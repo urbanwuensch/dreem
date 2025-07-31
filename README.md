@@ -1,5 +1,6 @@
 # drEEM toolbox for MATLAB version 2
-MATLAB toolbox aiding the multiway decomposition of fluorescence EEMs into underlying fluorescence components.
+MATLAB toolbox aids the import, processing, and analysis of ultraviolet-visible absorbance and fluorescence spectra. Particular focus is on FAIR data policies.
+The toolbox is particularly useful for the chemometric analysis of excitation-emission matrices (EEMs) of dissolved organic matter (DOM). Spectral properties of chromophoric DOM can also be determined easily.
 
 ## Installation
 
