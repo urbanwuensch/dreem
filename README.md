@@ -2,9 +2,9 @@
 MATLAB toolbox aiding the multiway decomposition of fluorescence EEMs into underlying fluorescence components.
 
 ## Installation
-1. Download the toolbox from the [Matlab File exchange](https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/). Run the *.mltbx file to install the toolbox.
-2. *Alternative*: In Matlab, click on the HOME tab, then find "Addons" to open the Addon Explorer and search for "drEEM toolbox". Follow the install instructions.
 
+[![Open in MATLAB Online](https://www.mathworks.com/images/responsive/global/open-in-matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=urbanwuensch/drEEM-online&file=GettingStartedOnline.mlx)
+[![Open in MATLAB Online](https://dreem.openfluor.org/assets/matlab-fileexchange.svg)](https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox)
 ## Usage
 - drEEM version 2 is based on object-oriented programming. To initialize the toolbox, type `tbx = drEEMtoolbox;`.
 - Access the toolbox methods by calling e.g. `tbx.importeems(...)`
