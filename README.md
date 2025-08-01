@@ -1,9 +1,15 @@
 # drEEM toolbox for MATLAB version 2
-MATLAB toolbox aiding the multiway decomposition of fluorescence EEMs into underlying fluorescence components.
+MATLAB toolbox aids the import, processing, and analysis of ultraviolet-visible absorbance and fluorescence spectra. Particular focus is on FAIR data policies.
+The toolbox is particularly useful for the chemometric analysis of excitation-emission matrices (EEMs) of dissolved organic matter (DOM). Spectral properties of chromophoric DOM can also be determined easily.
 
 ## Installation
-1. Download the toolbox from the [Matlab File exchange](https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/). Run the *.mltbx file to install the toolbox.
-2. *Alternative*: In Matlab, click on the HOME tab, then find "Addons" to open the Addon Explorer and search for "drEEM toolbox". Follow the install instructions.
+
+Option 1 (preferrable): [![Download on File Exchange](https://dreem.openfluor.org/assets/matlab-fileexchange.svg)](https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox)
+
+Option 2 (convenient): [![Open in MATLAB Online](https://dreem.openfluor.org/assets/matlab-online.svg)](https://matlab.mathworks.com/open/github/v1?repo=urbanwuensch/drEEM-online&file=GettingStartedOnline.mlx)
+
+
+Each method ends in displaying a guide to get started with more information.
 
 ## Usage
 - drEEM version 2 is based on object-oriented programming. To initialize the toolbox, type `tbx = drEEMtoolbox;`.
