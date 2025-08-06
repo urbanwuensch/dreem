@@ -20,7 +20,10 @@ drEEMdataset.validate(data)
 dataout=data;
 
 if islogical(index)|isnumeric(index)
-    dataout.X(index,:,:)=[];
+    if not(isempty(dataout.X))
+        dataout.X(index,:,:)=[];
+        dataout.nSample=size(dataout.X,1);
+    end
     dataout.i(index)=[];
     dataout.filelist(index)=[];
     dataout.metadata(index,:)=[];
@@ -32,8 +35,9 @@ if islogical(index)|isnumeric(index)
     end
     if not(isempty(dataout.abs))
         dataout.abs(index,:)=[];
+        dataout.nSample=size(dataout.abs,1);
     end
-    dataout.nSample=size(dataout.X,1);
+    
 else
     error("input to index must be numeric or logical")
 end
