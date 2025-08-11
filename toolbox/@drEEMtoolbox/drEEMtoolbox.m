@@ -128,7 +128,7 @@ classdef drEEMtoolbox < handle
                 answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
                     ,'Update notice','Yes','Yes','No','Why am I seeing this?');
                 if matches(answer,'Yes')
-                    dreeminstall
+                    web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                 end
             else
                 disp('<strong>Using the latest version of the drEEM toolbox.</strong>')
