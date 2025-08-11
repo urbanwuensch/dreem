@@ -74,7 +74,7 @@ classdef drEEMtoolbox < handle
             end
             options = weboptions;
             options.Timeout=1;
-            directory='https://gitlab.com/dreem/dreem-2/-/raw/main/@drEEMtoolbox/versions.txt';
+            directory='https://gitlab.com/dreem/dreem-2/-/raw/main/toolbox/@drEEMtoolbox/versions.txt';
             try
                 disp('Checking for updates (takes a moment if offline)...')
                 vhist=webread(directory,options);
@@ -126,7 +126,7 @@ classdef drEEMtoolbox < handle
 
             if any(update)
                 answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
-                    ,'Update notice','Yes','Yes','No','Why am I seeing this?');
+                    ,'Update notice','Yes','No','Why am I seeing this?');
                 if matches(answer,'Yes')
                     web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                 end
