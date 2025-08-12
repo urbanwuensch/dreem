@@ -1,5 +1,5 @@
 function data = importeems(filePattern,options)
-% <a href = "matlab:doc importeems">data = importeems(filePattern,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('importeems')">data = importeems(filePattern,options) (click to access documentation)</a>
 %
 % <strong>Import fluorescence EEMs</strong> and create drEEMdataset
 %
@@ -22,6 +22,8 @@ function data = importeems(filePattern,options)
 %       samples=tbx.importeems("*.csv","columnIsExcitation",true);
 %   3. <strong>Jasco csv-files with large header</strong>
 %       Not supported due to complex file format. Contact dreem@openfluor.net 
+%
+% <a href = "matlab:drEEMtoolbox.doc('importeems')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

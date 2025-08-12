@@ -1,5 +1,5 @@
 function dataout = pickpeaks( data,options)
-% <a href = "matlab:doc pickpeaks">[dataout,picklist,metadata] = pickpeaks( data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('pickpeaks')">[dataout,picklist,metadata] = pickpeaks( data,options) (click to access documentation)</a>
 %
 % <strong>Extract peak intensities</strong> and indices from fluorescence EEMs
 %
@@ -9,6 +9,8 @@ function dataout = pickpeaks( data,options)
 % <strong>Inputs - Optional</strong>
 % options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
 % details       {mustBeNumericOrLogical} = false
+%
+% <a href = "matlab:drEEMtoolbox.doc('pickpeaks')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

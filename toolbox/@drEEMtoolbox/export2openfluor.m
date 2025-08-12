@@ -1,5 +1,5 @@
 function export2openfluor(data, f, filename)
-% <a href = "matlab:doc export2openfluor">export2openfluor(data,f,filename) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('export2openfluor')">export2openfluor(data,f,filename) (click to access documentation)</a>
 %
 % <strong>Export PARAFAC model for OpenFluor comparisons</strong>
 %
@@ -12,6 +12,8 @@ function export2openfluor(data, f, filename)
 %   1. Export a 5-component model to a text file that can be uploaded to
 %   OpenFluor.org with an automatic date addition to the filename
 %       tbx.export2openfluor(samples,5,['myAwesome5Cmodel_',char(datetime('today'))]);
+%
+% <a href = "matlab:drEEMtoolbox.doc('export2openfluor')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

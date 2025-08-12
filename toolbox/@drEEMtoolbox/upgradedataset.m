@@ -1,5 +1,5 @@
 function dataout = upgradedataset(data,atypicalFieldnames)
-% <a href = "matlab:doc subdataset">dataout=subdataset(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('upgradedataset')">dataout=subdataset(data,options) (click to access documentation)</a>
 %
 % Upgrade drEEM datasets to the drEEMdataset class
 %
@@ -19,6 +19,8 @@ function dataout = upgradedataset(data,atypicalFieldnames)
 %   4. Upgrade drEEM tutorial dataset from previous version (produces warning due to non-existent absorbance data)
 %       load(which('drEEM_tutorial_DS_old.mat')),
 %       samples = tbx.upgradedataset(dreemdata,{'longID','filelist'})
+%
+% <a href = "matlab:drEEMtoolbox.doc('upgradedataset')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

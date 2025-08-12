@@ -1,5 +1,5 @@
 function dataout = ramancalibration(samples,blanks,options)
-% <a href = "matlab:doc ramancalibration">dataout = ramancalibration(samples,blanks,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('ramancalibration')">dataout = ramancalibration(samples,blanks,options) (click to access documentation)</a>
 %
 % <strong>Calibrate fluorescence signals</strong> and convert from arbitrary to Raman Units
 %
@@ -24,6 +24,8 @@ function dataout = ramancalibration(samples,blanks,options)
 %       samples = tbx.ramancalibration(samples,blanks,iStart=375,iEnd=430);
 %   4. Different Raman peak (you decide start and end wavelength of peaks visually please)
 %       samples = tbx.ramancalibration(samples,blanks,ExWave=275,iStart=...,iEnd=...);
+%
+% <a href = "matlab:drEEMtoolbox.doc('ramancalibration')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

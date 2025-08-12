@@ -1,5 +1,5 @@
 function [fighandleout] = dreemfig(fighandlein)
-% <a href = "matlab:doc dreemfig">[fighandleout] = dreemfig(fighandlein) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('dreemfig')">[fighandleout] = dreemfig(fighandlein) (click to access documentation)</a>
 %
 % <strong>Inputs - Required</strong>
 % fighandlein (1,:)                 {mustBeA('matlab.ui.Figure')}

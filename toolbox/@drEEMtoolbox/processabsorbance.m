@@ -1,5 +1,5 @@
 function dataout = processabsorbance(data,options)
-% <a href = "matlab:doc processabsorbance">dataout = processabsorbance(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('processabsorbance')">dataout = processabsorbance(data,options) (click to access documentation)</a>
 %
 % <strong>Process CDOM absorbance measurements</strong>
 %
@@ -21,6 +21,8 @@ function dataout = processabsorbance(data,options)
 %       samples = tbx.processabsorbance(samples,correctBase=true,extrapolate=false,zero=false);
 %   4. Do something, but please don't show that final plot
 %       samples = tbx.processabsorbance(samples,...,plot=false);
+%
+% <a href = "matlab:drEEMtoolbox.doc('processabsorbance')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

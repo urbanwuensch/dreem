@@ -1,5 +1,5 @@
 function dataout=subdataset(data,options)
-% <a href = "matlab:doc subdataset">dataout=subdataset(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('subdataset')">dataout=subdataset(data,options) (click to access documentation)</a>
 %
 % <strong>Delete samples or parts of EEMs</strong> from a drEEMdataset
 %
@@ -24,6 +24,8 @@ function dataout=subdataset(data,options)
 %       samples = tbx.subdataset(samples,outEx=samples.Ex==275);
 %   6. drEEM ships with a <strong>nearest neighbor function</strong>: isNearest, use it if wavelengths have many decimals
 %       samples = tbx.subdataset(samples,outEm=tbx.isNearest(samples.Em,349));
+%
+% <a href = "matlab:drEEMtoolbox.doc('subdataset')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

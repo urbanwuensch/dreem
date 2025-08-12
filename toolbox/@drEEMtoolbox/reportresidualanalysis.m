@@ -1,5 +1,5 @@
 function fhandle = reportresidualanalysis(data,ftarget,mdfield)
-% <a href = ""matlab:doc reportresidualanalysis">fhandle = reportresidualanalysis(data,ftarget,mdfield) (click to access documentation)</a>
+% <a href = ""matlab:drEEMtoolbox.doc('reportresidualanalysis')">fhandle = reportresidualanalysis(data,ftarget,mdfield) (click to access documentation)</a>
 %
 % <strong>Perform and export residual analysis</strong>
 %
@@ -11,6 +11,8 @@ function fhandle = reportresidualanalysis(data,ftarget,mdfield)
 % <strong>EXAMPLE(S)</strong>
 %   1. Report residual analysis of a bad 3 component model
 %       fig = tbx.reportresidualanalysis(samples,3,'i');
+%
+% <a href = "matlab:drEEMtoolbox.doc('reportresidualanalysis')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

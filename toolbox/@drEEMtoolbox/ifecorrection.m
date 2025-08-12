@@ -1,5 +1,5 @@
 function dataout = ifecorrection(data,options)
-% <a href = "matlab:doc ifecorrection">dataout = ifecorrection(data) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('ifecorrection')">dataout = ifecorrection(data) (click to access documentation)</a>
 %
 % <strong>Correct inner-filter effects</strong> with the absorbance-based approach
 %
@@ -10,6 +10,8 @@ function dataout = ifecorrection(data,options)
 % <strong>EXAMPLE(S)</strong>
 %   1. samples = ifecorrection(samples)
 %   2. samples = ifecorrection(samples,plot=false) (no final overview over IFE)
+%
+% <a href = "matlab:drEEMtoolbox.doc('ifecorrection')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

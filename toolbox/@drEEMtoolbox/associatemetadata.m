@@ -1,5 +1,5 @@
 function dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
-% <a href = "matlab:doc associatemetadata">dataout = associatemetadata(data,pathtofile,metadatakey,datakey) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('associatemetadata')">dataout = associatemetadata(data,pathtofile,metadatakey,datakey) (click to access documentation)</a>
 %
 % <strong>Integrate metadata</strong> into drEEMdataset
 %
@@ -16,6 +16,8 @@ function dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
 %       samples = tbx.associatemetadata(samples,"metadata.xls",'EEMfile');
 %   2. merge metadata from existing (already loaded) table into a dataset
 %       samples = tbx.associatemetadata(samples,someTable,'EEMfile');
+%
+% <a href = "matlab:drEEMtoolbox.doc('associatemetadata')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

@@ -1,5 +1,5 @@
 function dataout = fitslopes(data,options)
-% <a href = "matlab:doc fitslopes">[dataout,slopes,metadata,model] = fitslopes(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('fitslopes')">[dataout,slopes,metadata,model] = fitslopes(data,options) (click to access documentation)</a>
 %
 % <strong>Fit slopes to CDOM absorbance data</strong>
 %
@@ -17,6 +17,8 @@ function dataout = fitslopes(data,options)
 %       samples = tbx.fitslopes(samples,details=true);
 %   2. fit slopes but don't show final plots or fit details
 %       samples = tbx.fitslopes(samples,plot=false);
+%
+% <a href = "matlab:drEEMtoolbox.doc('fitslopes')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

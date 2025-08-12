@@ -1,5 +1,5 @@
 function f=dreemuifig
-% <a href = "matlab:doc dreemfig">f = dreemuifig (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('dreemuifig')">f = dreemuifig (click to access documentation)</a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

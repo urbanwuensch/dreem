@@ -1,5 +1,5 @@
 function dataout = scalesamples(data,option)
-% <a href = "matlab:doc scalesamples">dataout = scalesamples(data,option) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('scalesamples')">dataout = scalesamples(data,option) (click to access documentation)</a>
 %
 % <strong>Scale samples</strong> of a dataset by the nth root of the standard deviation
 %
@@ -18,6 +18,8 @@ function dataout = scalesamples(data,option)
 %       samples = tbx.scalesamples(samples,'reverse');
 %   5. <strong>Don't know what to do? </strong> Get decision help
 %       samples = tbx.scalesamples(samples,'help');
+%
+% <a href = "matlab:drEEMtoolbox.doc('scalesamples')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

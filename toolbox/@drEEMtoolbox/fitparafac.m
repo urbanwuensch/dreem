@@ -1,5 +1,5 @@
 function dataout = fitparafac(data,mode,options)
-% <a href = "matlab:doc fitparafac">dataout = fitparafac(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('fitparafac')">dataout = fitparafac(data,options) (click to access documentation)</a>
 %
 % <strong>Fit PARAFAC models to fluorescence data</strong>
 %
@@ -27,6 +27,8 @@ function dataout = fitparafac(data,mode,options)
 %       samples = tbx.fitparafac(samples,f=2:7,constraints="unconstrained",convergence=1e-6,starts=10,maxIteration=5000);
 %   4. Equivalent to the former <strong>splitanalysis</strong>
 %       samples = tbx.fitparafac(samples,f=2:7,mode="split",convergence=1e-8,starts=50,maxIteration=5000);
+%
+% <a href = "matlab:drEEMtoolbox.doc('fitparafac')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

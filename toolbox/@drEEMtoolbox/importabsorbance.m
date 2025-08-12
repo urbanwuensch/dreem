@@ -1,5 +1,5 @@
 function data = importabsorbance(filePattern,options)
-% <a href = "matlab:doc importabsorbance">data = importabsorbance(filePattern,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('importabsorbance')">data = importabsorbance(filePattern,options) (click to access documentation)</a>
 %
 % <strong>Import absorbance measurements</strong> and create drEEMdataset
 %
@@ -16,6 +16,8 @@ function data = importabsorbance(filePattern,options)
 %       absorbance = tbx.importabsorbance("* - Abs Spectra Graphs.dat");
 %   2. <strong>csv-export of data from software</strong>
 %       absorbance = tbx.importabsorbance(".csv",waveColumn=1,absColumn=2);
+%
+% <a href = "matlab:drEEMtoolbox.doc('importabsorbance')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

@@ -1,5 +1,5 @@
 function dataout = splitdataset(data,splitType,options)
-% <a href = "matlab:doc splitdataset">dataout = splitdataset(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('subdataset')">dataout = splitdataset(data,options) (click to access documentation)</a>
 %
 % <strong>Split dataset into subsets</strong> for split-validation of PARAFAC models
 %
@@ -19,6 +19,8 @@ function dataout = splitdataset(data,splitType,options)
 %       samples = splitdataset(samples,splitType='blind',blindType='random',numSplit=4);
 %   3. Split dataset according to metadata variable "origin" (must exist, needs to be adopted to your dataset)
 %       samples = splitdataset(samples,splitType='byMetadata',metadataColumn='origin');
+%
+% <a href = "matlab:drEEMtoolbox.doc('splitdataset')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

@@ -1,5 +1,5 @@
 function varargout = alignsamples(varargin)
-% <a href = "matlab:doc alignsamples">varargout = alignsamples(varargin) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('alignsamples')">varargout = alignsamples(varargin) (click to access documentation)</a>
 %
 % <strong>Compare filelists between datasets</strong>, align filelists, and delete non-ubiquitous samples
 %
@@ -11,6 +11,8 @@ function varargout = alignsamples(varargin)
 %       [samples,blanks,absorbance] = tbx.alignsamples(samples,blanks,absorbance);
 %   2. FDOM only
 %       [samples,blanks] = tbx.alignsamples(samples,blanks);
+%
+% <a href = "matlab:drEEMtoolbox.doc('alignsamples')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

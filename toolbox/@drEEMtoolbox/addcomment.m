@@ -1,5 +1,5 @@
 function dataout = addcomment(data,comment,newopt)
-% <a href = "matlab:doc addcomment">dataout = addcomment(data,comment) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('addcomment')">dataout = addcomment(data,comment) (click to access documentation)</a>
 %
 % <strong>Add a comment to a drEEMdataset object</strong> to document your analysis process
 %
@@ -10,7 +10,8 @@ function dataout = addcomment(data,comment,newopt)
 %
 % <strong>EXAMPLE(S)</strong>
 %   samples = tbx.addcomment(data,'This last modification really made a difference');
-
+%
+% <a href = "matlab:drEEMtoolbox.doc('addcomment')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

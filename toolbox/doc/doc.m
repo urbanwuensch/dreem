@@ -1,6 +1,6 @@
 function doc(functionname)
 arguments
-    functionname (1,:) {mustBeText(functionname)}
+    functionname (1,:) {mustBeText(functionname)} =''
 end
 % drEEM-specific function for displaying custom formatted documentation
 % (c) Urban Wuensch, 2019

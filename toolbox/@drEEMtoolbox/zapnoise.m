@@ -1,5 +1,5 @@
 function dataout = zapnoise(data,sampleIdent,emRange,exRange)
-% <a href = "matlab:doc zapnoise">dataout = zapnoise(data,sampleIdent,emRange,exRange) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('zapnoise')">dataout = zapnoise(data,sampleIdent,emRange,exRange) (click to access documentation)</a>
 %
 % NaN ("zap") parts of individual EEMs to treat outliers.
 %
@@ -17,6 +17,8 @@ function dataout = zapnoise(data,sampleIdent,emRange,exRange)
 %   1. Zap entire emission scans at Ex 255 and 300 in sample data.i==7
 %       like example 2., but in two calls since [255 300] would delete the
 %       entire block between both.
+%
+% <a href = "matlab:drEEMtoolbox.doc('zapnoise')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

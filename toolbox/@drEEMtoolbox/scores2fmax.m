@@ -1,5 +1,5 @@
 function fmax = scores2fmax(data,f)
-% <a href = "matlab:doc scores2fmax">fmax = scores2fmax(data,f) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('scores2fmax')">fmax = scores2fmax(data,f) (click to access documentation)</a>
 %
 % <strong>Inputs - Required</strong>
 % data (1,1) {mustBeA('drEEMdataset'),drEEMdataset.validate}
@@ -7,6 +7,8 @@ function fmax = scores2fmax(data,f)
 %
 % <strong>EXAMPLE(S)</strong>
 %   fmax = tbx.scores2fmax(newSamples,5)
+%
+% <a href = "matlab:drEEMtoolbox.doc('scores2fmax')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

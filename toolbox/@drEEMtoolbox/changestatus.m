@@ -1,5 +1,5 @@
 function dataout = changestatus(data)
-% <a href = "matlab:doc changestatus">dataout = changestatus(data) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('changestatus')">dataout = changestatus(data) (click to access documentation)</a>
 %
 % <strong>Manually change the processing status</strong> of a drEEMdataset
 %
@@ -8,6 +8,8 @@ function dataout = changestatus(data)
 %
 % <strong>EXAMPLE(S)</strong>
 %   samples = tbx.changestatus(samples); (follow the GUI advice)
+%
+% <a href = "matlab:drEEMtoolbox.doc('changestatus')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

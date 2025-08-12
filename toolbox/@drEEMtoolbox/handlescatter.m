@@ -1,5 +1,5 @@
 function dataout = handlescatter(data,option)
-% <a href = "matlab:doc handlescatter">dataout = handlescatter(data,option) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('handlescatter')">dataout = handlescatter(data,option) (click to access documentation)</a>
 %
 % <strong>Remove Rayleigh and Raman scatter</strong> from fluorescence data
 %
@@ -16,6 +16,8 @@ function dataout = handlescatter(data,option)
 %       samples = tbx.handlescatter(samples,scatteroptions);
 %   3. get interactive help with option defintion
 %       samples = tbx.handlescatter(samples,'gui');
+%
+% <a href = "matlab:drEEMtoolbox.doc('handlescatter')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

@@ -1,5 +1,5 @@
 function dataout = subtractblanks(samples,blanks,options)
-% <a href = "matlab:doc subtractblanks">dataout = subtractblanks(samples,blanks) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('subtractblanks')">dataout = subtractblanks(samples,blanks) (click to access documentation)</a>
 %
 % <strong>Subtract blank dataset from sample dataset</strong>
 %
@@ -15,6 +15,8 @@ function dataout = subtractblanks(samples,blanks,options)
 %       samples = tbx.subtractblanks(samples,blanks)
 %   2. Blank subtraction without visual output (not recommended)
 %       samples = tbx.subtractblanks(samples,blanks,plot=false)
+%
+% <a href = "matlab:drEEMtoolbox.doc('subtractblanks')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

@@ -1,5 +1,5 @@
 function [summary,M]  =  viewopenfluormatches(filename)
-% <a href = "matlab:doc viewopenfluormatches">[summary,M] = viewopenfluormatches(filename) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('viewopenfluormatches')">[summary,M] = viewopenfluormatches(filename) (click to access documentation)</a>
 %
 % <strong>Import results from OpenFluor</strong> for analysis
 %
@@ -8,6 +8,8 @@ function [summary,M]  =  viewopenfluormatches(filename)
 %
 % <strong>EXAMPLE(S)</strong>
 %   [summary,M] = tbx.viewopenfluormatches(which("OpenFluorSearch_384_osPARAFAC_Tapajos_20250223.csv"))
+%
+% <a href = "matlab:drEEMtoolbox.doc('viewopenfluormatches')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

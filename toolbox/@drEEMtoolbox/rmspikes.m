@@ -1,5 +1,5 @@
 function dataout = rmspikes(data,options)
-% <a href = "matlab:doc rmspikes">dataout = rmspikes(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('rmspikes')">dataout = rmspikes(data,options) (click to access documentation)</a>
 %
 % <strong>Remove noisy data from fluorescence EEMs</strong>
 %
@@ -17,6 +17,8 @@ function dataout = rmspikes(data,options)
 %       samples = tbx.rmspikes(samples);
 %   3. Delete signals 20x above the noise floor and interpolate over deletions
 %       samples = tbx.rmspikes(samples,thresholdFactor=20,interpolate=true);
+%
+% <a href = "matlab:drEEMtoolbox.doc('rmspikes')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

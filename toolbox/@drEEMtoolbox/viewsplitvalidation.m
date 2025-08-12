@@ -1,5 +1,5 @@
 function viewsplitvalidation(data,fac)
-% <a href = "matlab:doc viewsplitvalidation">dataout = viewsplitvalidation(data,fac) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('viewsplitvalidation')">dataout = viewsplitvalidation(data,fac) (click to access documentation)</a>
 %
 % <strong>Compare PARAFAC models</strong> of a dataset to validate a model
 %
@@ -9,6 +9,9 @@ function viewsplitvalidation(data,fac)
 %
 % <strong>EXAMPLE(S)</strong>
 %       viewsplitvalidation(samples,5)
+%
+% <a href = "matlab:drEEMtoolbox.doc('viewsplitvalidation')"><strong>-> full documentation</strong></a>
+
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

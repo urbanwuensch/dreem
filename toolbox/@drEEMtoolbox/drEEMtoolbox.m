@@ -1,5 +1,5 @@
 classdef drEEMtoolbox < handle
-% <a href = "matlab:doc dreem">Documentation of the drEEM toolbox</a>
+% <a href = "matlab:drEEMtoolbox.doc('drEEM)'">Documentation of the drEEM toolbox</a>
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. Make a class instance to call methods (highly recommended)
@@ -208,6 +208,9 @@ classdef drEEMtoolbox < handle
     end
 
     methods (Static = true , Access = public)
+        
+        %doc function
+        doc(fname)
 
         % import functions
         function importwizard
