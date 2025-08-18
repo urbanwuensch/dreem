@@ -297,64 +297,15 @@ classdef drEEMtoolbox < handle
 
         % Visualization (incl. app workarounds)
         viewspectralvariance(data)
-        function vieweems(data)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.validate(data),drEEMdataset.mustContainSamples(data)}
-            end
-            vieweems(data)
-        end
-        function viewmodels(data,startTab,f)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.validate(data),drEEMdataset.mustContainSamples(data)}
-                startTab (1,:) {mustBeText,...
-                    mustBeMember(startTab,["Overview","Scores & loadings",...
-                    "Spectral loadings","Loadings & leverages","Errors & leverages", ...
-                    "Fingerprint plots","SSE","Score correlation"])} = "Overview"
-                f (1,1) {mustBeNumeric,drEEMdataset.mustBeModel(data,f)} = nan
-            end
-            ncomp=numel(find(arrayfun(@(x) not(isempty(x.loads{1})),data.models)));
-            if ncomp==0
-               error('Can''t find any models to plot.')
-            end
-            viewmodels(data,startTab,f)
-        end
-        function viewdmr(data,f)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.validate(data),drEEMdataset.mustContainSamples(data)}
-                f (1,1) {mustBeNumeric} = nan
-            end
-            viewdmr(data,f)
-        end
-        function viewcompcorr(data)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.mustContainSamples(data)}
-            end
-            viewcompcorr(data)
-        end
-        function viewhistory(data)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.mustContainSamples(data)}
-            end
-            if height(data.history)==0
-                error('No entries to display.')
-            end
-            viewhistory(data)
-        end
-        % function explorevariability(data)
-        %     explorevariability(data)
-        % end
-        function viewscatter(data)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.mustContainSamples(data)}
-            end
-            viewscatter(data)
-        end
-        function viewabsorbance(data)
-            arguments
-                data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.mustContainSamples(data),drEEMdataset.sanityCheckAbsorbance(data)}
-            end
-            viewabsorbance(data)
-        end
+        vieweems(data) % mlapp with m-file
+
+        viewmodels(data,startTab,f) % mlapp with m-file
+        viewdmr(data,f) % mlapp with m-file
+        viewcompcorr(data) % mlapp with m-file
+        viewhistory(data) % mlapp with m-file
+        %explorevariability(data) % not shipping yet.
+        viewscatter(data)
+        viewabsorbance(data)
         [summary,M]  =  viewopenfluormatches(filename)
 
     end
