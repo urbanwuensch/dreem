@@ -4,7 +4,7 @@ disp('<strong> starting to pack...</strong>')
 % Change these for the release!!!
 uuid="186c884d-4f97-4318-9f12-cbf90a332379";
 version='2.25.09';
-OutputFile=string(['/Users/wuensch/Documents/git/dreem-2/release/drEEM-test',version,'.mltbx']);
+OutputFile=string(['/Users/wuensch/Documents/git/dreem-2/release/drEEMtest-',version,'.mltbx']);
 
 
 % Get old, make new opts
