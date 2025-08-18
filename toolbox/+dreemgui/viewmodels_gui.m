@@ -8,8 +8,8 @@ classdef viewmodels_gui < matlab.apps.AppBase
         OverviewTab           matlab.ui.container.Tab
         GridLayout4           matlab.ui.container.GridLayout
         UITable               matlab.ui.control.Table
-        core                  matlab.ui.control.UIAxes
         var                   matlab.ui.control.UIAxes
+        core                  matlab.ui.control.UIAxes
         ScoresloadingsTab     matlab.ui.container.Tab
         GridLayout7           matlab.ui.container.GridLayout
         scoresloadscanvas     matlab.ui.container.Panel
@@ -20,17 +20,17 @@ classdef viewmodels_gui < matlab.apps.AppBase
         GridLayout            matlab.ui.container.GridLayout
         LinelegendCheckBox    matlab.ui.control.CheckBox
         lldrop                matlab.ui.control.DropDown
-        scs                   matlab.ui.control.UIAxes
-        leex                  matlab.ui.control.UIAxes
         leem                  matlab.ui.control.UIAxes
+        leex                  matlab.ui.control.UIAxes
+        scs                   matlab.ui.control.UIAxes
         les                   matlab.ui.control.UIAxes
         loex                  matlab.ui.control.UIAxes
         loem                  matlab.ui.control.UIAxes
         ErrorsleveragesTab    matlab.ui.container.Tab
         GridLayout_2          matlab.ui.container.GridLayout
         eldrop                matlab.ui.control.DropDown
-        elex                  matlab.ui.control.UIAxes
         elem                  matlab.ui.control.UIAxes
+        elex                  matlab.ui.control.UIAxes
         elsam                 matlab.ui.control.UIAxes
         FingerprintplotsTab   matlab.ui.container.Tab
         GridLayout2           matlab.ui.container.GridLayout
@@ -39,8 +39,8 @@ classdef viewmodels_gui < matlab.apps.AppBase
         SSETab                matlab.ui.container.Tab
         GridLayout3           matlab.ui.container.GridLayout
         ssedrop               matlab.ui.control.DropDown
-        ssesam                matlab.ui.control.UIAxes
         sseex                 matlab.ui.control.UIAxes
+        ssesam                matlab.ui.control.UIAxes
         sseem                 matlab.ui.control.UIAxes
         ScorecorrelationTab   matlab.ui.container.Tab
         GridLayout6           matlab.ui.container.GridLayout
@@ -552,7 +552,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
         % Button pushed function: viewcorrelationsvsmetadataButton
         function viewcorrelationsvsmetadataButtonPushed(app, event)
-            viewcompcorr(app.data)
+            dreemgui.viewcompcorr(app.data)
         end
 
         % Selection change function: TabGroup
@@ -613,17 +613,6 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.GridLayout4 = uigridlayout(app.OverviewTab);
             app.GridLayout4.RowHeight = {'0.5x', '1x'};
 
-            % Create var
-            app.var = uiaxes(app.GridLayout4);
-            title(app.var, 'Explained variance')
-            xlabel(app.var, 'Number of components')
-            ylabel(app.var, '% explained variance')
-            zlabel(app.var, 'Z')
-            app.var.Box = 'on';
-            app.var.TickDir = 'both';
-            app.var.Layout.Row = 2;
-            app.var.Layout.Column = 2;
-
             % Create core
             app.core = uiaxes(app.GridLayout4);
             title(app.core, 'Core consistency')
@@ -634,6 +623,17 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.core.TickDir = 'both';
             app.core.Layout.Row = 2;
             app.core.Layout.Column = 1;
+
+            % Create var
+            app.var = uiaxes(app.GridLayout4);
+            title(app.var, 'Explained variance')
+            xlabel(app.var, 'Number of components')
+            ylabel(app.var, '% explained variance')
+            zlabel(app.var, 'Z')
+            app.var.Box = 'on';
+            app.var.TickDir = 'both';
+            app.var.Layout.Row = 2;
+            app.var.Layout.Column = 2;
 
             % Create UITable
             app.UITable = uitable(app.GridLayout4);
@@ -712,16 +712,16 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.les.Layout.Row = 3;
             app.les.Layout.Column = 1;
 
-            % Create leem
-            app.leem = uiaxes(app.GridLayout);
-            title(app.leem, 'Leverage: emission')
-            xlabel(app.leem, 'Wavelength (nm)')
-            ylabel(app.leem, 'Leverage')
-            zlabel(app.leem, 'Z')
-            app.leem.Box = 'on';
-            app.leem.TickDir = 'both';
-            app.leem.Layout.Row = 3;
-            app.leem.Layout.Column = 2;
+            % Create scs
+            app.scs = uiaxes(app.GridLayout);
+            title(app.scs, 'Scores: samples')
+            xlabel(app.scs, 'Sample identifier (data.i)')
+            ylabel(app.scs, 'Scores')
+            zlabel(app.scs, 'Z')
+            app.scs.Box = 'on';
+            app.scs.TickDir = 'both';
+            app.scs.Layout.Row = 2;
+            app.scs.Layout.Column = 1;
 
             % Create leex
             app.leex = uiaxes(app.GridLayout);
@@ -734,16 +734,16 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.leex.Layout.Row = 3;
             app.leex.Layout.Column = 3;
 
-            % Create scs
-            app.scs = uiaxes(app.GridLayout);
-            title(app.scs, 'Scores: samples')
-            xlabel(app.scs, 'Sample identifier (data.i)')
-            ylabel(app.scs, 'Scores')
-            zlabel(app.scs, 'Z')
-            app.scs.Box = 'on';
-            app.scs.TickDir = 'both';
-            app.scs.Layout.Row = 2;
-            app.scs.Layout.Column = 1;
+            % Create leem
+            app.leem = uiaxes(app.GridLayout);
+            title(app.leem, 'Leverage: emission')
+            xlabel(app.leem, 'Wavelength (nm)')
+            ylabel(app.leem, 'Leverage')
+            zlabel(app.leem, 'Z')
+            app.leem.Box = 'on';
+            app.leem.TickDir = 'both';
+            app.leem.Layout.Row = 3;
+            app.leem.Layout.Column = 2;
 
             % Create lldrop
             app.lldrop = uidropdown(app.GridLayout);
@@ -779,17 +779,6 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.elsam.Layout.Row = [2 3];
             app.elsam.Layout.Column = 1;
 
-            % Create elem
-            app.elem = uiaxes(app.GridLayout_2);
-            title(app.elem, 'emission')
-            xlabel(app.elem, 'leverages')
-            ylabel(app.elem, 'sum of squared errors')
-            zlabel(app.elem, 'Z')
-            app.elem.Box = 'on';
-            app.elem.TickDir = 'both';
-            app.elem.Layout.Row = [2 3];
-            app.elem.Layout.Column = 2;
-
             % Create elex
             app.elex = uiaxes(app.GridLayout_2);
             title(app.elex, 'excitation')
@@ -800,6 +789,17 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.elex.TickDir = 'both';
             app.elex.Layout.Row = [2 3];
             app.elex.Layout.Column = 3;
+
+            % Create elem
+            app.elem = uiaxes(app.GridLayout_2);
+            title(app.elem, 'emission')
+            xlabel(app.elem, 'leverages')
+            ylabel(app.elem, 'sum of squared errors')
+            zlabel(app.elem, 'Z')
+            app.elem.Box = 'on';
+            app.elem.TickDir = 'both';
+            app.elem.Layout.Row = [2 3];
+            app.elem.Layout.Column = 2;
 
             % Create eldrop
             app.eldrop = uidropdown(app.GridLayout_2);
@@ -847,17 +847,6 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.sseem.Layout.Row = 2;
             app.sseem.Layout.Column = 2;
 
-            % Create sseex
-            app.sseex = uiaxes(app.GridLayout3);
-            title(app.sseex, 'Excitation')
-            xlabel(app.sseex, 'Wavelength (nm)')
-            ylabel(app.sseex, 'SSE')
-            zlabel(app.sseex, 'Z')
-            app.sseex.Box = 'on';
-            app.sseex.TickDir = 'both';
-            app.sseex.Layout.Row = 2;
-            app.sseex.Layout.Column = 3;
-
             % Create ssesam
             app.ssesam = uiaxes(app.GridLayout3);
             title(app.ssesam, 'Samples')
@@ -868,6 +857,17 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.ssesam.TickDir = 'both';
             app.ssesam.Layout.Row = 2;
             app.ssesam.Layout.Column = 1;
+
+            % Create sseex
+            app.sseex = uiaxes(app.GridLayout3);
+            title(app.sseex, 'Excitation')
+            xlabel(app.sseex, 'Wavelength (nm)')
+            ylabel(app.sseex, 'SSE')
+            zlabel(app.sseex, 'Z')
+            app.sseex.Box = 'on';
+            app.sseex.TickDir = 'both';
+            app.sseex.Layout.Row = 2;
+            app.sseex.Layout.Column = 3;
 
             % Create ssedrop
             app.ssedrop = uidropdown(app.GridLayout3);
