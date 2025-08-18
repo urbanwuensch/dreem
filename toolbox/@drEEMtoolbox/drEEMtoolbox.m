@@ -212,10 +212,7 @@ classdef drEEMtoolbox < handle
         %doc function
         doc(fname)
 
-        % import functions
-        function importwizard
-            importwizard
-        end
+        
         data = importeems(filePattern,options)
         data = importabsorbance(filePattern,options)
         dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
@@ -296,9 +293,10 @@ classdef drEEMtoolbox < handle
         % fhandle = reportresidualanalysis(data,ftarget,mdfield)
 
         % Visualization (incl. app workarounds)
+        % import functions
+        importwizard
         viewspectralvariance(data)
         vieweems(data) % mlapp with m-file
-
         viewmodels(data,startTab,f) % mlapp with m-file
         viewdmr(data,f) % mlapp with m-file
         viewcompcorr(data) % mlapp with m-file
