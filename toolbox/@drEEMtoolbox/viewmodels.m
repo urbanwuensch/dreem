@@ -28,5 +28,5 @@ ncomp=numel(find(arrayfun(@(x) not(isempty(x.loads{1})),data.models)));
 if ncomp==0
     error('Can''t find any models to plot.')
 end
-viewmodels_gui(data,startTab,f)
+dreemgui.viewmodels_gui(data,startTab,f)
 end
