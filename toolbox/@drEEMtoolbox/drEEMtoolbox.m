@@ -222,7 +222,7 @@ classdef drEEMtoolbox < handle
         dataout=upgradedataset(data,atypicalFieldnames)
 
         % Merging function (not ready as of Aug-2025, will be published in future update)
-        %data = mergedatasets(varargin)
+        data = mergedatasets(varargin)
 
         % Status-specific functions
         dataout=changestatus(data)
