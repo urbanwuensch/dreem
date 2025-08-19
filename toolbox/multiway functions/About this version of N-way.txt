@@ -1,6 +1,0 @@
-This version of the N-way toolbox (v3.30, Jun 2011) includes updates for version 3.20 (July 2012)
-
-This version of N-way does not contain the function "parafac". 
-It has been replaced with a function called "nwayparafac" to avoid conflicting names.
-
-Small cosmetic modifications have been made to ensure forward compatibility.
