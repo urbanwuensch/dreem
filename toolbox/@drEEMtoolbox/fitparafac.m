@@ -140,7 +140,7 @@ switch funmode
         Iter=arrayfun(@(x) x.iterations,modout,'UniformOutput',false)';
         Err=arrayfun(@(x) x.err,modout,'UniformOutput',false)';
         for ii=1:numel(Model)
-            corecon{ii,1}=corcond(mdata.split(splitsource(i)).X,Model{ii},[],0);
+            corecon{ii,1}=nway.modeleval.corcond(mdata.split(splitsource(i)).X,Model{ii},[],0);
         end
 
     case 'parallel'
@@ -206,7 +206,7 @@ for j=1:nsplit
             100 * (1 - ehere(midx) / measuredSS );
 
         mdl.error=ehere(midx);
-        mdl.core=corcond(mdata.split(spltsrc(midx)).X,mdl.loads);
+        mdl.core=nway.modeleval.corcond(mdata.split(spltsrc(midx)).X,mdl.loads);
         mdl.percentUnconverged=pu;
 
         sizeF=nan(1,size(mdl.loads{1},2));
