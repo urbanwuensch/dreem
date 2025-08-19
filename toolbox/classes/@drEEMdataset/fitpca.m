@@ -41,8 +41,8 @@ Xbackup=X;
 Xunf          = tens2mat(X,data.nSample,data.nEm,data.nEx);
 Xbackup       = tens2mat(Xbackup,data.nSample,data.nEm,data.nEx);
 
-[Xunf,~,s]    = nprocess(Xunf,[1 0],[1 0],[],[],1,-1);
-[Xbackup]     = nprocess(Xbackup,[1 0],[1 0],[],[],1,-1);
+[Xunf,~,s]    = nway.tools.nprocess(Xunf,[1 0],[1 0],[],[],1,-1);
+[Xbackup]     = nway.tools.nprocess(Xbackup,[1 0],[1 0],[],[],1,-1);
 
 s=s{1};
 lowdelete=false(size(Xunf,1),1);

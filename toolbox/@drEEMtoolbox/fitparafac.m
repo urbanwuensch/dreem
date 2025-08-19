@@ -185,7 +185,7 @@ for j=1:nsplit
         
         measuredF = mdata.split(spltsrc(midx)).X;
         measuredSS = sum(measuredF(:).^2,'omitnan'); % sum of sq. data
-        modelledF = nmodel(mhere{midx});
+        modelledF = nway.modeleval.nmodel(mhere{midx});
         
         mdl=drEEMmodel;
         mdl.loads=mhere{midx};
@@ -211,7 +211,7 @@ for j=1:nsplit
 
         sizeF=nan(1,size(mdl.loads{1},2));
         for l=1:size(mdl.loads{1},2)
-            modelledH=nmodel([{mdl.loads{1}(:,l)} {mdl.loads{2}(:,l)} {mdl.loads{3}(:,l)}]);
+            modelledH=nway.modeleval.nmodel([{mdl.loads{1}(:,l)} {mdl.loads{2}(:,l)} {mdl.loads{3}(:,l)}]);
             sizeF(l)=100 * (1 - (sum((measuredF(:) - modelledH(:)).^2,'omitnan')) / measuredSS);
         end
         mdl.componentContribution=sizeF;
@@ -346,7 +346,7 @@ switch tbox
             addpath(mlpath{nway});
             addpath(mlpath{plsp});
         end
-        clearvars pls
+        clearvars plsp
         try
             pls test
             disp('Testing PLS_toolbox'),evridebug
@@ -482,7 +482,7 @@ switch tbox
             optInNew=false;
         end
         if opt.init~=0&&not(all(constraints==2))
-            [Factors,it,err,~] = nwayparafac(tensor,f,...
+            [Factors,it,err,~] = nway.models.parafac(tensor,f,...
                 [opt.stopcriteria.relativechange opt.init 0 0 50 opt.stopcriteria.iterations],...
                 constraints);
             out.model = Factors;
@@ -490,7 +490,7 @@ switch tbox
             out.err = err;
             clearvars Factors it err
         elseif opt.init==0
-            [Factors,it,err,~] = nwayparafac(tensor,f,...
+            [Factors,it,err,~] = nway.models.parafac(tensor,f,...
                 [opt.stopcriteria.relativechange opt.init 0 0 50 opt.stopcriteria.iterations],...
                 constraints,...
                 initvalues,[0 0 0]);
@@ -507,9 +507,9 @@ switch tbox
 
                 out.model={res.A res.B res.C};
                 out.iterations=numel(res.allfits);
-                out.err=sum(vec(tensor-nmodel({res.A,res.B,res.C})).^2,'omitnan');
+                out.err=sum(vec(tensor-nway.modeleval.nmodel({res.A,res.B,res.C})).^2,'omitnan');
             elseif not(optInNew)
-                [Factors,it,err,~] = nwayparafac(tensor,f,...
+                [Factors,it,err,~] = nway.models.parafac(tensor,f,...
                     [opt.stopcriteria.relativechange opt.init 0 0 50 opt.stopcriteria.iterations],...
                     constraints);
                 out.model = Factors;

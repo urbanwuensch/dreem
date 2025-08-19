@@ -261,7 +261,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             for n=1:numel(app.f)
                 ncomp=app.f(n);
                 [temp,idx]=app.reordercomponents(app.data,'emmaxinv');
-                [~,B,C] = fac2let(temp.models(ncomp).loads);
+                [~,B,C] = nway.modeleval.fac2let(temp.models(ncomp).loads);
                 for i=1:max(app.f)
                     if i<=ncomp
                         hold(ax(cnt),'on')

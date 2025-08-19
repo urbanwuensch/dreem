@@ -117,7 +117,7 @@ for j=1:100
             dataout.models(j,1).leverages(1,n)={lev};
         end
 
-        E=dataout.X-nmodel(loads);
+        E=dataout.X-nway.modeleval.nmodel(loads);
         E_ex = squeeze(sum(sum(E.^2,1,'omitnan'),2,'omitnan'));
         E_em = squeeze(sum(sum(E.^2,1,'omitnan'),3,'omitnan'))';
         E_sample = squeeze(sum(sum(E.^2,2,'omitnan'),3,'omitnan'));
@@ -133,7 +133,7 @@ for j=1:100
 
         sizeF=nan(1,size(loads{1},2));
         for l=1:size(loads{1},2)
-            modelledH=nmodel([{loads{1}(:,l)} {loads{2}(:,l)} {loads{3}(:,l)}]);
+            modelledH=nway.modeleval.nmodel([{loads{1}(:,l)} {loads{2}(:,l)} {loads{3}(:,l)}]);
             sizeF(l)=100 * (1 - (sum((dataout.X(:) - modelledH(:)).^2,'omitnan')) / sum(dataout.X(:).^2,'omitnan'));
         end
         dataout.models(j,1).componentContribution=sizeF;

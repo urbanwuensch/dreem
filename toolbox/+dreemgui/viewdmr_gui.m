@@ -69,7 +69,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             s = matches(app.data.filelist,s);
 
             dt = squeeze(app.data.X(s,:,:));
-            md = nmodel(app.data.models(m).loads);
+            md = nway.modeleval.nmodel(app.data.models(m).loads);
             md = squeeze(md(s,:,:));
             rs = dt - md;
 
@@ -192,7 +192,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             s = matches(app.data.filelist,s);
 
             dt = squeeze(app.data.X(s,:,:));
-            md = nmodel(app.data.models(m).loads);
+            md = nway.modeleval.nmodel(app.data.models(m).loads);
             md = squeeze(md(s,:,:));
             rs = dt - md;
 

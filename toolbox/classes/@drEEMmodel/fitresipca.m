@@ -36,7 +36,7 @@ end
 tens2mat=@(x,sz1,sz2,sz3) reshape(x,sz1,sz2*sz3);
 lev=@(x) diag(x*(x'*x)^-1*x');
 
-X=data.X-nmodel(model.loads);
+X=data.X-nway.modeleval.nmodel(model.loads);
 Xbackup=X;
 
 Xunf          = tens2mat(X,data.nSample,data.nEm,data.nEx);

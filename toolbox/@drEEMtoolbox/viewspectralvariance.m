@@ -39,11 +39,11 @@ end
 
 
 if pltcase==1||pltcase==2
-    [X,~,fscales]=nprocess(dat,[0 0 0],[1 0 0],[],[],1,-1);
+    [X,~,fscales]=nway.tools.nprocess(dat,[0 0 0],[1 0 0],[],[],1,-1);
     fdom=squeeze(std(X,'omitmissing'));
 end
 if pltcase==1||pltcase==3
-    [Y,~,~]=nprocess(data.abs,[0 0],[1 0],[],[],1,-1);
+    [Y,~,~]=nway.tools.nprocess(data.abs,[0 0],[1 0],[],[],1,-1);
     cdom=std(Y,'omitmissing');
 end
 fscales{1}(isinf(fscales{1}))=nan;

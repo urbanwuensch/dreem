@@ -79,11 +79,11 @@ classdef vieweems_gui < matlab.apps.AppBase
                     results=app.data.X;
                 case "model"
                     c=str2double(app.componentsDropDown.Value);
-                    results=nmodel(app.data.models(c).loads);
+                    results=nway.modeleval.nmodel(app.data.models(c).loads);
                 case "residuals"
                     c=str2double(app.componentsDropDown.Value);
                     X=app.data.X;
-                    Xm=nmodel(app.data.models(c).loads);
+                    Xm=nway.modeleval.nmodel(app.data.models(c).loads);
                     results=X-Xm;
             end
             results=squeeze(results(app.state.sample,:,:));

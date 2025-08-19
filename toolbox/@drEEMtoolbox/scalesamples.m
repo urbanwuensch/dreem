@@ -123,7 +123,7 @@ switch opmode
 
             
             % cc, init, plotting, scaling, showfit, maxit
-            forced=nwayparafac(Xnotscaled,f(n),[cc 2 0 0 -1 5000],constr,...
+            forced=nway.models.parafac(Xnotscaled,f(n),[cc 2 0 0 -1 5000],constr,...
                 {rand(data.history(idx).previous.nSample,f(n));loads{2};loads{3}},[0 1 1]);
             dataout.models(f(n)).loads = forced;
            
