@@ -91,7 +91,7 @@ classdef drEEMtoolbox < handle
             online.url=cellvhist{2};
 
             existing=ver;
-            existing=existing(arrayfun(@(x) contains(x.Name,'drEEM'),existing));
+            existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
             existing=rmfield(existing,{'Date','Release','Name'});
 
 
