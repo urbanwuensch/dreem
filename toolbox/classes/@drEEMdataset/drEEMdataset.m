@@ -13,24 +13,39 @@ classdef drEEMdataset
 % Sven Hultins Gata 6
 % 41296 Gothenburg (Sweden)
     properties
-        history (:,1) drEEMhistory
-        X (:,:,:) double {mustBeNumeric}
-        abs (:,:) double {mustBeNumeric}
+        % Handling metadata
+        history (:,1) drEEMhistory                      % <-
+        status (1,1) drEEMstatus                        % <-
+        
+        % Measurement data
+        X (:,:,:) double {mustBeNumeric}                % <-
+        XBlank (:,:,:) double {mustBeNumeric}           % <-
+        abs (:,:) double {mustBeNumeric}                % <-
+        absBlank (:,:) double {mustBeNumeric}           % <-
         suppSpectra (:,:) double {mustBeNumeric}
-        filelist (:,1) cell
-        i (:,1) double {mustBeNumeric}
-        Ex (:,1) double {mustBeNumeric}
-        Em (:,1) double {mustBeNumeric}
-        nEx (1,1) double {mustBeNumeric}
-        nEm (1,1) double {mustBeNumeric}
-        absWave (:,1) double {mustBeNumeric}
-        suppSpectraAxis (:,1) double {mustBeNumeric}
-        nSample (1,1) double {mustBeNumeric}
+        
+        % PARAFAC
         models (:,1) drEEMmodel
-        metadata  (:,:) table
-        opticalMetadata (:,:) table
+        
+        % Measurement / optical axis information
+        i (:,1) double {mustBeNumeric}
+        Ex (:,1) double {mustBeNumeric}                 % <-
+        Em (:,1) double {mustBeNumeric}                 % <-
+        nEx (1,1) double {mustBeNumeric}                
+        nEm (1,1) double {mustBeNumeric}
+        absWave (:,1) double {mustBeNumeric}            % <-
+        suppSpectraAxis (:,1) double {mustBeNumeric}    
+        nSample (1,1) double {mustBeNumeric}
+        
+        % Sample metadata
+        filelist (:,1) cell                             % <-
+        metadata  (:,:) table                           % <-
+        opticalMetadata (:,:) table                     % <-
+        about (1,1) struct                              % <-
         split drEEMdataset
-        status (1,1) drEEMstatus
+        
+
+        
         userdata % anything goes
         instrumentInfo struct % currently unused (placeholder)
         measurementInfo struct % currently unused (placeholder)
@@ -39,11 +54,6 @@ classdef drEEMdataset
     properties (Hidden = true,SetAccess = public)
         toolboxdata
         toolboxOptions=drEEMtoolbox.options;
-    end
-
-    properties (Hidden = true)
-        XBlank
-        absBlank
     end
 
     properties (SetAccess = private, Hidden = true)
@@ -543,5 +553,7 @@ classdef drEEMdataset
             % disp('drEEMdataset was saved w/o backups. Use "data.saveall(data)" to include backups.')
         end      
     end
+
+    
 
 end
