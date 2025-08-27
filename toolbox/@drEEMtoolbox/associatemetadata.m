@@ -251,62 +251,70 @@ end
 
 
 function mdnew = metadataconverter(metadata)
-    mdnew=table;
-    for j=1:numel(metadata.Properties.VariableNames)
-        here=metadata.Properties.VariableNames{j};
-        md=metadata.(here);
-        % Removes columns with the same information (i.e. always the same)
-        % Currently not used (but the statement largely remains to catch
-        % different datatypes in a column.
-        try
-            if numel(unique(md))==1
-                %continue
-            end
-        catch
-            % different data types (nogo)
-            continue
-        end
-        type=class(md);
-        switch type
-            case 'cell'
-                alltype=cellfun(@(x) class(x),md,'UniformOutput',false);
-                celltypes=unique(alltype);
-                if numel(celltypes)>1
-                    warning(['Variable "',here,'" consists of different datatypes and will not be included.'])
-                    continue
-                else
-                    celltypes=celltypes{1};
-                end
-                switch celltypes
-                    case 'char'
-                        mdconv=categorical(md);
-                    case 'datetime'
-                        mdconv=categorical(md);
-                    case 'duration'
-                        mdconv=double(md);
-                    case 'categorical'
-                        mdconv=md;
-                    case 'numeric'
-                        mdconv=md;
-                    otherwise
-                        error('Metadata type: cell, subtype not accounted for.')
+% Supported classes are:
+% 1) categorical
+% 2) double
+% 3) cells
+% Everything else is converted to those types
+% If a cell array contains different underlying classes, it is
+% automatically discarded and excluded from conversion (I'm honering my bandwidth)
 
-                end
-            case 'numeric'
-                mdconv=md;
-            case 'datetime'
-                mdconv=categorical(md);
-            case 'duration'
-                mdconv=double(md);
-            case 'double'
-                    mdconv=md;
-            case 'categorical'
-                mdconv=md;
-            otherwise
-                error('Metadata type not accounted for.')
+mdnew=table;
+for j=1:numel(metadata.Properties.VariableNames)
+    here=metadata.Properties.VariableNames{j};
+    md=metadata.(here);
+    % Removes columns with the same information (i.e. always the same)
+    % Currently not used (but the statement largely remains to catch
+    % different datatypes in a column.
+    try
+        if isscalar(unique(md))
+            %continue
         end
-        mdnew.(here)=mdconv;
+    catch
+        % different data types (nogo)
+        continue
     end
+    type=class(md);
+    switch type
+        case 'cell'
+            alltype=cellfun(@(x) class(x),md,'UniformOutput',false);
+            celltypes=unique(alltype);
+            if numel(celltypes)>1
+                warning(['Variable "',here,'" consists of different datatypes and will not be included.'])
+                continue
+            else
+                celltypes=celltypes{1};
+            end
+            switch celltypes
+                case 'char'
+                    mdconv=categorical(md);
+                case 'datetime'
+                    mdconv=categorical(md);
+                case 'duration'
+                    mdconv=double(md);
+                case 'categorical'
+                    mdconv=md;
+                case 'numeric'
+                    mdconv=md;
+                otherwise
+                    error('Metadata type: cell, subtype not accounted for.')
+
+            end
+        case 'numeric'
+            mdconv=md;
+        case 'datetime'
+            mdconv=categorical(md);
+        case 'duration'
+            mdconv=double(md);
+        case 'double'
+            mdconv=md;
+        case 'categorical'
+            mdconv=md;
+        otherwise
+            error('Metadata type not accounted for.')
+    end
+    mdnew.(here)=mdconv;
+end
 end
 
 function assocMetaValidator(input)
