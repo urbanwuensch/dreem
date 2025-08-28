@@ -209,7 +209,7 @@ data.validate(data);
 if not(diagnostic)
 
     % User needs to tell the toolbox what the status of the dataset is.
-    handle=setstatus_dreem(data,'data',options.changeStatusMessage);
+    handle=dreemgui.setstatus_dreem(data,'data',options.changeStatusMessage);
     options=rmfield(options,'changeStatusMessage');
     waitfor(handle,"finishedHere",true);
     try
