@@ -130,6 +130,7 @@ classdef drEEMtoolbox < handle
                 if matches(answer,'Yes')
                     web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                 end
+                setenv('drEEM update checked',char(datetime("today")))
             else
                 disp('<strong>Using the latest version of the drEEM toolbox.</strong>')
                 setenv('drEEM update checked',char(datetime("today")))
