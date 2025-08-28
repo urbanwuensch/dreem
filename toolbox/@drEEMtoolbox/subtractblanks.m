@@ -116,7 +116,7 @@ if all(size(samples_mod.X)==size(blanks_mod.X))
     dataout.X=samples_mod.X-blanks_mod.X;
 
     % Won't do anything with them, but the blanks will carry on existing in
-    % the dataset because they will be exported if export2zip is used.
+    % the dataset because they will be exported.
     dataout.XBlank=blanks_mod.X;
     
     
