@@ -1,14 +1,14 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
-# dataout
+# fitparafac
 Fit PARAFAC models to fluorescence data.
 
 ## Syntax
 
-[`dataout = dataout(data,mode)`](#syntax1)
+[`dataout = fitparafac(data,mode)`](#syntax1)
 
-[`dataout = dataout(data,"fitoverall")`](#syntax1)
+[`dataout = fitparafac(data,"fitoverall")`](#syntax1)
 
-[`dataout = dataout(data,"fitsplits")`](#syntax1)
+[`dataout = fitparafac(data,"fitsplits")`](#syntax1)
 
 [`dataout = fitparafac(___ , Name,Value)`](#syntax2)
 
