@@ -321,7 +321,7 @@ classdef viewscatter_gui < matlab.apps.AppBase
 
             pidx=drEEMhistory.searchhistory(data.history,"handlescatter","last");
             if not(isempty(pidx))
-                disp('Old options detected. These will be transfered to the GUI')
+                disp('Existing options found. These will be transfered to the GUI')
                 app.options=data.history(pidx).details;
                 app.options2gui;
             end
