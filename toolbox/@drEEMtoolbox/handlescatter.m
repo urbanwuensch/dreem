@@ -47,7 +47,7 @@ end
 % Scenario: User wants GUI for decision support
 if isa(data,"drEEMdataset")&&not(isa(option,"handlescatterOptions"))
     % Start app with names
-    handle=viewscatter(data);
+    handle=drEEMtoolbox.viewscatter(data);
     waitfor(handle,"finishedHere",true);
     try
         dataout=handle.dataTreated;
