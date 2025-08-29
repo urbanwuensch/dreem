@@ -23,7 +23,7 @@ end
     x_name = inputname(1);
     
     % Start app with names
-    handle=setstatus_dreem(data, x_name);
+    handle=dreemgui.setstatus_dreem(data, x_name);
     waitfor(handle,"finishedHere",true);
     try
         dataout=handle.data;
