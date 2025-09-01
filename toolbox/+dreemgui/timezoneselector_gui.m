@@ -4,7 +4,7 @@ classdef timezoneselector_gui < matlab.apps.AppBase
     properties (Access = public)
         UIFigure             matlab.ui.Figure
         GridLayout           matlab.ui.container.GridLayout
-        SelectyourtimezoneandconfirmLabel  matlab.ui.control.Label
+        mainmessage          matlab.ui.control.Label
         savecloseButton      matlab.ui.control.Button
         RegionDropDown       matlab.ui.control.DropDown
         RegionDropDownLabel  matlab.ui.control.Label
@@ -23,7 +23,17 @@ classdef timezoneselector_gui < matlab.apps.AppBase
     methods (Access = private)
 
         % Code that executes after component creation
-        function startupFcn(app)
+        function startupFcn(app, message)
+            arguments
+                app
+                message (1,:) {mustBeText} = ''
+            end
+            if not(isempty(char(message)))
+                message=[char(message),': Select your timezone and confirm'];
+            else
+                message='Select your timezone and confirm';
+            end
+            app.mainmessage.Text=message;
             movegui(app.UIFigure,"center")
             app.AreaDropDownValueChanged
         end
@@ -57,7 +67,6 @@ classdef timezoneselector_gui < matlab.apps.AppBase
 
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
-            colormap(app.UIFigure, 'turbo');
             app.UIFigure.Position = [100 100 369 168];
             app.UIFigure.Name = 'MATLAB App';
             app.UIFigure.Resize = 'off';
@@ -109,13 +118,13 @@ classdef timezoneselector_gui < matlab.apps.AppBase
             app.savecloseButton.Layout.Column = [3 4];
             app.savecloseButton.Text = 'save & close';
 
-            % Create SelectyourtimezoneandconfirmLabel
-            app.SelectyourtimezoneandconfirmLabel = uilabel(app.GridLayout);
-            app.SelectyourtimezoneandconfirmLabel.HorizontalAlignment = 'center';
-            app.SelectyourtimezoneandconfirmLabel.FontWeight = 'bold';
-            app.SelectyourtimezoneandconfirmLabel.Layout.Row = 1;
-            app.SelectyourtimezoneandconfirmLabel.Layout.Column = [1 4];
-            app.SelectyourtimezoneandconfirmLabel.Text = 'Select your timezone and confirm';
+            % Create mainmessage
+            app.mainmessage = uilabel(app.GridLayout);
+            app.mainmessage.HorizontalAlignment = 'center';
+            app.mainmessage.FontWeight = 'bold';
+            app.mainmessage.Layout.Row = 1;
+            app.mainmessage.Layout.Column = [1 4];
+            app.mainmessage.Text = 'Select your timezone and confirm';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
@@ -126,7 +135,7 @@ classdef timezoneselector_gui < matlab.apps.AppBase
     methods (Access = public)
 
         % Construct app
-        function app = timezoneselector_gui
+        function app = timezoneselector_gui(varargin)
 
             runningApp = getRunningApp(app);
 
@@ -140,7 +149,7 @@ classdef timezoneselector_gui < matlab.apps.AppBase
                 registerApp(app, app.UIFigure)
 
                 % Execute the startup function
-                runStartupFcn(app, @startupFcn)
+                runStartupFcn(app, @(app)startupFcn(app, varargin{:}))
             else
 
                 % Focus the running singleton app
