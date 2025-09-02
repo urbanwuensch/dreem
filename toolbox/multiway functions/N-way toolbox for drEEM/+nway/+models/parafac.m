@@ -31,14 +31,6 @@ function [Factors,it,err,corcondia]=parafac(X,Fac,Options,const,OldLoad,FixMode,
 % extrapolate the individual loading elements a number of
 % iterations ahead after a specified number of iterations.
 %
-% A temporary MAT-file called TEMP.mat is saved for every
-% 50 iterations. IF the computer breaks down or the model
-% seems to be good enough, one can break the program and
-% load the last saved estimate. The loadings in TEMP.MAT
-% are given a cell array as described below and can be
-% converted to A, B, C etc. by FAC2LET.M typing
-% [A,B,C]=nway.modeleval.fac2let(Factors,size(X));
-%
 % All loading vectors except in first mode are normalized,
 % so that all variance is kept in the first mode (as is
 % common in two-way PCA). The components are arranged as
@@ -1109,7 +1101,7 @@ while (((f>crit) | (norm(connew-conold)/norm(conold)>MissConvCrit) | Constraints
     
     % Make safety copy of loadings and initial parameters in temp.mat
     if it/50-round(it/50)==0
-        save temp Factors
+        %save temp Factors
     end
     
     % JUDGE FIT
