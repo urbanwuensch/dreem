@@ -78,7 +78,14 @@ classdef drEEMdataset
             data.toolboxdata.host = strtrim(lower(name));
             data.toolboxdata.matlabVersion=version;
             data.toolboxdata.matlabToolboxes=ver;
-            %data.metadata=array2table(zeros(0,10), 'VariableNames',{'i','filtration (um)','storage temperature (C)','storage duration (d)','dilution factor absorbance','diltion factor fluorescence','datetime sampling (UTC)','datetime measurement (UTC)','Latitude','Longitude'});
+
+            % CF conventions
+            data.metadata=addprop(data.metadata,'standard_name','variable');
+            data.metadata=addprop(data.metadata,'long_name','variable');
+            data.metadata=addprop(data.metadata,'units','variable');
+            data.metadata=addprop(data.metadata,'comment','variable');
+            data.metadata=addprop(data.metadata,'coverage_content_type','variable');
+
             data.history=drEEMhistory;
             data.history(1).fname='drEEMdataset.create';
             data.history(1).fmessage='drEEMdataset created (empty)';
