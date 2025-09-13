@@ -13,6 +13,8 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
         RightPanel                     matlab.ui.container.Panel
         GridLayout3                    matlab.ui.container.GridLayout
         canvas                         matlab.ui.container.Panel
+        ContextMenu                    matlab.ui.container.ContextMenu
+        SavefigurepanelMenu            matlab.ui.container.Menu
     end
 
     % Properties that correspond to apps with auto-reflow
@@ -172,6 +174,7 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
             allax=[];
             for j=1:size(combs,1)
                 ax=nexttile(t);
+                ax.ContextMenu=app.ContextMenu;
                 allax(j)=ax;
                 xp=scores(:,combs(j,1));
                 yp=scores(:,combs(j,2));
@@ -230,6 +233,46 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
 
         end
 
+        % Menu selected function: SavefigurepanelMenu
+        function SavefigurepanelMenuSelected(app, event)
+            panel = app.canvas;
+            if isempty(panel)
+                warning('Could not find a panel in the selected tab. Cannot save as image.')
+                return
+            end
+            defname=['compcorrplot','.png'];
+
+            [filename, pathname] = uiputfile({'*.png'; '*.jpg'},...
+                'Save Figure As', ...
+                defname);
+            
+
+            if isequal(filename, 0) || isequal(pathname, 0)
+                pathname=pwd;
+                filename=defname;
+                warning('Did not specify filename and path. Assumed default name in current directory.')
+            end
+            
+            if endsWith(filename,'.fig')
+                error('Matlab fig-files are on the to-do list. Please save as image instead.')
+                fig1=uifigure;
+                newpanel = copyobj(panel, fig1);
+                newpanel.Position = [0.1 0.1 0.8 0.8];
+
+                savefig(fig1,fullfile(pathname,filename));
+                delete(fig1)
+            else
+                warning off
+                exportgraphics(panel,...
+                    fullfile(pathname,filename),...
+                    "BackgroundColor","white",...
+                    "Resolution",600)
+                warning on
+            end
+            
+            figure(app.UIFigure)
+        end
+
         % Changes arrangement of the app based on UIFigure width
         function updateAppLayout(app, event)
             currentFigureWidth = app.UIFigure.Position(3);
@@ -258,11 +301,9 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
             app.UIFigure.AutoResizeChildren = 'off';
-            colormap(app.UIFigure, 'turbo');
             app.UIFigure.Position = [100 100 942 428];
             app.UIFigure.Name = 'viewcompcorr: Inspect score correlations in light of available metadata';
             app.UIFigure.SizeChangedFcn = createCallbackFcn(app, @updateAppLayout, true);
-            app.UIFigure.WindowStyle = 'alwaysontop';
 
             % Create GridLayout
             app.GridLayout = uigridlayout(app.UIFigure);
@@ -326,6 +367,17 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
             app.canvas = uipanel(app.GridLayout3);
             app.canvas.Layout.Row = [1 7];
             app.canvas.Layout.Column = [1 3];
+
+            % Create ContextMenu
+            app.ContextMenu = uicontextmenu(app.UIFigure);
+
+            % Create SavefigurepanelMenu
+            app.SavefigurepanelMenu = uimenu(app.ContextMenu);
+            app.SavefigurepanelMenu.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelMenuSelected, true);
+            app.SavefigurepanelMenu.Text = 'Save figure panel';
+            
+            % Assign app.ContextMenu
+            app.canvas.ContextMenu = app.ContextMenu;
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

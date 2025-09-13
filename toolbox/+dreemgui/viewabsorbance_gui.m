@@ -38,16 +38,19 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
         slopesPanel                     matlab.ui.container.Panel
         source                          matlab.ui.container.Tab
         GridLayout9                     matlab.ui.container.GridLayout
+        Panel                           matlab.ui.container.Panel
         GridLayout12                    matlab.ui.container.GridLayout
+        Button_3                        matlab.ui.control.Button
         autochthonousdilutionlineLabel  matlab.ui.control.Label
         allochthonousdilutionlineLabel  matlab.ui.control.Label
-        Label                           matlab.ui.control.Label
         loglogscaleButton               matlab.ui.control.StateButton
         allo                            matlab.ui.control.Spinner
         AllochthonousendmemberSSpinnerLabel  matlab.ui.control.Label
         auto                            matlab.ui.control.Spinner
         AutochthonousendmemberSSpinnerLabel  matlab.ui.control.Label
         sourcediagram                   matlab.ui.control.UIAxes
+        ContextMenu                     matlab.ui.container.ContextMenu
+        SavefigurepanelMenu             matlab.ui.container.Menu
     end
 
     % Properties that correspond to apps with auto-reflow
@@ -437,6 +440,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                 Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k')
             ylabel(ax,'S_{350-400} (µm^{-1})',Interpreter='tex')
             title(ax,'S_{350-400}',Interpreter='tex')
+            xlabel(t,'sample sequence identifier (data.i)')
         end
     end
     
@@ -553,6 +557,51 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             
         end
 
+        % Button pushed function: Button_3
+        function Button_3Pushed(app, event)
+            web("http://doi.wiley.com/10.4319/lo.2001.46.8.2087")
+        end
+
+        % Menu selected function: SavefigurepanelMenu
+        function SavefigurepanelMenuSelected(app, event)
+            sel=app.TabGroup.SelectedTab;
+            panel = findobj(sel, 'Type', 'uipanel');
+            if isempty(panel)
+                warning('Could not find a panel in the selected tab. Cannot save as image.')
+                return
+            end
+            defname=[char(sel.Title),'.png'];
+
+            [filename, pathname] = uiputfile({'*.png'; '*.jpg'; '*.fig'},...
+                'Save Figure As', ...
+                defname);
+            
+
+            if isequal(filename, 0) || isequal(pathname, 0)
+                pathname=pwd;
+                filename=defname;
+                warning('Did not specify filename and path. Assumed default name in current directory.')
+            end
+            
+            if endsWith(filename,'.fig')
+                error('Matlab fig-files are on the to-do list. Please save as image instead.')
+                fig1=uifigure;
+                newpanel = copyobj(panel, fig1);
+                newpanel.Position = [0.1 0.1 0.8 0.8];
+
+                savefig(fig1,fullfile(pathname,filename));
+                delete(fig1)
+            else
+                warning off
+                exportgraphics(panel,...
+                    fullfile(pathname,filename),...
+                    "BackgroundColor","white",...
+                    "Resolution",600)
+            end
+            warning on
+            figure(app.viewabsorbanceUIFigure)
+        end
+
         % Changes arrangement of the app based on UIFigure width
         function updateAppLayout(app, event)
             currentFigureWidth = app.viewabsorbanceUIFigure.Position(3);
@@ -581,7 +630,6 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             % Create viewabsorbanceUIFigure and hide until all components are created
             app.viewabsorbanceUIFigure = uifigure('Visible', 'off');
             app.viewabsorbanceUIFigure.AutoResizeChildren = 'off';
-            colormap(app.viewabsorbanceUIFigure, 'turbo');
             app.viewabsorbanceUIFigure.Position = [100 100 828 489];
             app.viewabsorbanceUIFigure.Name = 'viewabsorbance';
             app.viewabsorbanceUIFigure.SizeChangedFcn = createCallbackFcn(app, @updateAppLayout, true);
@@ -742,9 +790,9 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             xlabel(app.cdom, 'Wavelength (nm)')
             zlabel(app.cdom, 'Z')
             app.cdom.Box = 'on';
-            app.cdom.TickDir = 'both';
             app.cdom.Layout.Row = 2;
             app.cdom.Layout.Column = 1;
+            colormap(app.cdom, 'parula')
 
             % Create missingDisclosure
             app.missingDisclosure = uilabel(app.GridLayout10);
@@ -774,19 +822,22 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
 
             % Create source
             app.source = uitab(app.TabGroup);
-            app.source.Title = 'OTHER';
+            app.source.Title = 'SOURCE DIAGRAM';
 
             % Create GridLayout9
             app.GridLayout9 = uigridlayout(app.source);
             app.GridLayout9.ColumnWidth = {'1x'};
             app.GridLayout9.RowHeight = {'1x'};
 
+            % Create Panel
+            app.Panel = uipanel(app.GridLayout9);
+            app.Panel.Layout.Row = 1;
+            app.Panel.Layout.Column = 1;
+
             % Create GridLayout12
-            app.GridLayout12 = uigridlayout(app.GridLayout9);
-            app.GridLayout12.ColumnWidth = {'1x', '1x', 70, '1x', 70};
+            app.GridLayout12 = uigridlayout(app.Panel);
+            app.GridLayout12.ColumnWidth = {'1x', '1x', 50, '1x', 70};
             app.GridLayout12.RowHeight = {30, 30, '1x', '1x'};
-            app.GridLayout12.Layout.Row = 1;
-            app.GridLayout12.Layout.Column = 1;
 
             % Create sourcediagram
             app.sourcediagram = uiaxes(app.GridLayout12);
@@ -795,9 +846,9 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             ylabel(app.sourcediagram, 'S (µm^{-1})')
             zlabel(app.sourcediagram, 'Z')
             app.sourcediagram.Box = 'on';
-            app.sourcediagram.TickDir = 'both';
             app.sourcediagram.Layout.Row = [3 4];
             app.sourcediagram.Layout.Column = [1 5];
+            colormap(app.sourcediagram, 'parula')
 
             % Create AutochthonousendmemberSSpinnerLabel
             app.AutochthonousendmemberSSpinnerLabel = uilabel(app.GridLayout12);
@@ -840,11 +891,6 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             app.loglogscaleButton.Layout.Row = 1;
             app.loglogscaleButton.Layout.Column = 1;
 
-            % Create Label
-            app.Label = uilabel(app.GridLayout12);
-            app.Label.Layout.Row = 4;
-            app.Label.Layout.Column = 1;
-
             % Create allochthonousdilutionlineLabel
             app.allochthonousdilutionlineLabel = uilabel(app.GridLayout12);
             app.allochthonousdilutionlineLabel.HorizontalAlignment = 'center';
@@ -862,6 +908,32 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             app.autochthonousdilutionlineLabel.Layout.Row = 2;
             app.autochthonousdilutionlineLabel.Layout.Column = [1 2];
             app.autochthonousdilutionlineLabel.Text = 'autochthonous dilution line';
+
+            % Create Button_3
+            app.Button_3 = uibutton(app.GridLayout12, 'push');
+            app.Button_3.ButtonPushedFcn = createCallbackFcn(app, @Button_3Pushed, true);
+            app.Button_3.Icon = 'question-inquiry-icon.png';
+            app.Button_3.Layout.Row = 2;
+            app.Button_3.Layout.Column = 3;
+            app.Button_3.Text = '';
+
+            % Create ContextMenu
+            app.ContextMenu = uicontextmenu(app.viewabsorbanceUIFigure);
+
+            % Create SavefigurepanelMenu
+            app.SavefigurepanelMenu = uimenu(app.ContextMenu);
+            app.SavefigurepanelMenu.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelMenuSelected, true);
+            app.SavefigurepanelMenu.Text = 'Save figure panel';
+            
+            % Assign app.ContextMenu
+            app.GridLayout10.ContextMenu = app.ContextMenu;
+            app.spectra.ContextMenu = app.ContextMenu;
+            app.slopesPanel.ContextMenu = app.ContextMenu;
+            app.Panel.ContextMenu = app.ContextMenu;
+            app.GridLayout12.ContextMenu = app.ContextMenu;
+            app.sourcediagram.ContextMenu = app.ContextMenu;
+            app.cdom.ContextMenu = app.ContextMenu;
+            app.missingDisclosure.ContextMenu = app.ContextMenu;
 
             % Show the figure after all components are created
             app.viewabsorbanceUIFigure.Visible = 'on';

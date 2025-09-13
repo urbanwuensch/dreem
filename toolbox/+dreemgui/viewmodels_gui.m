@@ -3,49 +3,61 @@ classdef viewmodels_gui < matlab.apps.AppBase
     % Properties that correspond to app components
     properties (Access = public)
         viewmodelsDiagnosePARAFACmodelsUIFigure  matlab.ui.Figure
-        GridLayout5           matlab.ui.container.GridLayout
-        TabGroup              matlab.ui.container.TabGroup
-        OverviewTab           matlab.ui.container.Tab
-        GridLayout4           matlab.ui.container.GridLayout
-        UITable               matlab.ui.control.Table
-        core                  matlab.ui.control.UIAxes
-        var                   matlab.ui.control.UIAxes
-        ScoresloadingsTab     matlab.ui.container.Tab
-        GridLayout7           matlab.ui.container.GridLayout
-        scoresloadscanvas     matlab.ui.container.Panel
-        SpectralloadingsTab   matlab.ui.container.Tab
-        GridLayout8           matlab.ui.container.GridLayout
-        loadstab              matlab.ui.container.Panel
-        LoadingsleveragesTab  matlab.ui.container.Tab
-        GridLayout            matlab.ui.container.GridLayout
-        LinelegendCheckBox    matlab.ui.control.CheckBox
-        lldrop                matlab.ui.control.DropDown
-        scs                   matlab.ui.control.UIAxes
-        leex                  matlab.ui.control.UIAxes
-        leem                  matlab.ui.control.UIAxes
-        les                   matlab.ui.control.UIAxes
-        loex                  matlab.ui.control.UIAxes
-        loem                  matlab.ui.control.UIAxes
-        ErrorsleveragesTab    matlab.ui.container.Tab
-        GridLayout_2          matlab.ui.container.GridLayout
-        eldrop                matlab.ui.control.DropDown
-        elex                  matlab.ui.control.UIAxes
-        elem                  matlab.ui.control.UIAxes
-        elsam                 matlab.ui.control.UIAxes
-        FingerprintplotsTab   matlab.ui.container.Tab
-        GridLayout2           matlab.ui.container.GridLayout
-        fingerpanel           matlab.ui.container.Panel
-        fingerdrop            matlab.ui.control.DropDown
-        SSETab                matlab.ui.container.Tab
-        GridLayout3           matlab.ui.container.GridLayout
-        ssedrop               matlab.ui.control.DropDown
-        ssesam                matlab.ui.control.UIAxes
-        sseex                 matlab.ui.control.UIAxes
-        sseem                 matlab.ui.control.UIAxes
-        ScorecorrelationTab   matlab.ui.container.Tab
-        GridLayout6           matlab.ui.container.GridLayout
+        GridLayout5            matlab.ui.container.GridLayout
+        TabGroup               matlab.ui.container.TabGroup
+        OverviewTab            matlab.ui.container.Tab
+        GridLayout4            matlab.ui.container.GridLayout
+        Panel_2                matlab.ui.container.Panel
+        GridLayout10           matlab.ui.container.GridLayout
+        var                    matlab.ui.control.UIAxes
+        core                   matlab.ui.control.UIAxes
+        UITable                matlab.ui.control.Table
+        ScoresloadingsTab      matlab.ui.container.Tab
+        GridLayout7            matlab.ui.container.GridLayout
+        scoresloadscanvas      matlab.ui.container.Panel
+        SpectralloadingsTab    matlab.ui.container.Tab
+        GridLayout8            matlab.ui.container.GridLayout
+        loadstab               matlab.ui.container.Panel
+        LoadingsleveragesTab   matlab.ui.container.Tab
+        GridLayout             matlab.ui.container.GridLayout
+        Panel                  matlab.ui.container.Panel
+        GridLayout9            matlab.ui.container.GridLayout
+        leex                   matlab.ui.control.UIAxes
+        leem                   matlab.ui.control.UIAxes
+        les                    matlab.ui.control.UIAxes
+        loex                   matlab.ui.control.UIAxes
+        loem                   matlab.ui.control.UIAxes
+        scs                    matlab.ui.control.UIAxes
+        LinelegendCheckBox     matlab.ui.control.CheckBox
+        lldrop                 matlab.ui.control.DropDown
+        ErrorsleveragesTab     matlab.ui.container.Tab
+        GridLayout_2           matlab.ui.container.GridLayout
+        Panel_3                matlab.ui.container.Panel
+        GridLayout11           matlab.ui.container.GridLayout
+        elex                   matlab.ui.control.UIAxes
+        elem                   matlab.ui.control.UIAxes
+        elsam                  matlab.ui.control.UIAxes
+        eldrop                 matlab.ui.control.DropDown
+        FingerprintplotsTab    matlab.ui.container.Tab
+        GridLayout2            matlab.ui.container.GridLayout
+        fingerpanel            matlab.ui.container.Panel
+        fingerdrop             matlab.ui.control.DropDown
+        SSETab                 matlab.ui.container.Tab
+        GridLayout3            matlab.ui.container.GridLayout
+        Panel_4                matlab.ui.container.Panel
+        GridLayout12           matlab.ui.container.GridLayout
+        sseex                  matlab.ui.control.UIAxes
+        sseem                  matlab.ui.control.UIAxes
+        ssesam                 matlab.ui.control.UIAxes
+        ssedrop                matlab.ui.control.DropDown
+        ScorecorrelationTab    matlab.ui.container.Tab
+        GridLayout6            matlab.ui.container.GridLayout
         viewcorrelationsvsmetadataButton  matlab.ui.control.Button
-        corrcanvas            matlab.ui.container.Panel
+        corrcanvas             matlab.ui.container.Panel
+        ContextMenu            matlab.ui.container.ContextMenu
+        SavefigurepanelMenu    matlab.ui.container.Menu
+        ContextMenu2           matlab.ui.container.ContextMenu
+        SavefigurepanelMenu_2  matlab.ui.container.Menu
     end
 
 
@@ -219,6 +231,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
                     title(ax,tit{j})
                 end
                 axis(ax,'tight')
+                ax.ContextMenu=app.ContextMenu2;
             end
             app.ScoresloadingsTab.Tag='painted';
 
@@ -247,16 +260,17 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             for n=1:numel(fcor)
                 cormap=rsq{n};
-                nexttile(t);
+                ax=nexttile(t);
                 heatmap(t,round(cormap,2),'MissingDataColor','k',...
                     'Title',[num2str(fcor(n)),'-component model'],...
                     'Colormap',app.cmap,'ColorLimits',[0 1]);
+                ax.ContextMenu=app.ContextMenu2;
             end
         end
         
         function paintLoadingsTab(app)
             t = tiledlayout(app.loadstab,app.ncomp,max(app.f),'padding','compact','TileSpacing','compact');
-            for n=1:app.ncomp*max(app.f),ax(n)=nexttile(t);end
+            for n=1:app.ncomp*max(app.f),ax(n)=nexttile(t);ax(n).ContextMenu=app.ContextMenu2;end
             cnt=1;
             for n=1:numel(app.f)
                 ncomp=app.f(n);
@@ -341,7 +355,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             
             selected=matches({app.TabGroup.Children.Title},startTab);
             app.TabGroup.SelectedTab=app.TabGroup.Children(selected);
-            TabGroupSelectionChanged(app)
+            app.TabGroupSelectionChanged(app)
             
             %% Core and var plots
             cc=nan(app.ncomp,1);
@@ -579,6 +593,48 @@ classdef viewmodels_gui < matlab.apps.AppBase
                 end
             end
         end
+
+        % Menu selected function: SavefigurepanelMenu, 
+        % ...and 1 other component
+        function SavefigurepanelMenuSelected(app, event)
+            sel=app.TabGroup.SelectedTab;
+            panel = findobj(sel, 'Type', 'uipanel');
+            if isempty(panel)
+                warning('Could not find a panel in the selected tab. Cannot save as image.')
+                return
+            end
+            defname=[char(sel.Title),'.png'];
+
+            [filename, pathname] = uiputfile({'*.png'; '*.jpg'; '*.fig'},...
+                'Save Figure As', ...
+                defname);
+            
+
+            if isequal(filename, 0) || isequal(pathname, 0)
+                pathname=pwd;
+                filename=defname;
+                warning('Did not specify filename and path. Assumed default name in current directory.')
+            end
+            
+            if endsWith(filename,'.fig')
+                error('Matlab fig-files are on the to-do list. Please save as image instead.')
+                fig1=uifigure;
+                newpanel = copyobj(panel, fig1);
+                newpanel.Position = [0.1 0.1 0.8 0.8];
+
+                savefig(fig1,fullfile(pathname,filename));
+                delete(fig1)
+            else
+                warning off
+                exportgraphics(panel,...
+                    fullfile(pathname,filename),...
+                    "BackgroundColor","white",...
+                    "Resolution",600)
+                warning on
+            end
+            
+            figure(app.viewmodelsDiagnosePARAFACmodelsUIFigure)
+        end
     end
 
     % Component initialization
@@ -589,10 +645,8 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             % Create viewmodelsDiagnosePARAFACmodelsUIFigure and hide until all components are created
             app.viewmodelsDiagnosePARAFACmodelsUIFigure = uifigure('Visible', 'off');
-            colormap(app.viewmodelsDiagnosePARAFACmodelsUIFigure, 'turbo');
             app.viewmodelsDiagnosePARAFACmodelsUIFigure.Position = [92 92 946 529];
             app.viewmodelsDiagnosePARAFACmodelsUIFigure.Name = 'viewmodels: Diagnose PARAFAC models';
-            app.viewmodelsDiagnosePARAFACmodelsUIFigure.WindowStyle = 'alwaysontop';
 
             % Create GridLayout5
             app.GridLayout5 = uigridlayout(app.viewmodelsDiagnosePARAFACmodelsUIFigure);
@@ -613,28 +667,6 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.GridLayout4 = uigridlayout(app.OverviewTab);
             app.GridLayout4.RowHeight = {'0.5x', '1x'};
 
-            % Create var
-            app.var = uiaxes(app.GridLayout4);
-            title(app.var, 'Explained variance')
-            xlabel(app.var, 'Number of components')
-            ylabel(app.var, '% explained variance')
-            zlabel(app.var, 'Z')
-            app.var.Box = 'on';
-            app.var.TickDir = 'both';
-            app.var.Layout.Row = 2;
-            app.var.Layout.Column = 2;
-
-            % Create core
-            app.core = uiaxes(app.GridLayout4);
-            title(app.core, 'Core consistency')
-            xlabel(app.core, 'Number of components')
-            ylabel(app.core, '% core consistency')
-            zlabel(app.core, 'Z')
-            app.core.Box = 'on';
-            app.core.TickDir = 'both';
-            app.core.Layout.Row = 2;
-            app.core.Layout.Column = 1;
-
             % Create UITable
             app.UITable = uitable(app.GridLayout4);
             app.UITable.ColumnName = '';
@@ -642,19 +674,55 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.UITable.Layout.Row = 1;
             app.UITable.Layout.Column = [1 2];
 
+            % Create Panel_2
+            app.Panel_2 = uipanel(app.GridLayout4);
+            app.Panel_2.BackgroundColor = [1 1 1];
+            app.Panel_2.Layout.Row = 2;
+            app.Panel_2.Layout.Column = [1 2];
+
+            % Create GridLayout10
+            app.GridLayout10 = uigridlayout(app.Panel_2);
+            app.GridLayout10.RowHeight = {'1x'};
+            app.GridLayout10.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create core
+            app.core = uiaxes(app.GridLayout10);
+            title(app.core, 'Core consistency')
+            xlabel(app.core, 'Number of components')
+            ylabel(app.core, '% core consistency')
+            zlabel(app.core, 'Z')
+            app.core.FontName = 'Helvetica';
+            app.core.Box = 'on';
+            app.core.Layout.Row = 1;
+            app.core.Layout.Column = 1;
+            colormap(app.core, 'parula')
+
+            % Create var
+            app.var = uiaxes(app.GridLayout10);
+            title(app.var, 'Explained variance')
+            xlabel(app.var, 'Number of components')
+            ylabel(app.var, '% explained variance')
+            zlabel(app.var, 'Z')
+            app.var.FontName = 'Helvetica';
+            app.var.Box = 'on';
+            app.var.Layout.Row = 1;
+            app.var.Layout.Column = 2;
+            colormap(app.var, 'parula')
+
             % Create ScoresloadingsTab
             app.ScoresloadingsTab = uitab(app.TabGroup);
             app.ScoresloadingsTab.Title = 'Scores & loadings';
 
             % Create GridLayout7
             app.GridLayout7 = uigridlayout(app.ScoresloadingsTab);
-            app.GridLayout7.ColumnWidth = {'1x'};
+            app.GridLayout7.ColumnWidth = {30, '1x'};
             app.GridLayout7.RowHeight = {'1x'};
 
             % Create scoresloadscanvas
             app.scoresloadscanvas = uipanel(app.GridLayout7);
+            app.scoresloadscanvas.BackgroundColor = [0.9412 0.9412 0.9412];
             app.scoresloadscanvas.Layout.Row = 1;
-            app.scoresloadscanvas.Layout.Column = 1;
+            app.scoresloadscanvas.Layout.Column = [1 2];
 
             % Create SpectralloadingsTab
             app.SpectralloadingsTab = uitab(app.TabGroup);
@@ -667,6 +735,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             % Create loadstab
             app.loadstab = uipanel(app.GridLayout8);
+            app.loadstab.BackgroundColor = [0.9412 0.9412 0.9412];
             app.loadstab.Layout.Row = 1;
             app.loadstab.Layout.Column = 1;
 
@@ -677,73 +746,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             % Create GridLayout
             app.GridLayout = uigridlayout(app.LoadingsleveragesTab);
             app.GridLayout.ColumnWidth = {'1x', '1x', '1x'};
-            app.GridLayout.RowHeight = {'0.1x', '1x', '1x'};
-
-            % Create loem
-            app.loem = uiaxes(app.GridLayout);
-            title(app.loem, 'Loadings: emission')
-            xlabel(app.loem, 'Wavelength (nm)')
-            ylabel(app.loem, 'Loadings')
-            zlabel(app.loem, 'Z')
-            app.loem.Box = 'on';
-            app.loem.TickDir = 'both';
-            app.loem.Layout.Row = 2;
-            app.loem.Layout.Column = 2;
-
-            % Create loex
-            app.loex = uiaxes(app.GridLayout);
-            title(app.loex, 'Loadings: excitation')
-            xlabel(app.loex, 'Wavelength (nm)')
-            ylabel(app.loex, 'Loadings')
-            zlabel(app.loex, 'Z')
-            app.loex.Box = 'on';
-            app.loex.TickDir = 'both';
-            app.loex.Layout.Row = 2;
-            app.loex.Layout.Column = 3;
-
-            % Create les
-            app.les = uiaxes(app.GridLayout);
-            title(app.les, 'Leverage: samples')
-            xlabel(app.les, 'Sample identifier (data.i)')
-            ylabel(app.les, 'Leverage')
-            zlabel(app.les, 'Z')
-            app.les.Box = 'on';
-            app.les.TickDir = 'both';
-            app.les.Layout.Row = 3;
-            app.les.Layout.Column = 1;
-
-            % Create leem
-            app.leem = uiaxes(app.GridLayout);
-            title(app.leem, 'Leverage: emission')
-            xlabel(app.leem, 'Wavelength (nm)')
-            ylabel(app.leem, 'Leverage')
-            zlabel(app.leem, 'Z')
-            app.leem.Box = 'on';
-            app.leem.TickDir = 'both';
-            app.leem.Layout.Row = 3;
-            app.leem.Layout.Column = 2;
-
-            % Create leex
-            app.leex = uiaxes(app.GridLayout);
-            title(app.leex, 'Leverage: excitation')
-            xlabel(app.leex, 'Wavelength (nm)')
-            ylabel(app.leex, 'Leverage')
-            zlabel(app.leex, 'Z')
-            app.leex.Box = 'on';
-            app.leex.TickDir = 'both';
-            app.leex.Layout.Row = 3;
-            app.leex.Layout.Column = 3;
-
-            % Create scs
-            app.scs = uiaxes(app.GridLayout);
-            title(app.scs, 'Scores: samples')
-            xlabel(app.scs, 'Sample identifier (data.i)')
-            ylabel(app.scs, 'Scores')
-            zlabel(app.scs, 'Z')
-            app.scs.Box = 'on';
-            app.scs.TickDir = 'both';
-            app.scs.Layout.Row = 2;
-            app.scs.Layout.Column = 1;
+            app.GridLayout.RowHeight = {30, '1x', '1x'};
 
             % Create lldrop
             app.lldrop = uidropdown(app.GridLayout);
@@ -759,6 +762,89 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.LinelegendCheckBox.Layout.Column = 3;
             app.LinelegendCheckBox.Value = true;
 
+            % Create Panel
+            app.Panel = uipanel(app.GridLayout);
+            app.Panel.BackgroundColor = [1 1 1];
+            app.Panel.Layout.Row = [2 3];
+            app.Panel.Layout.Column = [1 3];
+
+            % Create GridLayout9
+            app.GridLayout9 = uigridlayout(app.Panel);
+            app.GridLayout9.ColumnWidth = {'1x', '1x', '1x'};
+            app.GridLayout9.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create scs
+            app.scs = uiaxes(app.GridLayout9);
+            title(app.scs, 'Scores: samples')
+            xlabel(app.scs, 'Sample identifier (data.i)')
+            ylabel(app.scs, 'Scores')
+            zlabel(app.scs, 'Z')
+            app.scs.FontName = 'Helvetica';
+            app.scs.Box = 'on';
+            app.scs.Layout.Row = 1;
+            app.scs.Layout.Column = 1;
+            colormap(app.scs, 'parula')
+
+            % Create loem
+            app.loem = uiaxes(app.GridLayout9);
+            title(app.loem, 'Loadings: emission')
+            xlabel(app.loem, 'Wavelength (nm)')
+            ylabel(app.loem, 'Loadings')
+            zlabel(app.loem, 'Z')
+            app.loem.FontName = 'Helvetica';
+            app.loem.Box = 'on';
+            app.loem.Layout.Row = 1;
+            app.loem.Layout.Column = 2;
+            colormap(app.loem, 'parula')
+
+            % Create loex
+            app.loex = uiaxes(app.GridLayout9);
+            title(app.loex, 'Loadings: excitation')
+            xlabel(app.loex, 'Wavelength (nm)')
+            ylabel(app.loex, 'Loadings')
+            zlabel(app.loex, 'Z')
+            app.loex.FontName = 'Helvetica';
+            app.loex.Box = 'on';
+            app.loex.Layout.Row = 1;
+            app.loex.Layout.Column = 3;
+            colormap(app.loex, 'parula')
+
+            % Create les
+            app.les = uiaxes(app.GridLayout9);
+            title(app.les, 'Leverage: samples')
+            xlabel(app.les, 'Sample identifier (data.i)')
+            ylabel(app.les, 'Leverage')
+            zlabel(app.les, 'Z')
+            app.les.FontName = 'Helvetica';
+            app.les.Box = 'on';
+            app.les.Layout.Row = 2;
+            app.les.Layout.Column = 1;
+            colormap(app.les, 'parula')
+
+            % Create leem
+            app.leem = uiaxes(app.GridLayout9);
+            title(app.leem, 'Leverage: emission')
+            xlabel(app.leem, 'Wavelength (nm)')
+            ylabel(app.leem, 'Leverage')
+            zlabel(app.leem, 'Z')
+            app.leem.FontName = 'Helvetica';
+            app.leem.Box = 'on';
+            app.leem.Layout.Row = 2;
+            app.leem.Layout.Column = 2;
+            colormap(app.leem, 'parula')
+
+            % Create leex
+            app.leex = uiaxes(app.GridLayout9);
+            title(app.leex, 'Leverage: excitation')
+            xlabel(app.leex, 'Wavelength (nm)')
+            ylabel(app.leex, 'Leverage')
+            zlabel(app.leex, 'Z')
+            app.leex.FontName = 'Helvetica';
+            app.leex.Box = 'on';
+            app.leex.Layout.Row = 2;
+            app.leex.Layout.Column = 3;
+            colormap(app.leex, 'parula')
+
             % Create ErrorsleveragesTab
             app.ErrorsleveragesTab = uitab(app.TabGroup);
             app.ErrorsleveragesTab.Title = 'Errors & leverages';
@@ -766,46 +852,62 @@ classdef viewmodels_gui < matlab.apps.AppBase
             % Create GridLayout_2
             app.GridLayout_2 = uigridlayout(app.ErrorsleveragesTab);
             app.GridLayout_2.ColumnWidth = {'1x', '1x', '1x'};
-            app.GridLayout_2.RowHeight = {'0.1x', '1x', '1x'};
-
-            % Create elsam
-            app.elsam = uiaxes(app.GridLayout_2);
-            title(app.elsam, 'samples')
-            xlabel(app.elsam, 'leverages')
-            ylabel(app.elsam, 'sum of squared errors')
-            zlabel(app.elsam, 'Z')
-            app.elsam.Box = 'on';
-            app.elsam.TickDir = 'both';
-            app.elsam.Layout.Row = [2 3];
-            app.elsam.Layout.Column = 1;
-
-            % Create elem
-            app.elem = uiaxes(app.GridLayout_2);
-            title(app.elem, 'emission')
-            xlabel(app.elem, 'leverages')
-            ylabel(app.elem, 'sum of squared errors')
-            zlabel(app.elem, 'Z')
-            app.elem.Box = 'on';
-            app.elem.TickDir = 'both';
-            app.elem.Layout.Row = [2 3];
-            app.elem.Layout.Column = 2;
-
-            % Create elex
-            app.elex = uiaxes(app.GridLayout_2);
-            title(app.elex, 'excitation')
-            xlabel(app.elex, 'leverages')
-            ylabel(app.elex, 'sum of squared errors')
-            zlabel(app.elex, 'Z')
-            app.elex.Box = 'on';
-            app.elex.TickDir = 'both';
-            app.elex.Layout.Row = [2 3];
-            app.elex.Layout.Column = 3;
+            app.GridLayout_2.RowHeight = {30, '1x', '1x'};
+            app.GridLayout_2.BackgroundColor = [0.9412 0.9412 0.9412];
 
             % Create eldrop
             app.eldrop = uidropdown(app.GridLayout_2);
             app.eldrop.ValueChangedFcn = createCallbackFcn(app, @eldropValueChanged, true);
             app.eldrop.Layout.Row = 1;
             app.eldrop.Layout.Column = 2;
+
+            % Create Panel_3
+            app.Panel_3 = uipanel(app.GridLayout_2);
+            app.Panel_3.BackgroundColor = [1 1 1];
+            app.Panel_3.Layout.Row = [2 3];
+            app.Panel_3.Layout.Column = [1 3];
+
+            % Create GridLayout11
+            app.GridLayout11 = uigridlayout(app.Panel_3);
+            app.GridLayout11.ColumnWidth = {'1x', '1x', '1x'};
+            app.GridLayout11.RowHeight = {'1x'};
+            app.GridLayout11.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create elsam
+            app.elsam = uiaxes(app.GridLayout11);
+            title(app.elsam, 'samples')
+            xlabel(app.elsam, 'leverages')
+            ylabel(app.elsam, 'sum of squared errors')
+            zlabel(app.elsam, 'Z')
+            app.elsam.FontName = 'Helvetica';
+            app.elsam.Box = 'on';
+            app.elsam.Layout.Row = 1;
+            app.elsam.Layout.Column = 1;
+            colormap(app.elsam, 'parula')
+
+            % Create elem
+            app.elem = uiaxes(app.GridLayout11);
+            title(app.elem, 'emission')
+            xlabel(app.elem, 'leverages')
+            ylabel(app.elem, 'sum of squared errors')
+            zlabel(app.elem, 'Z')
+            app.elem.FontName = 'Helvetica';
+            app.elem.Box = 'on';
+            app.elem.Layout.Row = 1;
+            app.elem.Layout.Column = 2;
+            colormap(app.elem, 'parula')
+
+            % Create elex
+            app.elex = uiaxes(app.GridLayout11);
+            title(app.elex, 'excitation')
+            xlabel(app.elex, 'leverages')
+            ylabel(app.elex, 'sum of squared errors')
+            zlabel(app.elex, 'Z')
+            app.elex.FontName = 'Helvetica';
+            app.elex.Box = 'on';
+            app.elex.Layout.Row = 1;
+            app.elex.Layout.Column = 3;
+            colormap(app.elex, 'parula')
 
             % Create FingerprintplotsTab
             app.FingerprintplotsTab = uitab(app.TabGroup);
@@ -814,7 +916,8 @@ classdef viewmodels_gui < matlab.apps.AppBase
             % Create GridLayout2
             app.GridLayout2 = uigridlayout(app.FingerprintplotsTab);
             app.GridLayout2.ColumnWidth = {'1x', '1x', '1x'};
-            app.GridLayout2.RowHeight = {'0.05x', '1x'};
+            app.GridLayout2.RowHeight = {30, '1x'};
+            app.GridLayout2.BackgroundColor = [0.9412 0.9412 0.9412];
 
             % Create fingerdrop
             app.fingerdrop = uidropdown(app.GridLayout2);
@@ -824,6 +927,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             % Create fingerpanel
             app.fingerpanel = uipanel(app.GridLayout2);
+            app.fingerpanel.BackgroundColor = [0.9412 0.9412 0.9412];
             app.fingerpanel.Layout.Row = 2;
             app.fingerpanel.Layout.Column = [1 3];
 
@@ -834,46 +938,62 @@ classdef viewmodels_gui < matlab.apps.AppBase
             % Create GridLayout3
             app.GridLayout3 = uigridlayout(app.SSETab);
             app.GridLayout3.ColumnWidth = {'1x', '1x', '1x'};
-            app.GridLayout3.RowHeight = {'0.05x', '1x'};
-
-            % Create sseem
-            app.sseem = uiaxes(app.GridLayout3);
-            title(app.sseem, 'Emission')
-            xlabel(app.sseem, 'Wavelength (nm)')
-            ylabel(app.sseem, 'SSE')
-            zlabel(app.sseem, 'Z')
-            app.sseem.Box = 'on';
-            app.sseem.TickDir = 'both';
-            app.sseem.Layout.Row = 2;
-            app.sseem.Layout.Column = 2;
-
-            % Create sseex
-            app.sseex = uiaxes(app.GridLayout3);
-            title(app.sseex, 'Excitation')
-            xlabel(app.sseex, 'Wavelength (nm)')
-            ylabel(app.sseex, 'SSE')
-            zlabel(app.sseex, 'Z')
-            app.sseex.Box = 'on';
-            app.sseex.TickDir = 'both';
-            app.sseex.Layout.Row = 2;
-            app.sseex.Layout.Column = 3;
-
-            % Create ssesam
-            app.ssesam = uiaxes(app.GridLayout3);
-            title(app.ssesam, 'Samples')
-            xlabel(app.ssesam, 'Samples')
-            ylabel(app.ssesam, 'SSE')
-            zlabel(app.ssesam, 'Z')
-            app.ssesam.Box = 'on';
-            app.ssesam.TickDir = 'both';
-            app.ssesam.Layout.Row = 2;
-            app.ssesam.Layout.Column = 1;
+            app.GridLayout3.RowHeight = {30, '1x'};
+            app.GridLayout3.BackgroundColor = [0.9412 0.9412 0.9412];
 
             % Create ssedrop
             app.ssedrop = uidropdown(app.GridLayout3);
             app.ssedrop.ValueChangedFcn = createCallbackFcn(app, @ssedropValueChanged, true);
             app.ssedrop.Layout.Row = 1;
             app.ssedrop.Layout.Column = 2;
+
+            % Create Panel_4
+            app.Panel_4 = uipanel(app.GridLayout3);
+            app.Panel_4.BackgroundColor = [0.9412 0.9412 0.9412];
+            app.Panel_4.Layout.Row = 2;
+            app.Panel_4.Layout.Column = [1 3];
+
+            % Create GridLayout12
+            app.GridLayout12 = uigridlayout(app.Panel_4);
+            app.GridLayout12.ColumnWidth = {'1x', '1x', '1x'};
+            app.GridLayout12.RowHeight = {'1x'};
+            app.GridLayout12.BackgroundColor = [0.9412 0.9412 0.9412];
+
+            % Create ssesam
+            app.ssesam = uiaxes(app.GridLayout12);
+            title(app.ssesam, 'Samples')
+            xlabel(app.ssesam, 'Samples')
+            ylabel(app.ssesam, 'SSE')
+            zlabel(app.ssesam, 'Z')
+            app.ssesam.FontName = 'Helvetica';
+            app.ssesam.Box = 'on';
+            app.ssesam.Layout.Row = 1;
+            app.ssesam.Layout.Column = 1;
+            colormap(app.ssesam, 'parula')
+
+            % Create sseem
+            app.sseem = uiaxes(app.GridLayout12);
+            title(app.sseem, 'Emission')
+            xlabel(app.sseem, 'Wavelength (nm)')
+            ylabel(app.sseem, 'SSE')
+            zlabel(app.sseem, 'Z')
+            app.sseem.FontName = 'Helvetica';
+            app.sseem.Box = 'on';
+            app.sseem.Layout.Row = 1;
+            app.sseem.Layout.Column = 2;
+            colormap(app.sseem, 'parula')
+
+            % Create sseex
+            app.sseex = uiaxes(app.GridLayout12);
+            title(app.sseex, 'Excitation')
+            xlabel(app.sseex, 'Wavelength (nm)')
+            ylabel(app.sseex, 'SSE')
+            zlabel(app.sseex, 'Z')
+            app.sseex.FontName = 'Helvetica';
+            app.sseex.Box = 'on';
+            app.sseex.Layout.Row = 1;
+            app.sseex.Layout.Column = 3;
+            colormap(app.sseex, 'parula')
 
             % Create ScorecorrelationTab
             app.ScorecorrelationTab = uitab(app.TabGroup);
@@ -882,10 +1002,11 @@ classdef viewmodels_gui < matlab.apps.AppBase
             % Create GridLayout6
             app.GridLayout6 = uigridlayout(app.ScorecorrelationTab);
             app.GridLayout6.ColumnWidth = {'1x', 200};
-            app.GridLayout6.RowHeight = {40, '1x'};
+            app.GridLayout6.RowHeight = {30, '1x'};
 
             % Create corrcanvas
             app.corrcanvas = uipanel(app.GridLayout6);
+            app.corrcanvas.BackgroundColor = [0.9412 0.9412 0.9412];
             app.corrcanvas.Layout.Row = 2;
             app.corrcanvas.Layout.Column = [1 2];
 
@@ -895,6 +1016,52 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.viewcorrelationsvsmetadataButton.Layout.Row = 1;
             app.viewcorrelationsvsmetadataButton.Layout.Column = 2;
             app.viewcorrelationsvsmetadataButton.Text = 'view correlations vs. metadata';
+
+            % Create ContextMenu
+            app.ContextMenu = uicontextmenu(app.viewmodelsDiagnosePARAFACmodelsUIFigure);
+
+            % Create SavefigurepanelMenu
+            app.SavefigurepanelMenu = uimenu(app.ContextMenu);
+            app.SavefigurepanelMenu.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelMenuSelected, true);
+            app.SavefigurepanelMenu.Text = 'Save figure panel';
+            
+            % Assign app.ContextMenu
+            app.scoresloadscanvas.ContextMenu = app.ContextMenu;
+            app.loadstab.ContextMenu = app.ContextMenu;
+            app.GridLayout9.ContextMenu = app.ContextMenu;
+            app.GridLayout11.ContextMenu = app.ContextMenu;
+            app.fingerpanel.ContextMenu = app.ContextMenu;
+            app.Panel_4.ContextMenu = app.ContextMenu;
+            app.corrcanvas.ContextMenu = app.ContextMenu;
+            app.Panel_2.ContextMenu = app.ContextMenu;
+            app.GridLayout12.ContextMenu = app.ContextMenu;
+            app.GridLayout_2.ContextMenu = app.ContextMenu;
+            app.Panel.ContextMenu = app.ContextMenu;
+            app.GridLayout10.ContextMenu = app.ContextMenu;
+
+            % Create ContextMenu2
+            app.ContextMenu2 = uicontextmenu(app.viewmodelsDiagnosePARAFACmodelsUIFigure);
+
+            % Create SavefigurepanelMenu_2
+            app.SavefigurepanelMenu_2 = uimenu(app.ContextMenu2);
+            app.SavefigurepanelMenu_2.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelMenuSelected, true);
+            app.SavefigurepanelMenu_2.Text = 'Save figure panel';
+            
+            % Assign app.ContextMenu2
+            app.core.ContextMenu = app.ContextMenu2;
+            app.var.ContextMenu = app.ContextMenu2;
+            app.scs.ContextMenu = app.ContextMenu2;
+            app.loem.ContextMenu = app.ContextMenu2;
+            app.loex.ContextMenu = app.ContextMenu2;
+            app.leex.ContextMenu = app.ContextMenu2;
+            app.leem.ContextMenu = app.ContextMenu2;
+            app.les.ContextMenu = app.ContextMenu2;
+            app.elsam.ContextMenu = app.ContextMenu2;
+            app.elem.ContextMenu = app.ContextMenu2;
+            app.elex.ContextMenu = app.ContextMenu2;
+            app.ssesam.ContextMenu = app.ContextMenu2;
+            app.sseem.ContextMenu = app.ContextMenu2;
+            app.sseex.ContextMenu = app.ContextMenu2;
 
             % Show the figure after all components are created
             app.viewmodelsDiagnosePARAFACmodelsUIFigure.Visible = 'on';
