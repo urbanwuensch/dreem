@@ -6,6 +6,6 @@ function f=dreemuifig
 % Department of Architecture and Civil Engineering
 % Sven Hultins Gata 6
 % 41296 Gothenburg (Sweden)
-f=uifigure(WindowStyle='alwaysontop');
+f=uifigure(WindowStyle='normal');
 movegui(f,"center")
 end
