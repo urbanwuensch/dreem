@@ -199,9 +199,10 @@ classdef setstatus_dreem < matlab.apps.AppBase
 
             % Create changestatusUIFigure and hide until all components are created
             app.changestatusUIFigure = uifigure('Visible', 'off');
-            colormap(app.changestatusUIFigure, 'turbo');
             app.changestatusUIFigure.Position = [100 100 532 469];
             app.changestatusUIFigure.Name = 'changestatus';
+            app.changestatusUIFigure.Theme = 'light';
+            app.changestatusUIFigure.WindowStyle = 'alwaysontop';
 
             % Create GridLayout
             app.GridLayout = uigridlayout(app.changestatusUIFigure);
