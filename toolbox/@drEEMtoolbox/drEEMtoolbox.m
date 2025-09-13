@@ -57,6 +57,18 @@ classdef drEEMtoolbox < handle
             if isMATLABReleaseOlderThan('R2024b')
                 error('<strong>The drEEM toolbox for MATLAB requires R2024b or newer</strong>. Please update.')
             end
+
+            %% Check if multiple versions installed
+            existing=ver;
+            existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
+            if numel(existing)>1
+                for j=1:numel(existing)
+                    if str2double(existing(j).Version(1))==0
+                        error('Remove old versions of drEEM from your path before continuing. Use <strong> >> pathtool</strong>')
+                    end
+                end
+                warning('Multiple versions of drEEM installed. We recommend cleaning up your path using <strong> >> pathtool</strong>')
+            end
             %% Check for updates if needed
             % Has check already been done today? Trying to minimize delays.
             debugging=false;
