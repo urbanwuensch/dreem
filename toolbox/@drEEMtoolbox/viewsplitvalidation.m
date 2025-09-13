@@ -124,7 +124,11 @@ end
 
 %% Step 5: Plot
 if data.toolboxOptions.uifig
-    hf=drEEMtoolbox.dreemuifig;
+    hf=drEEMtoolbox.dreemuifig;fig=hf;
+    hf=uipanel(hf,"Units","normalized","Position",[0.02 0.02 0.96,0.96],"Title",'');
+    cm = uicontextmenu(fig);
+    uimenu(cm, 'Text', 'Save figure panel', 'MenuSelectedFcn', @(src, event) savepanel(hf));
+    hf.ContextMenu = cm;
 else
     hf=drEEMtoolbox.dreemfig;
 end
@@ -138,7 +142,12 @@ movegui(hf,"center")
 if passed&&checkedoverall % Passed: Plot lines for all splits and overall model, as well as contours    
     col=lines(nSplit);
     t=tiledlayout(hf,2,fac,'padding','compact');
-    for k=1:fac*2;ax(k)=nexttile(t);end
+    for k=1:fac*2;
+        ax(k)=nexttile(t);
+        if data.toolboxOptions.uifig
+            ax(k).ContextMenu=cm;
+        end
+    end
     for k=1:fac
         hold(ax(k),'on')
         for l=1:nSplit
@@ -378,4 +387,35 @@ function seq = orderbyemissionmax( model,f )
 % Order PARAFAC model components by their emission maxima
 [~,idx]=max(model.(['Model' num2str(f)]){2});
 [~,seq]=sort(idx);
+end
+
+function savepanel(panel)
+
+if isempty(panel)
+    warning('Could not find a panel in the selected tab. Cannot save as image.')
+    return
+end
+defname=['splitvalidation_results','.png'];
+
+[filename, pathname] = uiputfile({'*.png'; '*.jpg'},...
+    'Save Figure As', ...
+    defname);
+
+
+if isequal(filename, 0) || isequal(pathname, 0)
+    pathname=pwd;
+    filename=defname;
+    warning('Did not specify filename and path. Assumed default name in current directory.')
+end
+
+
+warning off
+exportgraphics(panel,...
+    fullfile(pathname,filename),...
+    "BackgroundColor","white",...
+    "Resolution",600)
+warning on
+
+figure(panel.Parent)
+
 end
