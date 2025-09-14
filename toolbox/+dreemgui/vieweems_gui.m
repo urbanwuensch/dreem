@@ -526,7 +526,7 @@ classdef vieweems_gui < matlab.apps.AppBase
             app.plotData=app.dataExtractor;
             rotate3d(app.eem,'on')
             app.triggerNewData;
-           
+           app.eem.ContextMenu.Children
 
         end
 
@@ -677,6 +677,30 @@ classdef vieweems_gui < matlab.apps.AppBase
             end
             
         end
+
+        % Callback function
+        function SaveasimageMenuSelected(app, event)
+            defname=[char(sel.Title),'.png'];
+
+            [filename, pathname] = uiputfile({'*.png'; '*.jpg'},...
+                'Save Figure As', ...
+                defname);
+            
+
+            if isequal(filename, 0) || isequal(pathname, 0)
+                pathname=pwd;
+                filename=defname;
+                warning('Did not specify filename and path. Assumed default name in current directory.')
+            end
+            
+            warning off
+                exportgraphics(app.eem,...
+                    fullfile(pathname,filename),...
+                    "BackgroundColor","white",...
+                    "Resolution",600)
+            warning on
+
+        end
     end
 
     % Component initialization
@@ -687,7 +711,6 @@ classdef vieweems_gui < matlab.apps.AppBase
 
             % Create drEEMtoolboxvieweemsUIFigure and hide until all components are created
             app.drEEMtoolboxvieweemsUIFigure = uifigure('Visible', 'off');
-            colormap(app.drEEMtoolboxvieweemsUIFigure, 'turbo');
             app.drEEMtoolboxvieweemsUIFigure.Position = [100 100 1028 672];
             app.drEEMtoolboxvieweemsUIFigure.Name = 'drEEM toolbox: vieweems';
 
@@ -1010,13 +1033,11 @@ classdef vieweems_gui < matlab.apps.AppBase
             ylabel(app.eem, 'emission (nm)')
             zlabel(app.eem, 'Z')
             app.eem.PlotBoxAspectRatio = [3 2.48258706467662 1];
-            app.eem.FontName = 'Arial';
             app.eem.BoxStyle = 'full';
             app.eem.Box = 'on';
             app.eem.TickDir = 'out';
             app.eem.Layout.Row = [1 4];
             app.eem.Layout.Column = 1;
-            colormap(app.eem, 'turbo')
 
             % Create colorLimitSlider
             app.colorLimitSlider = uislider(app.GridLayout8, 'range');
@@ -1071,24 +1092,22 @@ classdef vieweems_gui < matlab.apps.AppBase
             xlabel(app.ex, 'excitation (nm)')
             ylabel(app.ex, 'signal')
             zlabel(app.ex, 'Z')
-            app.ex.FontName = 'Arial';
             app.ex.Box = 'on';
-            app.ex.TickDir = 'both';
             app.ex.Layout.Row = 1;
             app.ex.Layout.Column = 1;
             app.ex.Tag = 'ex';
+            colormap(app.ex, 'parula')
 
             % Create em
             app.em = uiaxes(app.GridLayout9);
             xlabel(app.em, 'emission (nm)')
-            ylabel(app.em, 'Y')
+            ylabel(app.em, 'signal')
             zlabel(app.em, 'Z')
-            app.em.FontName = 'Arial';
             app.em.Box = 'on';
-            app.em.TickDir = 'both';
             app.em.Layout.Row = 1;
             app.em.Layout.Column = 2;
             app.em.Tag = 'em';
+            colormap(app.em, 'parula')
 
             % Show the figure after all components are created
             app.drEEMtoolboxvieweemsUIFigure.Visible = 'on';
