@@ -15,7 +15,7 @@ function data = importeems(filePattern,options)
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. <strong>Horiba AquaLog</strong>
-%       blanks = tbx.importeems(" - Waterfall Plot Blank.dat");
+%       blanks = tbx.importeems("* - Waterfall Plot Blank.dat");
 %   2. <strong>Horiba FluoroMax</strong>
 %       blanks=tbx.importeems('*.dat','columnIsExcitation',true,'columnWave',240:10:450);
 %   2. <strong>Cary Eclipse</strong>
