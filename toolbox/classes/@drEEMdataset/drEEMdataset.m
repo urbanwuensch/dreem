@@ -28,7 +28,7 @@ classdef drEEMdataset
         models (:,1) drEEMmodel
         
         % Measurement / optical axis information
-        i (:,1) double {mustBeNumeric}
+        i (:,1) double {mustBeNumeric}                  % <-
         Ex (:,1) double {mustBeNumeric}                 % <-
         Em (:,1) double {mustBeNumeric}                 % <-
         nEx (1,1) double {mustBeNumeric}                
@@ -40,8 +40,8 @@ classdef drEEMdataset
         % Sample metadata
         filelist (:,1) cell                             % <-
         metadata  (:,:) table                           % <-
-        opticalMetadata (:,:) table                     % <-
-        about (1,1) struct                              % <-
+        opticalMetadata (:,:) table
+        about (1,1) struct
         split drEEMdataset
         
 
@@ -57,7 +57,7 @@ classdef drEEMdataset
     end
 
     properties (SetAccess = private, Hidden = true)
-        Name 
+        Name
     end
 
 
@@ -543,22 +543,11 @@ classdef drEEMdataset
         data = undo(data)
         displayhistory(data)
     end
-    methods 
-
-            
-    end
 
     methods
         function savedata = saveobj(data)
             savedata=data;
-            % for j=1:numel(savedata.history)
-            %     if matches(class(savedata.history(j).backup),'drEEMdataset')
-            %         savedata.history(j).backup=drEEMdataset;
-            %         savedata.history(j).previous=drEEMdataset;
-            %     end
-            % end
-            % disp('drEEMdataset was saved w/o backups. Use "data.saveall(data)" to include backups.')
-        end      
+        end
     end
 
     
