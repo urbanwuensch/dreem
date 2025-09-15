@@ -15,7 +15,7 @@ function data = importabsorbance(filePattern,options)
 %   1. <strong>Horiba AquaLog</strong>
 %       absorbance = tbx.importabsorbance("* - Abs Spectra Graphs.dat");
 %   2. <strong>csv-export of data from software</strong>
-%       absorbance = tbx.importabsorbance(".csv",waveColumn=1,absColumn=2);
+%       absorbance = tbx.importabsorbance("*.csv",waveColumn=1,absColumn=2);
 %
 % <a href = "matlab:drEEMtoolbox.doc('importabsorbance')"><strong>-> full documentation</strong></a>
 
