@@ -264,7 +264,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
                 heatmap(t,round(cormap,2),'MissingDataColor','k',...
                     'Title',[num2str(fcor(n)),'-component model'],...
                     'Colormap',app.cmap,'ColorLimits',[0 1]);
-                ax.ContextMenu=app.ContextMenu2;
+                %ax.ContextMenu=app.ContextMenu2;
             end
         end
         
@@ -1026,18 +1026,18 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.SavefigurepanelMenu.Text = 'Save figure panel';
             
             % Assign app.ContextMenu
+            app.Panel_2.ContextMenu = app.ContextMenu;
+            app.GridLayout10.ContextMenu = app.ContextMenu;
             app.scoresloadscanvas.ContextMenu = app.ContextMenu;
             app.loadstab.ContextMenu = app.ContextMenu;
+            app.Panel.ContextMenu = app.ContextMenu;
             app.GridLayout9.ContextMenu = app.ContextMenu;
+            app.GridLayout_2.ContextMenu = app.ContextMenu;
             app.GridLayout11.ContextMenu = app.ContextMenu;
             app.fingerpanel.ContextMenu = app.ContextMenu;
             app.Panel_4.ContextMenu = app.ContextMenu;
-            app.corrcanvas.ContextMenu = app.ContextMenu;
-            app.Panel_2.ContextMenu = app.ContextMenu;
             app.GridLayout12.ContextMenu = app.ContextMenu;
-            app.GridLayout_2.ContextMenu = app.ContextMenu;
-            app.Panel.ContextMenu = app.ContextMenu;
-            app.GridLayout10.ContextMenu = app.ContextMenu;
+            app.corrcanvas.ContextMenu = app.ContextMenu;
 
             % Create ContextMenu2
             app.ContextMenu2 = uicontextmenu(app.viewmodelsDiagnosePARAFACmodelsUIFigure);
@@ -1053,9 +1053,9 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.scs.ContextMenu = app.ContextMenu2;
             app.loem.ContextMenu = app.ContextMenu2;
             app.loex.ContextMenu = app.ContextMenu2;
-            app.leex.ContextMenu = app.ContextMenu2;
-            app.leem.ContextMenu = app.ContextMenu2;
             app.les.ContextMenu = app.ContextMenu2;
+            app.leem.ContextMenu = app.ContextMenu2;
+            app.leex.ContextMenu = app.ContextMenu2;
             app.elsam.ContextMenu = app.ContextMenu2;
             app.elem.ContextMenu = app.ContextMenu2;
             app.elex.ContextMenu = app.ContextMenu2;
