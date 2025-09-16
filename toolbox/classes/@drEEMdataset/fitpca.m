@@ -27,7 +27,7 @@ if isempty(idx)
 else
     for j=1:numel(idx)
         opt=data.history(idx).details; clearvars idx
-        data=handlescatter(data,opt);
+        data=drEEMtoolbox.handlescatter(data,opt);
     end
 end
 
