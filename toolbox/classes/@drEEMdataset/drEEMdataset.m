@@ -16,6 +16,7 @@ classdef drEEMdataset
         % Handling metadata
         history (:,1) drEEMhistory                      % <-
         status (1,1) drEEMstatus                        % <-
+        about (1,1) about                               % <-
         
         % Measurement data
         X (:,:,:) double {mustBeNumeric}                % <-
@@ -41,7 +42,6 @@ classdef drEEMdataset
         filelist (:,1) cell                             % <-
         metadata  (:,:) table                           % <-
         opticalMetadata (:,:) table
-        about (1,1) struct
         split drEEMdataset
         
 
