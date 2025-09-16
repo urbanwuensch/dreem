@@ -367,11 +367,11 @@ classdef viewmodels_gui < matlab.apps.AppBase
             end
             comp(comp==0)=nan;
             plot(app.core,comp,cc, ...
-                'LineWidth',1,'Marker','o','MarkerFaceColor',lines(1), ...
+                'LineWidth',1,'Marker','o','MarkerFaceColor','k', ...
                 'MarkerEdgeColor','k',Color='k')
             yline(app.core,0,'Color','r')
             plot(app.var,comp,ve, ...
-                'LineWidth',1,'Marker','o','MarkerFaceColor',lines(1), ...
+                'LineWidth',1,'Marker','o','MarkerFaceColor','k', ...
                 'MarkerEdgeColor','k',Color='k')
             ylabel(app.core,'% core consistency')
             ylabel(app.var,'% explained variance')
@@ -538,7 +538,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             ax=[app.ssesam;app.sseem;app.sseex];
             for n=1:3
-                plot(ax(n),xax{n},err{n},'LineStyle',lspec{n},'Marker',mstyle{n})
+                plot(ax(n),xax{n},err{n},'LineStyle',lspec{n},'Marker',mstyle{n},Color='k')
                 axis(ax(n),'padded')
                 ylim(ax(n),[0 inf])
                 pbaspect(ax(n),[1 1 1])
