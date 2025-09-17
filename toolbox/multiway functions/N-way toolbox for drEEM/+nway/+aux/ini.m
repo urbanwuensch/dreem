@@ -76,12 +76,19 @@ X = reshape(X,DimX(1),prod(DimX(2:end)));
 
 % Assign intermediaries
 Show=0;
-rng('default')
 
-dt = datetime('now');
-vec = [year(dt), month(dt), day(dt), hour(dt), minute(dt), second(dt)];
+s=rng;
+switch s.Type
+    case 'Legacy'
+        rand('seed',sum(100*clock));
+    otherwise
+        rng('default')
+        dt = datetime('now');
+        vec = [year(dt), month(dt), day(dt), hour(dt), minute(dt), second(dt)];
+        rng(sum(100*vec))
+end
 
-rng(sum(100*vec))
+
 MissingExist=any(isnan(X(:)));
 
 % Initialize system variables
