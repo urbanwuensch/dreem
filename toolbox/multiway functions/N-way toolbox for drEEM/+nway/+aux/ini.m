@@ -76,7 +76,12 @@ X = reshape(X,DimX(1),prod(DimX(2:end)));
 
 % Assign intermediaries
 Show=0;
-rand('seed',sum(100*clock));
+rng('default')
+
+dt = datetime('now');
+vec = [year(dt), month(dt), day(dt), hour(dt), minute(dt), second(dt)];
+
+rng(sum(100*vec))
 MissingExist=any(isnan(X(:)));
 
 % Initialize system variables

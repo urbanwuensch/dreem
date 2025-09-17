@@ -47,15 +47,3 @@ test2=readopenuv(file);
 % disp(info)
 % info.Variables(3).Attributes.Value
 
-
-%%
-t=samples.metadata;
-t=addprop(t,'standard_name','variable');
-t=addprop(t,'long_name','variable');
-t=addprop(t,'units','variable');
-t=addprop(t,'comment','variable');
-t=addprop(t,'coverage_content_type','variable');
-
-t.Properties.CustomProperties.coverage_content_type={'coordinate',...
-    'auxilliaryInformation','coordinate','coordinate','auxilliaryInformation','auxilliaryInformation',...
-    };
