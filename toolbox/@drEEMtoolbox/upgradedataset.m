@@ -128,7 +128,7 @@ for j=1:100
 
         dataout.models(j,1).percentExplained=...
             100 * (1 - e / sum(dataout.X(:).^2,'omitnan') );
-        dataout.models(j,1).core=corcond(dataout.X,loads,[],0);
+        dataout.models(j,1).core=nway.modeleval.corcond(dataout.X,loads,[],0);
         dataout.models(j,1).percentUnconverged=NaN;
 
         sizeF=nan(1,size(loads{1},2));
