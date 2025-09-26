@@ -52,6 +52,8 @@ classdef vieweems_gui < matlab.apps.AppBase
         Button_2                       matlab.ui.control.Button
         Button                         matlab.ui.control.Button
         Button_3                       matlab.ui.control.Button
+        ContextMenu                    matlab.ui.container.ContextMenu
+        SavefigurepanelasimageMenu     matlab.ui.container.Menu
     end
 
     
@@ -526,7 +528,7 @@ classdef vieweems_gui < matlab.apps.AppBase
             app.plotData=app.dataExtractor;
             rotate3d(app.eem,'on')
             app.triggerNewData;
-           app.eem.ContextMenu.Children
+           
 
         end
 
@@ -1108,6 +1110,16 @@ classdef vieweems_gui < matlab.apps.AppBase
             app.em.Layout.Column = 2;
             app.em.Tag = 'em';
             colormap(app.em, 'parula')
+
+            % Create ContextMenu
+            app.ContextMenu = uicontextmenu(app.drEEMtoolboxvieweemsUIFigure);
+
+            % Create SavefigurepanelasimageMenu
+            app.SavefigurepanelasimageMenu = uimenu(app.ContextMenu);
+            app.SavefigurepanelasimageMenu.Text = 'Save figure panel as image';
+            
+            % Assign app.ContextMenu
+            app.em.ContextMenu = app.ContextMenu;
 
             % Show the figure after all components are created
             app.drEEMtoolboxvieweemsUIFigure.Visible = 'on';
