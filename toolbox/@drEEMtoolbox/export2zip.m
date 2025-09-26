@@ -237,7 +237,7 @@ if not(isempty(data.abs))
         absData=data.abs(j,:)';
     
         absData=[data.absWave,absData];
-        absData=array2table(absData,"VariableNames",{'wavelength',data.status.absorbanceUnit});
+        absData=array2table(absData,"VariableNames",{'wavelength',char(data.status.absorbanceUnit)});
         writetable(absData,[data.filelist{j},'.csv'],"Delimiter",',','WriteMode','overwrite')
     end
     disp('    Finished files: Absorbance spectra')
