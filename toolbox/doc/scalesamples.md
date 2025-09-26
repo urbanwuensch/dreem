@@ -21,6 +21,8 @@ In previous versions of the drEEM toolbox, the function to accomplish this was `
 
 `scalesamples` provides more flexibility to perform scaling. It does so by scaling with the nth root of the standard deviation. The user specifies which nth root should be used. The lowest number (1) equals the scaling of the predecessor `normeem`. The higher the number, the less severe the scaling. In testing, values between 1.2 and 2 have proven useful.
 
+Alternatively, a normalization by the maximum intensity is also possible. 
+
 
 <details open>
 <summary>
@@ -29,6 +31,23 @@ In previous versions of the drEEM toolbox, the function to accomplish this was `
  <a name="syntax1"></a>
  
  This syntax is used to apply the scaling. The number provided in `option` represents the `n` of the `nth root` of the standard deviation. n is limited to be between 1 (most severe scaling) and 50 (least severe scaling). If 1, all samples essentially have the same numeric weight, whereas differences between signal magnitutes are maintained at higher numbers (though lessened).
+ 
+The function adds an entry to the dataset's history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.
+
+> ***Any calls to `subdataset` or `zapnoise` will search for the unscaled, original data and make sure that changes are reflected in the original dataset. The toolbox does so automatically, no need to keep track.***
+ 
+
+ 
+</details>
+
+
+<details open>
+<summary>
+<b>`dataout = scalesamples(data, 'max')` - apply max-normalization</b>
+</summary>
+ <a name="syntax1"></a>
+ 
+ This syntax is used to apply the max-normalization. Each EEM is divided by the maximum intensity observed in the sample.
  
 The function adds an entry to the dataset's history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.
 

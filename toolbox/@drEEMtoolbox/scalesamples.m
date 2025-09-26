@@ -1,11 +1,11 @@
 function dataout = scalesamples(data,option)
 % <a href = "matlab:drEEMtoolbox.doc('scalesamples')">dataout = scalesamples(data,option) (click to access documentation)</a>
 %
-% <strong>Scale samples</strong> of a dataset by the nth root of the standard deviation
+% <strong>Scale samples</strong> of a dataset by the nth root of the standard deviation or maximum intensity in each sample
 %
 % <strong>INPUTS - Required</strong>
 % data (1,1) {mustBeA("drEEMdataset"),drEEMdataset.validate}
-% option (1,:) {mustBeNumeric OR mustBeMember(["reverse","help"])} = 2
+% option (1,:) {mustBeNumeric OR mustBeMember(["max","reverse","help"])} = 2
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. <strong>normeem equivalent</strong> (unit variance scaling)
@@ -14,9 +14,11 @@ function dataout = scalesamples(data,option)
 %       samples = tbx.scalesamples(samples);
 %   3. <strong>very gentle scaling </strong> (5th root of std)
 %       samples = tbx.scalesamples(samples,5);
-%   4. <strong>reverse scaling </strong> after it had been applied
+%   4. <strong>maximum-normalization </strong> (division of intensities by maximum in each sample)
+%       samples = tbx.scalesamples(samples,'max');
+%   5. <strong>reverse scaling </strong> after it had been applied
 %       samples = tbx.scalesamples(samples,'reverse');
-%   5. <strong>Don't know what to do? </strong> Get decision help
+%   6. <strong>Don't know what to do? </strong> Get decision help
 %       samples = tbx.scalesamples(samples,'help');
 %
 % <a href = "matlab:drEEMtoolbox.doc('scalesamples')"><strong>-> full documentation</strong></a>
@@ -69,33 +71,47 @@ end
 
 switch opmode
     case 'apply'
-        
-        if not(option>=1&option<=50)
-            error('''intensity'' should be a number between 1 (close to unit variance) and 50 (close to no scaling)')
+        if isnumeric(option)
+            if not(option>=1&option<=50)
+                error('''intensity'' should be a number between 1 (close to unit variance) and 50 (close to no scaling)')
+            end
+            
+            dataout=data;
+            if not(option==1)
+                dataout.status=drEEMstatus.change(dataout.status,...
+                    "signalScaling",...
+                    ['Scaled to ',num2str(option),'th root of standard deviation in sample mode']);
+            else
+                dataout.status=drEEMstatus.change(dataout.status,...
+                    "signalScaling",'Scaled to unit variance in sample mode');
+            end
+            scalefac=1./nthroot(std(...
+                tens2mat(dataout.X,dataout.nSample,dataout.nEm,dataout.nEx)...
+                ,0,2,'omitnan'),option);
+            
+            if any(isnan(scalefac))
+                error('Some scaling factors are NaN!')
+            end
+            
+            dataout.X=dataout.X.*scalefac;
+            message=['scaling applied nth root of std, n = ',num2str(option)];
+            idx=height(dataout.history)+1;
+            dataout.history(idx,1)=...
+                drEEMhistory.addEntry(mfilename,message,[],dataout,data);
+        elseif ischar(option)|isstring(option)
+            if not(matches(option,'max'))
+                error('Somehow, scalesamples believes it is in "opmode", but the input to option is not "max". This should not happen')
+            end
+            dataout=data;
+            X=tens2mat(dataout.X,dataout.nSample,dataout.nEm,dataout.nEx);
+            maxval=max(X,[],2,"omitmissing");
+
+            dataout.X=dataout.X./maxval;
+            message='EEMs scaled by maximum intensity in each sample';
+            idx=height(dataout.history)+1;
+            dataout.history(idx,1)=...
+                drEEMhistory.addEntry(mfilename,message,[],dataout,data);
         end
-        
-        dataout=data;
-        if not(option==1)
-            dataout.status=drEEMstatus.change(dataout.status,...
-                "signalScaling",...
-                ['Scaled to ',num2str(option),'th root of standard deviation in sample mode']);
-        else
-            dataout.status=drEEMstatus.change(dataout.status,...
-                "signalScaling",'Scaled to unit variance in sample mode');
-        end
-        scalefac=1./nthroot(std(...
-            tens2mat(dataout.X,dataout.nSample,dataout.nEm,dataout.nEx)...
-            ,0,2,'omitnan'),option);
-        
-        if any(isnan(scalefac))
-            error('Some scaling factors are NaN!')
-        end
-        
-        dataout.X=dataout.X.*scalefac;
-        message=['scaling applied nth root of std, n = ',num2str(option)];
-        idx=height(dataout.history)+1;
-        dataout.history(idx,1)=...
-            drEEMhistory.addEntry(mfilename,message,[],dataout,data);
 
     case 'reverse'
         dataout=data;
@@ -288,11 +304,13 @@ if isnumeric(option)
     mustBeGreaterThanOrEqual(option,1)
     opmode='apply';
 else
-    mustBeMember(option,["reverse","help"])
+    mustBeMember(option,["reverse","help","max"])
     if matches(option,'reverse')
         opmode='reverse';
     elseif matches(option,'help')
         opmode='help';
+    elseif matches(option,'max')
+        opmode='apply';
     end
 end
 

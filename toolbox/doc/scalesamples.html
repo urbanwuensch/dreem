@@ -403,6 +403,8 @@ details:open > summary {
 
 <p><code>scalesamples</code> provides more flexibility to perform scaling. It does so by scaling with the nth root of the standard deviation. The user specifies which nth root should be used. The lowest number (1) equals the scaling of the predecessor <code>normeem</code>. The higher the number, the less severe the scaling. In testing, values between 1.2 and 2 have proven useful.</p>
 
+<p>Alternatively, a normalization by the maximum intensity is also possible. </p>
+
 <p><details open>
 <summary>
 <b><code>dataout = scalesamples(data, option)</code> - apply scaling</b>
@@ -410,6 +412,22 @@ details:open > summary {
  <a name="syntax1"></a></p>
 
 <p>This syntax is used to apply the scaling. The number provided in <code>option</code> represents the <code>n</code> of the <code>nth root</code> of the standard deviation. n is limited to be between 1 (most severe scaling) and 50 (least severe scaling). If 1, all samples essentially have the same numeric weight, whereas differences between signal magnitutes are maintained at higher numbers (though lessened).</p>
+
+<p>The function adds an entry to the dataset&#39;s history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.</p>
+
+<blockquote>
+<p><strong><em>Any calls to <code>subdataset</code> or <code>zapnoise</code> will search for the unscaled, original data and make sure that changes are reflected in the original dataset. The toolbox does so automatically, no need to keep track.</em></strong></p>
+</blockquote>
+
+<p></details></p>
+
+<p><details open>
+<summary>
+<b><code>dataout = scalesamples(data, &#39;max&#39;)</code> - apply max-normalization</b>
+</summary>
+ <a name="syntax1"></a></p>
+
+<p>This syntax is used to apply the max-normalization. Each EEM is divided by the maximum intensity observed in the sample.</p>
 
 <p>The function adds an entry to the dataset&#39;s history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.</p>
 
