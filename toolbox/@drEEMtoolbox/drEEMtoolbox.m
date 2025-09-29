@@ -64,7 +64,11 @@ classdef drEEMtoolbox < handle
             if numel(existing)>1
                 for j=1:numel(existing)
                     if str2double(existing(j).Version(1))==0
-                        error('Remove old versions of drEEM from your path before continuing. Use <strong> >> pathtool</strong>')
+                        message=['\n Old versions of drEEM detected. Remove these from your' ...
+                            ' path before continuing. Your options are:\n' ...
+                            '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
+                            '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)'];
+                        throwAsCaller(MException("drEEM:versionConflict",message))
                     end
                 end
                 warning('Multiple versions of drEEM installed. We recommend cleaning up your path using <strong> >> pathtool</strong>')
