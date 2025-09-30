@@ -50,16 +50,9 @@ end
 % Check if the function has already been run
 idx=drEEMhistory.searchhistory(data.history,'processabsorbance','first');
 if not(isempty(idx))
-    warning(['"processabsorbance has already been run before.' ...
-        ' It is recommended to chose appropriate settings and only' ...
-        ' run this function once."'])
-    optionsbefore=data.history(idx).details;
-    
-    if isequal(options,optionsbefore)
-        warning('Identical options to a previous execution detected. Exiting...')
-        return
-    end
-   
+    error(['"processabsorbance" has already been run before.' ...
+        ' Please chose appropriate settings and only' ...
+        ' run this function once to avoid ambiguity."'])
 end
 
 % Experimental feature; overwrite workspace variable, needs no outputarg check
@@ -120,7 +113,7 @@ if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
         end
     end
 
-%% Scenario 2: Stitch-on (extrapolation
+%% Scenario 2: Stitch-on (extrapolation)
 elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
     disp('EEMs were measured at wavelengths longer than CDOM spectra.')
     % The extrapolation bit
@@ -137,6 +130,8 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         % were found
         afit=@(b1,b2,b3,lambda) b1*exp(b2/1000*(350-lambda))+b3;
         ewstep=round(mean(diff(dataout.absWave)));
+        ex_start=dataout.absWave(end)+ewstep;
+        options.extrapolation_start=ex_start;
         extrawave=(dataout.absWave(end)+ewstep:ewstep:ceil(max([dataout.Ex;dataout.Em])))';
         new=zeros(data.nSample,numel([abswave;extrawave]));
         beta=nan(data.nSample,3);
