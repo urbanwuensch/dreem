@@ -262,10 +262,10 @@ if matches(mode,"fitsplits")
     for j=1:numel(C)
         res=drEEMtoolbox.silentvalidation(dataout,C(j));
         if res
-            disp(['<strong> Successful validation </strong> (',num2str(C(j)),'-compnent model)'])
+            disp(['<strong> Successful validation </strong> (',num2str(C(j)),'-component model)'])
             dataout.models(C(j)).status='validated';
         else
-            disp(['<strong> Failed validation </strong> (',num2str(C(j)),'-compnent model)'])
+            disp(['<strong> Failed validation </strong> (',num2str(C(j)),'-component model)'])
             dataout.models(C(j)).status='not validated';
         end
         
