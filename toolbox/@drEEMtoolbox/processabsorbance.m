@@ -19,7 +19,9 @@ function dataout = processabsorbance(data,options)
 %       samples = tbx.processabsorbance(samples);
 %   3. Just carry out a baseline correction
 %       samples = tbx.processabsorbance(samples,correctBase=true,extrapolate=false,zero=false);
-%   4. Do something, but please don't show that final plot
+%   4. Baseline correction with narrow range averages
+%       samples = tbx.processabsorbance(samples,correctBase=true,baseWave=[650 700],extrapolate=false,zero=false);
+%   5. Do something, but please don't show that final plot
 %       samples = tbx.processabsorbance(samples,...,plot=false);
 %
 % <a href = "matlab:drEEMtoolbox.doc('processabsorbance')"><strong>-> full documentation</strong></a>
