@@ -103,6 +103,11 @@ classdef drEEMdataset
                     message=['EEMs field (',inputname(1),'.X) must have 3 dimensions. Validation function exited prematurely. Fix the issue and rerun the validation'];
                     throwAsCaller(MException("drEEM:Invalid",message))
                 end
+
+                if not(numel(unique(data.filelist))==numel(data.filelist))
+                    e{cnt}='The sample identifiers ("filelist") are not unique. For your dataset to be FAIR-compliant and for the toolbox to work as expected, unique sample identfiers must be used.';
+                    cnt=cnt+1;
+                end
                 if not(sz(1)==data.nSample)
                     e{cnt}='size of EEM dimension 1 not consistent with data.nSample';
                     cnt=cnt+1;
