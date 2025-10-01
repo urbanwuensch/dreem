@@ -400,9 +400,14 @@ details:open > summary {
 <p>The <code>processabsorbance</code> function reads <code>absorbance</code> values from <code>data</code> and performs multiple corrections of the data. These are:</p>
 
 <ul>
-<li>baseline correction. The average absorbance above the value <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
-<li>extrapolating the longer wavelength (needed for inner filter effects correction). This is done via the exponential slope that is fitted to the existing data and then extracted to the longest wavelength in the EEM (excitation or emission).</li>
-<li>Replacing negative values with zeroes. This option is not intended to improve the quality of CDOM spectra but to avoid IFE correction artefacts.</li>
+<li>baseline correction.
+
+<ul>
+<li>If a single wavelength is given, the average absorbance <em>above</em> the value <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
+<li>If two wavelength values are give, the average absorbance <em>between</em> both values <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
+</ul></li>
+<li>extrapolating the longer wavelength (needed for inner filter effects correction). This is done via the exponential slope that is fitted to the existing data and then extracted to the longest wavelength in the EEM (excitation or emission). Note that this extrapolation will only work well for CDOM spectra. If non-CDOM-type absorbance above 300 nm is found, the method will produce invalid results.</li>
+<li>Replacing negative values with zeroes. This option is not intended to improve the quality of CDOM spectra but only to avoid IFE correction artefacts.</li>
 </ul>
 
 <p>These processes are performed in the order specified above. If extrapolation is requested, baseline correction will be carried out both prior and after the extrapolation to ensure data quality. </p>
@@ -474,11 +479,13 @@ The baseline correction is applied using the mean absorbance beyond the specifie
 
 <p><details open>
     <summary><b><code>baseWave</code>- wavelength range for baseline correction</b></summary>
-    <i>numeric scalar</i></p>
+    <i>numeric scalar or vector with two elements</i></p>
 
 <p>Specify the wavelength from which the absorbance data is used for baseline correction. The wavelength must be greater than 580 nm.</p>
 
-<p>Wavelengths above the specified value will be used to extract the average baseline absorbance to subtract.</p>
+<p>If one value is provided, wavelengths above the specified value will be used to extract the average baseline absorbance to subtract.</p>
+
+<p>If two values are provided the average between both is subtracted for every sample.</p>
 
 <p>Default value is <code>595</code>.</p>
 

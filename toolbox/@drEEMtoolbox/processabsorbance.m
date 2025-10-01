@@ -8,7 +8,7 @@ function dataout = processabsorbance(data,options)
 %
 % <strong>INPUTS - Optional</strong>
 % correctBase           {mustBeNumericOrLogical} = true
-% baseWave              {mustBeNumeric,mustBeGreaterThan(580)} = 595
+% baseWave              {mustBeNumeric,mustBeGreaterThan(580),mustBeBetween(numel(baseWave),1,2)} = 595
 % zero                  {mustBeNumericOrLogical} = false
 % extrapolate           {mustBeNumericOrLogical} = true
 % plot                  {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
@@ -35,8 +35,8 @@ arguments
         drEEMdataset.validate(data),drEEMdataset.sanityCheckAbsorbance(data),drEEMdataset.mustContainSamples(data)}
 
     % Optional
-    options.correctBase (1,:)   {mustBeNumericOrLogical} = true
-    options.baseWave (1,:)      {mustBeNumeric,mustBeGreaterThan(options.baseWave,580)} = 595
+    options.correctBase (1,:)   {mustBeA(options.correctBase,'logical')} = true
+    options.baseWave (1,:)      {mustBeNumeric,mustBeGreaterThan(options.baseWave,580),baseValidator(options.baseWave)} = 595
     options.zero (1,:)          {mustBeNumericOrLogical} = false
     options.extrapolate (1,:)   {mustBeNumericOrLogical} = true
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
@@ -197,7 +197,13 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         % Baseline possible, wanted, and no extrapolation necessary
         % Otherwise, the baseline subtraction is done later.
         if blcor_allowed&&options.correctBase
-            i=dataout.absWave>=options.baseWave;
+            if isscalar(options.baseWave)
+                i = dataout.absWave>=options.baseWave;
+            elseif numel(options.baseWave)==2
+                i(1) =drEEMtoolbox.mindist(dataout.absWave,options.baseWave(1));
+                i(2) = drEEMtoolbox.mindist(dataout.absWave,options.baseWave(2));
+                i=i(1):i(2);
+            end
             if not(any(i))
                 warning('Please double-check the baseline correction wavelength. Could not perform the baseline correction.')
             else
@@ -268,6 +274,12 @@ yhat = b1*exp(b2/1000*(350-x))+b3;
 
 end
 
-function [idx,distance] = mindist( vec,value)
-[distance,idx]=min(abs(vec-value));
+function baseValidator(input)
+
+nel=numel(input);
+
+if nel<1|nel>2
+    error('Input must be either be a scalar (e.g. 585) or a row vector of two elements (e.g. [585 600]')
+end
+
 end
