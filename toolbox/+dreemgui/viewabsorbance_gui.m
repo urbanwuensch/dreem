@@ -602,6 +602,12 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             figure(app.viewabsorbanceUIFigure)
         end
 
+        % Value changed function: SampleDropDown
+        function SampleDropDownValueChanged(app, event)
+            value = app.SampleDropDown.Value;
+            app.sampleChangedByList
+        end
+
         % Changes arrangement of the app based on UIFigure width
         function updateAppLayout(app, event)
             currentFigureWidth = app.viewabsorbanceUIFigure.Position(3);
@@ -702,6 +708,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
 
             % Create SampleDropDown
             app.SampleDropDown = uidropdown(app.GridLayout5);
+            app.SampleDropDown.ValueChangedFcn = createCallbackFcn(app, @SampleDropDownValueChanged, true);
             app.SampleDropDown.Layout.Row = 1;
             app.SampleDropDown.Layout.Column = [1 2];
 
@@ -926,14 +933,14 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             app.SavefigurepanelMenu.Text = 'Save figure panel';
             
             % Assign app.ContextMenu
-            app.GridLayout10.ContextMenu = app.ContextMenu;
             app.spectra.ContextMenu = app.ContextMenu;
+            app.GridLayout10.ContextMenu = app.ContextMenu;
+            app.missingDisclosure.ContextMenu = app.ContextMenu;
+            app.cdom.ContextMenu = app.ContextMenu;
             app.slopesPanel.ContextMenu = app.ContextMenu;
             app.Panel.ContextMenu = app.ContextMenu;
             app.GridLayout12.ContextMenu = app.ContextMenu;
             app.sourcediagram.ContextMenu = app.ContextMenu;
-            app.cdom.ContextMenu = app.ContextMenu;
-            app.missingDisclosure.ContextMenu = app.ContextMenu;
 
             % Show the figure after all components are created
             app.viewabsorbanceUIFigure.Visible = 'on';
