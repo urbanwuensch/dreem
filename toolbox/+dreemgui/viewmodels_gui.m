@@ -40,6 +40,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
         eldrop                 matlab.ui.control.DropDown
         FingerprintplotsTab    matlab.ui.container.Tab
         GridLayout2            matlab.ui.container.GridLayout
+        ShowRamanandRayleighscatterlocationCheckBox  matlab.ui.control.CheckBox
         fingerpanel            matlab.ui.container.Panel
         fingerdrop             matlab.ui.control.DropDown
         SSETab                 matlab.ui.container.Tab
@@ -515,9 +516,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
                 contour(ax(n),app.data.Ex,app.data.Em,factors{2}(:,n).*factors{3}(:,n)',10,'Color','k','DisplayName','contourf');
                 grid(ax(n),'on')
                 title(ax(n),['C',num2str(n)])
-
-                for k=1:numel(scatter)
-                    line(ax(n),[min(app.data.Ex) max(app.data.Ex)],[scatter{k}(min(app.data.Ex)) scatter{k}(max(app.data.Ex))],'Color','r')
+                if app.ShowRamanandRayleighscatterlocationCheckBox.Value
+                    for k=1:numel(scatter)
+                        line(ax(n),[min(app.data.Ex) max(app.data.Ex)],[scatter{k}(min(app.data.Ex)) scatter{k}(max(app.data.Ex))],'Color','r')
+                    end
                 end
                 xlim(ax(n),[min(app.data.Ex) max(app.data.Ex)])
                 ylim(ax(n),[min(app.data.Em) max(app.data.Em)])
@@ -638,6 +640,13 @@ classdef viewmodels_gui < matlab.apps.AppBase
             end
             
             figure(app.viewmodelsDiagnosePARAFACmodelsUIFigure)
+        end
+
+        % Value changed function: 
+        % ShowRamanandRayleighscatterlocationCheckBox
+        function ShowRamanandRayleighscatterlocationCheckBoxValueChanged(app, event)
+            value = app.ShowRamanandRayleighscatterlocationCheckBox.Value;
+            app.fingerdropValueChanged
         end
     end
 
@@ -934,6 +943,13 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.fingerpanel.BackgroundColor = [0.9412 0.9412 0.9412];
             app.fingerpanel.Layout.Row = 2;
             app.fingerpanel.Layout.Column = [1 3];
+
+            % Create ShowRamanandRayleighscatterlocationCheckBox
+            app.ShowRamanandRayleighscatterlocationCheckBox = uicheckbox(app.GridLayout2);
+            app.ShowRamanandRayleighscatterlocationCheckBox.ValueChangedFcn = createCallbackFcn(app, @ShowRamanandRayleighscatterlocationCheckBoxValueChanged, true);
+            app.ShowRamanandRayleighscatterlocationCheckBox.Text = 'Show Raman and Rayleigh scatter location';
+            app.ShowRamanandRayleighscatterlocationCheckBox.Layout.Row = 1;
+            app.ShowRamanandRayleighscatterlocationCheckBox.Layout.Column = 3;
 
             % Create SSETab
             app.SSETab = uitab(app.TabGroup);
