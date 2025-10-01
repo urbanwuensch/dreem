@@ -462,6 +462,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
         % Value changed function: LinelegendCheckBox, lldrop
         function lldropValueChanged(app, event)
             value = app.lldrop.Value;
+            value=erase(value,' ');
             f=str2double(value(1));
             factors=app.models(f).loads;
             lev=app.models(f).leverages;
@@ -491,6 +492,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
         % Value changed function: fingerdrop
         function fingerdropValueChanged(app, event)
             value = app.fingerdrop.Value;
+            value=erase(value,' ');
             f=str2double(value(1));
             factors=app.models(f).loads;
             app.fingergrid = tiledlayout(app.fingerpanel,'flow','padding','normal','TileSpacing','compact');
@@ -529,6 +531,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
         % Value changed function: ssedrop
         function ssedropValueChanged(app, event)
             value = app.ssedrop.Value;
+            value=erase(value,' ');
             f=str2double(value(1));
             err=app.models(f).sse;
             xax={app.data.i app.data.Em app.data.Ex};
@@ -548,6 +551,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
         % Value changed function: eldrop
         function eldropValueChanged(app, event)
             value = app.eldrop.Value;
+            value=erase(value,' ');
             f=str2double(value(1));
             err=app.models(f).sse;
             lev=app.models(f).leverages;
