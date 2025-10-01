@@ -1,4 +1,4 @@
-function dataout = handlescatter(data,option)
+function dataout = handlescatter(data,option,ramanShift)
 % <a href = "matlab:drEEMtoolbox.doc('handlescatter')">dataout = handlescatter(data,option) (click to access documentation)</a>
 %
 % <strong>Remove Rayleigh and Raman scatter</strong> from fluorescence data
@@ -27,6 +27,7 @@ function dataout = handlescatter(data,option)
 arguments
     data (1,:) {dataValidation(data)}
     option (1,:) {optionValidation(data,option)} = handlescatterOptions;
+    ramanShift (1,1) {mustBeNumeric,mustBePositive} = 3382;
 end
 
 %% Check input arguments and react to different scenarios
@@ -97,7 +98,7 @@ nanmat=false(data.nEm,data.nEx);
 % Interpolation matrix (will be used to identify interpolation scenarios)
 imat=ones(data.nEm,data.nEx); % imat: 1(don't handle) 2(interpolate) 3(do no interpolate) (2&3 are set by labeler)
 for n=1:numel(types)
-    [nanmat,imat]=labeler(nanmat,imat,data.Ex,data.Em,types{n},options.(types{n})(1),options.(types{n})(2),options.interpolate(n),options.cutout(n));
+    [nanmat,imat]=labeler(nanmat,imat,data.Ex,data.Em,types{n},options.(types{n})(1),options.(types{n})(2),options.interpolate(n),options.cutout(n),ramanShift);
 end
 clearvars types
 
@@ -136,7 +137,7 @@ end
 % (5) Zero data below 1st order Rayleigh
 if ~isempty(options.d2zero)
     d2zeromat=false(data.nEm,data.nEx);
-    [d2zeromat,~]=labeler(d2zeromat,[],data.Ex,data.Em,'d2zero',options.d2zero);
+    [d2zeromat,~]=labeler(d2zeromat,[],data.Ex,data.Em,'d2zero',options.d2zero,ramanShift);
     Xi(:,d2zeromat)=0;
 end
 
@@ -149,8 +150,8 @@ if strcmp(options.iopt,'conservative')
     for n=1:numel(types)
         if options.cutout(n)
             % labeler(nanin,iin,x,y,type,below,above,iswitch,cutswitch)
-            [~,imat2{n}]=labeler([],imattemplate,ex,em,types{n},options.(types{n})(1),options.(types{n})(2),1,0);
-            [compmat{n},]=labeler(false(data.nEm,data.nEx),[],data.Ex,data.Em,types{n},options.(types{n})(1),options.(types{n})(2),1,0);
+            [~,imat2{n}]=labeler([],imattemplate,ex,em,types{n},options.(types{n})(1),options.(types{n})(2),1,0,ramanShift);
+            [compmat{n},]=labeler(false(data.nEm,data.nEx),[],data.Ex,data.Em,types{n},options.(types{n})(1),options.(types{n})(2),1,0,ramanShift);
         end
     end
 
@@ -279,7 +280,7 @@ end
 %% Internal functions used above
 
 %%
-function [nanout,iout]=labeler(nanin,iin,x,y,type,below,above,iswitch,cutswitch)
+function [nanout,iout]=labeler(nanin,iin,x,y,type,below,above,iswitch,cutswitch,ramanShift)
 nanout=nanin;
 iout=iin;
 syncx=nan(numel(x),numel(y));
@@ -296,12 +297,12 @@ switch type
         end
     case 'ram1'
         for n=1:numel(x)
-            syncx(n,:)= y -(1e7*((1e7)/(x(n))-3382)^-1);
+            syncx(n,:)= y -(1e7*((1e7)/(x(n))-ramanShift)^-1);
         end
 
     case 'ram2'
         for n=1:numel(x)
-            syncx(n,:) = y - ((1e7*((1e7)/(x(n))-3382)^-1)*2);
+            syncx(n,:) = y - ((1e7*((1e7)/(x(n))-ramanShift)^-1)*2);
         end
     case 'd2zero'
         for n=1:numel(x)
