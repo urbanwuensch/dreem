@@ -48,3 +48,5 @@ test2=readopenuv(file);
 % disp(info)
 % info.Variables(3).Attributes.Value
 
+ncdisp("CMOP_2016.nc")
+
