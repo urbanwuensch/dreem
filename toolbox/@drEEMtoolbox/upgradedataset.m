@@ -158,7 +158,7 @@ dataout.validate(dataout);
 
 %%%%% IMPLEMENT SPLITS!!!!
 % User needs to tell the toolbox what the status of the dataset is.
-handle=setstatus_dreem(dataout,'data');
+handle=dreemgui.setstatus_dreem(dataout,'data');
 waitfor(handle,"finishedHere",true);
 try
     dataout=handle.data;
