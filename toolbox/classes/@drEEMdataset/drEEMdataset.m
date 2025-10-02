@@ -78,6 +78,10 @@ classdef drEEMdataset
             data.toolboxdata.host = strtrim(lower(name));
             data.toolboxdata.matlabVersion=version;
             data.toolboxdata.matlabToolboxes=ver;
+            
+            % data.metadata = table('Size', [0 3], ...
+            %     'VariableTypes', {'double', 'string', 'datetime'}, ...
+            %     'VariableNames', {'dilution_factor', 'pathlength', 'comment'});
 
             % CF conventions
             data.metadata=addprop(data.metadata,'standard_name','variable');
