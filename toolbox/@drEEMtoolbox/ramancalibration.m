@@ -119,7 +119,9 @@ end
 % drEEMhistory entry
 idx=height(dataout.history)+1;
 dataout.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,'Raman Units',SignalCalibration,dataout);
+    drEEMhistory.addEntry(mfilename, ...
+    ['Raman Units at Ex=',num2str(options.ExWave),' nm with peak integration range = ',num2str(options.iEnd),' - ',num2str(options.iEnd),' nm'], ...
+    SignalCalibration,dataout);
 
 % validate the dataset (should not be a problem, but best be sure)
 dataout.validate(dataout);

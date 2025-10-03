@@ -42,11 +42,11 @@ export2openuv(test,file,...
     sample_storage_temperature='2-8°C',...
     processing_level='Data fully processed, final',...
     product_version='v1')
-test2=readopenuv(file);
+% test2=readopenuv(file);
 
 % info=ncinfo(file);
 % disp(info)
 % info.Variables(3).Attributes.Value
-
+clc
 ncdisp("CMOP_2016.nc")
 
