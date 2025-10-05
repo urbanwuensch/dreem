@@ -5,7 +5,7 @@ disp('<strong> starting to pack...</strong>')
 uuid="186c884d-4f97-4318-9f12-cbf90a332379";
 version='2.25.10';
 OutputFile=string(['/Users/wuensch/Documents/git/dreem-2/release/drEEM-',version,'.mltbx']);
-
+releaseMax=matlabRelease.Release;
 
 % Get old, make new opts
 opts = matlab.addons.toolbox.ToolboxOptions(which("dreem-2.prj"));
@@ -19,8 +19,10 @@ for j=1:numel(fnames)
     end
 end
 
+% Overwrite some incorrect values that needed change compared to prj-file.
 optsNew.OutputFile=OutputFile;
 optsNew.ToolboxVersion=version;
+optsNew.MaximumMatlabRelease=releaseMax;
 
 matlab.addons.toolbox.packageToolbox(optsNew)
 disp('<strong> done...</strong>')
