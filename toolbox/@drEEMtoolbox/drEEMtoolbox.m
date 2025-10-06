@@ -71,7 +71,12 @@ classdef drEEMtoolbox < handle
                         throwAsCaller(MException("drEEM:versionConflict",message))
                     end
                 end
-                warning('Multiple versions of drEEM installed. We recommend cleaning up your path using <strong> >> pathtool</strong>')
+                message=['\n Multiple versions of drEEM detected. Since this complicates things tremendously, please clean your path environment' ...
+                            ' before continuing. Your options are:\n' ...
+                            '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
+                            '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)\n\n'
+                            ' Afterwards, you should reinstall the latest version of drEEM via Matlab File Exchange (via the Add-Ons Explorer or your Web-browser.'];
+                throwAsCaller(MException("drEEM:versionConflict",message))
             end
             %% Check for updates if needed
             % Has check already been done today? Trying to minimize delays.
@@ -112,35 +117,53 @@ classdef drEEMtoolbox < handle
 
 
             ov=online.version{1}; % latest online version
-            ev={existing.Version}; % installed version(s)
+            ev=existing.Version; % installed version(s)
 
-            % digest version numbers
-            ov=cellfun(@(x) str2double(x),strsplit(ov,'.'));
-            for j=1:length(ev)
-                evd(j,:)=cellfun(@(x) str2double(x),strsplit(ev{j},'.'));
-            end
-
-            % Compare versions
-            update=true;
-            for j=1:height(evd)
-                if ov(1)>=evd(j,1)
-                    if ov(2)>=evd(j,2)
-                        if ov(3)>evd(j,3)
-                            update(j)=true;
-                             if debugging,disp('update=true'),end
-                        else
-                            update(j)=false;
-                             if debugging,disp('update=false'),end
-                        end
-                    else
-                        update(j)=false;
-                    end
-                else
-                    update(j)=false;
+            % digest version numbers into parts
+            ovp=cellfun(@(x) str2double(x),strsplit(ov,'.'));
+            evp=cellfun(@(x) str2double(x),strsplit(ev,'.'));
+           
+            % What is the max number of version parts?
+            maxPart=max([numel(ovp) numel(evp)]);
+            % Iterate through the version parts to see if update is needed
+            update = false;
+            % First part, check if number of elements differs between
+            % the online vs. existing versioning. Replace with a 0 if
+            % so (thinking that the other will be larger than that).
+            for j=1:numel(maxPart)
+                
+                if j>numel(evp)
+                    evp(j)=0;
+                end
+                if j>numel(ovp)
+                    ovp(j)=0;
                 end
             end
 
-            if any(update)
+            % Then check the version
+            if debugging,disp(evp),disp(ovp),trigger={'major','year','month','day'};end
+            for j=1:maxPart
+                % First part, check if number of elements differs between
+                % the online vs. existing versioning. Replace with a 0 if
+                % so (thinking that the other will be larger than that).
+                if j>numel(evp)
+                    evp(j)=0;
+                end
+                if j>numel(ovp)
+                    ovp(j)=0;
+                end
+
+                if ovp(j) > evp(j)
+                    update = true;
+                    if debugging,disp(['update=true trigger=',trigger{j}]),end
+                    break
+                else
+                    update = false;
+                    if debugging,disp('update=false'),end
+                end
+            end
+           
+            if update
                 answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
                     ,'Update notice','Yes','No','Why am I seeing this?');
                 if matches(answer,'Yes')
