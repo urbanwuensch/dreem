@@ -79,8 +79,9 @@ classdef drEEMtoolbox < handle
                 throwAsCaller(MException("drEEM:versionConflict",message))
             end
             %% Check for updates if needed
-            % Has check already been done today? Trying to minimize delays.
             debugging=false;
+
+            % Has check already been done today? Trying to minimize delays
             lastcheck=getenv('drEEM update checked');
             if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
                 check=true;
@@ -164,10 +165,18 @@ classdef drEEMtoolbox < handle
             end
            
             if update
-                answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
-                    ,'Update notice','Yes','No','Why am I seeing this?');
+                answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update? If you select "Yes", you will be taken File Exchange where you can download and install the latest version.'...
+                    ,'Update notice','Yes','No','Why am I seeing this?','Yes');
                 if matches(answer,'Yes')
                     web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                elseif matches(answer,'Why am I seeing this?')
+                    h=msgbox('Once per day, drEEM checks against a version directory to see if you are using the latest version of the toolbox. We do so to help you benefit from the latest developments and to be able to fix bugs you may have experienced. We do not collect any data on your usage of the toolbox during this check.');
+                    uiwait(h)
+                    answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update? If you select "Yes", you will be taken File Exchange where you can download and install the latest version.'...
+                        ,'Update notice','Yes','No','Why am I seeing this?','Yes');
+                    if matches(answer,'Yes')
+                        web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                    end
                 end
                 setenv('drEEM update checked',char(datetime("today")))
             else
