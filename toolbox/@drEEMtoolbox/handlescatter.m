@@ -336,10 +336,16 @@ Xout=zeros(size(Xin,1),size(Xin,2),size(Xin,3));
 
 switch method
     case 'inpaint'
-        %disp(['    inpaint-interpolation takes time. Please wait... (approx. ',num2str(round(1.6/40000*numel(Xin)*2/60,1)),'min)'])        
         doparallel=true;
-        if isempty(gcp('nocreate'))
+        toolboxName = 'Parallel Computing Toolbox';
+        installedToolboxes = ver;
+        isInstalled = any(strcmp(toolboxName, {installedToolboxes.Name}));
+        if not(isInstalled)
             doparallel=false;
+        else
+            if isempty(gcp('nocreate'))
+                doparallel=false;
+            end
         end
         if doparallel
             parfor n=1:size(Xin,1)
