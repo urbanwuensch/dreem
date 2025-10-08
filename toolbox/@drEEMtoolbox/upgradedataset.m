@@ -59,7 +59,13 @@ dataout=drEEMdataset.create;
 
 flds=[{'X','Ex','Em','nEm','nEx','filelist','i','nSample','Abs_wave','Abs'},atypicalFieldnames(:,1)'];
 newflds=[{'X','Ex','Em','nEm','nEx','filelist','i','nSample','absWave','abs'},atypicalFieldnames(:,2)'];
-dataout.metadata.i=data.i;
+if isfield(data,'metadata')
+    if istable(data.metadata)
+        dataout.metadata=data.metadata;
+    else
+        dataout.metadata.i=data.i;
+    end
+end
 for j=1:numel(flds)
     if not(isfield(data,flds{j}))
         if not(contains(atypicalFieldnames(:,2),flds{j}))
