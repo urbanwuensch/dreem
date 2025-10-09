@@ -415,7 +415,10 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
         function slopesPlots(app)
             dataHere=app.data;
             t=tiledlayout(app.slopesPanel);
-
+            if dataHere.nSample<5
+                warning('With less than 5 samples, making boxplots of slope values makes little sense. The tab "Slopes" will remain empty.')
+                return
+            end
             ax=nexttile(t);
             boxchart(ax, ...
                 [dataHere.opticalMetadata.exp_slope_microm, ...
