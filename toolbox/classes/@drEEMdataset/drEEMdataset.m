@@ -330,7 +330,9 @@ classdef drEEMdataset
             f{1}=vec(find(arrayfun(@(x) not(isempty(x.loads{1})),data.models)));
             
             for j=1:numel(data.split)
-                f{j+1}=vec(find(arrayfun(@(x) not(isempty(x.loads{1})),data.split(j).models)));
+                if not(data.split(j).nSample==0)
+                    f{j+1}=vec(find(arrayfun(@(x) not(isempty(x.loads{1})),data.split(j).models)));
+                end
             end
             message='';
             for j=1:numel(f)
