@@ -1,20 +1,20 @@
 classdef drEEMtoolbox < handle
-% <a href = "matlab:drEEMtoolbox.doc('drEEM)'">Documentation of the drEEM toolbox</a>
-%
-% <strong>EXAMPLE(S)</strong>
-%   1. Make a class instance to call methods (highly recommended)
-%       tbx = drEEMtoolbox;
-%   2. Call a method from the class directly
-%       samples=drEEMtoolbox.processabsorbance(samples);
+    % <a href = "matlab:drEEMtoolbox.doc('drEEM)'">Documentation of the drEEM toolbox</a>
+    %
+    % <strong>EXAMPLE(S)</strong>
+    %   1. Make a class instance to call methods (highly recommended)
+    %       tbx = drEEMtoolbox;
+    %   2. Call a method from the class directly
+    %       samples=drEEMtoolbox.processabsorbance(samples);
 
-% Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
-% Chalmers University of Technology
-% Department of Architecture and Civil Engineering
-% Sven Hultins Gata 6
-% 41296 Gothenburg (Sweden)
+    % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
+    % Chalmers University of Technology
+    % Department of Architecture and Civil Engineering
+    % Sven Hultins Gata 6
+    % 41296 Gothenburg (Sweden)
     properties (Constant = true, Hidden = false)
-        version = "2.25.10"
-        url = "https://gitlab.com/dreem/drEEM-2/-/archive/2.25.10/drEEM-2-2.25.10.zip"
+        version = "2.25.11"
+        url = "https://zenodo.org/records/17404138/files/drEEM-2.25.11.mltbx?download=1"
         requiredVersion = 'R2024b'
         rootfolder = drEEMtoolbox.tbxpath;
         options=drEEMtoolbox.defaultOptions;
@@ -26,7 +26,7 @@ classdef drEEMtoolbox < handle
         dataout = sampleQimport(workingpath,data)
         [DS,DSb] = processHJYdata(Xin,opt)
     end
-    
+
     % This is hidden because it's only ever used for install
     methods (Hidden = true,Static = true)
         function out=defaultOptions
@@ -72,10 +72,10 @@ classdef drEEMtoolbox < handle
                     end
                 end
                 message=['\n Multiple versions of drEEM detected. Since this complicates things tremendously, please clean your path environment' ...
-                            ' before continuing. Your options are:\n' ...
-                            '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
-                            '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)\n\n'
-                            ' Afterwards, you should reinstall the latest version of drEEM via Matlab File Exchange (via the Add-Ons Explorer or your Web-browser.'];
+                    ' before continuing. Your options are:\n' ...
+                    '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
+                    '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)\n\n' ...
+                    ' Afterwards, you should reinstall the latest version of drEEM via Matlab File Exchange (via the Add-Ons Explorer or your Web-browser.'];
                 throwAsCaller(MException("drEEM:versionConflict",message))
             end
             %% Check for updates if needed
@@ -123,7 +123,7 @@ classdef drEEMtoolbox < handle
             % digest version numbers into parts
             ovp=cellfun(@(x) str2double(x),strsplit(ov,'.'));
             evp=cellfun(@(x) str2double(x),strsplit(ev,'.'));
-           
+
             % What is the max number of version parts?
             maxPart=max([numel(ovp) numel(evp)]);
             % Iterate through the version parts to see if update is needed
@@ -132,7 +132,7 @@ classdef drEEMtoolbox < handle
             % the online vs. existing versioning. Replace with a 0 if
             % so (thinking that the other will be larger than that).
             for j=1:numel(maxPart)
-                
+
                 if j>numel(evp)
                     evp(j)=0;
                 end
@@ -163,20 +163,40 @@ classdef drEEMtoolbox < handle
                     if debugging,disp('update=false'),end
                 end
             end
-           
+            %% Handle update (if needed)
             if update
-                answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update? If you select "Yes", you will be taken File Exchange where you can download and install the latest version.'...
-                    ,'Update notice','Yes','No','Why am I seeing this?','Yes');
-                if matches(answer,'Yes')
+                answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
+                    ,'Update Notice','Update now','Open File exchange','No','Update now');
+                if matches(answer,'Open File exchange')
+                    if debugging,disp('answer=fex'),end
                     web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
-                elseif matches(answer,'Why am I seeing this?')
-                    h=msgbox('Once per day, drEEM checks against a version directory to see if you are using the latest version of the toolbox. We do so to help you benefit from the latest developments and to be able to fix bugs you may have experienced. We do not collect any data on your usage of the toolbox during this check.');
-                    uiwait(h)
-                    answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update? If you select "Yes", you will be taken File Exchange where you can download and install the latest version.'...
-                        ,'Update notice','Yes','No','Why am I seeing this?','Yes');
-                    if matches(answer,'Yes')
+                elseif matches(answer,'Update now')
+                    if debugging,disp('answer=direct update'),end
+                    try
+                        % Kick off the ? parts of the URL
+                        digested=strsplit(online.url{1},'?');
+                        % Disect the URL and take the last bit (the file)
+                        digested=strsplit(digested{1},'/');
+
+                        if contains(digested{end},'.mltbx')
+                            if debugging,disp('attempt install'),end
+                            disp('<strong>Downloading...</strong> (approx 100MB, might take a while)')
+                            websave(digested{end}, online.url{1});
+                            disp('<strong>Installing...</strong>')
+                            installedToolbox = matlab.addons.toolbox.installToolbox(digested{end});
+                            delete(digested{end})
+                        else
+                            warning('Install failed (no .mltbx file found), redirecting to File Exchange instead')
+                            pause(2)
+                            web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                        end
+                    catch
+                        warning('Install failed (unspecified issue), redirecting to File Exchange instead')
+                        pause(2)
                         web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                     end
+                else
+                    disp('No action taken. You will be reminded again tomorrow...')
                 end
                 setenv('drEEM update checked',char(datetime("today")))
             else
@@ -219,7 +239,7 @@ classdef drEEMtoolbox < handle
                 error('value must be scalar')
             end
             out=vec==vec(idx);
-            
+
         end
 
         f=dreemfig(fighandlein)
@@ -257,11 +277,11 @@ classdef drEEMtoolbox < handle
     end
 
     methods (Static = true , Access = public)
-        
+
         %doc function
         doc(fname)
 
-        
+
         data = importeems(filePattern,options)
         data = importabsorbance(filePattern,options)
         dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
@@ -310,7 +330,7 @@ classdef drEEMtoolbox < handle
 
         % Benchmark the system performance
         [singlescore,multiscore]=benchmark
-        
+
         % Data processing
         varargout = alignsamples(varargin)
         dataout = processabsorbance(data,options)
@@ -331,7 +351,7 @@ classdef drEEMtoolbox < handle
         % PARAFAC
         dataout = fitparafac(data,options)
         dataout = splitdataset(data,options)
-                  viewsplitvalidation(data,fac)
+        viewsplitvalidation(data,fac)
         fmax = scores2fmax(data,f)
 
         % Data export

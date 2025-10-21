@@ -50,3 +50,22 @@ export2openuv(test,file,...
 clc
 ncdisp("CMOP_2016.nc")
 
+%%
+plot(ncread("CMOP_2016.nc",'absorbance_wavelength'),ncread("CMOP_2016.nc","absorbance_sample"),'k'),
+xlabel('absorbance_wavelength',Interpreter='none')
+ylabel('absorbance_sample(sample_name,absorbance_waelength)',interpreter='none')
+scifig(width=18,height=10)
+copygraphics(gcf)
+%%
+x=ncread("CMOP_2016.nc","fluorescence_sample");
+x=squeeze(x(5,:,:));
+contourf(ncread("CMOP_2016.nc",'excitation_wavelength'),...
+    ncread("CMOP_2016.nc",'emission_wavelength'),...
+    x,LevelList=linspace(0,0.9,50))
+
+xlabel('excitation_wavelength',Interpreter='none')
+ylabel('emission_wavelength',interpreter='none')
+title({'fluorescence_sample(sample_name,...', ...
+    'emission_wavelength,excitation_wavelength)'},Interpreter='none')
+scifig(width=10,height=8)
+copygraphics(gcf)
