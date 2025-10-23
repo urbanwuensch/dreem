@@ -31,7 +31,6 @@ narginchk(2,2)
 overallModel=data;
 nSplit=numel(data.split);
 splitComparisons=nchoosek(1:nSplit,2);
-nComparisons=size(splitComparisons,1);
 splitNames=cellstr(strcat(repmat("Split ",nSplit,1),int2str((1:nSplit)')));
 ignoreerror=false;
 mode='tcc';
@@ -142,7 +141,7 @@ movegui(hf,"center")
 if passed&&checkedoverall % Passed: Plot lines for all splits and overall model, as well as contours    
     col=lines(nSplit);
     t=tiledlayout(hf,2,fac,'padding','compact');
-    for k=1:fac*2;
+    for k=1:fac*2
         ax(k)=nexttile(t);
         if data.toolboxOptions.uifig
             ax(k).ContextMenu=cm;
@@ -325,14 +324,14 @@ tcc=load1'*load2/(sqrt(load1'*load1)*sqrt(load2'*load2));
 tcc2=tcc-(shape_penalty+shift_penalty);
 end
 
-function [compidx,besttcc] = sortcomponents(ref,models,fac)
+function [compidx,besttcc] = sortcomponents(reference,models,fac)
 tcc=@(l1,l2) l1'*l2/(sqrt(l1'*l1)*sqrt(l2'*l2)); % Tucker's congruence coefficients
 compidx=zeros(numel(models),fac);
 for k=1:numel(models)
     for l=1:fac
         for o=1:fac
-            simi(k,l,o,:)=[tcc(ref.models(fac).loads{2}(:,l),models{k}.models(fac).loads{2}(:,o)) ...
-                tcc(ref.models(fac).loads{3}(:,l),models{k}.models(fac).loads{3}(:,o))];
+            simi(k,l,o,:)=[tcc(reference.models(fac).loads{2}(:,l),models{k}.models(fac).loads{2}(:,o)) ...
+                tcc(reference.models(fac).loads{3}(:,l),models{k}.models(fac).loads{3}(:,o))];
         end
     end
     
@@ -351,11 +350,13 @@ for k=1:numel(models)
             ci=find(matchingExAndEm(l,:));
         elseif numel(find(matchingExAndEm(l,:)))>1 % Take the best when multiple are similar
             [~,ci]=max(sum(simiExtract(l,:,:),3)); 
-        elseif numel(find(matchingExAndEm(l,:)))==0 % Take the best when none match
-            [val,ci]=max(sum(simiExtract(l,:,:),3));
-            if val<1
-                ci=[];
-            end
+        elseif not(any(matchingExAndEm(l,:))) % Take the best when none match
+            % Edit: Here, the function should not do anything because these
+            % bad cases are handled futher down.
+            % [val,ci]=max(sum(simiExtract(l,:,:),3));
+            % if val<1
+            %     ci=[];
+            % end
         end
         if ~isempty(ci)
             compidx(k,l)=ci;
