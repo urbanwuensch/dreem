@@ -216,19 +216,6 @@ if ~passed
     else
         fprintf(2,sprintf([message '\n']))
     end
-end
-if ~checkedoverall&&passed
-    disp(' ')
-    disp(sprintf(['Overall Result = <strong>Validated</strong> for all comparisons, but no comparison with an overall model was made. ' ...
-        '\n    To complete the validation, specify input variable ''overallmodel'''])) %#ok<*DSPS>
-    pause(1)
-    dataout=data;
-    dataout.Val_Result='Overall Result = Validated for all comparisons';
-    for k=1:nComparisons
-        comps{k}=[cellOfNames{comparisons(k,1)}, "vs. ", cellOfNames{comparisons(k,2)}];
-    end
-    dataout.Comparisons=comps; clearvars comps
-    
 elseif checkedoverall&&passed
     disp(' ')
     disp('Overall Result= <strong>Validated</strong> for all comparisons')
@@ -239,8 +226,8 @@ elseif checkedoverall&&passed
     for k=1:nComparisons
         comps{k}=[cellOfNames{comparisons(k,1)}, "vs. ", cellOfNames{comparisons(k,2)}];
     end
-    
-
+else
+    error('Validation outcome scenario unaccounted for. This should not happen (contact developers)')
 end
 
 % Will only run if toolbox is set to overwrite workspace variable and user
