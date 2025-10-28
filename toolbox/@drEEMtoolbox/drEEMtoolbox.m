@@ -27,183 +27,17 @@ classdef drEEMtoolbox < handle
         [DS,DSb] = processHJYdata(Xin,opt)
     end
 
-    % This is hidden because it's only ever used for install
+
     methods (Hidden = true,Static = true)
-        function out=defaultOptions
-            out.plotByDefault = true;
-            out.OvrWrteUnless = false;
-            out.uifig = true;
-        end
-        function versionRequires
-            if isMATLABReleaseOlderThan(drEEMtoolbox.requiredVersion)
-                error(['You need Matlab ',drEEMtoolbox.requiredVersion,' or newer to use this version of drEEM.'])
-            end
-            mallver=ver;
-            tbs={'Statistics and Machine Learning Toolbox' 'Parallel Computing Toolbox'};
-            isthere=zeros(1,numel(tbs));
-            for n=1:numel(tbs)
-                isthere(n)=any(~cellfun(@isempty,strfind({mallver.Name},tbs{n})));
-            end
-            if all(isthere)
-                % No action or information needed.
-            else
-                warning(['Missing toolbox(es):',tbs{~isthere},'. Some toolbox functionality will not be available.'])
-            end
-
-        end
-
         function tbx=drEEMtoolbox
-            % Class constructor method: Update check and requirements
-            if isMATLABReleaseOlderThan('R2024b')
-                error('<strong>The drEEM toolbox for MATLAB requires R2024b or newer</strong>. Please update.')
-            end
+            % Class constructor method
 
-            %% Check if multiple versions installed
-            existing=ver;
-            existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
-            if numel(existing)>1
-                for j=1:numel(existing)
-                    if str2double(existing(j).Version(1))==0
-                        message=['\n Old versions of drEEM detected. Remove these from your' ...
-                            ' path before continuing. Your options are:\n' ...
-                            '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
-                            '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)'];
-                        throwAsCaller(MException("drEEM:versionConflict",message))
-                    end
-                end
-                message=['\n Multiple versions of drEEM detected. Since this complicates things tremendously, please clean your path environment' ...
-                    ' before continuing. Your options are:\n' ...
-                    '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
-                    '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)\n\n' ...
-                    ' Afterwards, you should reinstall the latest version of drEEM via Matlab File Exchange (via the Add-Ons Explorer or your Web-browser.'];
-                throwAsCaller(MException("drEEM:versionConflict",message))
-            end
-            %% Check for updates if needed
-            debugging=false;
-
-            % Has check already been done today? Trying to minimize delays
-            lastcheck=getenv('drEEM update checked');
-            if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
-                check=true;
-                if debugging,disp('Check=true'),end
-            else
-                check=false;
-                if debugging,disp('Check=false'),end
-            end
-
-            if not(check)
-                return
-            end
-            options = weboptions;
-            options.Timeout=1;
-            directory='https://gitlab.com/dreem/dreem-2/-/raw/main/toolbox/@drEEMtoolbox/versions.txt';
-            try
-                disp('Checking for updates (takes a moment if offline)...')
-                vhist=webread(directory,options);
-                if debugging,disp('online=true'),end
-            catch
-                setenv('drEEM update checked',char(datetime("today")))
-                if debugging,disp('offline=true'),end
-                return
-            end
-            cellvhist=textscan(vhist,'%s%s','Delimiter',';');
-
-            online=table;
-            online.version=cellvhist{1};
-            online.url=cellvhist{2};
-
-            existing=ver;
-            existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
-            existing=rmfield(existing,{'Date','Release','Name'});
-
-
-            ov=online.version{1}; % latest online version
-            ev=existing.Version; % installed version(s)
-
-            % digest version numbers into parts
-            ovp=cellfun(@(x) str2double(x),strsplit(ov,'.'));
-            evp=cellfun(@(x) str2double(x),strsplit(ev,'.'));
-
-            % What is the max number of version parts?
-            maxPart=max([numel(ovp) numel(evp)]);
-            % Iterate through the version parts to see if update is needed
-            update = false;
-            % First part, check if number of elements differs between
-            % the online vs. existing versioning. Replace with a 0 if
-            % so (thinking that the other will be larger than that).
-            for j=1:numel(maxPart)
-
-                if j>numel(evp)
-                    evp(j)=0;
-                end
-                if j>numel(ovp)
-                    ovp(j)=0;
-                end
-            end
-
-            % Then check the version
-            if debugging,disp(evp),disp(ovp),trigger={'major','year','month','day'};end
-            for j=1:maxPart
-                % First part, check if number of elements differs between
-                % the online vs. existing versioning. Replace with a 0 if
-                % so (thinking that the other will be larger than that).
-                if j>numel(evp)
-                    evp(j)=0;
-                end
-                if j>numel(ovp)
-                    ovp(j)=0;
-                end
-
-                if ovp(j) > evp(j)
-                    update = true;
-                    if debugging,disp(['update=true trigger=',trigger{j}]),end
-                    break
-                else
-                    update = false;
-                    if debugging,disp('update=false'),end
-                end
-            end
-            %% Handle update (if needed)
-            if update
-                answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
-                    ,'Update Notice','Update now','Open File exchange','No','Update now');
-                if matches(answer,'Open File exchange')
-                    if debugging,disp('answer=fex'),end
-                    web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
-                elseif matches(answer,'Update now')
-                    if debugging,disp('answer=direct update'),end
-                    try
-                        % Kick off the ? parts of the URL
-                        digested=strsplit(online.url{1},'?');
-                        % Disect the URL and take the last bit (the file)
-                        digested=strsplit(digested{1},'/');
-
-                        if contains(digested{end},'.mltbx')
-                            if debugging,disp('attempt install'),end
-                            disp('<strong>Downloading...</strong> (approx 100MB, might take a while)')
-                            websave(digested{end}, online.url{1});
-                            disp('<strong>Installing...</strong>')
-                            installedToolbox = matlab.addons.toolbox.installToolbox(digested{end});
-                            delete(digested{end})
-                        else
-                            warning('Install failed (no .mltbx file found), redirecting to File Exchange instead')
-                            pause(2)
-                            web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
-                        end
-                    catch
-                        warning('Install failed (unspecified issue), redirecting to File Exchange instead')
-                        pause(2)
-                        web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
-                    end
-                else
-                    disp('No action taken. You will be reminded again tomorrow...')
-                end
-                setenv('drEEM update checked',char(datetime("today")))
-            else
-                disp('<strong>Using the latest version of the drEEM toolbox.</strong>')
-                setenv('drEEM update checked',char(datetime("today")))
-            end
-
+            % Check required versions of MATLAB and toolboxes
+            drEEMtoolbox.versionRequires
+            % Check if multiple versions installed (throws error!)
+            drEEMtoolbox.countinstallations
+            % Check for updates and updates if desired
+            drEEMtoolbox.updatedreem
 
         end
 
@@ -298,32 +132,7 @@ classdef drEEMtoolbox < handle
         function validatedataset(data)
             drEEMdataset.validate(data)
         end
-        % function [dataout] = undolast(data)
-        %     arguments
-        %         data {mustBeA(data,"drEEMdataset"),drEEMdataset.validate(data)}
-        %     end
-        %     n=numel(data.history);
-        %     if n==1
-        %         error('Nothing to undo')
-        %     end
-        %
-        %     temp=data.history(n-1).backup;
-        %     temp=drEEMbackup.convert2dataset(temp);
-        %     temp.history=data.history(1:n-1);
-        %     %temp.toolboxdata=data.toolboxdata;
-        %
-        %     if nargout==0
-        %         assignin("base",inputname(1),temp);
-        %         disp(['<strong> Last step (',num2str(n-1),') in dataset "',inputname(1), '" undone. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-        %         return
-        %     else
-        %         dataout=temp;
-        %     end
-        %
-        % end
-        % function restore(data,whichone)
-        %     drEEMhistory.restore(data,whichone)
-        % end
+
         function displayhistory(data)
             drEEMdataset.displayhistory(data)
         end
@@ -375,6 +184,205 @@ classdef drEEMtoolbox < handle
         viewabsorbance(data)
         [summary,M]  =  viewopenfluormatches(filename)
 
+    end
+
+    % These are hidden only used for class constructor
+    methods (Hidden = true,Static = true)
+        function out=defaultOptions
+            out.plotByDefault = true;
+            out.OvrWrteUnless = false;
+            out.uifig = true;
+        end
+        function versionRequires
+            lastcheck=getenv('drEEM ML version check');
+            if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
+                if isMATLABReleaseOlderThan(drEEMtoolbox.requiredVersion)
+                    error(['You need Matlab ',drEEMtoolbox.requiredVersion,' or newer to use this version of drEEM.'])
+                end
+                mallver=ver;
+                tbs={'Statistics and Machine Learning Toolbox' 'Parallel Computing Toolbox'};
+                isthere=zeros(1,numel(tbs));
+                for n=1:numel(tbs)
+                    isthere(n)=any(~cellfun(@isempty,strfind({mallver.Name},tbs{n})));
+                end
+                if all(isthere)
+                    % No action or information needed.
+                else
+                    warning(['Missing toolbox(es):',tbs{~isthere},'. Some toolbox functionality will not be available.'])
+                end
+                setenv('drEEM ML version check',char(datetime("today")))
+            else
+                % All good, nothing to do.
+            end
+
+
+        end
+
+        function countinstallations
+            existing=ver;
+            existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
+            if numel(existing)>1
+                for j=1:numel(existing)
+                    if str2double(existing(j).Version(1))==0
+                        message=['\n Old versions of drEEM detected. Remove these from your' ...
+                            ' path before continuing. Your options are:\n' ...
+                            '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
+                            '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)'];
+                        throwAsCaller(MException("drEEM:versionConflict",message))
+                    end
+                end
+                message=['\n Multiple versions of drEEM detected. Since this complicates things tremendously, please clean your path environment' ...
+                    ' before continuing. Your options are:\n' ...
+                    '  1) Use<strong> >> pathtool</strong> to solve the issue interactively.\n' ...
+                    '  2) Use<strong> >> restoredefaultpath</strong> for a quick solution (but you loose all custom path settings)\n\n' ...
+                    ' Afterwards, you should reinstall the latest version of drEEM via Matlab File Exchange (via the Add-Ons Explorer or your Web-browser.'];
+                throwAsCaller(MException("drEEM:versionConflict",message))
+            end
+        end
+
+        function updatedreem(directory,debugging,existingversion,onlineversion)
+            arguments
+                directory (1,:) {mustBeText} = 'https://gitlab.com/dreem/dreem-2/-/raw/main/toolbox/@drEEMtoolbox/versions.txt';
+                debugging (1,:) {mustBeA(debugging,'logical')} = false
+                existingversion (1,:) {mustBeNumeric} = [];
+                onlineversion (1,:) {mustBeNumeric} = [];
+            end
+
+            % Has check already been done today? Trying to minimize delays
+            lastcheck=getenv('drEEM update checked');
+            if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
+                check=true;
+                if debugging,disp('check = true'),end
+            else
+                check=false;
+                if debugging,disp('check = false'),end
+            end
+
+            if not(check)&&not(debugging)
+                return
+            end
+
+            try
+                options = weboptions;
+                options.Timeout=1;
+                vhist=webread(directory,options);
+            catch
+                setenv('drEEM update checked',char(datetime("today")))
+                if debugging,disp('version document download failed.'),end
+                if debugging,disp('setenv=true'),end
+                return
+            end
+            cellvhist=textscan(vhist,'%s%s','Delimiter',';');
+
+            online=table;
+            online.Version=cellvhist{1}{1};
+            online.url=cellvhist{2}{1};
+            clearvars cellvhist
+
+            existing=ver;
+            existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
+            existing=rmfield(existing,{'Date','Release','Name'});
+            existing=struct2table(existing);
+
+
+            % digest version numbers into parts
+            online.Parts=cellfun(@(x) str2double(x),strsplit(online.Version,'.'));
+            existing.Parts=cellfun(@(x) str2double(x),strsplit(existing.Version,'.'));
+
+            if debugging
+                existing.Parts=existingversion;
+                online.Parts=onlineversion;
+            end
+
+            % What is the max number of version parts?
+            maxPart=max([numel(online.Parts) numel(existing.Parts)]);
+            % First part, check if number of elements differs between
+            % the online vs. existing versioning. Replace with a 0 if
+            % so (thinking that the other will be larger than that).
+            for j=1:maxPart
+                if j>numel(existing.Parts)
+                    existing.Parts(j)=0;
+                    if debugging,disp('existing version zero insertion'),end
+                end
+                if j>numel(online.Parts)
+                    online.Parts(j)=0;
+                    if debugging,disp('online version zero insertion'),end
+                end
+            end
+
+            % Check for updates now
+            update = false; % Initialize update flag
+            if debugging,disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)]),end
+            for j=1:maxPart
+                if online.Parts(j) > existing.Parts(j)
+                    update = true;
+                    if debugging,trigger={'major','year','month','day'};disp(['update = true | trigger = ',trigger{j}]),end
+                    break
+                elseif online.Parts(j) < existing.Parts(j)
+                    if debugging,disp('update = false, implausible scenario'),end
+                    disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)])
+                    disp('<strong>Online version out of date?</strong> This should not happen. Cancelling update routine...')
+                    return
+                elseif online.Parts(j) == existing.Parts(j)
+                    update = false;
+                    if debugging,disp('update = false, plausible scenario'),end
+                end
+            end
+
+            if update
+                url=online.url;
+            else
+                url='';
+            end
+
+            clearvars -except url directory debugging
+
+            if not(isempty(url))
+                if debugging,disp('update execution'),end
+                answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
+                    ,'Update Notice','Update now','Open File exchange','No','Update now');
+            else
+                setenv('drEEM update checked',char(datetime("today")))
+                disp('<strong>Using the latest version of the drEEM toolbox.</strong>')
+                return
+            end
+
+            switch answer
+                case 'Open File exchange'
+                    web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                    setenv('drEEM update checked',char(datetime("today")))
+                case 'Update now'
+                    % Kick off the ? parts of the URL
+                    digested=strsplit(url,'?');
+                    % Disect the URL and take the last bit (the file)
+                    digested=strsplit(digested{1},'/');
+                    if contains(digested{end},'.mltbx')
+                        if debugging,disp('attempt install'),end
+                        disp('<strong>Downloading...</strong> (approx 100MB, might take a while)')
+                        try
+                            websave(digested{end}, url);
+                            disp('<strong>Installing...</strong>')
+                            matlab.addons.toolbox.installToolbox(digested{end});
+                            delete(digested{end})
+                        catch
+                            warning('Install failed, redirecting to File Exchange instead')
+                            pause(2)
+                            web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                        end
+                    else
+                        warning('No .mltbx file found online, redirecting to File Exchange instead')
+                        pause(2)
+                        web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                    end
+                case 'No'
+                    setenv('drEEM update checked',char(datetime("today")))
+                    disp('<strong>Update skipped</strong>. Will check again tomorrow...')
+                otherwise
+                    setenv('drEEM update checked',char(datetime("today")))
+                    disp('<strong>Update skipped</strong>. Will check again tomorrow...')
+            end
+
+        end
     end
 
 end

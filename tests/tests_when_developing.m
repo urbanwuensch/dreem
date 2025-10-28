@@ -69,3 +69,16 @@ title({'fluorescence_sample(sample_name,...', ...
     'emission_wavelength,excitation_wavelength)'},Interpreter='none')
 scifig(width=10,height=8)
 copygraphics(gcf)
+
+
+
+%%
+cd(fileparts(matlab.desktop.editor.getActiveFilename))
+clc
+directory='https://gitlab.com/dreem/dreem-2/-/raw/main/toolbox/@drEEMtoolbox/versions.txt';
+existing=[2 26 01];
+online=[2 26 01 05];
+drEEMtoolbox.countinstallations
+drEEMtoolbox.updatedreem(directory,true,existing,online)
+
+tbx=drEEMtoolbox
