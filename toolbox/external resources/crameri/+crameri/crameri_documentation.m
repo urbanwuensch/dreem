@@ -7,30 +7,30 @@
 %% Syntax 
 % 
 %  crameri 
-%  cmap = crameri('ColormapName') 
-%  cmap = crameri('-ColormapName') 
-%  cmap = crameri(...,NLevels)
-%  cmap = crameri(...,'pivot',PivotValue) 
-%  crameri(...)
+%  cmap = crameri.makemap('ColormapName') 
+%  cmap = crameri.makemap('-ColormapName') 
+%  cmap = crameri.makemap(...,NLevels)
+%  cmap = crameri.makemap(...,'pivot',PivotValue) 
+%  crameri.makemap(...)
 % 
 %% Description 
 % 
 % |crameri| without any inputs displays the options for colormaps. 
 % 
-% |cmap = crameri('ColormapName')| returns a 256x3 colormap. For a visual
+% |cmap = crameri.makemap('ColormapName')| returns a 256x3 colormap. For a visual
 % depiction of valid colormap names, type |crameri|. 
 %
-% |cmap = crameri('-ColormapName')| a minus sign preceeding any |ColormapName| flips the
+% |cmap = crameri.makemap('-ColormapName')| a minus sign preceeding any |ColormapName| flips the
 % order of the colormap. 
 %
-% |cmap = crameri(...,NLevels)| specifies a number of levels in the colormap. Default
+% |cmap = crameri.makemap(...,NLevels)| specifies a number of levels in the colormap. Default
 % value is |256|. 
 %
-% |cmap = crameri(...,'pivot',PivotValue)| centers a diverging colormap such that white 
+% |cmap = crameri.makemap(...,'pivot',PivotValue)| centers a diverging colormap such that white 
 % corresponds to a given value and maximum extents are set using current caxis limits. 
 % If no |PivotValue| is set, |0| is assumed. 
 %
-% |crameri(...)| without any outputs sets the current colormap to the current axes.  
+% |crameri.makemap(...)| without any outputs sets the current colormap to the current axes.  
 % 
 %% Examples 
 % Using this sample plot: 
@@ -51,18 +51,18 @@ crameri -devon
 %%
 % Set the colormap to a 12-level 'hawaii': 
 
-crameri('hawaii',12)
+crameri.makemap('hawaii',12)
 
 %% 
 % Get the RGB values of a 5-level buda colormap: 
 
-RGB = crameri('buda',5)
+RGB = crameri.makemap('buda',5)
 
 %%
 % Some of the values in the image are below zero and others are above. If this dataset represents
 % anomalies, perhaps a diverging colormap is more appropriate: 
 
-crameri('cork') 
+crameri.makemap('cork') 
 
 %%
 % It's unlikely that 1.7776 is an interesting value about which the data values 
@@ -70,7 +70,7 @@ crameri('cork')
 % the color axis limits using |caxis|, or you can keep the current color axis
 % limits by simply including the |'pivot'| option when you call |crameri|:  
 
-crameri('cork','pivot',0) 
+crameri.makemap('cork','pivot',0) 
 
 %% 
 % For a final example, topography. Topography is a special case because it's usually
@@ -91,7 +91,7 @@ cb = colorbar;
 ylabel(cb,'elevation') 
 
 shadem(-11,[225 83]) 
-crameri('oleron','pivot') 
+crameri.makemap('oleron','pivot') 
 
 %% Citing this colormap: 
 % Please acknowledge the free use of these colormaps by citing

@@ -1,4 +1,4 @@
-function cmap = crameri(ColormapName,varargin) 
+function cmap = makemap(ColormapName,varargin) 
 % crameri returns perceptually-uniform scientific colormaps created
 % by Fabio Crameri. 
 % 
@@ -144,7 +144,7 @@ end
 %% Adjust values to current caxis limits? 
 
 if autopivot
-   clim = caxis; 
+   clim = clim; 
    maxval = max(abs(clim-PivotValue)); 
    cmap = interp1(linspace(-maxval,maxval,size(cmap,1))+PivotValue, cmap, linspace(clim(1),clim(2),size(cmap,1)),'linear');
 end
