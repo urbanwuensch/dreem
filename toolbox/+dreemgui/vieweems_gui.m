@@ -120,6 +120,9 @@ classdef vieweems_gui < matlab.apps.AppBase
                     switch app.ColormapDropDown.Value
                         case 'blue-red'
                             colormap(app.eem,app.residualcolormap(50,50))
+                        case {'imola' 'hawaii' 'batlow'}
+                            map=crameri.makemap(app.ColormapDropDown.Value);
+                            colormap(app.eem,map)
                         otherwise
                             colormap(app.eem,app.ColormapDropDown.Value);
                     end
@@ -156,9 +159,19 @@ classdef vieweems_gui < matlab.apps.AppBase
 
         function map = residualcolormap(app,nneg,npos)
             % ncol=ceil(round(ncol)/2);
-            nmap=[linspace(0,1,nneg)' linspace(0.45,1,nneg)' linspace(0.737,1,nneg)'];
-            pmap=flipud([flipud(linspace(1,0.686,npos)') flipud(linspace(1,0.208,npos)') flipud(linspace(1,0.278,npos)')]);
-            map=[nmap;pmap];
+            try
+                S = load('CrameriColourMaps7.0.mat','vik'); 
+                map = S.('vik');
+                nmap=map(1:128,:);
+                pmap=map(129:end,:);
+                nmap = interp1(1:size(nmap,1), nmap, linspace(1,size(nmap,1),nneg),'linear');
+                pmap = interp1(1:size(pmap,1), pmap, linspace(1,size(pmap,1),npos),'linear');
+                map=[nmap;pmap];
+            catch
+                nmap=[linspace(0,1,nneg)' linspace(0.45,1,nneg)' linspace(0.737,1,nneg)'];
+                pmap=flipud([flipud(linspace(1,0.686,npos)') flipud(linspace(1,0.208,npos)') flipud(linspace(1,0.278,npos)')]);
+                map=[nmap;pmap];
+            end
 
         end
         
@@ -857,7 +870,7 @@ classdef vieweems_gui < matlab.apps.AppBase
 
             % Create ColormapDropDown
             app.ColormapDropDown = uidropdown(app.GridLayout4);
-            app.ColormapDropDown.Items = {'turbo', 'parula', 'jet', 'hsv', 'blue-red'};
+            app.ColormapDropDown.Items = {'turbo', 'imola', 'hawaii', 'batlow', 'parula', 'vik'};
             app.ColormapDropDown.ValueChangedFcn = createCallbackFcn(app, @triggerRedraw, true);
             app.ColormapDropDown.Tooltip = {'Select a colormap of your choosing.'};
             app.ColormapDropDown.Layout.Row = 1;
