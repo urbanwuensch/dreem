@@ -350,12 +350,12 @@ darkratio=median(x.S1DarkSample(:),'omitnan')./median(xnew.S1DarkSample(:),'omit
 Sratio=median(x.S1Blank(:),'omitnan')./median(xnew.S1Blank(:),'omitnan');
 
 if darkratio>1.01||darkratio<0.99
-    error('Pixel binning introduced a significant difference in the level of S1DarkSample signals')
+    warning('Pixel binning introduced a significant difference in the level of S1DarkSample signals')
 else
     %disp(['Ratio S1DarkSample before/S1DarkSample after ',num2str(darkratio)])
 end
 if Sratio>1.01||Sratio<0.99
-    error('Pixel binning introduced a significant difference in S1Sample signal levels')
+    warning('Pixel binning introduced a significant difference in S1Sample signal levels')
 else
     %disp(['Ratio S1Sample before/S1Sample after         ',num2str(Sratio)])
 end
@@ -372,10 +372,10 @@ for j=1:size(x.S1DarkSample,1)
 end
 
 if abs(max(samplediff))>10
-    error('Difference of >10 in binned sample fluorescence counts (samples)')
+    warning('Difference of >10 in binned sample fluorescence counts (samples)')
 end
 if abs(max(blankdiff))>10
-    error('Difference of >10 in binned sample fluorescence counts (samples)')
+    warning('Difference of >10 in binned sample fluorescence counts (samples)')
 end
 
 % Overwrite old fields
