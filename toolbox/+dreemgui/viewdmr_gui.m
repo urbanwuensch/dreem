@@ -40,13 +40,20 @@ classdef viewdmr_gui < matlab.apps.AppBase
 
 
         function map = residualcolormap(app,nneg,npos)
-
             % ncol=ceil(round(ncol)/2);
-
-            nmap=[linspace(0,1,nneg)' linspace(0.45,1,nneg)' linspace(0.737,1,nneg)'];
-            pmap=flipud([flipud(linspace(1,0.686,npos)') flipud(linspace(1,0.208,npos)') flipud(linspace(1,0.278,npos)')]);
-
-            map=[nmap;pmap];
+            try
+                S = load('CrameriColourMaps7.0.mat','vik'); 
+                map = S.('vik');
+                nmap=map(1:128,:);
+                pmap=map(129:end,:);
+                nmap = interp1(1:size(nmap,1), nmap, linspace(1,size(nmap,1),nneg),'linear');
+                pmap = interp1(1:size(pmap,1), pmap, linspace(1,size(pmap,1),npos),'linear');
+                map=[nmap;pmap];
+            catch
+                nmap=[linspace(0,1,nneg)' linspace(0.45,1,nneg)' linspace(0.737,1,nneg)'];
+                pmap=flipud([flipud(linspace(1,0.686,npos)') flipud(linspace(1,0.208,npos)') flipud(linspace(1,0.278,npos)')]);
+                map=[nmap;pmap];
+            end
 
         end
         
@@ -345,7 +352,6 @@ classdef viewdmr_gui < matlab.apps.AppBase
             % Create viewdmrUIFigure and hide until all components are created
             app.viewdmrUIFigure = uifigure('Visible', 'off');
             app.viewdmrUIFigure.AutoResizeChildren = 'off';
-            colormap(app.viewdmrUIFigure, 'turbo');
             app.viewdmrUIFigure.Position = [100 100 1485 429];
             app.viewdmrUIFigure.Name = 'viewdmr: View data, modelled data, and residuals of PARAFAC models';
             app.viewdmrUIFigure.SizeChangedFcn = createCallbackFcn(app, @updateAppLayout, true);
@@ -465,10 +471,8 @@ classdef viewdmr_gui < matlab.apps.AppBase
             xlabel(app.measured, 'Excitation (nm)')
             ylabel(app.measured, 'Emission (nm)')
             zlabel(app.measured, 'Z')
-            app.measured.TickDir = 'both';
             app.measured.Layout.Row = 1;
             app.measured.Layout.Column = 1;
-            colormap(app.measured, 'turbo')
 
             % Create modelled
             app.modelled = uiaxes(app.GridLayout2);
@@ -476,10 +480,8 @@ classdef viewdmr_gui < matlab.apps.AppBase
             xlabel(app.modelled, 'Excitation (nm)')
             ylabel(app.modelled, 'Emission (nm)')
             zlabel(app.modelled, 'Z')
-            app.modelled.TickDir = 'both';
             app.modelled.Layout.Row = 1;
             app.modelled.Layout.Column = 2;
-            colormap(app.modelled, 'turbo')
 
             % Create residuals
             app.residuals = uiaxes(app.GridLayout2);
@@ -487,10 +489,8 @@ classdef viewdmr_gui < matlab.apps.AppBase
             xlabel(app.residuals, 'Excitation (nm)')
             ylabel(app.residuals, 'Emission (nm)')
             zlabel(app.residuals, 'Z')
-            app.residuals.TickDir = 'both';
             app.residuals.Layout.Row = 1;
             app.residuals.Layout.Column = 3;
-            colormap(app.residuals, 'turbo')
 
             % Show the figure after all components are created
             app.viewdmrUIFigure.Visible = 'on';
