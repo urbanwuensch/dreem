@@ -193,7 +193,10 @@ classdef drEEMtoolbox < handle
             out.OvrWrteUnless = false;
             out.uifig = true;
         end
-        function versionRequires
+        function versionRequires(debugging)
+            arguments
+                debugging (1,:) {mustBeA(debugging,'logical')} = false
+            end
             lastcheck=getenv('drEEM ML version check');
             if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
                 if isMATLABReleaseOlderThan(drEEMtoolbox.requiredVersion)
@@ -210,7 +213,7 @@ classdef drEEMtoolbox < handle
                 else
                     warning(['Missing toolbox(es):',tbs{~isthere},'. Some toolbox functionality will not be available.'])
                 end
-                setenv('drEEM ML version check',char(datetime("today")))
+                setenv('drEEM ML version check',char(datetime("today"))),if debugging,disp('setenv executed (ML version check + addon tbxs)'),end
             else
                 % All good, nothing to do.
             end
@@ -310,7 +313,7 @@ classdef drEEMtoolbox < handle
                 end
             end
 
-            % Check for updates now
+            % Compare versions
             update = false; % Initialize update flag
             if debugging,disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)]),end
             for j=1:maxPart
@@ -321,7 +324,7 @@ classdef drEEMtoolbox < handle
                 elseif online.Parts(j) < existing.Parts(j)
                     if debugging,disp('update = false, implausible scenario'),end
                     disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)])
-                    disp('<strong>Online version out of date?</strong> This should not happen. Cancelling update routine...')
+                    disp('<strong>Online version out of date?</strong> Either you are a developer, or something is wrong. Returning...')
                     return
                 elseif online.Parts(j) == existing.Parts(j)
                     update = false;
@@ -350,7 +353,7 @@ classdef drEEMtoolbox < handle
             switch answer
                 case 'Open File exchange'
                     web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
-                    setenv('drEEM update checked',char(datetime("today")))
+                    setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                 case 'Update now'
                     % Kick off the ? parts of the URL
                     digested=strsplit(url,'?');
@@ -375,10 +378,10 @@ classdef drEEMtoolbox < handle
                         web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                     end
                 case 'No'
-                    setenv('drEEM update checked',char(datetime("today")))
+                    setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                     disp('<strong>Update skipped</strong>. Will check again tomorrow...')
                 otherwise
-                    setenv('drEEM update checked',char(datetime("today")))
+                    setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                     disp('<strong>Update skipped</strong>. Will check again tomorrow...')
             end
 
