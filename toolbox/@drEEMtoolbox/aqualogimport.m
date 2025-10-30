@@ -52,7 +52,7 @@ catch
 end
 %% Finding files
 disp('   Importing samples...')
-if isempty(file)
+if not(exist('file','var'))
     disp('   Idefify projects/samples to import (*.ogw first)')
     oldpath=pwd;
     patt='*.ogw';
