@@ -76,9 +76,9 @@ copygraphics(gcf)
 cd(fileparts(matlab.desktop.editor.getActiveFilename))
 clc
 directory='https://gitlab.com/dreem/dreem-2/-/raw/main/toolbox/@drEEMtoolbox/versions.txt';
-existing=[2 26 01];
-online=[2 26 01 05];
+existing=[2 25 11];
+online=[2 25 11 05];
 drEEMtoolbox.countinstallations
 drEEMtoolbox.updatedreem(directory,true,existing,online)
 
-tbx=drEEMtoolbox
+tbx=drEEMtoolbox;
