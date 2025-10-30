@@ -3,7 +3,7 @@ cd(fileparts(matlab.desktop.editor.getActiveFilename))
 disp('<strong> starting to pack...</strong>')
 % Change these for the release!!!
 uuid="186c884d-4f97-4318-9f12-cbf90a332379";
-version='2.25.10';
+version='2.25.11';
 OutputFile=string(['/Users/wuensch/Documents/git/dreem-2/release/drEEM-',version,'.mltbx']);
 releaseMax=matlabRelease.Release;
 
