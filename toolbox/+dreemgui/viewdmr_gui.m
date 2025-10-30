@@ -181,6 +181,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             colorbar(app.measured)
             colorbar(app.modelled)
             colorbar(app.residuals)
+            movegui(app.viewdmrUIFigure,'center')
         end
 
         % Value changed function: ModelDropDown, 

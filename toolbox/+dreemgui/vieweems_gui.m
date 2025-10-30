@@ -120,7 +120,7 @@ classdef vieweems_gui < matlab.apps.AppBase
                     switch app.ColormapDropDown.Value
                         case 'blue-red'
                             colormap(app.eem,app.residualcolormap(50,50))
-                        case {'imola' 'hawaii' 'batlow'}
+                        case {'imola' 'hawaii' 'batlow','vik'}
                             map=crameri.makemap(app.ColormapDropDown.Value);
                             colormap(app.eem,map)
                         otherwise
@@ -145,7 +145,7 @@ classdef vieweems_gui < matlab.apps.AppBase
                     n_pos=sum(levels>0);
                     colormap(app.eem,app.residualcolormap(n_neg,n_pos))
                     app.cmapOld=app.ColormapDropDown.Value;
-                    app.ColormapDropDown.Value='blue-red';
+                    app.ColormapDropDown.Value='vik';
                     app.ColormapDropDown.Enable='off';
             end
             %title(app.eem,app.data.filelist(app.state.sample))
