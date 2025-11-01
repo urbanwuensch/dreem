@@ -1,5 +1,5 @@
 classdef drEEMtoolbox < handle
-    % <a href = "matlab:drEEMtoolbox.doc('drEEM)'">Documentation of the drEEM toolbox</a>
+    % <a href = "matlab:drEEMtoolbox.doc('drEEM')">Documentation of the drEEM toolbox</a>
     %
     % <strong>EXAMPLE(S)</strong>
     %   1. Make a class instance to call methods (highly recommended)
@@ -385,6 +385,32 @@ classdef drEEMtoolbox < handle
                     disp('<strong>Update skipped</strong>. Will check again tomorrow...')
             end
 
+        end
+
+        function displaycitationinformation
+
+            zenodoref='Wünsch, U., Murphy, K., Esmaeeli, A., & Bro, R. (2025). drEEM toolbox version 2. Zenodo. https://doi.org/10.5281/zenodo.17182160';
+            amethoreg='Murphy, Kathleen R., et al. (2013). Fluorescence Spectroscopy and Multi-Way Techniques. PARAFAC. Analytical Methods, vol. 5, no. 23, Royal Society of Chemistry (RSC), p. 6557, https://doi.org/10.1039/c3ay41160e.';
+            zenodoweb='https://doi.org/10.5281/zenodo.17182160';
+            amethoweb='https://doi.org/10.1039/c3ay41160e';
+
+
+            zenodocopy=['<a href = "matlab:clipboard(''copy'',''',zenodoref,''')">click to copy reference</a>'];
+            amethocopy=['<a href = "matlab:clipboard(''copy'',''',amethoreg,''')">click to copy reference</a>'];
+
+            zenodovisit=['<a href = "matlab:web(''',zenodoweb,''')">visit resource website</a>'];
+            amethovisit=['<a href = "matlab:web(''',amethoweb,''')">visit resource website</a>'];
+
+            message=['\n<strong>drEEM is free & open source.</strong> We ask that you cite these resources to indicate its use:' ...
+                '\n    1. Toolbox: Zenodo entry (',zenodocopy,' | ',zenodovisit,')'...
+                '\n    2. PARAFAC methodology: 2013 tutorial review (',amethocopy,' | ',amethovisit,')'...
+                '\n\n    We also ask that you cite the appropriate primary references for peaks, slopes, and indicies.'];
+            try
+                disp(sprintf(message))
+            catch
+                % Nothing (the errors usually occur during the execution
+                % which won't be caught by the try-catch statement
+            end
         end
     end
 

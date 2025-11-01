@@ -113,4 +113,7 @@ for i=1:size(report,1)
     end
 end
 fclose(fid);
+
+tbx.displaycitationinformation
+
 end
