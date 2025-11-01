@@ -385,7 +385,7 @@ details:open > summary {
 
 <h1 id="toc_0">pickpeaks</h1>
 
-<p>Extract common fluorescence peaks and indices from a drEEMdataset object.</p>
+<p>Extract common fluorescence peaks and indices from a drEEMdataset object and store them in the <code>opticalMetadata</code> dataset property.</p>
 
 <h2 id="toc_1">Syntax</h2>
 
@@ -397,32 +397,15 @@ details:open > summary {
 
 <h2 id="toc_2">Description</h2>
 
-<p>The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample.</p>
+<p>The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample. Please refer to the primary references provided below to indicate the use of peaks or indicies.</p>
 
-<blockquote>
-<p><strong><em>Note:</em></strong> Data coverage differs between datasets. If a peak or index is out of the range covered by the measurements, NaNs will be returned. If the distance between the peak definition and the measurements is equal to or greater than 5nm, a message will be displayed to disclose this. The function does not and cannot perform interpolations to solve the issue.</p>
-</blockquote>
-
-<ol>
-<li><strong>Peak Extraction:</strong><br>
-
-<ol>
-<li>Single Point: The peak value is taken directly from the specified Em/Ex pair.</li>
-<li>Max over Range: The peak value is the maximum fluorescence intensity within the specified Em and/or Ex range.</li>
-</ol></li>
-<li><strong>Fluorescence Indices:</strong><br>
-
-<ol>
-<li>Fluorescence Index (FluI): Ratio of fluorescence intensities at <code>Em=470</code> nm and <code>Em=520</code> nm for <code>Ex=370</code> nm.</li>
-<li>Freshness Index (FrI): Ratio of fluorescence intensities at <code>Em=380</code> nm and the maximum intensity between <code>Em=420</code> nm and <code>Em=435</code> nm for <code>Ex=310</code> nm.</li>
-<li>Biological Index (BIX): Ratio of fluorescence intensities at <code>Em=380</code> nm and <code>Em=430</code> nm for <code>Ex=310</code> nm.</li>
-<li>Humification Index (HIX): Ratio of the sum of fluorescence intensities between <code>Em=435</code> nm and <code>Em=480</code> nm to the sum of intensities between <code>Em=300</code> nm and <code>Em=345</code> nm plus <code>Em=435</code> nm and <code>Em=480</code> nm for <code>Ex=254</code> nm.</li>
-</ol></li>
-</ol>
+<p>Data coverage differs between datasets. If a peak or index is out of the range covered by the measurements, NaNs will be returned. If the distance between the peak definition and the measurements is equal to or greater than 5nm, a message will be displayed to disclose this. The function does not and cannot perform interpolations to solve the issue.</p>
 
 <blockquote>
 <p><strong><em>Info:</em></strong> For fluorescence indices, the emission scans in question are smoothed using <code>smoothdata(___,&#39;sgolay&#39;,2)</code>. Verify with <code>pickpeaks(data,details=true)</code> if this represents <em>your</em> data well in <em>your</em> case.</p>
 </blockquote>
+
+<p>The following table provides a reference for how the peaks or indices are extracted:</p>
 
 <table border="1">
     <tr>
@@ -506,6 +489,13 @@ details:open > summary {
         <td>Ratio</td>
 
     </tr>
+    <tr>
+        <td>Aromaticity index (ARIX)</td>
+        <td>390, 520</td>
+        <td>320</td>
+        <td>Ratio</td>
+
+    </tr>
 </table>
 
 <p>Pickes predefined peaks and fluorescence indices in the EEM and stores the results in <code>dataout.opticalMetadata</code>.</p>
@@ -539,7 +529,20 @@ Th function <code>pickpeaks</code> extracts predefined fluorescence peaks, inclu
 
 <p></details></p>
 
-<h2 id="toc_3">Input arguments</h2>
+<h2 id="toc_3">References</h2>
+
+<ol>
+<li>Peaks A, B, C, T, M, N: Coble, P.G., 2007. Marine optical biogeochemistry: The chemistry of ocean color.
+%    Chem. Rev. 107, 402–418. https://doi.org/10.1021/cr050350+</li>
+<li>Peak D: Lochmüller CH, Saavedra SS. Conformational Changes in a Soil Fulvic Acid Measured by Time-Dependent Fluorescence Depolarization. Analytical Chemistry. 1986;58(9):1978-1981. doi:10.1021/ac00122a014</li>
+<li>Fluorescence index: Maie, N., Parish, K.J., Watanabe, A., Knicker, H., Benner, R., Abe, T., Kaiser, K., Jaffé, R., 2006. Chemical characteristics of dissolved organic nitrogen in an oligotrophic subtropical coastal ecosystem. Geochim. Cosmochim. Acta 70, 4491–4506. https://doi.org/10.1016/j.gca.2006.06.1554</li>
+<li>Freshness index: Parlanti, E., Wörz, K., Geoffroy, L., Lamotte, M., 2000. Dissolved organic matter fluorescence spectroscopy as a tool to estimate biological activity in a coastal zone submitted to anthropogenic inputs. Org. Geochem. 31, 1765–1781. https://doi.org/10.1016/S0146-6380(00)00124-8</li>
+<li>Biological index: Huguet, A., Vacher, L., Relexans, S., Saubusse, S., Froidefond, J.M., Parlanti, E., 2009. Properties of fluorescent dissolved organic matter in the Gironde Estuary. Org. Geochem. 40, 706–719. https://doi.org/10.1016/j.orggeochem.2009.03.002</li>
+<li>Humification index: Ohno, T. Fluorescence Inner-Filtering Correction for Determining the Humification Index of Dissolved Organic Matter. Environ. Sci. Technol. 2002, 36 (4), 742−746. https://doi.org/10.1021/es0155276</li>
+<li>Aromaticity index: Murphy KR. Prediction of Dissolved Organic Carbon Concentrations in Inland Waters Using Optical Proxies of Aromaticity. Environ Sci Technol. 2025;59(31):16430-16442. doi:10.1021/acs.est.5c05408</li>
+</ol>
+
+<h2 id="toc_4">Input arguments</h2>
 
 <p><details>
     <summary><b><code>data</code> - contains sample fluorescence</b></summary>
@@ -549,7 +552,7 @@ Th function <code>pickpeaks</code> extracts predefined fluorescence peaks, inclu
 
 <p></details></p>
 
-<h2 id="toc_4">Name-Value arguments</h2>
+<h2 id="toc_5">Name-Value arguments</h2>
 
 <p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
 <a name="NameValue"></a></p>
@@ -574,7 +577,7 @@ Th function <code>pickpeaks</code> extracts predefined fluorescence peaks, inclu
 
 <p></details></p>
 
-<h2 id="toc_5">Output arguments</h2>
+<h2 id="toc_6">Output arguments</h2>
 
 <p><details open>
     <summary><b><code>dataout</code> - contains results</b></summary>

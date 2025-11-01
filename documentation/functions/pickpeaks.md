@@ -1,7 +1,7 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 
 # pickpeaks
-Extract common fluorescence peaks and indices from a drEEMdataset object.
+Extract common fluorescence peaks and indices from a drEEMdataset object and store them in the `opticalMetadata` dataset property.
 
 
 
@@ -16,20 +16,14 @@ Extract common fluorescence peaks and indices from a drEEMdataset object.
 
 ## Description
 
-The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample.
+The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample. Please refer to the primary references provided below to indicate the use of peaks or indicies.
 
-> ***Note:*** Data coverage differs between datasets. If a peak or index is out of the range covered by the measurements, NaNs will be returned. If the distance between the peak definition and the measurements is equal to or greater than 5nm, a message will be displayed to disclose this. The function does not and cannot perform interpolations to solve the issue.
+Data coverage differs between datasets. If a peak or index is out of the range covered by the measurements, NaNs will be returned. If the distance between the peak definition and the measurements is equal to or greater than 5nm, a message will be displayed to disclose this. The function does not and cannot perform interpolations to solve the issue.
 
-1. **Peak Extraction:**<br>
-	1. Single Point: The peak value is taken directly from the specified Em/Ex pair.
-	2. Max over Range: The peak value is the maximum fluorescence intensity within the specified Em and/or Ex range.
-2. **Fluorescence Indices:**<br>
-	1. Fluorescence Index (FluI): Ratio of fluorescence intensities at `Em=470` nm and `Em=520` nm for `Ex=370` nm.
-	2. Freshness Index (FrI): Ratio of fluorescence intensities at `Em=380` nm and the maximum intensity between `Em=420` nm and `Em=435` nm for `Ex=310` nm.
-	3. Biological Index (BIX): Ratio of fluorescence intensities at `Em=380` nm and `Em=430` nm for `Ex=310` nm.
-	4. Humification Index (HIX): Ratio of the sum of fluorescence intensities between `Em=435` nm and `Em=480` nm to the sum of intensities between `Em=300` nm and `Em=345` nm plus `Em=435` nm and `Em=480` nm for `Ex=254` nm.
 
 > ***Info:*** For fluorescence indices, the emission scans in question are smoothed using `smoothdata(___,'sgolay',2)`. Verify with `pickpeaks(data,details=true)` if this represents _your_ data well in _your_ case.
+
+The following table provides a reference for how the peaks or indices are extracted:
 
 <table border="1">
     <tr>
@@ -113,6 +107,13 @@ The function returns fluorescence intensities and ratios at predefined points in
         <td>Ratio</td>
 
     </tr>
+    <tr>
+        <td>Aromaticity index (ARIX)</td>
+        <td>390, 520</td>
+        <td>320</td>
+        <td>Ratio</td>
+
+    </tr>
 </table>
 
 Pickes predefined peaks and fluorescence indices in the EEM and stores the results in `dataout.opticalMetadata`.
@@ -146,6 +147,17 @@ specifies additional options using one or more [name-value](#NameValue) pair arg
 If no output argument is provided, the function will automatically set `plot=true` and `details=true` to provide diagnostic plots that describe the peack picking process in more detail.
 
 </details>
+
+## References
+
+1. Peaks A, B, C, T, M, N: Coble, P.G., 2007. Marine optical biogeochemistry: The chemistry of ocean color.
+%    Chem. Rev. 107, 402–418. https://doi.org/10.1021/cr050350+
+2. Peak D: Lochmüller CH, Saavedra SS. Conformational Changes in a Soil Fulvic Acid Measured by Time-Dependent Fluorescence Depolarization. Analytical Chemistry. 1986;58(9):1978-1981. doi:10.1021/ac00122a014
+3. Fluorescence index: Maie, N., Parish, K.J., Watanabe, A., Knicker, H., Benner, R., Abe, T., Kaiser, K., Jaffé, R., 2006. Chemical characteristics of dissolved organic nitrogen in an oligotrophic subtropical coastal ecosystem. Geochim. Cosmochim. Acta 70, 4491–4506. https://doi.org/10.1016/j.gca.2006.06.1554
+4. Freshness index: Parlanti, E., Wörz, K., Geoffroy, L., Lamotte, M., 2000. Dissolved organic matter fluorescence spectroscopy as a tool to estimate biological activity in a coastal zone submitted to anthropogenic inputs. Org. Geochem. 31, 1765–1781. https://doi.org/10.1016/S0146-6380(00)00124-8
+5. Biological index: Huguet, A., Vacher, L., Relexans, S., Saubusse, S., Froidefond, J.M., Parlanti, E., 2009. Properties of fluorescent dissolved organic matter in the Gironde Estuary. Org. Geochem. 40, 706–719. https://doi.org/10.1016/j.orggeochem.2009.03.002
+6. Humification index: Ohno, T. Fluorescence Inner-Filtering Correction for Determining the Humification Index of Dissolved Organic Matter. Environ. Sci. Technol. 2002, 36 (4), 742−746. https://doi.org/10.1021/es0155276
+7. Aromaticity index: Murphy KR. Prediction of Dissolved Organic Carbon Concentrations in Inland Waters Using Optical Proxies of Aromaticity. Environ Sci Technol. 2025;59(31):16430-16442. doi:10.1021/acs.est.5c05408
 
 ## Input arguments
 <details>
