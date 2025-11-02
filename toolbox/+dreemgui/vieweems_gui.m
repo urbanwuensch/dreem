@@ -118,9 +118,9 @@ classdef vieweems_gui < matlab.apps.AppBase
                     sc(2).LineWidth = 0.5;
                     sc(2).LevelList=linspace(min(mat(~isnan(mat))),max(mat(~isnan(mat))),app.contoursEditField.Value);
                     switch app.ColormapDropDown.Value
-                        case 'blue-red'
+                        case 'vik'
                             colormap(app.eem,app.residualcolormap(50,50))
-                        case {'imola' 'hawaii' 'batlow','vik'}
+                        case {'imola' 'hawaii' 'batlow','-imola' '-hawaii' '-batlow'}
                             map=crameri.makemap(app.ColormapDropDown.Value);
                             colormap(app.eem,map)
                         otherwise
@@ -870,7 +870,7 @@ classdef vieweems_gui < matlab.apps.AppBase
 
             % Create ColormapDropDown
             app.ColormapDropDown = uidropdown(app.GridLayout4);
-            app.ColormapDropDown.Items = {'turbo', 'imola', 'hawaii', 'batlow', 'parula', 'vik'};
+            app.ColormapDropDown.Items = {'turbo', 'imola', 'hawaii', 'batlow', 'parula', 'vik', '-imola', '-hawaii', '-batlow'};
             app.ColormapDropDown.ValueChangedFcn = createCallbackFcn(app, @triggerRedraw, true);
             app.ColormapDropDown.Tooltip = {'Select a colormap of your choosing.'};
             app.ColormapDropDown.Layout.Row = 1;
