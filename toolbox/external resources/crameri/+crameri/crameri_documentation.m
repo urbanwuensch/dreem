@@ -41,12 +41,12 @@ colorbar
 %% 
 % Set the colormap to 'devon': 
 
-crameri devon
+crameri.makemap("devon")
 
 %% 
 % Same as above, but with an inverted devon colormap: 
 
-crameri -devon
+crameri.makemap("-devon")
 
 %%
 % Set the colormap to a 12-level 'hawaii': 
@@ -56,13 +56,13 @@ crameri.makemap('hawaii',12)
 %% 
 % Get the RGB values of a 5-level buda colormap: 
 
-RGB = crameri.makemap('buda',5)
+RGB = crameri.makemap('buda',5);
 
 %%
 % Some of the values in the image are below zero and others are above. If this dataset represents
 % anomalies, perhaps a diverging colormap is more appropriate: 
 
-crameri.makemap('cork') 
+crameri.makemap('cork');
 
 %%
 % It's unlikely that 1.7776 is an interesting value about which the data values 

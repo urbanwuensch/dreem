@@ -114,6 +114,6 @@ for i=1:size(report,1)
 end
 fclose(fid);
 
-tbx.displaycitationinformation
+drEEMtoolbox.displaycitationinformation
 
 end

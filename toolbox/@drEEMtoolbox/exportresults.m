@@ -231,7 +231,7 @@ writetable(load,filename,"FileType","spreadsheet",...
 disp('    Finished spreadsheets for selected PARAFAC model (scores and loadings)')
 disp('<strong> Success! Done with result export.</strong>')
 
-tbx.displaycitationinformation
+drEEMtoolbox.displaycitationinformation
 
 end
 

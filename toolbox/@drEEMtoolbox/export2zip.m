@@ -251,7 +251,7 @@ rmdir("drEEMexportTemporary",'s')
 disp('    Removed temporary directory.')
 disp('<strong> Success! Done with export.</strong>')
 
-tbx.displaycitationinformation
+drEEMtoolbox.displaycitationinformation
 
 end
 
