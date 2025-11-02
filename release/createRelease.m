@@ -5,6 +5,7 @@ disp('<strong> starting to pack...</strong>')
 uuid="186c884d-4f97-4318-9f12-cbf90a332379";
 version='2.25.11';
 OutputFile=string(['/Users/wuensch/Documents/git/dreem-2/release/drEEM-',version,'.mltbx']);
+if isfile(OutputFile),delete(OutputFile),end
 releaseMax=matlabRelease.Release;
 
 % Get old, make new opts
