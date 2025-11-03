@@ -106,8 +106,13 @@ classdef vieweems_gui < matlab.apps.AppBase
                 case {'data','model'}
                     % After switch from residuals, restore old colormap
                     if not(isempty(app.cmapOld))
-                        app.ColormapDropDown.Value=app.cmapOld;
-                        app.cmapOld=[];
+                        try
+                            app.ColormapDropDown.Value=app.cmapOld;
+                            app.cmapOld=[];
+                        catch
+                            app.ColormapDropDown.Value=app.ColormapDropDown.Items{1};
+                            app.cmapOld=[];
+                        end
                     end
                     app.colorLimitSlider.Enable="on";
                     sc = surfc(app.eem,x,y,mat,...
@@ -118,8 +123,6 @@ classdef vieweems_gui < matlab.apps.AppBase
                     sc(2).LineWidth = 0.5;
                     sc(2).LevelList=linspace(min(mat(~isnan(mat))),max(mat(~isnan(mat))),app.contoursEditField.Value);
                     switch app.ColormapDropDown.Value
-                        case 'vik'
-                            colormap(app.eem,app.residualcolormap(50,50))
                         case {'imola' 'hawaii' 'batlow','-imola' '-hawaii' '-batlow'}
                             map=crameri.makemap(app.ColormapDropDown.Value);
                             colormap(app.eem,map)
@@ -128,7 +131,7 @@ classdef vieweems_gui < matlab.apps.AppBase
                     end
                     zlim(app.eem,[min(mat(~isnan(mat))),max(mat(~isnan(mat)))])
                     clim(app.eem,app.aclim)
-                    app.ColormapDropDown.Enable='on';
+                    %app.ColormapDropDown.Enable='on';
                 case 'residuals'
                     app.colorLimitSlider.Enable="off";
                     sc = surfc(app.eem,x,y,mat,'EdgeColor','none','FaceColor','flat');
@@ -145,8 +148,8 @@ classdef vieweems_gui < matlab.apps.AppBase
                     n_pos=sum(levels>0);
                     colormap(app.eem,app.residualcolormap(n_neg,n_pos))
                     app.cmapOld=app.ColormapDropDown.Value;
-                    app.ColormapDropDown.Value='vik';
-                    app.ColormapDropDown.Enable='off';
+                    %app.ColormapDropDown.Value='vik';
+                    %app.ColormapDropDown.Enable='off';
             end
             %title(app.eem,app.data.filelist(app.state.sample))
             colorbar(app.eem)
@@ -160,8 +163,11 @@ classdef vieweems_gui < matlab.apps.AppBase
         function map = residualcolormap(app,nneg,npos)
             % ncol=ceil(round(ncol)/2);
             try
-                S = load('CrameriColourMaps7.0.mat','vik'); 
-                map = S.('vik');
+                S = load('CrameriColourMaps7.0.mat',erase(app.ColormapDropDown.Value,'-')); 
+                map = S.(erase(app.ColormapDropDown.Value,'-'));
+                if contains(app.ColormapDropDown.Value,'-')
+                    map=flipud(map);
+                end
                 nmap=map(1:128,:);
                 pmap=map(129:end,:);
                 nmap = interp1(1:size(nmap,1), nmap, linspace(1,size(nmap,1),nneg),'linear');
@@ -574,7 +580,20 @@ classdef vieweems_gui < matlab.apps.AppBase
         % Value changed function: ColormapDropDown, contoursEditField, 
         % ...and 2 other components
         function triggerRedraw(app, event)
-                       
+            
+            % Depending on Data type, change available colormaps
+            if not(matches(app.state.dataType,app.DatatypeDropDown.Value))
+                app.state.dataType=app.DatatypeDropDown.Value;
+                switch app.state.dataType
+                    case {'data','model'}
+                        app.ColormapDropDown.Items={'turbo','imola','hawaii','batlow','parula'...
+                            '-imola','-hawaii','-batlow'};
+                    case 'residuals'
+                        app.ColormapDropDown.Items={'vik','berlin','-roma'};
+
+                end
+            end
+
             % Rotation has no callback, so we need to save the viewangles
             app.storeViewangle;
             % Plot the EEM
