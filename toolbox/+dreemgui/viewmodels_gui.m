@@ -3,62 +3,66 @@ classdef viewmodels_gui < matlab.apps.AppBase
     % Properties that correspond to app components
     properties (Access = public)
         viewmodelsDiagnosePARAFACmodelsUIFigure  matlab.ui.Figure
-        GridLayout5            matlab.ui.container.GridLayout
-        TabGroup               matlab.ui.container.TabGroup
-        OverviewTab            matlab.ui.container.Tab
-        GridLayout4            matlab.ui.container.GridLayout
-        Panel_2                matlab.ui.container.Panel
-        GridLayout10           matlab.ui.container.GridLayout
-        var                    matlab.ui.control.UIAxes
-        core                   matlab.ui.control.UIAxes
-        UITable                matlab.ui.control.Table
-        ScoresloadingsTab      matlab.ui.container.Tab
-        GridLayout7            matlab.ui.container.GridLayout
-        scoresloadscanvas      matlab.ui.container.Panel
-        SpectralloadingsTab    matlab.ui.container.Tab
-        GridLayout8            matlab.ui.container.GridLayout
-        loadstab               matlab.ui.container.Panel
-        LoadingsleveragesTab   matlab.ui.container.Tab
-        GridLayout             matlab.ui.container.GridLayout
-        Panel                  matlab.ui.container.Panel
-        GridLayout9            matlab.ui.container.GridLayout
-        leex                   matlab.ui.control.UIAxes
-        leem                   matlab.ui.control.UIAxes
-        les                    matlab.ui.control.UIAxes
-        loex                   matlab.ui.control.UIAxes
-        loem                   matlab.ui.control.UIAxes
-        scs                    matlab.ui.control.UIAxes
-        LinelegendCheckBox     matlab.ui.control.CheckBox
-        lldrop                 matlab.ui.control.DropDown
-        ErrorsleveragesTab     matlab.ui.container.Tab
-        GridLayout_2           matlab.ui.container.GridLayout
-        Panel_3                matlab.ui.container.Panel
-        GridLayout11           matlab.ui.container.GridLayout
-        elex                   matlab.ui.control.UIAxes
-        elem                   matlab.ui.control.UIAxes
-        elsam                  matlab.ui.control.UIAxes
-        eldrop                 matlab.ui.control.DropDown
-        FingerprintplotsTab    matlab.ui.container.Tab
-        GridLayout2            matlab.ui.container.GridLayout
+        GridLayout5                  matlab.ui.container.GridLayout
+        TabGroup                     matlab.ui.container.TabGroup
+        OverviewTab                  matlab.ui.container.Tab
+        GridLayout4                  matlab.ui.container.GridLayout
+        Panel_2                      matlab.ui.container.Panel
+        GridLayout10                 matlab.ui.container.GridLayout
+        var                          matlab.ui.control.UIAxes
+        core                         matlab.ui.control.UIAxes
+        UITable                      matlab.ui.control.Table
+        ScoresloadingsTab            matlab.ui.container.Tab
+        GridLayout7                  matlab.ui.container.GridLayout
+        scoresloadscanvas            matlab.ui.container.Panel
+        SpectralloadingsTab          matlab.ui.container.Tab
+        GridLayout8                  matlab.ui.container.GridLayout
+        loadstab                     matlab.ui.container.Panel
+        LoadingsleveragesTab         matlab.ui.container.Tab
+        GridLayout                   matlab.ui.container.GridLayout
+        Panel                        matlab.ui.container.Panel
+        GridLayout9                  matlab.ui.container.GridLayout
+        leex                         matlab.ui.control.UIAxes
+        leem                         matlab.ui.control.UIAxes
+        les                          matlab.ui.control.UIAxes
+        loex                         matlab.ui.control.UIAxes
+        loem                         matlab.ui.control.UIAxes
+        scs                          matlab.ui.control.UIAxes
+        LinelegendCheckBox           matlab.ui.control.CheckBox
+        lldrop                       matlab.ui.control.DropDown
+        ErrorsleveragesTab           matlab.ui.container.Tab
+        GridLayout_2                 matlab.ui.container.GridLayout
+        Panel_3                      matlab.ui.container.Panel
+        GridLayout11                 matlab.ui.container.GridLayout
+        elex                         matlab.ui.control.UIAxes
+        elem                         matlab.ui.control.UIAxes
+        elsam                        matlab.ui.control.UIAxes
+        eldrop                       matlab.ui.control.DropDown
+        FingerprintplotsTab          matlab.ui.container.Tab
+        GridLayout2                  matlab.ui.container.GridLayout
+        NumberofcontousSpinner       matlab.ui.control.Spinner
+        NumberofcontousSpinnerLabel  matlab.ui.control.Label
+        ColormapDropDown             matlab.ui.control.DropDown
+        ColormapLabel                matlab.ui.control.Label
         ShowRamanandRayleighscatterlocationCheckBox  matlab.ui.control.CheckBox
-        fingerpanel            matlab.ui.container.Panel
-        fingerdrop             matlab.ui.control.DropDown
-        SSETab                 matlab.ui.container.Tab
-        GridLayout3            matlab.ui.container.GridLayout
-        Panel_4                matlab.ui.container.Panel
-        GridLayout12           matlab.ui.container.GridLayout
-        sseex                  matlab.ui.control.UIAxes
-        sseem                  matlab.ui.control.UIAxes
-        ssesam                 matlab.ui.control.UIAxes
-        ssedrop                matlab.ui.control.DropDown
-        ScorecorrelationTab    matlab.ui.container.Tab
-        GridLayout6            matlab.ui.container.GridLayout
+        fingerpanel                  matlab.ui.container.Panel
+        fingerdrop                   matlab.ui.control.DropDown
+        SSETab                       matlab.ui.container.Tab
+        GridLayout3                  matlab.ui.container.GridLayout
+        Panel_4                      matlab.ui.container.Panel
+        GridLayout12                 matlab.ui.container.GridLayout
+        sseex                        matlab.ui.control.UIAxes
+        sseem                        matlab.ui.control.UIAxes
+        ssesam                       matlab.ui.control.UIAxes
+        ssedrop                      matlab.ui.control.DropDown
+        ScorecorrelationTab          matlab.ui.container.Tab
+        GridLayout6                  matlab.ui.container.GridLayout
         viewcorrelationsvsmetadataButton  matlab.ui.control.Button
-        corrcanvas             matlab.ui.container.Panel
-        ContextMenu            matlab.ui.container.ContextMenu
-        SavefigurepanelMenu    matlab.ui.container.Menu
-        ContextMenu2           matlab.ui.container.ContextMenu
-        SavefigurepanelMenu_2  matlab.ui.container.Menu
+        corrcanvas                   matlab.ui.container.Panel
+        ContextMenu                  matlab.ui.container.ContextMenu
+        SavefigurepanelMenu          matlab.ui.container.Menu
+        ContextMenu2                 matlab.ui.container.ContextMenu
+        SavefigurepanelMenu_2        matlab.ui.container.Menu
     end
 
 
@@ -490,7 +494,8 @@ classdef viewmodels_gui < matlab.apps.AppBase
             end
         end
 
-        % Value changed function: fingerdrop
+        % Value changed function: ColormapDropDown, 
+        % ...and 2 other components
         function fingerdropValueChanged(app, event)
             value = app.fingerdrop.Value;
             value=erase(value,' ');
@@ -513,7 +518,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             for n=1:f
                 contourf(ax(n),app.data.Ex,app.data.Em,factors{2}(:,n).*factors{3}(:,n)',100,'LineStyle','none','DisplayName','contourf');
-                contour(ax(n),app.data.Ex,app.data.Em,factors{2}(:,n).*factors{3}(:,n)',10,'Color','k','DisplayName','contourf');
+                contour(ax(n),app.data.Ex,app.data.Em,factors{2}(:,n).*factors{3}(:,n)',app.NumberofcontousSpinner.Value,'Color','k','DisplayName','contourf');
                 grid(ax(n),'on')
                 title(ax(n),['C',num2str(n)])
                 if app.ShowRamanandRayleighscatterlocationCheckBox.Value
@@ -523,6 +528,13 @@ classdef viewmodels_gui < matlab.apps.AppBase
                 end
                 xlim(ax(n),[min(app.data.Ex) max(app.data.Ex)])
                 ylim(ax(n),[min(app.data.Em) max(app.data.Em)])
+                switch app.ColormapDropDown.Value
+                    case {'turbo','parula'}
+                        colormap(ax(n),app.ColormapDropDown.Value)
+                    otherwise
+                        map=crameri.makemap(app.ColormapDropDown.Value);
+                        colormap(ax(n),map)
+                end
 
             end
             xlabel(app.fingergrid,'Excitation (nm)')
@@ -928,7 +940,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
 
             % Create GridLayout2
             app.GridLayout2 = uigridlayout(app.FingerprintplotsTab);
-            app.GridLayout2.ColumnWidth = {'1x', '1x', '1x'};
+            app.GridLayout2.ColumnWidth = {'1x', '1x', '1x', '1x', '1x', '1x'};
             app.GridLayout2.RowHeight = {30, '1x'};
             app.GridLayout2.BackgroundColor = [0.9412 0.9412 0.9412];
 
@@ -936,20 +948,50 @@ classdef viewmodels_gui < matlab.apps.AppBase
             app.fingerdrop = uidropdown(app.GridLayout2);
             app.fingerdrop.ValueChangedFcn = createCallbackFcn(app, @fingerdropValueChanged, true);
             app.fingerdrop.Layout.Row = 1;
-            app.fingerdrop.Layout.Column = 2;
+            app.fingerdrop.Layout.Column = 5;
 
             % Create fingerpanel
             app.fingerpanel = uipanel(app.GridLayout2);
             app.fingerpanel.BackgroundColor = [0.9412 0.9412 0.9412];
             app.fingerpanel.Layout.Row = 2;
-            app.fingerpanel.Layout.Column = [1 3];
+            app.fingerpanel.Layout.Column = [1 6];
 
             % Create ShowRamanandRayleighscatterlocationCheckBox
             app.ShowRamanandRayleighscatterlocationCheckBox = uicheckbox(app.GridLayout2);
             app.ShowRamanandRayleighscatterlocationCheckBox.ValueChangedFcn = createCallbackFcn(app, @ShowRamanandRayleighscatterlocationCheckBoxValueChanged, true);
             app.ShowRamanandRayleighscatterlocationCheckBox.Text = 'Show Raman and Rayleigh scatter location';
             app.ShowRamanandRayleighscatterlocationCheckBox.Layout.Row = 1;
-            app.ShowRamanandRayleighscatterlocationCheckBox.Layout.Column = 3;
+            app.ShowRamanandRayleighscatterlocationCheckBox.Layout.Column = 6;
+
+            % Create ColormapLabel
+            app.ColormapLabel = uilabel(app.GridLayout2);
+            app.ColormapLabel.HorizontalAlignment = 'right';
+            app.ColormapLabel.Layout.Row = 1;
+            app.ColormapLabel.Layout.Column = 1;
+            app.ColormapLabel.Text = 'Colormap:';
+
+            % Create ColormapDropDown
+            app.ColormapDropDown = uidropdown(app.GridLayout2);
+            app.ColormapDropDown.Items = {'turbo', 'roma', 'imola', 'hawaii', 'batlow', 'parula', '-imola', '-hawaii', '-batlow'};
+            app.ColormapDropDown.ValueChangedFcn = createCallbackFcn(app, @fingerdropValueChanged, true);
+            app.ColormapDropDown.Layout.Row = 1;
+            app.ColormapDropDown.Layout.Column = 2;
+            app.ColormapDropDown.Value = 'turbo';
+
+            % Create NumberofcontousSpinnerLabel
+            app.NumberofcontousSpinnerLabel = uilabel(app.GridLayout2);
+            app.NumberofcontousSpinnerLabel.HorizontalAlignment = 'right';
+            app.NumberofcontousSpinnerLabel.Layout.Row = 1;
+            app.NumberofcontousSpinnerLabel.Layout.Column = 3;
+            app.NumberofcontousSpinnerLabel.Text = 'Number of contous:';
+
+            % Create NumberofcontousSpinner
+            app.NumberofcontousSpinner = uispinner(app.GridLayout2);
+            app.NumberofcontousSpinner.Limits = [0 50];
+            app.NumberofcontousSpinner.ValueChangedFcn = createCallbackFcn(app, @fingerdropValueChanged, true);
+            app.NumberofcontousSpinner.Layout.Row = 1;
+            app.NumberofcontousSpinner.Layout.Column = 4;
+            app.NumberofcontousSpinner.Value = 15;
 
             % Create SSETab
             app.SSETab = uitab(app.TabGroup);
