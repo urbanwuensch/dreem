@@ -1,4 +1,8 @@
 cd(fileparts(matlab.desktop.editor.getActiveFilename))
+initSession("vanilla",force=true)
+cd ..
+p=openProject("dreem-2.prj");
+cd(fileparts(matlab.desktop.editor.getActiveFilename))
 
 disp('<strong> starting to pack...</strong>')
 % Change these for the release!!!

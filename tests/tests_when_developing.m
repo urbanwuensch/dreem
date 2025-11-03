@@ -82,6 +82,3 @@ drEEMtoolbox.countinstallations
 drEEMtoolbox.updatedreem(directory,true,existing,online)
 
 tbx=drEEMtoolbox;
-
-
-%% run pre-deployment tests (largely the tutorials atm).
