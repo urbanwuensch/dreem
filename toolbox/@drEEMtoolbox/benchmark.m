@@ -11,7 +11,7 @@ function  varargout=benchmark
 % 41296 Gothenburg (Sweden)
 funmode=parallelcomp;
 
-fpath=[drEEMtoolbox.tbxpath,'documentation',filesep,'benchmarkDataset.mat'];
+fpath=[drEEMtoolbox.tbxpath,'doc',filesep,'benchmarkDataset.mat'];
 load(fpath,'data')
 X=data.X;
 clearvars data
