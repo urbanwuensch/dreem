@@ -18,6 +18,15 @@ Each method ends in displaying a guide to get started with more information.
 - For orientation, method names generally refer to an action and an object, e.g. `importeems`, `fitparafac`, `subtractblanks`, `splitdataset`, etc.
 - Type `doc drEEM` for for an overview of functions.
 
+## Additional toolboxes contained within
+drEEM ships with several functions provided by external sources:
+
+1. [N-Way toolbox by Rasmus Bro](https://doi.org/10.1039/c3ay41160e)
+2. [inpaint_nans by John D'Errico](https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans)
+3. [crameri colormaps by Fabio Crameri & Chad Greene](https://www.mathworks.com/matlabcentral/fileexchange/68546-crameri-perceptually-uniform-scientific-colormaps)
+
+These toolboxes are contained in a seperate namespace and will not interfere with your MATLAB path environment.
+
 ## Further reading (peer-reviewed publications)
 - [drEEM toolbox](https://doi.org/10.1039/c3ay41160e)
 - [N-way toolbox](https://doi.org/10.1016/S0169-7439(00)00071-X)
@@ -27,4 +36,4 @@ Each method ends in displaying a guide to get started with more information.
 - [Lecture series on multiway analysis](https://www.youtube.com/watch?v=_gIb6PzBEc4&list=PL4L59zaizb3E-Pgp-f90iKHdQQi15JJoL)
 
 ## Questions, comments , suggestions?
-- Email the project team at [dreem@openfluor.net](mailto:dreem@openfluor.net)
+- Contact Urban [urban.wunsch@chalmers.se](mailto:urban.wunsch@chalmers.se)
