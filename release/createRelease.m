@@ -31,3 +31,4 @@ optsNew.MaximumMatlabRelease=releaseMax;
 
 matlab.addons.toolbox.packageToolbox(optsNew)
 disp('<strong> done...</strong>')
+initSession
