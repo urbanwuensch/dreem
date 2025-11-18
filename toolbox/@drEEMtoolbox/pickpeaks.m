@@ -119,8 +119,8 @@ end
 distEx=nan(1,numel(peaks));
 distEm=nan(1,numel(peaks));
 for n=1:numel(peaks)
-    [~,distEx(n)] = mindist( data.Ex,peaks(n).Ex{1});
-    [~,distEm(n)] = mindist( data.Em,peaks(n).Em{1});
+    [~,distEx(n)] = drEEMtoolbox.mindist( data.Ex,peaks(n).Ex{1});
+    [~,distEm(n)] = drEEMtoolbox.mindist( data.Em,peaks(n).Em{1});
 end
 
 if any(distEx>=5)
@@ -143,22 +143,29 @@ for i=1:data.nSample
     % #1: Ex/Em pair
     for n=1:size(peaks,2)
         if isscalar(peaks(n).Em)&&isscalar(peaks(n).Ex)
-            Cpeak(i,n)=data.(Xname)(i,mindist(data.Em,peaks(n).Em{1}),mindist(data.Ex,peaks(n).Ex{1}));
+            Cpeak(i,n)=data.(Xname)(i,drEEMtoolbox.mindist(data.Em,peaks(n).Em{1}),drEEMtoolbox.mindist(data.Ex,peaks(n).Ex{1}));
             % #2: Specific Ex, but Em range
         elseif isscalar(peaks(n).Ex)&&numel(peaks(n).Em)~=1
-            tempEm=data.(Xname)(i,mindist(data.Em,peaks(n).Em{1}):mindist(data.Em,peaks(n).Em{end}),mindist(data.Ex,peaks(n).Ex{1}));
+            tempEm=data.(Xname)(i,drEEMtoolbox.mindist(data.Em,peaks(n).Em{1}):drEEMtoolbox.mindist(data.Em,peaks(n).Em{end}),drEEMtoolbox.mindist(data.Ex,peaks(n).Ex{1}));
             Cpeak(i,n)=max(tempEm,[],'omitnan');
             % #3: Ex and Em range-peaks
         else
-            x1=mindist(data.Ex,peaks(n).Ex{1});
-            x2=mindist(data.Ex,peaks(n).Ex{end});
-            y1=mindist(data.Em,peaks(n).Em{1});
-            y2=mindist(data.Em,peaks(n).Em{end});
+            x1=drEEMtoolbox.mindist(data.Ex,peaks(n).Ex{1});
+            x2=drEEMtoolbox.mindist(data.Ex,peaks(n).Ex{end});
+            y1=drEEMtoolbox.mindist(data.Em,peaks(n).Em{1});
+            y2=drEEMtoolbox.mindist(data.Em,peaks(n).Em{end});
+
+            if x1==x2||y1==y2
+                Cpeak(i,n)=nan;
+                continue
+            end
+
             mat=squeeze(data.(Xname)(i,y1:y2,x1:x2));
             [Cpeak(i,n),idxmax]=max(vec(mat),[],'omitnan');
             [empos, expos] = ind2sub(size(mat), idxmax);
             ex=data.Ex(x1:x2);
             em=data.Em(y1:y2);
+            
             md.Ex(i,n)=ex(expos);
             md.Em(i,n)=em(empos);
         end
@@ -193,10 +200,10 @@ end
 for i=1:data.nSample
     
         % Extract scans
-        EmScan370=data.(Xname)(i,:,mindist(data.Ex,370)); % FluI
+        EmScan370=data.(Xname)(i,:,drEEMtoolbox.mindist(data.Ex,370)); % FluI
         EmScan310=data.(Xname)(i,:,drEEMtoolbox.mindist(data.Ex,310)); %FreshI
         if ~HIX_excl
-            EmScan254=data.(Xname)(i,:,mindist(data.Ex,254)); % HIX
+            EmScan254=data.(Xname)(i,:,drEEMtoolbox.mindist(data.Ex,254)); % HIX
         end
         EmScan320=data.(Xname)(i,:,drEEMtoolbox.mindist(data.Ex,320)); % ARIX
 
@@ -269,8 +276,8 @@ for i=1:data.nSample
             box(ax(2),"on")
         end
 
-        Val1=EmScan310s(mindist(data.Em,380));
-        Val2=max(EmScan310s(mindist(data.Em,420):mindist(data.Em,435)),[],'omitnan');
+        Val1=EmScan310s(drEEMtoolbox.mindist(data.Em,380));
+        Val2=max(EmScan310s(drEEMtoolbox.mindist(data.Em,420):drEEMtoolbox.mindist(data.Em,435)),[],'omitnan');
         FrI(i)=Val1/Val2;
     catch
         FrI(i)=nan;
@@ -303,9 +310,9 @@ for i=1:data.nSample
                 box(ax(3),"on")
             end
 
-            Val1=sum(EmScan254s(mindist(data.Em,435):mindist(data.Em,480)),'omitnan');
-            Val2=sum(EmScan254s(mindist(data.Em,300):mindist(data.Em,345)),'omitnan')+...
-                sum(EmScan254s(mindist(data.Em,435):mindist(data.Em,480)),'omitnan');
+            Val1=sum(EmScan254s(drEEMtoolbox.mindist(data.Em,435):drEEMtoolbox.mindist(data.Em,480)),'omitnan');
+            Val2=sum(EmScan254s(drEEMtoolbox.mindist(data.Em,300):drEEMtoolbox.mindist(data.Em,345)),'omitnan')+...
+                sum(EmScan254s(drEEMtoolbox.mindist(data.Em,435):drEEMtoolbox.mindist(data.Em,480)),'omitnan');
             HIX(i)=Val1/Val2;
 
         end
@@ -315,8 +322,8 @@ for i=1:data.nSample
     end
 
     try % BIX
-        Val1=EmScan310s(mindist(data.Em,380));
-        Val2=EmScan310s(mindist(data.Em,430));
+        Val1=EmScan310s(drEEMtoolbox.mindist(data.Em,380));
+        Val2=EmScan310s(drEEMtoolbox.mindist(data.Em,430));
         BIX(i)=Val1/Val2;
     catch
         BIX(i)=nan;
@@ -342,8 +349,8 @@ for i=1:data.nSample
             title(ax(4),'em at ex = 320 (ARIX)')
             box(ax(4),"on")
         end
-        Val1=EmScan320s(mindist(data.Em,520));
-        Val2=EmScan320s(mindist(data.Em,390));
+        Val1=EmScan320s(drEEMtoolbox.mindist(data.Em,520));
+        Val2=EmScan320s(drEEMtoolbox.mindist(data.Em,390));
         arix(i)=Val1/Val2;
     catch
         arix(i)=nan;
@@ -441,9 +448,7 @@ end
 end
 
 
-function [idx,distance] = mindist( vec,value)
-[distance,idx]=min(abs(vec-value));
-end
+
 
 function X = naninterp(X,method)
 % Interpolate over NaNs
