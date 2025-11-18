@@ -82,3 +82,16 @@ drEEMtoolbox.countinstallations
 drEEMtoolbox.updatedreem(directory,true,existing,online)
 
 tbx=drEEMtoolbox;
+
+
+
+%% projectmodel development
+cd(fileparts(matlab.desktop.editor.getActiveFilename))
+clc
+clearvars
+tbx=drEEMtoolbox;
+load("tutorial_01_processed.mat")
+
+samples=projectmodel(samples,"TRM_6C_PARAFAC.txt");
+tbx.viewmodels(samples)
+tbx.vieweems(samples)

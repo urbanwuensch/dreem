@@ -162,6 +162,7 @@ classdef drEEMtoolbox < handle
         dataout = splitdataset(data,options)
         viewsplitvalidation(data,fac)
         fmax = scores2fmax(data,f)
+        dataout = projectmodel(data,file)
 
         % Data export
         export2openfluor(data, f, filename)
