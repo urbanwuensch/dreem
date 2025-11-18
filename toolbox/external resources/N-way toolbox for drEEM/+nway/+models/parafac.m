@@ -747,7 +747,9 @@ while (((f>crit) | (norm(connew-conold)/norm(conold)>MissConvCrit) | Constraints
     elseif strcmp(accel_pattern,'shifted')% this chooses harshman's every-iter way
         if acc==do_acc-1;
             Load_o2=Factors;
-            disp([' LS shifted accel will be done every time after iter ' int2str(it)])
+            if showfit~=-1
+                disp([' LS shifted accel will be done every time after iter ' int2str(it)])
+            end
         elseif acc==do_acc;
             Load_o1=Load_o2; % shift the one that was latest back to first
             acc=0;Load_o2=Factors; % latest factors become the newer set
