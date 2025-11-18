@@ -234,8 +234,10 @@ function mdnew = metadataconverter(metadata)
                     mdconv=md;
             case 'categorical'
                 mdconv=md;
+            case 'logical'
+                mdconv=categorical(md);
             otherwise
-                error('Metadata type not accounted for.')
+                error(['<strong>',type,'</strong>: Metadata type not accounted for.'])
         end
         mdnew.(here)=mdconv;
     end
