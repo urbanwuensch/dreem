@@ -6,10 +6,10 @@ function dataout = projectmodel(data,file)
 % <strong>INPUTS - Required</strong>
 % data (1,:) {drEEMdataset.sanityCheckPARAFAC(data)}
 % file (1,:) {mustBeFile}
-% 
+%
 %
 % <strong>EXAMPLE(S)</strong>
-%   1. Project OpenFluor model to existing dataset 
+%   1. Project OpenFluor model to existing dataset
 %       samples = tbx.projectmodel(samples,'openfluormodel.txt');
 % <a href = "matlab:drEEMtoolbox.doc('projectmodel')"><strong>-> full documentation</strong></a>
 
@@ -34,35 +34,40 @@ model=loadOF(file);
 % Convert the contraint to N-Way notation
 constraints=model.constraints;
 if contains(constraints,'nonnegativity')
-        % Set default: All dims nonnegative
-        cdim=1:3;
-        % Check for custom input (deletes default)
-        if ~isempty(erase(constraints,'nonnegativity'))
-            t=(erase(constraints,'nonnegativity'));
-            cdim=[];
-            for n=1:numel(t)
-                cdim=[cdim str2double(t(n))];
-            end
-            if numel(cdim)>3||any(cdim>3)
-                error('numeric input to nonnegativity not understood')
-            end
+    % Set default: All dims nonnegative
+    cdim=1:3;
+    % Check for custom input (deletes default)
+    if ~isempty(erase(constraints,'nonnegativity'))
+        t=(erase(constraints,'nonnegativity'));
+        cdim=[];
+        for n=1:numel(t)
+            cdim=[cdim str2double(t(n))];
         end
-        for i=cdim
-            opt(i)=2;
+        if numel(cdim)>3||any(cdim>3)
+            error('numeric input to nonnegativity not understood')
         end
-        for i=setdiff(1:3,cdim)
-            opt(i)=0;
-        end
-        
-    elseif contains(constraints,'unimodnonneg')
-        for i=[1 3]
-            opt(i)=2;
-        end
-        opt(2)=3;
-    elseif contains(constraints,'unconstrained')
-        for i=1:3
-            opt(i)=0;
-        end
+    end
+    for i=cdim
+        opt(i)=2;
+    end
+    for i=setdiff(1:3,cdim)
+        opt(i)=0;
+    end
+
+elseif contains(constraints,'unimodnonneg')
+    for i=[1 3]
+        opt(i)=2;
+    end
+    opt(2)=3;
+elseif contains(constraints,'unconstrained')
+    for i=1:3
+        opt(i)=0;
+    end
+elseif contains(constraints,'unknown')
+    warning('constraints unknown, assuming nonnegativity (most common)')
+    opt=[2 2 2];
+else
+    error('projectmodel encountered a constraint in the OpenFluor file that it did not know how to interpret. Contact developer.')
 end
 % Define the inner boundary for "cutting"
 minEx=max([data.Ex(1) model.Ex(1)]);
