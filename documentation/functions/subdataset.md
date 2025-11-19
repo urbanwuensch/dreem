@@ -60,6 +60,9 @@ You can specify any combination of `outSample`,`outEm`, or `outEx`. If one of th
 6. drEEM ships with a <strong>nearest neighbor function</strong>: `isNearest`, use it if wavelengths have many decimals
 `samples = tbx.subdataset(samples,outEm=tbx.isNearest(samples.Em,349));`
 
+7. Delete every other emission wavelength
+ `samples = tbx.subdataset(samples,outEm=ismember(samples.Em,samples.Em(1:2:end)))`
+
 
 ## Input arguments
 

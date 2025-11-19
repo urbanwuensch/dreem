@@ -439,6 +439,8 @@ details:open > summary {
 <code>samples = tbx.subdataset(samples,outEx=samples.Ex==275);</code></p></li>
 <li><p>drEEM ships with a <strong>nearest neighbor function</strong>: <code>isNearest</code>, use it if wavelengths have many decimals
 <code>samples = tbx.subdataset(samples,outEm=tbx.isNearest(samples.Em,349));</code></p></li>
+<li><p>Delete every other emission wavelength
+<code>samples = tbx.subdataset(samples,outEm=ismember(samples.Em,samples.Em(1:2:end)))</code></p></li>
 </ol>
 
 <h2 id="toc_4">Input arguments</h2>
