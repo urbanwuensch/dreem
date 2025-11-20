@@ -124,8 +124,12 @@ disp('    Finished spreadsheet: scatter treatment')
 
 % Export optical metadata
 warning off
-data=drEEMtoolbox.fitslopes(data,quiet=true);
-data=drEEMtoolbox.pickpeaks(data,quiet=true);
+if not(isempty(data.abs))
+    data=drEEMtoolbox.fitslopes(data,quiet=true);
+end
+if not(isempty(data.X))
+    data=drEEMtoolbox.pickpeaks(data,quiet=true);
+end
 pl=table;
 pl.filelist=data.filelist;
 pl=[pl data.opticalMetadata];

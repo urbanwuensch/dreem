@@ -94,12 +94,5 @@ load("tutorial_01_processed.mat")
 
 samples=tbx.projectmodel(samples,"TRM_6C_PARAFAC.txt");
 
-samples=tbx.projectmodel(samples,"newFopenfluor.txt");
 tbx.viewmodels(samples)
 tbx.vieweems(samples)
-
-
-pcaout=drEEMmodel.fitresipca(samples.models(6),samples)
-
-countourf(samples.Ex,samples.Em,squeeze(pcaout.loadsEEM(1,:,:)))
-samples=tbx.subdataset(samples,outEm=ismember(samples.Em,samples.Em(1:2:end)))
