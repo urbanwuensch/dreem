@@ -32,12 +32,12 @@ classdef vieweems_gui < matlab.apps.AppBase
         holdonCheckBox                 matlab.ui.control.CheckBox
         EEMFORMATPanel                 matlab.ui.container.Panel
         GridLayout4                    matlab.ui.container.GridLayout
+        contoursEditField              matlab.ui.control.Spinner
+        contoursSpinnerLabel           matlab.ui.control.Label
         showindicesCheckBox            matlab.ui.control.CheckBox
         showCoblePeaksCheckBox         matlab.ui.control.CheckBox
         remembercolorlimitsCheckBox    matlab.ui.control.CheckBox
         rememberrotationCheckBox       matlab.ui.control.CheckBox
-        contoursEditField              matlab.ui.control.NumericEditField
-        contoursEditFieldLabel         matlab.ui.control.Label
         ColormapDropDown               matlab.ui.control.DropDown
         ColormapDropDownLabel          matlab.ui.control.Label
         SAMPLECONTROLPanel             matlab.ui.container.Panel
@@ -131,7 +131,6 @@ classdef vieweems_gui < matlab.apps.AppBase
                     end
                     zlim(app.eem,[min(mat(~isnan(mat))),max(mat(~isnan(mat)))])
                     clim(app.eem,app.aclim)
-                    %app.ColormapDropDown.Enable='on';
                 case 'residuals'
                     app.colorLimitSlider.Enable="off";
                     sc = surfc(app.eem,x,y,mat,'EdgeColor','none','FaceColor','flat');
@@ -148,10 +147,7 @@ classdef vieweems_gui < matlab.apps.AppBase
                     n_pos=sum(levels>0);
                     colormap(app.eem,app.residualcolormap(n_neg,n_pos))
                     app.cmapOld=app.ColormapDropDown.Value;
-                    %app.ColormapDropDown.Value='vik';
-                    %app.ColormapDropDown.Enable='off';
             end
-            %title(app.eem,app.data.filelist(app.state.sample))
             colorbar(app.eem)
             
             % store the viewangle after plotting
@@ -590,7 +586,6 @@ classdef vieweems_gui < matlab.apps.AppBase
                             '-imola','-hawaii','-batlow'};
                     case 'residuals'
                         app.ColormapDropDown.Items={'vik','berlin','-roma'};
-
                 end
             end
 
@@ -889,28 +884,12 @@ classdef vieweems_gui < matlab.apps.AppBase
 
             % Create ColormapDropDown
             app.ColormapDropDown = uidropdown(app.GridLayout4);
-            app.ColormapDropDown.Items = {'turbo', 'imola', 'hawaii', 'batlow', 'parula', 'vik', '-imola', '-hawaii', '-batlow'};
+            app.ColormapDropDown.Items = {'turbo', 'imola', 'hawaii', 'batlow', 'parula', '-imola', '-hawaii', '-batlow'};
             app.ColormapDropDown.ValueChangedFcn = createCallbackFcn(app, @triggerRedraw, true);
             app.ColormapDropDown.Tooltip = {'Select a colormap of your choosing.'};
             app.ColormapDropDown.Layout.Row = 1;
             app.ColormapDropDown.Layout.Column = 2;
             app.ColormapDropDown.Value = 'turbo';
-
-            % Create contoursEditFieldLabel
-            app.contoursEditFieldLabel = uilabel(app.GridLayout4);
-            app.contoursEditFieldLabel.HorizontalAlignment = 'right';
-            app.contoursEditFieldLabel.Tooltip = {'Number of contours to show. 0 disables contours.'; ''; 'Note that the app performance is likely bad if more than 50 contours are requested.'};
-            app.contoursEditFieldLabel.Layout.Row = 2;
-            app.contoursEditFieldLabel.Layout.Column = 1;
-            app.contoursEditFieldLabel.Text = '# contours';
-
-            % Create contoursEditField
-            app.contoursEditField = uieditfield(app.GridLayout4, 'numeric');
-            app.contoursEditField.ValueChangedFcn = createCallbackFcn(app, @triggerRedraw, true);
-            app.contoursEditField.Tooltip = {'Number of contours to show. 0 disables contours.'; ''; 'Note that the app performance is likely bad if more than 50 contours are requested.'};
-            app.contoursEditField.Layout.Row = 2;
-            app.contoursEditField.Layout.Column = 2;
-            app.contoursEditField.Value = 20;
 
             % Create rememberrotationCheckBox
             app.rememberrotationCheckBox = uicheckbox(app.GridLayout4);
@@ -942,6 +921,21 @@ classdef vieweems_gui < matlab.apps.AppBase
             app.showindicesCheckBox.Text = 'show indices';
             app.showindicesCheckBox.Layout.Row = 4;
             app.showindicesCheckBox.Layout.Column = 2;
+
+            % Create contoursSpinnerLabel
+            app.contoursSpinnerLabel = uilabel(app.GridLayout4);
+            app.contoursSpinnerLabel.HorizontalAlignment = 'right';
+            app.contoursSpinnerLabel.Layout.Row = 2;
+            app.contoursSpinnerLabel.Layout.Column = 1;
+            app.contoursSpinnerLabel.Text = '# contours';
+
+            % Create contoursEditField
+            app.contoursEditField = uispinner(app.GridLayout4);
+            app.contoursEditField.Limits = [0 100];
+            app.contoursEditField.ValueChangedFcn = createCallbackFcn(app, @triggerRedraw, true);
+            app.contoursEditField.Layout.Row = 2;
+            app.contoursEditField.Layout.Column = 2;
+            app.contoursEditField.Value = 15;
 
             % Create SPECTRAFORMATPanel
             app.SPECTRAFORMATPanel = uipanel(app.GridLayout);
