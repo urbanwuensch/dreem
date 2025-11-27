@@ -193,7 +193,7 @@ function diagnoseDimensionIssue(filenames,sz)
 
 
 
-if isscalar(unique(sz(:,1)))&&isscalar(unique(sz(:,2)))
+if isscalar(unique(sz(:,1)))%&&isscalar(unique(sz(:,2)))
     %disp('Dimension check for files <strong>passed</strong>.')
 else
     message='Dimension check for files <strong>not passed</strong>. Information follows ... \n\n';
@@ -223,7 +223,7 @@ else
             uit=uitable(f,Data=diagt,Units="normalized",OuterPosition=[0 0 1 1]);
         end
     end
-    error(sprintf(message))
+    throwAsCaller(MException("drEEM:inCorrectFileDimensions",message))
 end
 
 end
