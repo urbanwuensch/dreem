@@ -45,6 +45,7 @@ arguments
     options.iEnd   (1,1) {mustBeNumeric} = 424
     options.doAlignmentcheck (1,1) {mustBeNumericOrLogical} = false
     options.plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
+    options.method (1,:) {mustBeText,mustBeMember(options.method,['raw','gauss1'])} = 'raw';
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -82,7 +83,7 @@ Rscan=squeeze(Rmat(:,:,idx));
 
 %% Execute the calibration
 RamanIntRange= [options.iStart,options.iEnd]; % This is only for 350nm
-[RA,BaseArea]=RamanAreaI([rcvec(blanks.Em,'row');Rscan],RamanIntRange(1),RamanIntRange(2));
+[RA,BaseArea]=RamanAreaI([rcvec(blanks.Em,'row');Rscan],RamanIntRange(1),RamanIntRange(2),options.method);
 % Raman area = Raman Peak area - baseline area (can be about 20% for
 % AquaLogs at 1-8s integration time!)
 RA=RA-BaseArea;
@@ -212,7 +213,7 @@ end
 
 end
 
-function [Y,BaseArea]=RamanAreaI(M,EmMin,EmMax)
+function [Y,BaseArea]=RamanAreaI(M,EmMin,EmMax,opt)
 % [Y,EmMin,EmMax]=RamanAreaI(M,EmMin,EmMax)
 % Find the area under the curves in M between wavelengths EmMin and EmMax, 
 % data are interpolated to 0.5 nm intervals
@@ -225,13 +226,29 @@ Mpt5 = FastLinearInterp(M(1,:)', M(2:end,:)', waves)'; %faster linear interp
 %Mpt5 = interp1(M(1,:)', M(2:end,:)', waves,'spline')'; %built in alternative
 
 %integrate
-RAsum=trapz(waves,Mpt5,2);%;
-BaseArea=(EmMax-EmMin)*(Mpt5(:,1)+0.5*(Mpt5(:,end)-Mpt5(:,1)));
 
-%RAsum=trapz(waves,Mpt5,2)*waveint;%;
-%BaseArea=(EmMax-EmMin)*(Mpt5(:,1)+0.5*(Mpt5(:,end)-Mpt5(:,1)))*waveint;
-% disp([RAsum BaseArea BaseArea./RAsum]);
-Y = RAsum;% - BaseArea;
+
+
+switch opt
+    case 'raw'
+        Y=trapz(waves,Mpt5,2);%;
+        BaseArea=(EmMax-EmMin)*(Mpt5(:,1)+0.5*(Mpt5(:,end)-Mpt5(:,1)));
+    case 'gauss1'
+        % Alternative with gaussian fit
+        x = waves;
+        y = Mpt5;
+        for j=1:height(y)
+            f=fit(x,y(j,:)','gauss1'); % Fit Gaussian with two terms to cut scan
+            yfull=feval(f,x)'; % Evaluate Gaussian function over whole Raman peak area to extrapolate
+            fb=fit([x(1) x(end)]', [yfull(1) yfull(end)]', 'poly1'); % fit linear model to baseline
+            yb=feval(fb,x)'; % Evaluate baseline function under  Raman peak area
+            Y(j,1)=trapz(x,yfull,2);%;
+            BaseArea(j,1)=trapz(x,yb,2);%;
+        end
+end
+
+
+
 end
 
 function Yi = FastLinearInterp(X, Y, Xi)
