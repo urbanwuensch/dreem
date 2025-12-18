@@ -1,3 +1,4 @@
+2.25.12;https://zenodo.org/records/17971456/files/drEEM-2.25.12.mltbx?download=1;
 2.25.11;https://zenodo.org/records/17404138/files/drEEM-2.25.11.mltbx?download=1;
 2.25.10;https://zenodo.org/records/17182161/files/drEEM-2.25.10.mltbx?download=1;
 2.25.09;https://gitlab.com/dreem/drEEM-2/-/archive/2.25.09/drEEM-2-2.25.09.zip;
