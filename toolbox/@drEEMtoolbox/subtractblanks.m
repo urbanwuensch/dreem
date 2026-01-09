@@ -134,7 +134,7 @@ if options.plot
         f=drEEMtoolbox.dreemfig;
     end
     f.Name='drEEM: subtractblanks.m';
-    t=tiledlayout(f,"flow");
+    t=tiledlayout(f,"flow",TileSpacing="compact");
     
     sam = inputname(1); % Show base workspace variable names in the plots
     bla = inputname(2); % Show base workspace variable names in the plots
@@ -146,39 +146,73 @@ if options.plot
     ray2=ex*2;  % predicted rayleigh 2nd order
     
     % Plot everything
+    
+    
+    
     ax=nexttile(t);
-    plot(ax,samples.Em,squeeze(samples.X(:,:,drEEMtoolbox.mindist(samples.Ex,275))))
+    y = squeeze(blanks.X(:,:,drEEMtoolbox.mindist(blanks.Ex,275)));
+    ysub = y(:,blanks.Em>340&blanks.Em<500);
+    yl = max(ysub(:),[],1,"omitmissing").*3;
+    plot(ax,blanks.Em,y)
+    ylims=get(ax,"YLim");
+    ylim(ax,[ylims(1) yl])
     xline(ax,ray1,'Color','r')
     xline(ax,ray2,'Color','r')
     xline(ax,ram1,'Color','b')
     xline(ax,ram2,'Color','b')
     
-    title(ax,{sam})
+    title(ax,[bla,' - emission scans @275nm'])
     xlabel(ax,'Emission (nm)')
     ylabel(ax,'Fluorescence intensity')
     
+    ax = nexttile(t);
+    tens2mat=@(x,sz1,sz2,sz3) reshape(x,sz1,sz2*sz3);
+    y = tens2mat(blanks.X,blanks.nSample,blanks.nEm,blanks.nEx);
+    mblank=reshape(max(y,[],1),blanks.nEm,blanks.nEx);
+    signals(1)=mblank(drEEMtoolbox.mindist(blanks.Em,350),drEEMtoolbox.mindist(blanks.Ex,275));
+    signals(2)=mblank(drEEMtoolbox.mindist(blanks.Em,450),drEEMtoolbox.mindist(blanks.Ex,250));
+    signals(3)=mblank(drEEMtoolbox.mindist(blanks.Em,450),drEEMtoolbox.mindist(blanks.Ex,370));
+    signals(4)=mblank(drEEMtoolbox.mindist(blanks.Em,500),drEEMtoolbox.mindist(blanks.Ex,450));
+    ymax=max(signals(:),[],"omitmissing")*1;
+    ymin=min(signals(:),[],"omitmissing")*1;
+    levels=linspace(ymin,ymax,10);
+    % contourf(ax,blanks.Ex,blanks.Em,mblank,100,LineStyle='none')
+    % hold(ax,'on')
+    % clim(ax,[ymin ymax])
+    contour(ax,blanks.Ex,blanks.Em,mblank,LevelList=levels,Color='k')
     
-    ax=nexttile(t);
-    plot(ax,blanks.Em,squeeze(blanks.X(:,:,drEEMtoolbox.mindist(blanks.Ex,275))))
+    title(ax,[bla,' - max. int. countour EEM'])
+    ylabel(ax,'Emission (nm)')
+    xlabel(ax,'Excitaion (nm)')
+
+    ax = nexttile(t);
+    y = squeeze(samples.X(:,:,drEEMtoolbox.mindist(samples.Ex,275)));
+    ysub = y(:,samples.Em>340&samples.Em<500);
+    yl = max(ysub(:),[],1,"omitmissing").*1.5;
+    plot(ax,samples.Em,y)
+    ylims=get(ax,"YLim");
+    ylim(ax,[ylims(1) yl])
+
     xline(ax,ray1,'Color','r')
     xline(ax,ray2,'Color','r')
     xline(ax,ram1,'Color','b')
     xline(ax,ram2,'Color','b')
     
-    title(ax,{bla})
+    title(ax,[sam,' - emission scans @275nm'])
     xlabel(ax,'Emission (nm)')
     ylabel(ax,'Fluorescence intensity')
-    
+
     ax=nexttile(t);
-    plot(ax,dataout.Em,squeeze(dataout.X(:,:,drEEMtoolbox.mindist(dataout.Ex,275))))
+    y = squeeze(dataout.X(:,:,drEEMtoolbox.mindist(dataout.Ex,275)));
+    ysub = y(:,dataout.Em>340&dataout.Em<500);
+    plot(ax,dataout.Em,y)
     xline(ax,ray1,'Color','r')
     xline(ax,ray2,'Color','r')
     xline(ax,ram1,'Color','b')
     xline(ax,ram2,'Color','b')
-    title(ax,{[sam,' - ',bla]})
+    title(ax,{['[',sam,' - ',bla,'] - emission scans @275nm']})
     xlabel(ax,'Emission (nm)')
     ylabel(ax,'Fluorescence intensity')
-    title(t,'Emission spectra closest to Ex = 275 nm')
 end
 
 % drEEMhistory entry
