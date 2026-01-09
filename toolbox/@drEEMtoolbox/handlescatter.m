@@ -48,14 +48,17 @@ end
 % Scenario: User wants GUI for decision support
 if isa(data,"drEEMdataset")&&not(isa(option,"handlescatterOptions"))
     % Start app with names
-    handle=drEEMtoolbox.viewscatter(data);
+    handle=dreemgui.viewscatter_gui(data);
+    uialert(handle.UIFigure, ...
+        'When you are done using this GUI, please exit with the "apply & close button" to avoid error messages', ...
+        'Notice',Icon='warning')
     waitfor(handle,"finishedHere",true);
     try
         dataout=handle.dataTreated;
         delete(handle.deleteThis)
         delete(handle)
     catch
-        error('App window closed before apply & exit button was pushed.')
+        error('App window closed before "apply & close" button was pushed.')
     end
     return
 end
