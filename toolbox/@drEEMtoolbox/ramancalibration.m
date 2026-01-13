@@ -244,9 +244,25 @@ switch opt
             yb=feval(fb,x)'; % Evaluate baseline function under  Raman peak area
             Y(j,1)=trapz(x,yfull,2);%;
             BaseArea(j,1)=trapz(x,yb,2);%;
+
+            RamanPeak(j,:)=yfull-yb;
+
         end
 end
 
+debug=false;
+if debug
+    f=drEEMtoolbox.dreemuifig;
+    f.Name='drEEM toolbox: Raman alignment check overview';
+    movegui(f,'northwest')
+    t=tiledlayout(f,"flow");
+    for j=1:height(y)
+        ax=nexttile(t);
+        plot(ax,x,RamanPeak(j,:))
+        hold(ax,'on')
+        plot(ax,x,y(j,:))
+    end
+end
 
 
 end
