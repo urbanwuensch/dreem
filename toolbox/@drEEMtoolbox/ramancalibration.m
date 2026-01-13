@@ -281,37 +281,69 @@ end
 
 function results = alignmentcheck(data)
 
+% Some options (central place to put them)
+raman_shift=3400; % cm-1
+peaksigma = 12; % nm (data left and right of peak considered for fit)
+interpolation_res = 0.1; %nm (interpolation increment)
 
+% Subset the blank dataset to unique blanks to reduce the runtime
+[~,ia,ic] = unique(reshape(data.X,data.nSample,data.nEx*data.nEm),'rows','stable');
+del=setdiff(1:data.nSample,ia);
+data=drEEMtoolbox.subdataset(data,outSample=ismember(1:data.nSample,del));
+
+% Transform emission axis to center on 1st order Raman scatter
 sign=@(x,y) minus(x,y);
 for n=1:data.nEx
-    em(n,:) = sign(data.Em,(1e7*((1e7)/(data.Ex(n))-3382)^-1));
+    em(n,:) = sign(data.Em,(1e7*((1e7)/(data.Ex(n))-raman_shift)^-1));
 end
 
-minmax=[-12 12];
+% Make another emission wl vector that centers around the peak
+minmax=[-peaksigma peaksigma];
 dem=rcvec(minmax(1):mean(diff(data.Em)):minmax(2),'column');
-dem_i=dem(1):0.2:dem(end);
+dem_i=dem(1):interpolation_res:dem(end);
 
-Xn=nan(data.nSample,numel(dem),data.nEx);
+% Prepare results structure
 results=struct;
 results.peakposition=nan(data.nSample,data.nEx);
 results.Ex=data.Ex;
+
+% For every sample and excitation, interpolate to the Ram 1st scatter
+% center and fit a gaussian to that to determine the max peak position
 for n=1:data.nSample
     for i=1:data.nEx
         Xn=interp1(em(i,:),squeeze(data.X(n,:,i)),dem);
-        f=fit(dem,Xn,'gauss1');
-        Xn_f=feval(f,dem_i);
-        results.peakposition(n,i)=dem_i(maxi(Xn_f));
+        try
+            f=fit(dem,Xn,'gauss1');
+            Xn_f=feval(f,dem_i);
+            results.peakposition(n,i)=dem_i(maxi(Xn_f));
+        catch ME
+            %warning(ME.message)
+            results.peakposition(n,i)=nan;
+        end
     end
 end
 
+% final plots
+    if data.toolboxOptions.uifig
+        f=drEEMtoolbox.dreemuifig;
+    else
+        f=drEEMtoolbox.dreemfig;
+    end
+    f.Name='drEEM toolbox: Raman alignment check overview';
+    movegui(f,'northwest')
+    t=tiledlayout(f,"flow");
+    
+    ax=nexttile(t);
+    mesh(ax,data.Ex,data.i,results.peakposition)
+    xlabel(ax,'Excitation (nm)')
+    ylabel(ax,'Unique blank data.i (gaps = identical blanks)')
+    zlabel(ax,'Difference from predicted position (nm)')
+    title(t,'Alignment check (visual only, no action taken)')
+    
+    i=drEEMtoolbox.mindist(data.Ex,350);
+    median_dist=median(results.peakposition(:,i));
 
-
-dataout=data;
-dataout.Em=dem;
-dataout.nEm=numel(dem);
-% dataout.Xorg=data.X;
-dataout.X=Xn;
-% eemreview(dataout,'hold',true)
+    disp(['Wavelength offset is <strong>',num2str(round(median_dist,1)),'nm</strong> on average at Ex = 350 nm, based on Raman 1st order scatter'])
 
 end
 
