@@ -342,9 +342,10 @@ end
     
     i=drEEMtoolbox.mindist(data.Ex,350);
     median_dist=median(results.peakposition(:,i));
-
+    
+    disp('Results stored in dataset.toolboxOptions.alignmentcheck')
     disp(['Wavelength offset is <strong>',num2str(round(median_dist,1)),'nm</strong> on average at Ex = 350 nm, based on Raman 1st order scatter'])
-
+    disp([' '])
 end
 
 function [idx] = maxi(y)
