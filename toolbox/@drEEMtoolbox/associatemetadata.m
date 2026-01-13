@@ -69,6 +69,7 @@ end
 if ischar(pathtofile)||isstring(pathtofile)
     warning off % Readtable will complain about Column headers a lot
     md = readtable(pathtofile);
+    md = deleteemptyrows(md);
     warning on
 
     if not(any(matches(md.Properties.VariableNames,metadatakey)))
@@ -324,4 +325,21 @@ else
     mustBeText(input)
     mustBeFile(input)
 end
+end
+
+
+function t=deleteemptyrows(t)
+arguments
+    t (1,1) {mustBeA(t,'table')}
+end
+
+for j=1:height(t)
+    t_sub = t(j,:);
+    %disp([ismissing(t_sub),all(ismissing(t_sub), 2)])
+    emptyRows(j,1) = all(ismissing(t_sub), 2);
+end
+if any(emptyRows)
+    disp('Found and deleted empty rows in the metadata table!')
+end
+t(emptyRows,:)=[];
 end
