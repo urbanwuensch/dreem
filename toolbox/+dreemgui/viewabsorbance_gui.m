@@ -30,6 +30,8 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
         GridLayout8                     matlab.ui.container.GridLayout
         TabGroup                        matlab.ui.container.TabGroup
         spectra                         matlab.ui.container.Tab
+        GridLayout13                    matlab.ui.container.GridLayout
+        spectra_panel                   matlab.ui.container.Panel
         GridLayout10                    matlab.ui.container.GridLayout
         missingDisclosure               matlab.ui.control.Label
         cdom                            matlab.ui.control.UIAxes
@@ -790,8 +792,19 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             app.spectra = uitab(app.TabGroup);
             app.spectra.Title = 'ABSORBANCE SPECTRA';
 
+            % Create GridLayout13
+            app.GridLayout13 = uigridlayout(app.spectra);
+            app.GridLayout13.ColumnWidth = {'1x'};
+            app.GridLayout13.RowHeight = {'1x'};
+
+            % Create spectra_panel
+            app.spectra_panel = uipanel(app.GridLayout13);
+            app.spectra_panel.AutoResizeChildren = 'off';
+            app.spectra_panel.Layout.Row = 1;
+            app.spectra_panel.Layout.Column = 1;
+
             % Create GridLayout10
-            app.GridLayout10 = uigridlayout(app.spectra);
+            app.GridLayout10 = uigridlayout(app.spectra_panel);
             app.GridLayout10.ColumnWidth = {'1x'};
             app.GridLayout10.RowHeight = {30, '1x'};
 
