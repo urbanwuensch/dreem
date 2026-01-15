@@ -96,3 +96,27 @@ samples=tbx.projectmodel(samples,"TRM_6C_PARAFAC.txt");
 
 tbx.viewmodels(samples)
 tbx.vieweems(samples)
+
+
+%%
+clearvars
+cd(fileparts(matlab.desktop.editor.getActiveFilename))
+load("tutorial_01_processed.mat")
+export_cmop=cdf_toolbox.load("CMOP_2016.nc");
+
+somevariable=cdf_toolbox.cdfvariable(samples.metadata.location);
+
+somevariable.Attributes.comment='this is some variable for demo purposes';
+somevariable.Attributes.long_name='Some variable with a long name';
+somevariable.Attributes.missing_value=-9999;
+somevariable.Attributes.units='1';
+somevariable.Attributes.standard_name='standard_name';
+somevariable.Attributes.coverage_content_type='physicalMeasurement';
+somevariable.Attributes.coordinates='some_other_variable';
+somevariable.Dimensions='some_other_variable';
+
+export_cmop.variables.somevariable=somevariable;
+
+save(export_cmop,'test')
+
+ncdisp("test.nc")
