@@ -52,8 +52,10 @@ classdef vieweems_gui < matlab.apps.AppBase
         Button_2                       matlab.ui.control.Button
         Button                         matlab.ui.control.Button
         Button_3                       matlab.ui.control.Button
-        ContextMenu                    matlab.ui.container.ContextMenu
+        ContextMenuEEM                 matlab.ui.container.ContextMenu
         SavefigurepanelasimageMenu     matlab.ui.container.Menu
+        ContextMenuSpectra             matlab.ui.container.ContextMenu
+        SavefigurepanelasimageMenu_2   matlab.ui.container.Menu
     end
 
     
@@ -66,6 +68,7 @@ classdef vieweems_gui < matlab.apps.AppBase
         aclim % absolute color limit
         ExEm % Description
         cmapOld % Description
+        figExportStruct = struct % Description
     end
     
     methods (Access = private)
@@ -483,6 +486,39 @@ classdef vieweems_gui < matlab.apps.AppBase
                 0.619607843137255,0.00392156862745098,0.258823529411765];
             cols=collist(1:i,:);
         end
+        
+        function savefigurepanel(app)
+            panel=app.figExportStruct.panel;
+            defname=app.figExportStruct.defname;
+            [filename, pathname] = uiputfile({'*.png'; '*.jpg'; '*.fig'},...
+                'Save Figure As', ...
+                defname);
+            
+
+            if isequal(filename, 0) || isequal(pathname, 0)
+                pathname=pwd;
+                filename=defname;
+                warning('Did not specify filename and path. Assumed default name in current directory.')
+            end
+            
+            if endsWith(filename,'.fig')
+                error('Matlab fig-files are on the to-do list. Please save as image instead.')
+                fig1=uifigure;
+                newpanel = copyobj(panel, fig1);
+                newpanel.Position = [0.1 0.1 0.8 0.8];
+
+                savefig(fig1,fullfile(pathname,filename));
+                delete(fig1)
+            else
+                warning off
+                exportgraphics(panel,...
+                    fullfile(pathname,filename),...
+                    "BackgroundColor","white",...
+                    "Resolution",600)
+            end
+            warning on
+            figure(app.drEEMtoolboxvieweemsUIFigure)
+        end
     end
     
 
@@ -707,28 +743,20 @@ classdef vieweems_gui < matlab.apps.AppBase
             
         end
 
-        % Callback function
-        function SaveasimageMenuSelected(app, event)
-            defname=[char(sel.Title),'.png'];
+        % Menu selected function: SavefigurepanelasimageMenu
+        function SavefigurepanelasimageMenuSelected(app, event)
+            app.figExportStruct.panel = app.EXCITATIONEMISSIONMATRIXPanel;
+            app.figExportStruct.defname='vieweems_eem.png';
+            app.savefigurepanel
+            app.figExportStruct=struct;
+        end
 
-            [filename, pathname] = uiputfile({'*.png'; '*.jpg'},...
-                'Save Figure As', ...
-                defname);
-            
-
-            if isequal(filename, 0) || isequal(pathname, 0)
-                pathname=pwd;
-                filename=defname;
-                warning('Did not specify filename and path. Assumed default name in current directory.')
-            end
-            
-            warning off
-                exportgraphics(app.eem,...
-                    fullfile(pathname,filename),...
-                    "BackgroundColor","white",...
-                    "Resolution",600)
-            warning on
-
+        % Menu selected function: SavefigurepanelasimageMenu_2
+        function SavefigurepanelasimageMenu_2Selected(app, event)
+            app.figExportStruct.panel = app.DSPECTRAPanel;
+            app.figExportStruct.defname='vieweems_2dspectra.png';
+            app.savefigurepanel
+            app.figExportStruct=struct;
         end
     end
 
@@ -1137,15 +1165,31 @@ classdef vieweems_gui < matlab.apps.AppBase
             app.em.Tag = 'em';
             colormap(app.em, 'parula')
 
-            % Create ContextMenu
-            app.ContextMenu = uicontextmenu(app.drEEMtoolboxvieweemsUIFigure);
+            % Create ContextMenuEEM
+            app.ContextMenuEEM = uicontextmenu(app.drEEMtoolboxvieweemsUIFigure);
 
             % Create SavefigurepanelasimageMenu
-            app.SavefigurepanelasimageMenu = uimenu(app.ContextMenu);
+            app.SavefigurepanelasimageMenu = uimenu(app.ContextMenuEEM);
+            app.SavefigurepanelasimageMenu.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelasimageMenuSelected, true);
             app.SavefigurepanelasimageMenu.Text = 'Save figure panel as image';
             
-            % Assign app.ContextMenu
-            app.em.ContextMenu = app.ContextMenu;
+            % Assign app.ContextMenuEEM
+            app.em.ContextMenu = app.ContextMenuEEM;
+            app.eem.ContextMenu = app.ContextMenuEEM;
+            app.EXCITATIONEMISSIONMATRIXPanel.ContextMenu = app.ContextMenuEEM;
+            app.GridLayout8.ContextMenu = app.ContextMenuEEM;
+
+            % Create ContextMenuSpectra
+            app.ContextMenuSpectra = uicontextmenu(app.drEEMtoolboxvieweemsUIFigure);
+
+            % Create SavefigurepanelasimageMenu_2
+            app.SavefigurepanelasimageMenu_2 = uimenu(app.ContextMenuSpectra);
+            app.SavefigurepanelasimageMenu_2.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelasimageMenu_2Selected, true);
+            app.SavefigurepanelasimageMenu_2.Text = 'Save figure panel as image';
+            
+            % Assign app.ContextMenuSpectra
+            app.DSPECTRAPanel.ContextMenu = app.ContextMenuSpectra;
+            app.GridLayout9.ContextMenu = app.ContextMenuSpectra;
 
             % Show the figure after all components are created
             app.drEEMtoolboxvieweemsUIFigure.Visible = 'on';

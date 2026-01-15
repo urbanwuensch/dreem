@@ -22,6 +22,8 @@ classdef viewdmr_gui < matlab.apps.AppBase
         residuals                       matlab.ui.control.UIAxes
         modelled                        matlab.ui.control.UIAxes
         measured                        matlab.ui.control.UIAxes
+        ContextMenu                     matlab.ui.container.ContextMenu
+        SavefigurepanelMenu             matlab.ui.container.Menu
     end
 
     % Properties that correspond to apps with auto-reflow
@@ -325,6 +327,46 @@ classdef viewdmr_gui < matlab.apps.AppBase
 
         end
 
+        % Menu selected function: SavefigurepanelMenu
+        function SavefigurepanelMenuSelected(app, event)
+            
+            panel = app.RightPanel;
+            if isempty(panel)
+                warning('Could not find a panel in the selected tab. Cannot save as image.')
+                return
+            end
+            defname=['DataModelledResidual.png'];
+
+            [filename, pathname] = uiputfile({'*.png'; '*.jpg'; '*.fig'},...
+                'Save Figure As', ...
+                defname);
+            
+
+            if isequal(filename, 0) || isequal(pathname, 0)
+                pathname=pwd;
+                filename=defname;
+                warning('Did not specify filename and path. Assumed default name in current directory.')
+            end
+            
+            if endsWith(filename,'.fig')
+                error('Matlab fig-files are on the to-do list. Please save as image instead.')
+                fig1=uifigure;
+                newpanel = copyobj(panel, fig1);
+                newpanel.Position = [0.1 0.1 0.8 0.8];
+
+                savefig(fig1,fullfile(pathname,filename));
+                delete(fig1)
+            else
+                warning off
+                exportgraphics(panel,...
+                    fullfile(pathname,filename),...
+                    "BackgroundColor","white",...
+                    "Resolution",600)
+            end
+            warning on
+            figure(app.viewdmrUIFigure)
+        end
+
         % Changes arrangement of the app based on UIFigure width
         function updateAppLayout(app, event)
             currentFigureWidth = app.viewdmrUIFigure.Position(3);
@@ -356,7 +398,6 @@ classdef viewdmr_gui < matlab.apps.AppBase
             app.viewdmrUIFigure.Position = [100 100 1485 429];
             app.viewdmrUIFigure.Name = 'viewdmr: View data, modelled data, and residuals of PARAFAC models';
             app.viewdmrUIFigure.SizeChangedFcn = createCallbackFcn(app, @updateAppLayout, true);
-            app.viewdmrUIFigure.WindowStyle = 'alwaysontop';
 
             % Create GridLayout
             app.GridLayout = uigridlayout(app.viewdmrUIFigure);
@@ -492,6 +533,17 @@ classdef viewdmr_gui < matlab.apps.AppBase
             zlabel(app.residuals, 'Z')
             app.residuals.Layout.Row = 1;
             app.residuals.Layout.Column = 3;
+
+            % Create ContextMenu
+            app.ContextMenu = uicontextmenu(app.viewdmrUIFigure);
+
+            % Create SavefigurepanelMenu
+            app.SavefigurepanelMenu = uimenu(app.ContextMenu);
+            app.SavefigurepanelMenu.MenuSelectedFcn = createCallbackFcn(app, @SavefigurepanelMenuSelected, true);
+            app.SavefigurepanelMenu.Text = 'Save figure panel';
+            
+            % Assign app.ContextMenu
+            app.GridLayout2.ContextMenu = app.ContextMenu;
 
             % Show the figure after all components are created
             app.viewdmrUIFigure.Visible = 'on';
