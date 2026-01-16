@@ -163,13 +163,14 @@ classdef drEEMtoolbox < handle
         viewsplitvalidation(data,fac)
         fmax = scores2fmax(data,f)
         dataout = projectmodel(data,file)
+        murea(data)
 
         % Data export
         export2openfluor(data, f, filename)
         export2zip(data,filename)
         %export2netcdf(data,filename)
         exportresults(data,filename,f,name_value)
-        % fhandle = reportresidualanalysis(data,ftarget,mdfield)
+        %fhandle = reportresidualanalysis(data,ftarget,mdfield)
 
         % Visualization (incl. app workarounds)
         % import functions
