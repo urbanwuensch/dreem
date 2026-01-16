@@ -42,7 +42,7 @@ for j=1:numel(f)
     exp(j,:)=res.explained(1:2);
 end
 
-if data.toolboxdata.uifig
+if data.toolboxOptions.uifig
     fh=drEEMtoolbox.dreemuifig;
 else
     fh=drEEMtoolbox.dreemfig;
