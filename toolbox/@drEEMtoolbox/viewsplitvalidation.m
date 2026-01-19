@@ -85,7 +85,7 @@ for k=1:nComparisons
     matchingEx{k}=squeeze(matchingExEm(:,:,2));
     matchingEm{k}=squeeze(matchingExEm(:,:,1));
     matchingExAndEm{k}=matchingEx{k}&matchingEm{k}; % Check that both Ex AND Em are similar enough
-    
+
     %C1: Tells us if the model is valid, C2 and C3 will inform the user why a model is not validated.
     %1: Are there as many (or more) Ex&Em matches as components?
     condition1(k)=sum(vec(matchingExAndEm{k}))>=fac;
@@ -138,7 +138,7 @@ if pos(3)>=1
     pos(3)=1;
 end
 movegui(hf,"center")
-if passed&&checkedoverall % Passed: Plot lines for all splits and overall model, as well as contours    
+if passed&&checkedoverall % Passed: Plot lines for all splits and overall model, as well as contours
     col=lines(nSplit);
     t=tiledlayout(hf,2,fac,'padding','compact');
     for k=1:fac*2
@@ -160,7 +160,7 @@ if passed&&checkedoverall % Passed: Plot lines for all splits and overall model,
         title(ax(k),['Comp. ',num2str(k)])
         box(ax(k),'on')
         axis(ax(k),'tight')
-        
+
         contourf(ax(k+fac),overallModel.Ex,overallModel.Em,overallModel.models(fac).loads{2}(:,k)*overallModel.models(fac).loads{3}(:,k)',...
             100,'LineStyle','none')
         hold(ax(k+fac),'on')
@@ -187,13 +187,13 @@ elseif ~passed&&checkedoverall % Failed. Plot all splits + overall model
             h(l)=plot(ax(k),data.Em,data.split(l).models(fac).loads{2}(:,compidx(l,k)),'LineWidth',2,'LineStyle','-','Color',col(l,:));
             plot(ax(k),data.Ex,data.split(l).models(fac).loads{3}(:,compidx(l,k)),'LineWidth',2,'LineStyle','-.','Color',col(l,:))
         end
-        
+
         h(l+1)=plot(ax(k),overallModel.Em,overallModel.models(fac).loads{2}(:,compidx(end,k)),'LineWidth',1,'LineStyle','-','Color','k');
         plot(ax(k),overallModel.Ex,overallModel.models(fac).loads{3}(:,compidx(end,k)),'LineWidth',1,'LineStyle','-.','Color','k')
-        
+
         title(ax(k),['Comp. ',num2str(k)])
         box(ax(k),'on')
-        axis(ax(k),'tight')       
+        axis(ax(k),'tight')
     end
     legend1=legend(h,[splitNames;{'Overall'}],'location','best');
     xlabel(t,'Wavelength (nm)')
@@ -222,7 +222,7 @@ elseif checkedoverall&&passed
     pause(1)
     dataout=data;
     dataout.models(fac).status='validated';
-    
+
     for k=1:nComparisons
         comps{k}=[cellOfNames{comparisons(k,1)}, "vs. ", cellOfNames{comparisons(k,2)}];
     end
@@ -261,9 +261,9 @@ for k=1:numel(models)
 end
 if ~isempty(nExnEm)
     if numel(unique(nExnEm))>2
-       pass=false;
-       message=[message '  Some of the datasets (specifically the models you want to compare) differ in their dataset dimensions (Emission or Excitation).'...
-           ' That is not allowed, similarities cannot be calculated for that case. \n'];
+        pass=false;
+        message=[message '  Some of the datasets (specifically the models you want to compare) differ in their dataset dimensions (Emission or Excitation).'...
+            ' That is not allowed, similarities cannot be calculated for that case. \n'];
     end
 end
 end
@@ -321,22 +321,22 @@ for k=1:numel(models)
                 tcc(reference.models(fac).loads{3}(:,l),models{k}.models(fac).loads{3}(:,o))];
         end
     end
-    
-    
+
+
     simiExtract=squeeze(simi(k,:,:,:)); % Extract, just so it's easier to work with
     % simiExtract: [m1,m2,em ex]
     matchingExEm=simiExtract>0.95; % Express it in logical array
     matchingEx=squeeze(matchingExEm(:,:,2));
     matchingEm=squeeze(matchingExEm(:,:,1));
     matchingExAndEm=matchingEx&matchingEm; % Check that both Ex AND Em are similar enough
-    
+
     for l=1:fac
         ci=[];
         besttcc(k,l)=max(sum(simiExtract(l,:,:),3))/2;
         if isscalar(find(matchingExAndEm(l,:))) % Uniequivolval match
             ci=find(matchingExAndEm(l,:));
         elseif numel(find(matchingExAndEm(l,:)))>1 % Take the best when multiple are similar
-            [~,ci]=max(sum(simiExtract(l,:,:),3)); 
+            [~,ci]=max(sum(simiExtract(l,:,:),3));
         elseif not(any(matchingExAndEm(l,:))) % Take the best when none match
             % Edit: Here, the function should not do anything because these
             % bad cases are handled futher down.
@@ -349,8 +349,8 @@ for k=1:numel(models)
             compidx(k,l)=ci;
         end
     end
-    
-    
+
+
 end
 
 
@@ -373,7 +373,7 @@ end
 end
 function seq = orderbyemissionmax( model,f )
 % Order PARAFAC model components by their emission maxima
-[~,idx]=max(model.(['Model' num2str(f)]){2});
+[~,idx]=max(model.models(f).loads{2});
 [~,seq]=sort(idx);
 end
 
