@@ -321,7 +321,7 @@ classdef viewscatter_gui < matlab.apps.AppBase
 
             pidx=drEEMhistory.searchhistory(data.history,"handlescatter","last");
             if not(isempty(pidx))
-                disp('Existing options found. These will be transfered to the GUI')
+                disp('Old options detected. These will be transfered to the GUI')
                 app.options=data.history(pidx).details;
                 app.options2gui;
             end
@@ -419,7 +419,6 @@ classdef viewscatter_gui < matlab.apps.AppBase
 
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
-            colormap(app.UIFigure, 'turbo');
             app.UIFigure.Position = [100 100 920 648];
             app.UIFigure.Name = 'MATLAB App';
             app.UIFigure.HandleVisibility = 'on';
@@ -490,7 +489,6 @@ classdef viewscatter_gui < matlab.apps.AppBase
             app.cut_ry1.Text = '';
             app.cut_ry1.Layout.Row = 2;
             app.cut_ry1.Layout.Column = 2;
-            app.cut_ry1.Value = true;
 
             % Create int_ry1
             app.int_ry1 = uicheckbox(app.GridLayout6);
@@ -753,10 +751,11 @@ classdef viewscatter_gui < matlab.apps.AppBase
             xlabel(app.firstray, 'nm from center')
             ylabel(app.firstray, 'signal')
             zlabel(app.firstray, 'Z')
+            app.firstray.FontName = 'Helvetica';
             app.firstray.Box = 'on';
-            app.firstray.TickDir = 'both';
             app.firstray.Layout.Row = 1;
             app.firstray.Layout.Column = 1;
+            colormap(app.firstray, 'parula')
 
             % Create firstram
             app.firstram = uiaxes(app.GridLayout5);
@@ -764,10 +763,11 @@ classdef viewscatter_gui < matlab.apps.AppBase
             xlabel(app.firstram, 'nm from center')
             ylabel(app.firstram, 'signal')
             zlabel(app.firstram, 'Z')
+            app.firstram.FontName = 'Helvetica';
             app.firstram.Box = 'on';
-            app.firstram.TickDir = 'both';
             app.firstram.Layout.Row = 1;
             app.firstram.Layout.Column = 2;
+            colormap(app.firstram, 'parula')
 
             % Create secray
             app.secray = uiaxes(app.GridLayout5);
@@ -775,10 +775,11 @@ classdef viewscatter_gui < matlab.apps.AppBase
             xlabel(app.secray, 'nm from center')
             ylabel(app.secray, 'signal')
             zlabel(app.secray, 'Z')
+            app.secray.FontName = 'Helvetica';
             app.secray.Box = 'on';
-            app.secray.TickDir = 'both';
             app.secray.Layout.Row = 2;
             app.secray.Layout.Column = 1;
+            colormap(app.secray, 'parula')
 
             % Create secram
             app.secram = uiaxes(app.GridLayout5);
@@ -786,10 +787,11 @@ classdef viewscatter_gui < matlab.apps.AppBase
             xlabel(app.secram, 'nm from center')
             ylabel(app.secram, 'signal')
             zlabel(app.secram, 'Z')
+            app.secram.FontName = 'Helvetica';
             app.secram.Box = 'on';
-            app.secram.TickDir = 'both';
             app.secram.Layout.Row = 2;
             app.secram.Layout.Column = 2;
+            colormap(app.secram, 'parula')
 
             % Create excitationemissionmatrixTab
             app.excitationemissionmatrixTab = uitab(app.TabGroup);
@@ -806,10 +808,11 @@ classdef viewscatter_gui < matlab.apps.AppBase
             ylabel(app.eem, 'emission (nm)')
             zlabel(app.eem, 'Z')
             app.eem.PlotBoxAspectRatio = [1.4 1 1];
+            app.eem.FontName = 'Helvetica';
             app.eem.Box = 'on';
-            app.eem.TickDir = 'both';
             app.eem.Layout.Row = 1;
             app.eem.Layout.Column = 1;
+            colormap(app.eem, 'parula')
 
             % Create CONTROLPANELPanel
             app.CONTROLPANELPanel = uipanel(app.GridLayout);
