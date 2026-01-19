@@ -173,7 +173,7 @@ if matches(cb,'char')
 end
 
 if not(matches(ca,cb))
-    error(['datakey: ',datakey,' and metadata.',metadatakey,' are not of the same class. Please convert one or both and try again.'])
+    error(['datakey: ',char(datakey),' and metadata.',char(metadatakey),' are not of the same class. Please convert one or both and try again.'])
 end
     
 
@@ -330,7 +330,7 @@ end
 
 function t=deleteemptyrows(t)
 arguments
-    t (1,1) {mustBeA(t,'table')}
+    t {mustBeA(t,'table')}
 end
 
 for j=1:height(t)
