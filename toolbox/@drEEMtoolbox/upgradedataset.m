@@ -229,7 +229,7 @@ function mdnew = metadataconverter(metadata)
             case 'datetime'
                 mdconv=categorical(md);
             case 'duration'
-                mdconv=double(md);
+                mdconv=seconds(md);
             case 'double'
                     mdconv=md;
             case 'categorical'
