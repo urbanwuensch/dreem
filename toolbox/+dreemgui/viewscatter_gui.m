@@ -2,7 +2,7 @@ classdef viewscatter_gui < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
-        UIFigure                       matlab.ui.Figure
+        drEEMviewscatterUIFigure       matlab.ui.Figure
         GridLayout                     matlab.ui.container.GridLayout
         CONTROLPANELPanel              matlab.ui.container.Panel
         GridLayout8                    matlab.ui.container.GridLayout
@@ -314,9 +314,9 @@ classdef viewscatter_gui < matlab.apps.AppBase
                 throwAsCaller(MException("drEEM:invalidData",'Input is not a valid dataset'))
             end
             app.finishedHere=false;
-            app.UIFigure.Units="normalized";
-            app.UIFigure.Position=[0.15 0.15 0.7 0.8];
-            movegui(app.UIFigure,'center')
+            app.drEEMviewscatterUIFigure.Units="normalized";
+            app.drEEMviewscatterUIFigure.Position=[0.15 0.15 0.7 0.8];
+            movegui(app.drEEMviewscatterUIFigure,'center')
             drEEMdataset.validate(data)
 
             pidx=drEEMhistory.searchhistory(data.history,"handlescatter","last");
@@ -404,7 +404,7 @@ classdef viewscatter_gui < matlab.apps.AppBase
         % Button pushed function: savesettingsButton
         function savesettingsButtonPushed(app, event)
             assignin('base','scatteroptions',app.options)
-            uialert(app.UIFigure, ...
+            uialert(app.drEEMviewscatterUIFigure, ...
                 'Settings saved to the workspace, look for variable ''scatteroptions''', ...
                 'settings saved to workspace', ...
                 Icon='success')
@@ -417,14 +417,14 @@ classdef viewscatter_gui < matlab.apps.AppBase
         % Create UIFigure and components
         function createComponents(app)
 
-            % Create UIFigure and hide until all components are created
-            app.UIFigure = uifigure('Visible', 'off');
-            app.UIFigure.Position = [100 100 920 648];
-            app.UIFigure.Name = 'MATLAB App';
-            app.UIFigure.HandleVisibility = 'on';
+            % Create drEEMviewscatterUIFigure and hide until all components are created
+            app.drEEMviewscatterUIFigure = uifigure('Visible', 'off');
+            app.drEEMviewscatterUIFigure.Position = [100 100 920 648];
+            app.drEEMviewscatterUIFigure.Name = 'drEEM: viewscatter';
+            app.drEEMviewscatterUIFigure.HandleVisibility = 'on';
 
             % Create GridLayout
-            app.GridLayout = uigridlayout(app.UIFigure);
+            app.GridLayout = uigridlayout(app.drEEMviewscatterUIFigure);
             app.GridLayout.ColumnWidth = {300, '1x'};
             app.GridLayout.RowHeight = {130, '0.7x'};
             app.GridLayout.Padding = [5 5 5 5];
@@ -913,7 +913,7 @@ classdef viewscatter_gui < matlab.apps.AppBase
             app.applycloseButton.Text = 'apply & close';
 
             % Show the figure after all components are created
-            app.UIFigure.Visible = 'on';
+            app.drEEMviewscatterUIFigure.Visible = 'on';
         end
     end
 
@@ -932,14 +932,14 @@ classdef viewscatter_gui < matlab.apps.AppBase
                 createComponents(app)
 
                 % Register the app with App Designer
-                registerApp(app, app.UIFigure)
+                registerApp(app, app.drEEMviewscatterUIFigure)
 
                 % Execute the startup function
                 runStartupFcn(app, @(app)startupFcn(app, varargin{:}))
             else
 
                 % Focus the running singleton app
-                figure(runningApp.UIFigure)
+                figure(runningApp.drEEMviewscatterUIFigure)
 
                 app = runningApp;
             end
@@ -953,7 +953,7 @@ classdef viewscatter_gui < matlab.apps.AppBase
         function delete(app)
 
             % Delete UIFigure when app is deleted
-            delete(app.UIFigure)
+            delete(app.drEEMviewscatterUIFigure)
         end
     end
 end
