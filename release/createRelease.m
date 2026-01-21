@@ -1,3 +1,4 @@
+% Close project if open
 cd(fileparts(matlab.desktop.editor.getActiveFilename))
 initSession("vanilla",force=true)
 cd ..
@@ -32,3 +33,4 @@ optsNew.MaximumMatlabRelease=releaseMax;
 matlab.addons.toolbox.packageToolbox(optsNew)
 disp('<strong> done...</strong>')
 initSession(force=true)
+% Close project
