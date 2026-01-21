@@ -7,14 +7,14 @@ classdef drEEMtoolbox < handle
     %   2. Call a method from the class directly
     %       samples=drEEMtoolbox.processabsorbance(samples);
 
-    % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
+    % Copyright (C) 2026 Urban J. Wuensch - wuensch@chalmers.se
     % Chalmers University of Technology
     % Department of Architecture and Civil Engineering
     % Sven Hultins Gata 6
     % 41296 Gothenburg (Sweden)
     properties (Constant = true, Hidden = false)
-        version = "2.25.12"
-        url = "https://zenodo.org/records/17971456/files/drEEM-2.25.12.mltbx?download=1"
+        version = "2.26.01"
+        url = "https://zenodo.org/records/18322883/files/drEEM-2.26.01.mltbx?download=1"
         requiredVersion = 'R2024b'
         rootfolder = drEEMtoolbox.tbxpath;
         options=drEEMtoolbox.defaultOptions;
