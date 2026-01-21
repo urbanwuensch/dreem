@@ -31,3 +31,4 @@ resources
 **/.buildtool/**/*
 **/*.asv
 **/*.DS_Store
+**/*.gitattributes
