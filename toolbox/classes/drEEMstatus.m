@@ -52,10 +52,31 @@ classdef drEEMstatus
 
         end
 
-        function outputArg = create(obj,inputArg)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
+        function [result,message] = isequal(a,b)
+            arguments
+                a (1,1) {mustBeA(a,'drEEMstatus')}
+                b (1,1) {mustBeA(b,'drEEMstatus')}
+            end
+            cnt=0;
+            props=fieldnames(a);
+            message='';
+            for j=1:numel(props)
+                if not(matches(a.(props{j}),b.(props{j})))
+                    if cnt==0
+                        message=[message,'The drEEMdataset status''es are <strong>not identical</strong>. See below for details:\n'];
+                    end
+                    cnt=cnt+1;
+                    message=[message,'   <strong>',props{j},'</strong>: "',char(a.(props{j})),'" vs. "',char(b.(props{j})),'"\n'];
+                end
+            end
+
+            if cnt==0
+                message='success';
+                result=true;
+            else
+                result=false;
+            end
+
         end
     end
 end
