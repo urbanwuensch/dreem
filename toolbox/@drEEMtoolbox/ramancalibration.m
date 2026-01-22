@@ -45,7 +45,7 @@ arguments
     options.iEnd   (1,1) {mustBeNumeric} = 424
     options.doAlignmentcheck (1,1) {mustBeNumericOrLogical} = false
     options.plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
-    options.method (1,:) {mustBeText,mustBeMember(options.method,['raw','gauss1'])} = 'raw';
+    options.method (1,:) {mustBeText,mustBeMember(options.method,["raw","gauss1"])} = 'raw';
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
