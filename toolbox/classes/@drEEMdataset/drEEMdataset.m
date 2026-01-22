@@ -84,11 +84,11 @@ classdef drEEMdataset
             %     'VariableNames', {'dilution_factor', 'pathlength', 'comment'});
 
             % CF conventions
-            data.metadata=addprop(data.metadata,'standard_name','variable');
-            data.metadata=addprop(data.metadata,'long_name','variable');
-            data.metadata=addprop(data.metadata,'units','variable');
-            data.metadata=addprop(data.metadata,'comment','variable');
-            data.metadata=addprop(data.metadata,'coverage_content_type','variable');
+            % data.metadata=addprop(data.metadata,'standard_name','variable');
+            % data.metadata=addprop(data.metadata,'long_name','variable');
+            % data.metadata=addprop(data.metadata,'units','variable');
+            % data.metadata=addprop(data.metadata,'comment','variable');
+            % data.metadata=addprop(data.metadata,'coverage_content_type','variable');
 
             data.history=drEEMhistory;
             data.history(1).fname='drEEMdataset.create';
