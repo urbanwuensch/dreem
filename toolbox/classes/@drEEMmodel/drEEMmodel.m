@@ -19,7 +19,7 @@ classdef drEEMmodel
         convergence (1,1) {mustBeNumeric}  = NaN
         constraints (1,:) {mustBeText}  = [""]
         toolbox  (1,:) {mustBeText}  = [""]
-
+        modelName (1,:) {mustBeText,mustBeMember(modelName,["PARAFAC","PCA","NPLS"])} = "PARAFAC";
     end
 
     methods (Static = true)
