@@ -241,7 +241,7 @@ stat=drEEMstatus.change(stat,"IFEcorrection","not applied");
 stat=drEEMstatus.change(stat,"blankSubtraction","not applied");
 stat=drEEMstatus.change(stat,"signalCalibration","not applied");
 stat=drEEMstatus.change(stat,"scatterTreatment","not applied");
-stat=drEEMstatus.change(stat,"signalScaling","not applied");
+stat=drEEMstatus.change(stat,"signalScaling","original scale");
 stat=drEEMstatus.change(stat,"absorbanceUnit","absorbance per cm");
 
 DS.status=stat;
