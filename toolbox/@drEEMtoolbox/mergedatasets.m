@@ -61,14 +61,14 @@ else
     dataout.status=a.status;
     dataout.abs=[a.abs;b.abs];
     dataout.absWave=a.absWave;
-    dataout.nSample=size(dataout.abs,1);
-    dataout.i=(1:dataout.nSample);
     dataout.metadata=[a.metadata;b.metadata];
     dataout.filelist=[a.filelist;b.filelist];
     dataout.X=[a.X;b.X];
     dataout.XBlank=[a.XBlank;b.XBlank];
     dataout.nEx=a.nEx;
     dataout.nEm=a.nEm;
+    dataout.nSample=size(dataout.filelist,1);
+    dataout.i=(1:dataout.nSample);
     dataout.Em=a.Em;
     dataout.Ex=a.Ex;
 end
