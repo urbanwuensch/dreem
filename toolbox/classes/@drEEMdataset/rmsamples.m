@@ -15,8 +15,6 @@ if isempty(index)|sum(index)==0
     return
 end
 
-drEEMdataset.validate(data)
-
 dataout=data;
 
 if islogical(index)|isnumeric(index)
