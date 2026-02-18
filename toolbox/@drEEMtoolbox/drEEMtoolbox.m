@@ -79,7 +79,7 @@ classdef drEEMtoolbox < handle
         function saveAfterFunctionCall(fig,name)
             arguments
                 fig (1,1) {mustBeA(fig,'matlab.ui.Figure')}
-                name (1,1) {mustBeText}
+                name (1,:) {mustBeText}
             end
 
             name=char(name);
@@ -99,13 +99,22 @@ classdef drEEMtoolbox < handle
                 warning('Export figure names should only contain one "." Replaced with "drEEM_figure.png"')
                 name='drEEM_figure.png';
             end
+            warning off
 
-            exportgraphics(fig,name, ...
-                "BackgroundColor","white", ...
-                "ContentType","auto", ...
-                "Resolution",600, ...
-                "PreserveAspectRatio","on",...
-                "Padding","tight")
+            % This is not clean, but works in current conditions.
+            % Exportgraphics fails if multiple "containers" exist in app.
+            % In this case, exportapp works.
+            try
+                exportgraphics(fig,name, ...
+                    "BackgroundColor","white", ...
+                    "ContentType","auto", ...
+                    "Resolution",600, ...
+                    "PreserveAspectRatio","on",...
+                    "Padding","tight")
+            catch
+                exportapp(fig,name)
+            end
+            warning on
         end
 
         f=dreemfig(fighandlein)

@@ -1,4 +1,4 @@
-function viewabsorbance(data)
+function viewabsorbance(data,figurefile)
 % <a href = "matlab:drEEMtoolbox.doc('viewabsorbance')">viewabsorbance(data) (click to access documentation)</a>
 %
 % <strong>View absorbance spectra</strong> contained in drEEMdataset object
@@ -18,6 +18,21 @@ function viewabsorbance(data)
 % 41296 Gothenburg (Sweden)
 arguments
     data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.mustContainSamples(data),drEEMdataset.sanityCheckAbsorbance(data)}
+    figurefile (1,:) {mustBeText} = ""
 end
-dreemgui.viewabsorbance_gui(data)
+app=dreemgui.viewabsorbance_gui(data);
+
+if not(isempty(figurefile))
+    % Pause for figure rendering
+    pause(3)
+    try
+        fig=dreemgui.extractUIfigure(app);
+        dreemgui.saveAfterFunctionCall(fig,'test.png')
+    catch ME
+        throwAsCaller(ME)
+    end
 end
+
+end
+
+
