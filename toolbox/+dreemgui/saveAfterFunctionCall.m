@@ -4,27 +4,37 @@ arguments
     name (1,:) {mustBeText}
 end
 
-st = dbstack;
 
+% Name digestion
 name=char(name);
-temp=strsplit(name,'.');
-if isscalar(temp)
-    name=[name,'-',char(st(end).name),'.png'];
-elseif numel(temp)==2
-    ext=temp{end};
-    try
-        mustBeMember(ext,["jpg","jpeg","png","tiff","tif","gif","svg","pdf","eps"])
-    catch ME
-        message=replace(ME.message,'Value ','Extension input to "figurefile" ');
-        ME = MException('MATLAB:validators:mustBeMember',message);
-        throwAsCaller(ME)
-    end
-    name=[temp{1},'-',char(st(end).name),'.',temp{2}];
-elseif numel(temp)>2
-    warning('Export figure names should only contain one "." Replaced with "drEEM_figure.png"')
-    name='drEEM_figure.png';
+[filepath,fname,ext] = fileparts(name);
+
+% First the filepath. Specify if it hasn't. Leave it if it was.
+if isempty(filepath)
+    filepath=pwd;
 end
-warning off
+
+% Next, the filename. Include the calling function's name.
+st = dbstack;
+fname=[fname,'-',char(st(end).name)];
+
+% Last the extension. Specify if it wasn't, police the extensions
+if isempty(ext)
+    ext='.png';
+end
+try
+    mustBeMember(ext,[".jpg",".jpeg",".png",".tiff",".tif",".gif",".svg",".pdf",".eps"])
+catch ME
+    message=replace(ME.message,'Value ','Extension input to "figurefile" ');
+    ME = MException('MATLAB:validators:mustBeMember',message);
+    throwAsCaller(ME)
+end
+
+% reassemble the bits.
+name=fullfile(filepath,[fname,ext]);
+
+
+    
 
 % This is not clean, but works in current conditions.
 % Exportgraphics fails if multiple "containers" exist in app.
