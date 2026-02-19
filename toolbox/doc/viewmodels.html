@@ -389,7 +389,7 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<div><pre><code class="language-none">viewmodels(data)</code></pre></div>
+<div><pre><code class="language-none">viewmodels(data,Name,Value)</code></pre></div>
 
 <h2 id="toc_2">Description</h2>
 
@@ -490,6 +490,53 @@ Left-clicking on the <code>view correlations vs. metadata</code> button opens a 
     <i>drEEMdataset</i></p>
 
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
+
+<p></details></p>
+
+<h2 id="toc_4">Name-Value arguments</h2>
+
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a></p>
+
+<p><details open>
+    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <i>character</i></p>
+
+<p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
+
+<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewmodels</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewmodels.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewmodels.jpg&quot;.</p>
+
+<p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
+
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>startTab</code>- specify which tab the GUI should open on. </b></summary>
+    <i>character</i></p>
+
+<p>If desired, the default &quot;Overview&quot; can be replaced by one of the following:</p>
+
+<ul>
+<li>&quot;Scores &amp; loadings&quot;</li>
+<li>&quot;Spectral loadings&quot;</li>
+<li>&quot;Loadings &amp; leverages&quot;</li>
+<li>&quot;Errors &amp; leverages&quot;</li>
+<li>&quot;Fingerprint plots&quot;</li>
+<li>&quot;SSE&quot;</li>
+<li>&quot;Score correlation&quot;</li>
+</ul>
+
+<p>This results in a switch of tab focus after the GUI starts up. Can be particularly useful in conjunction with saving figure outputs automatically.</p>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>f</code>- which model to show at startup </b></summary>
+    <i>numeric</i></p>
+
+<p>To start showing a particular model with f-components, the option can be supplied. Can be particularly useful in conjunction with saving figure outputs automatically.</p>
 
 <p></details></p>
 

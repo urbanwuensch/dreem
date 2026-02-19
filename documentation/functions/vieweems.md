@@ -7,7 +7,7 @@ Visualize and analyze Excitation Emission Matrices (EEMs) and modeled data.
 
 ## Syntax
 
-	vieweems(data)
+	vieweems(data,Name,Value)
 
 
 
@@ -65,3 +65,22 @@ Note: Vertical lines represent the positions of Raman and Rayleigh scatter peaks
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
 </details>
+
+## Name-Value arguments
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a>
+
+<details open>
+    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <i>character</i>
+
+If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+
+A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`vieweems`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-vieweems.png". Likewise, providing "projectX.jpg" will result in "projectX-vieweems.jpg".
+
+A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
+
+Default: `""` (i.e. an empty string disabling the figure saving.
+
+</details>
+

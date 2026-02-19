@@ -22,6 +22,7 @@ arguments
     data (1,1) {mustBeA(data,"drEEMdataset"),drEEMdataset.validate(data),...
         drEEMdataset.sanityCheckIFE(data),drEEMdataset.mustContainSamples(data)}
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+    options.figurefile (1,:) {mustBeText} = "";
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -97,6 +98,18 @@ if options.plot
     ylabel(t,'Emission (nm)')
     zlabel(ax(3),'IFE correction factor')
     title(t,'IFE matrices')
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
+
 end
 
 % Will only run if toolbox is set to overwrite workspace variable and user

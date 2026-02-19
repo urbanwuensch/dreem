@@ -8,7 +8,7 @@ Visualize, evaluate the performance, and compare different aspects of the PARAFA
 
 
 ## Syntax
-	viewmodels(data)
+	viewmodels(data,Name,Value)
 
 
 
@@ -109,3 +109,54 @@ Left-clicking on the `view correlations vs. metadata` button opens a new app, in
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
 </details>
+
+
+## Name-Value arguments
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a>
+
+
+<details open>
+    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <i>character</i>
+
+If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+
+A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`viewmodels`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewmodels.png". Likewise, providing "projectX.jpg" will result in "projectX-viewmodels.jpg".
+
+A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
+
+Default: `""` (i.e. an empty string disabling the figure saving.
+
+</details>
+
+
+<details open>
+    <summary><b>`startTab `- specify which tab the GUI should open on. </b></summary>
+    <i>character</i>
+
+If desired, the default "Overview" can be replaced by one of the following:
+
+
+- "Scores & loadings"
+- "Spectral loadings"
+- "Loadings & leverages"
+- "Errors & leverages"
+- "Fingerprint plots"
+- "SSE"
+- "Score correlation"
+
+This results in a switch of tab focus after the GUI starts up. Can be particularly useful in conjunction with saving figure outputs automatically.
+
+</details>
+
+
+<details open>
+    <summary><b>`f `- which model to show at startup </b></summary>
+    <i>numeric</i>
+
+To start showing a particular model with f-components, the option can be supplied. Can be particularly useful in conjunction with saving figure outputs automatically.
+
+
+</details>
+

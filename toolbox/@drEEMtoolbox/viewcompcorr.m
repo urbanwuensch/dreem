@@ -1,4 +1,4 @@
-function viewcompcorr(data)
+function viewcompcorr(data,options)
 % <a href = "matlab:drEEMtoolbox.doc('viewcompcorr')">viewcompcorr(data) (click to access documentation)</a>
 %
 % <strong>Inspect PARAFAC models of fluorescence EEMs</strong>
@@ -18,5 +18,20 @@ function viewcompcorr(data)
 % 41296 Gothenburg (Sweden)
 arguments
     data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.mustContainSamples(data)}
+    options.figurefile (1,:) {mustBeText} = ""
 end
-dreemgui.viewcompcorr_gui(data)
+app=dreemgui.viewcompcorr_gui(data);
+
+figurefile=char(options.figurefile);
+if not(isempty(figurefile))
+    % Pause for figure rendering
+    pause(3)
+    try
+        fig=dreemgui.extractUIfigure(app);
+        dreemgui.saveAfterFunctionCall(fig,'test.png')
+    catch ME
+        throwAsCaller(ME)
+    end
+end
+
+end

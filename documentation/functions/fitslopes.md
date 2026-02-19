@@ -118,6 +118,20 @@ Default is `false`.
 
 </details>
 
+<details open>
+    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <i>character</i>
+
+If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+
+A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`fitslopes`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-fitslopes.png". Likewise, providing "projectX.jpg" will result in "projectX-fitslopes.jpg".
+
+A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
+
+Default: `""` (i.e. an empty string disabling the figure saving.
+
+</details>
+
 ## Output arguments
 <details>
     <summary><b>`dataout` - dataset with slope data in .opticalMetadata</b></summary>

@@ -577,6 +577,20 @@ Th function <code>pickpeaks</code> extracts predefined fluorescence peaks, inclu
 
 <p></details></p>
 
+<p><details open>
+    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <i>character</i></p>
+
+<p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
+
+<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>pickpeaks</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-pickpeaks.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-pickpeaks.jpg&quot;.</p>
+
+<p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
+
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+
+<p></details></p>
+
 <h2 id="toc_6">Output arguments</h2>
 
 <p><details open>

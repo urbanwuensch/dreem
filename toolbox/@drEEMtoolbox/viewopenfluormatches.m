@@ -1,4 +1,4 @@
-function [summary,M]  =  viewopenfluormatches(filename)
+function [summary,M]  =  viewopenfluormatches(filename,options)
 % <a href = "matlab:drEEMtoolbox.doc('viewopenfluormatches')">[summary,M] = viewopenfluormatches(filename) (click to access documentation)</a>
 %
 % <strong>Import results from OpenFluor</strong> for analysis
@@ -18,6 +18,7 @@ function [summary,M]  =  viewopenfluormatches(filename)
 % 41296 Gothenburg (Sweden)
 arguments
     filename (1,:) {mustBeFile}
+    options.figurefile (1,:) {mustBeText} = ""
 end
 
 %% Load file and store contents in cell array
@@ -302,6 +303,17 @@ dcm_obj  =  datacursormode(hf);
 dcm_obj.Interpreter = 'none';
 set(dcm_obj,'UpdateFcn',{@augmentdatacursor,summary,referencemodelname});
 datacursormode(hf,'on')
+
+figurefile=char(options.figurefile);
+if not(isempty(figurefile))
+    % Pause for figure rendering
+    pause(3)
+    try
+        dreemgui.saveAfterFunctionCall(hf,figurefile)
+    catch ME
+        throwAsCaller(ME)
+    end
+end
 
 end
 function txt  =  augmentdatacursor(~,event_obj,summary,referencemodelname)

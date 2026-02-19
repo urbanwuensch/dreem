@@ -6,7 +6,7 @@ Visualize the raw data, modeled data, and residual EEM plots for every sample in
 
 
 ## Syntax
-[`viewdmr(data)`](#syntax1)
+[`viewdmr(data,Name,Value)`](#syntax1)
 
 
 
@@ -35,3 +35,20 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 </details>
 
+## Name-Value arguments
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a>
+
+<details open>
+    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <i>character</i>
+
+If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+
+A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`viewcompcorr`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewcompcorr.png". Likewise, providing "projectX.jpg" will result in "projectX-viewcompcorr.jpg".
+
+A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
+
+Default: `""` (i.e. an empty string disabling the figure saving.
+
+</details>

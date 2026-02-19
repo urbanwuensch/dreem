@@ -391,6 +391,10 @@ details:open > summary {
 
 <p><a href="#syntax1"><code>samplesout = subtractblanks(samples, blanks)</code></a></p>
 
+<p><a href="#syntax2"><code>dataout = subtractblanks( ___ , Name,Value)</code></a></p>
+
+<p><a href="#syntax3"><code>subtractblanks( ___ , Name,Value)</code></a></p>
+
 <h2 id="toc_2">Description</h2>
 
 <p>Subtracts EEMs of blank stored in <code>blanks</code> from EEMs stored in <code>samples</code>.
@@ -412,6 +416,30 @@ after the <code>ifecorrection</code> function has been applied on <code>samples<
 </blockquote>
 
 <p>An entry will be added to the <code>history</code> field of the <code>samplesout</code>.</p>
+
+<p><details open>
+    <summary><b><code>samplesout = subtractblanks(samples,blanks)</code> - default options</b></summary>
+<a name="syntax1"></a></p>
+
+<p>Simply subtracts blanks and shows plots</p>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>samplesout = rmspikes( ___ , Name,Value)</code> - custom options</b></summary>
+<a name="syntax2"></a></p>
+
+<p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments.</p>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>subtractblanks( ___ , Name,Value)</code> - Diagnosis mode</b></summary>
+<a name="syntax3"></a></p>
+
+<p>When no output argument is supplied, the function automatically switches to diagnostics mode. Outputs are shown to allow you to see how the operation would affect your dataset.</p>
+
+<p></details></p>
 
 <h2 id="toc_3">Input arguments</h2>
 
@@ -439,7 +467,35 @@ after the <code>ifecorrection</code> function has been applied on <code>samples<
 
 <p></details></p>
 
-<h2 id="toc_4">Output arguments</h2>
+<h2 id="toc_4">Name-Value arguments</h2>
+
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a></p>
+
+<p><details open>
+    <summary><b><code>plot</code>- switch to plot the results</b></summary>
+    <i>logical</i></p>
+
+<p>Logical or numeric value to specify if a plot showing the results should be generated.
+Default is <code>true</code>.</p>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <i>character</i></p>
+
+<p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
+
+<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>subtractblanks</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-subtractblanks.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-subtractblanks.jpg&quot;.</p>
+
+<p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
+
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+
+<p></details></p>
+
+<h2 id="toc_5">Output arguments</h2>
 
 <p><details>
     <summary><b><code>samplesout</code> - processed dataset </b></summary>

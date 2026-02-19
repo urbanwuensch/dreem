@@ -22,6 +22,7 @@ arguments
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
     options.details  {mustBeNumericOrLogical} = false
     options.quiet {mustBeNumericOrLogical} = false
+    options.figurefile (1,:) {mustBeText} = "";
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -420,6 +421,18 @@ if plt
     xlabel(ax,'# of sample in dataset')
     hold(ax,'off')
     axis(ax,'tight')
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
+
 end
 [C,ia,ib]=intersect(dataout.opticalMetadata.Properties.VariableNames, ...
     picklist.Properties.VariableNames);

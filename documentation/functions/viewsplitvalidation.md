@@ -7,7 +7,7 @@ Visualize a split validation on a specific model present in data.
 
 ## Syntax
 
-	dataout = viewsplitvalidation(data, fac)
+	dataout = viewsplitvalidation(data, fac,Name,Value)
 
 ## Description
 
@@ -49,3 +49,22 @@ Specifies the number of components in the model you wish to validate.
 
 
 </details>
+
+## Name-Value arguments
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a>
+
+<details open>
+    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <i>character</i>
+
+If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+
+A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`viewsplitvalidation`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewsplitvalidation.png". Likewise, providing "projectX.jpg" will result in "projectX-viewsplitvalidation.jpg".
+
+A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
+
+Default: `""` (i.e. an empty string disabling the figure saving.
+
+</details>
+

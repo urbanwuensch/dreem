@@ -8,6 +8,10 @@ subtract blanks from the samples
 ## Syntax
 [`samplesout = subtractblanks(samples, blanks)`](#syntax1)
 
+[`dataout = subtractblanks( ___ , Name,Value)`](#syntax2)
+
+[`subtractblanks( ___ , Name,Value)`](#syntax3)
+
 
 
 ## Description ##
@@ -32,6 +36,29 @@ If the last plot (bottom left) contains negative signals, more scatter was obser
 
 An entry will be added to the `history` field of the `samplesout`.
 
+<details open>
+    <summary><b>`samplesout = subtractblanks(samples,blanks)` - default options</b></summary>
+<a name="syntax1"></a>
+
+Simply subtracts blanks and shows plots
+
+</details>
+
+<details open>
+    <summary><b>`samplesout = rmspikes( ___ , Name,Value)` - custom options</b></summary>
+<a name="syntax2"></a>
+
+specifies additional options using one or more [name-value](#NameValue) pair arguments.
+
+</details>
+
+<details open>
+    <summary><b>`subtractblanks( ___ , Name,Value)` - Diagnosis mode</b></summary>
+<a name="syntax3"></a>
+
+When no output argument is supplied, the function automatically switches to diagnostics mode. Outputs are shown to allow you to see how the operation would affect your dataset.
+
+</details>
 
 ## Input arguments
 <details>
@@ -54,6 +81,32 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 </details>
 
+## Name-Value arguments
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+<a name="NameValue"></a>
+
+<details open>
+    <summary><b>`plot`- switch to plot the results</b></summary>
+    <i>logical</i>
+
+Logical or numeric value to specify if a plot showing the results should be generated.
+Default is `true`.
+
+</details>
+
+<details open>
+    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <i>character</i>
+
+If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+
+A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`subtractblanks`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-subtractblanks.png". Likewise, providing "projectX.jpg" will result in "projectX-subtractblanks.jpg".
+
+A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
+
+Default: `""` (i.e. an empty string disabling the figure saving.
+
+</details>
 
 
 

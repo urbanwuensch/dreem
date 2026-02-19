@@ -12,6 +12,7 @@ arguments (Input)
     options.XCor (:,2) {mustBeNumeric}
     options.MCor (:,2) {mustBeNumeric}
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+    options.figurefile (1,:) {mustBeText} = "";
 end
 arguments (Output)
     dataout (1,1) {mustBeA(dataout,"drEEMdataset"),drEEMdataset.validate(dataout)}
@@ -77,6 +78,17 @@ if options.plot
     legend(ax)
     ax=nexttile(t);
     mesh(ax,dataout.Ex,dataout.Em,squeeze(corfac))
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
 
 end
 

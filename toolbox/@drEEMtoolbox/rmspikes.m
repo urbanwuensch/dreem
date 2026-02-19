@@ -31,6 +31,7 @@ arguments
     options.interpolate (1,:) {mustBeNumericOrLogical} = false
     options.details (1,:) {mustBeNumericOrLogical} = false
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+    options.figurefile (1,:) {mustBeText} = "";
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -292,6 +293,17 @@ if plt
     ylabel(t,'% Removed at wavelength')
     xlabel(t,'Wavelength (nm)')
     title(t,'Removal overview: %-age removed per sample')
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
 
 end
 % Make the history entry

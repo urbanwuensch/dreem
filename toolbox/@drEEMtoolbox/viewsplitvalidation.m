@@ -1,4 +1,4 @@
-function viewsplitvalidation(data,fac)
+function viewsplitvalidation(data,fac,options)
 % <a href = "matlab:drEEMtoolbox.doc('viewsplitvalidation')">dataout = viewsplitvalidation(data,fac) (click to access documentation)</a>
 %
 % <strong>Compare PARAFAC models</strong> of a dataset to validate a model
@@ -21,6 +21,7 @@ function viewsplitvalidation(data,fac)
 arguments
     data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.validate(data)}
     fac (1,1) {mustBeNumeric,drEEMdataset.mustBeModel(data,fac)}
+    options.figurefile (1,:) {mustBeText} = ""
 end
 if isempty(data.split)
     error('data.split is empty. Please read the documentation to follow the workflow of the toolbox.')
@@ -177,6 +178,17 @@ if passed&&checkedoverall % Passed: Plot lines for all splits and overall model,
     t.Title.String=(['Validated ',num2str(fac),'-component PARAFAC model']);
     t.Title.FontWeight = 'bold';
     %t.Title.FontName = 'Source Sans Pro';
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(hf,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
 elseif ~passed&&checkedoverall % Failed. Plot all splits + overall model
     col=lines(nSplit);
     t=tiledlayout(hf,"flow",'padding','compact','TileSpacing','compact');

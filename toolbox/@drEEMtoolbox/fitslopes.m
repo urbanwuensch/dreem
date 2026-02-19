@@ -32,6 +32,7 @@ arguments
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
     options.details         {mustBeNumericOrLogical} = false
     options.quiet         {mustBeNumericOrLogical} = false
+    options.figurefile (1,:) {mustBeText} = "";
 end
 
 % Experimental feature; overwrite workspace variable, needs no outputarg check
@@ -336,6 +337,17 @@ switch options.plot
     legend(ax, ...
         ['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'nm}'], ...
         'S_{275-295nm}','S_{350-400nm}','location','northoutside',NumColumns=3)
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
+
 end
 
 % Will only run if toolbox is set to overwrite workspace variable and user

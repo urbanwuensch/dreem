@@ -1,4 +1,4 @@
-function viewspectralvariance(data)
+function viewspectralvariance(data,options)
 % <a href = "matlab:drEEMtoolbox.doc('viewspectralvariance')">spectralvariance(data) (click to access documentation)</a>
 %
 % <strong>Inspect the spectral variability</strong> of a drEEMdataset
@@ -18,6 +18,7 @@ function viewspectralvariance(data)
 % 41296 Gothenburg (Sweden)
 arguments
     data (1,1)              {mustBeA(data,"drEEMdataset"),drEEMdataset.validate(data),drEEMdataset.mustContainSamples(data)}
+    options.figurefile (1,:) {mustBeText} = ""
 end
 
 if containsfluorescence(data)&&containsabsorbance(data)
@@ -157,6 +158,17 @@ end
 
 linkaxes([ax(2),ax(3)],'y')
 linkaxes([ax(2),ax(4)],'x')
+
+figurefile=char(options.figurefile);
+if not(isempty(figurefile))
+    % Pause for figure rendering
+    pause(3)
+    try
+        dreemgui.saveAfterFunctionCall(hf,figurefile)
+    catch ME
+        throwAsCaller(ME)
+    end
+end
 
 end
 

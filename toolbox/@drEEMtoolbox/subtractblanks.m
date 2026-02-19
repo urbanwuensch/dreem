@@ -29,6 +29,7 @@ arguments
     blanks (1,1) {mustBeNonempty,drEEMdataset.validate(blanks),...
         drEEMdataset.sanityCheckBlankSubtraction(blanks),drEEMdataset.mustContainSamples(blanks)}
     options.plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
+    options.figurefile (1,:) {mustBeText} = "";
 end
 
 if nargout>0
@@ -213,6 +214,17 @@ if options.plot
     title(ax,{['[',sam,' - ',bla,'] - emission scans @275nm']})
     xlabel(ax,'Emission (nm)')
     ylabel(ax,'Fluorescence intensity')
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
 end
 
 % drEEMhistory entry

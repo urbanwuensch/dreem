@@ -46,6 +46,7 @@ arguments
     options.doAlignmentcheck (1,1) {mustBeNumericOrLogical} = false
     options.plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
     options.method (1,:) {mustBeText,mustBeMember(options.method,["raw","gauss1"])} = 'raw';
+    options.figurefile (1,:) {mustBeText} = "";
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -168,6 +169,17 @@ if options.plot
     title(ax,'Raman peak max / background signal (SNB)')
     ylabel(ax,'Signal to baseline ratio')
     xlabel(ax,"sample #")
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
 end
 
 % Will only run if toolbox is set to overwrite workspace variable and user

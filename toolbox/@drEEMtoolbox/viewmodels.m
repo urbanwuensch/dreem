@@ -1,4 +1,4 @@
-function viewmodels(data,startTab,f)
+function viewmodels(data,options)
 % <a href = "matlab:drEEMtoolbox.doc('viewmodels')">viewmodels(data) (click to access documentation)</a>
 %
 % <strong>Inspect PARAFAC models of fluorescence EEMs</strong>
@@ -18,15 +18,29 @@ function viewmodels(data,startTab,f)
 % 41296 Gothenburg (Sweden)
 arguments
     data (1,1) {mustBeA(data,'drEEMdataset'),drEEMdataset.validate(data),drEEMdataset.mustContainSamples(data)}
-    startTab (1,:) {mustBeText,...
-        mustBeMember(startTab,["Overview","Scores & loadings",...
+    options.startTab (1,:) {mustBeText,...
+        mustBeMember(options.startTab,["Overview","Scores & loadings",...
         "Spectral loadings","Loadings & leverages","Errors & leverages", ...
         "Fingerprint plots","SSE","Score correlation"])} = "Overview"
-    f (1,1) {mustBeNumeric,drEEMdataset.mustBeModel(data,f)} = nan
+    options.f (1,1) {mustBeNumeric,drEEMdataset.mustBeModel(data,options.f)} = nan
+    options.figurefile (1,:) {mustBeText} = ""
 end
 ncomp=numel(find(arrayfun(@(x) not(isempty(x.loads{1})),data.models)));
 if ncomp==0
     error('Can''t find any models to plot.')
 end
-dreemgui.viewmodels_gui(data,startTab,f)
+app=dreemgui.viewmodels_gui(data,options.startTab,options.f);
+
+figurefile=char(options.figurefile);
+if not(isempty(figurefile))
+    % Pause for figure rendering
+    pause(3)
+    try
+        fig=dreemgui.extractUIfigure(app);
+        dreemgui.saveAfterFunctionCall(fig,'test.png')
+    catch ME
+        throwAsCaller(ME)
+    end
+end
+
 end
