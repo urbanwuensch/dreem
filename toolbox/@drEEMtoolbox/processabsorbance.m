@@ -237,7 +237,7 @@ if options.plot
         % Pause for figure rendering
         pause(3)
         try
-            dreemgui.saveAfterFunctionCall(fig1,figurefile)
+            dreemgui.saveAfterFunctionCall(f,figurefile)
         catch ME
             throwAsCaller(ME)
         end

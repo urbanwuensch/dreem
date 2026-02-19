@@ -8,7 +8,7 @@ cd(fileparts(matlab.desktop.editor.getActiveFilename))
 disp('<strong> starting to pack...</strong>')
 % Change these for the release!!!
 uuid="186c884d-4f97-4318-9f12-cbf90a332379";
-version='2.26.01';
+version='2.26.02';
 OutputFile=string(['/Users/wuensch/git repros/dreem-2/release/drEEM-',version,'.mltbx']);
 if isfile(OutputFile),delete(OutputFile),disp('deleted existing mltbx file'),end
 releaseMax=matlabRelease.Release;
