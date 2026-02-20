@@ -11,6 +11,7 @@ function dataout = fitslopes(data,options)
 % rsq (1,1)       {mustBeNumeric,mustBeLessThanOrEqual(1)} = 0.95
 % options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
 % details         {mustBeNumericOrLogical} = false
+% figurefile (1,:) {mustBeText} = ""
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. fit slopes and get an idea how well the fit represents the data

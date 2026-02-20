@@ -7,6 +7,10 @@ function viewsplitvalidation(data,fac,options)
 % data (1,1) {mustBeNonempty,drEEMdataset.validate}
 % fac (1,1)  {mustBeInteger,drEEMdataset.mustBeModel}
 %
+% <strong>INPUTS - Optional</strong>
+% figurefile (1,:)      {mustBeText} = "";
+%
+
 % <strong>EXAMPLE(S)</strong>
 %       viewsplitvalidation(samples,5)
 %

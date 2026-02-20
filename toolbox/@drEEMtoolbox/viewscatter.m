@@ -6,6 +6,10 @@ function viewscatter(data,options)
 % <strong>INPUTS - Required</strong>
 % data      {mustBeA("drEEMdataset")}
 %
+% <strong>INPUTS - Optional</strong>
+% figurefile (1,:)      {mustBeText} = "";
+%
+
 % <strong>EXAMPLE(S)</strong>
 %   tbx.viewscatter(data);
 %

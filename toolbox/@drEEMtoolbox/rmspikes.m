@@ -11,6 +11,7 @@ function dataout = rmspikes(data,options)
 % interpolate (1,:) {mustBeNumericOrLogical} = false
 % details (1,:) {mustBeNumericOrLogical} = false
 % plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+% figurefile (1,:) {mustBeText} = ""
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. Delete signals 10x above the noise floor and don't interpolate

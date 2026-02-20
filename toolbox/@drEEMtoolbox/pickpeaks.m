@@ -9,7 +9,8 @@ function dataout = pickpeaks( data,options)
 % <strong>Inputs - Optional</strong>
 % options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
 % details       {mustBeNumericOrLogical} = false
-%
+% figurefile (1,:) {mustBeText} = ""
+
 % <a href = "matlab:drEEMtoolbox.doc('pickpeaks')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se

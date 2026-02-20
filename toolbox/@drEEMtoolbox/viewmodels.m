@@ -6,6 +6,14 @@ function viewmodels(data,options)
 % <strong>INPUTS - Required</strong>
 % data      {mustBeA("drEEMdataset")}
 %
+% <strong>INPUTS - Optional</strong>
+% startTab  (1,:) {mustBeText,...
+%        mustBeMember(options.startTab,["Overview","Scores & loadings",...
+%        "Spectral loadings","Loadings & leverages","Errors & leverages", ...
+%        "Fingerprint plots","SSE","Score correlation"])} = "Overview";
+% options.f (1,1) {mustBeNumeric,mustBeModel} = nan
+% figurefile (1,:)      {mustBeText} = "";
+%
 % <strong>EXAMPLE(S)</strong>
 %   tbx.viewmodels(data);
 %

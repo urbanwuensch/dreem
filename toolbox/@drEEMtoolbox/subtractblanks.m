@@ -8,7 +8,10 @@ function dataout = subtractblanks(samples,blanks,options)
 %     drEEMdataset.sanityCheckBlankSubtraction}
 % blanks (1,1)  {drEEMdataset.validate(blanks),...
 %     drEEMdataset.sanityCheckBlankSubtraction}
+%
+% <strong> INPUTS - Optional</strong>
 % plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
+% figurefile (1,:) {mustBeText} = "";
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. Blank subtraction with visual output for inspection

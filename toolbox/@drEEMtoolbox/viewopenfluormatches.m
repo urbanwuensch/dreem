@@ -6,6 +6,10 @@ function [summary,M]  =  viewopenfluormatches(filename,options)
 % <strong>Inputs - Required</strong>
 % filename (1,:) {mustBeFile}
 %
+% <strong>INPUTS - Optional</strong>
+% figurefile (1,:)      {mustBeText} = "";
+%
+
 % <strong>EXAMPLE(S)</strong>
 %   [summary,M] = tbx.viewopenfluormatches(which("OpenFluorSearch_384_osPARAFAC_Tapajos_20250223.csv"))
 %

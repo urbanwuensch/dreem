@@ -6,6 +6,7 @@ function dataout = ifecorrection(data,options)
 % <strong>INPUTS - Required</strong>
 % data (1,1) {mustBeA("drEEMdataset"),drEEMdataset.validate,drEEMdataset.sanityCheckIFE}
 % options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+% figurefile (1,:) {mustBeText} = ""
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. samples = ifecorrection(samples)

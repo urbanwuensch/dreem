@@ -14,6 +14,7 @@ function dataout = ramancalibration(samples,blanks,options)
 % iStart (1,1) {mustBeNumeric} = 378
 % iEnd   (1,1) {mustBeNumeric} = 424
 % plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+% figurefile (1,:) {mustBeText} = ""
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. Trust us, but verify(!)
