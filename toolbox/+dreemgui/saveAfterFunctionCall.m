@@ -33,7 +33,16 @@ end
 % reassemble the bits.
 name=fullfile(filepath,[fname,ext]);
 
-
+% Now check if that file exists and then add a counter to it.
+if isfile(name)
+    cnt=1;
+    fnameorg=fname;
+    while isfile(name)
+        fname=[fnameorg,'-',num2str(cnt)];
+        cnt=cnt+1;
+        name=fullfile(filepath,[fname,ext]);
+    end
+end
     
 
 % This is not clean, but works in current conditions.
