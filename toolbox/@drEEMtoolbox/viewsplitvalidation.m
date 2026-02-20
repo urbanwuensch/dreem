@@ -184,7 +184,7 @@ if passed&&checkedoverall % Passed: Plot lines for all splits and overall model,
         % Pause for figure rendering
         pause(3)
         try
-            dreemgui.saveAfterFunctionCall(hf,figurefile)
+            dreemgui.saveAfterFunctionCall(hf.Parent,figurefile)
         catch ME
             throwAsCaller(ME)
         end
@@ -217,6 +217,17 @@ elseif ~passed&&checkedoverall % Failed. Plot all splits + overall model
     % pos=get(hf,'Position');
     % pos(4)=pos(4)./2;
     % set(hf,'Position',pos);
+
+    figurefile=char(options.figurefile);
+    if not(isempty(figurefile))
+        % Pause for figure rendering
+        pause(3)
+        try
+            dreemgui.saveAfterFunctionCall(hf.Parent,figurefile)
+        catch ME
+            throwAsCaller(ME)
+        end
+    end
 end
 
 %% Step 6: Notify user (this is last because errors might be thrown)

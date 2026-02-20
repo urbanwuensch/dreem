@@ -15,7 +15,7 @@ arguments
     options.figurefile (1,:) {mustBeText} = ""
 end
 app=dreemgui.vieweems_gui(data);
-end
+
 
 figurefile=char(options.figurefile);
 if not(isempty(figurefile))
