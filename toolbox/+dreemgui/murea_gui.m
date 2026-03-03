@@ -192,10 +192,14 @@ classdef murea_gui < matlab.apps.AppBase
             ev=arrayfun(@(x) x.percentExplained,app.dataBackup.models);
             f=drEEMdataset.modelsWithContent(app.dataBackup);
             ev=ev(f);
-            plot(ax,f,ev,'k',LineStyle='-',Marker='o')
+            plot(ax,f,ev,'k',LineStyle='-',Marker='o',DisplayName='all')
+            hold(ax,"on")
+            line(ax,f(f==app.nComp),ev(f==app.nComp),'Marker','diamond', ...
+                MarkerFaceColor='r',MarkerEdgeColor='r',DisplayName='selected')
             title(ax,'Explained data (PARAFAC)')
             pbaspect(ax,[1 1 1])
             ylabel(ax,'Explained by PARAFAC models (%)')
+            legend(ax,location="best")
 
             ax=nexttile(t);
             ev=app.model.explained;
@@ -209,7 +213,7 @@ classdef murea_gui < matlab.apps.AppBase
             ylim(ax,[0 100])
             ylabel(ax,'% cummulative explained residuals (PCA)')
             set(ax,YColor='r')
-            title(ax,'Explained by PCA (residuals)')
+            title(ax,{['Explained by PCA on residuals of '],[num2str(app.nComp),'-comp. PARAFAC model']})
             pbaspect(ax,[1 1 1])
 
             % Delete and recreate Plot panel
@@ -268,7 +272,10 @@ classdef murea_gui < matlab.apps.AppBase
                     ax=nexttile(t);
                     plot(ax,app.model.score(:,j),'k')
                     yline(ax,0,LineStyle='--')
+                    title(ax,['PC',num2str(j),' (',num2str(round(app.model.explained(j),1)),'%)'])
                 end
+                xlabel(t,'Sample #')
+                ylabel(t,'Scores')
             end
 
             % Loadings
@@ -286,9 +293,11 @@ classdef murea_gui < matlab.apps.AppBase
                     n_pos=sum(levels>0);
 
                     colormap(ax1,app.residualcolormap(n_neg,n_pos))
-                    title(ax1,['C',num2str(j),' (',num2str(round(app.model.explained(j),1)),'%)'])
+                    title(ax1,['PC',num2str(j),' (',num2str(round(app.model.explained(j),1)),'%)'])
 
                 end
+                ylabel(t,'Emission (nm)')
+                xlabel(t,'Excitation (nm)')
             end
 
 
@@ -1131,10 +1140,10 @@ classdef murea_gui < matlab.apps.AppBase
             app.SavefigurepanelasimageMenu.Text = 'Save figure panel as image';
             
             % Assign app.ContextMenu
-            app.gl_detail.ContextMenu = app.ContextMenu;
             app.OverviewPanel.ContextMenu = app.ContextMenu;
             app.ScoresPanel.ContextMenu = app.ContextMenu;
             app.LoadingsPanel.ContextMenu = app.ContextMenu;
+            app.gl_detail.ContextMenu = app.ContextMenu;
             app.SelectedEEMPanel.ContextMenu = app.ContextMenu;
 
             % Show the figure after all components are created
