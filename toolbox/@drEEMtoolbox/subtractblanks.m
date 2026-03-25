@@ -156,10 +156,11 @@ if options.plot
     ax=nexttile(t);
     y = squeeze(blanks.X(:,:,drEEMtoolbox.mindist(blanks.Ex,275)));
     ysub = y(:,blanks.Em>340&blanks.Em<500);
-    yl = max(ysub(:),[],1,"omitmissing").*3;
+    yl = min(y(:));
+    yl(2) = max(ysub(:),[],1,"omitmissing").*3;
     plot(ax,blanks.Em,y)
     ylims=get(ax,"YLim");
-    ylim(ax,[ylims(1) yl])
+    ylim(ax,yl)
     xline(ax,ray1,'Color','r')
     xline(ax,ray2,'Color','r')
     xline(ax,ram1,'Color','b')
