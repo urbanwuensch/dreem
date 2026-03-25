@@ -399,6 +399,10 @@ details:open > summary {
 
 <p>First, let&#39;s look at all the properties of the <code>drEEMdataset</code>. You can see these by simply calling the class. This results in an empty dataset being created.</p>
 
+<blockquote>
+<p><strong>Note</strong>: <code>drEEMdataset</code> is a unified container that can hold absorbance data, fluorescence data, or both. When importing absorbance-only files, the container will contain absorbance (<code>abs</code>) data while the fluorescence field (<code>X</code>) remains empty; importing fluorescence-only files yields the opposite. After import, seperate containers get &quot;syncronized with <code>alignsamples</code> via the <code>filelist</code> so that the absorbance and fluorescence containers contain the same samples in the same order. You should then merge absorbance data into the fluorescence container. The separate absorbance container can then be cleared. When using the toolbox for blank subtraction, blank spectra from the separate container are copied into the sample container and stored in the <code>XBlank</code> field.</p>
+</blockquote>
+
 <div><pre><code class="language-none">&gt;&gt; drEEMdataset
 
 ans = 
