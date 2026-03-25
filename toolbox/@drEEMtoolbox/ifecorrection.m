@@ -281,7 +281,7 @@ end
 function dataout = absorbanceConverter(data,unitIn)
             arguments
                 data (1,1) {mustBeA(data,'drEEMdataset')}
-                unitIn (1,:) {mustBeText(unitIn),mustBeMember(unitIn,["absorbance per cm","absorbance per 5 cm","absorbance per 10 cm","Napierian absorption coefficient","Linear decadic absorption coefficient"])}
+                unitIn (1,:) {mustBeText(unitIn),mustBeMember(unitIn,["absorbance per cm","absorbance per 5 cm","absorbance per 10 cm","napierian absorption coefficient","linear decadic absorption coefficient"])}
             end
             unitOut="per cm";
             dataout=data;
@@ -313,7 +313,7 @@ function dataout = absorbanceConverter(data,unitIn)
                         case "naperian absorption coefficient"
                             dataout.abs=dataout.abs./10./0.01.*2.303;
                     end
-                case "Napierian absorption coefficient"
+                case "napierian absorption coefficient"
                     switch unitOut
                         case "per cm"
                             dataout.abs=dataout.abs.*0.01./2.303;
@@ -322,7 +322,7 @@ function dataout = absorbanceConverter(data,unitIn)
                         case "naperian absorption coefficient"
                             return
                     end
-                case "Linear decadic absorption coefficient"
+                case "linear decadic absorption coefficient"
                     switch unitOut
                         case "per cm"
                             dataout.abs=dataout.abs.*0.01;
