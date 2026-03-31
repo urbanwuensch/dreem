@@ -102,7 +102,7 @@ SignalCalibration.BaseAreaPerc=BaseArea./RA*100;
 
 % Attempt to extract SNB (signal-to-background ratio)
 signal=max(Rscan(:,blanks.Em>options.iStart&blanks.Em<options.iEnd),[],2,"omitmissing");
-background=median(Rscan(:,blanks.Em>options.iEnd&blanks.Em>options.iEnd+50),2,"omitmissing");
+background=median(Rscan(:,blanks.Em > options.iEnd & blanks.Em < options.iEnd + 50),2,"omitmissing");
 
 SignalCalibration.SNB=round(signal./background);
 % Change dataset status
@@ -116,14 +116,14 @@ dataout.X=dataout.X./RA;
 % Carry out an alignment check based on Raman peaks (if desired)
 if options.doAlignmentcheck
     warning('This is an undocumented, experimental feature. Don''t assume it will work.')
-    dataout.toolboxOptions.alginmentcheck=alignmentcheck(blanks);
+    dataout.toolboxOptions.alignmentcheck=alignmentcheck(blanks);
 end
 
 % drEEMhistory entry
 idx=height(dataout.history)+1;
 dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename, ...
-    ['Raman Units at Ex=',num2str(options.ExWave),' nm with peak integration range = ',num2str(options.iEnd),' - ',num2str(options.iEnd),' nm'], ...
+    ['Raman Units at Ex=',num2str(options.ExWave),' nm with peak integration range = ',num2str(options.iStart),' - ',num2str(options.iEnd),' nm'], ...
     SignalCalibration,dataout);
 
 % validate the dataset (should not be a problem, but best be sure)
