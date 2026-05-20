@@ -602,15 +602,11 @@ Default is <code>3000</code> iterations. The lower <code>convergence</code>, the
 
 <p>Models are stored in dataout.models. Each model is a <code>drEEMmodel</code> object contains the following information (no contents in this case):</p>
 
-<div><pre><code class="language-none">drEEMmodel
+<div><pre><code class="language-none">  drEEMmodel with properties:
 
-ans = 
-
-  drEEMmodel with properties:
-
-                loads: {[]  []  []}
-            leverages: {[]  []  []}
-                  sse: {[]  []  []}
+                loads: {1×0 cell}
+            leverages: {1×0 cell}
+                  sse: {1×0 cell}
                status: &quot;&quot;
      percentExplained: NaN
                 error: NaN
@@ -621,7 +617,9 @@ componentContribution: NaN
                starts: NaN
           convergence: NaN
           constraints: &quot;&quot;
-              toolbox: &quot;&quot;</code></pre></div>
+              toolbox: &quot;&quot;
+            modelName: &quot;PARAFAC&quot;
+       loadingsMatrix: []</code></pre></div>
 
 <p></details></p>
 

@@ -221,15 +221,11 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 Models are stored in dataout.models. Each model is a `drEEMmodel` object contains the following information (no contents in this case):
 
-	drEEMmodel
-
-	ans = 
-
 	  drEEMmodel with properties:
 
-                    loads: {[]  []  []}
-                leverages: {[]  []  []}
-                      sse: {[]  []  []}
+                    loads: {1×0 cell}
+                leverages: {1×0 cell}
+                      sse: {1×0 cell}
                    status: ""
          percentExplained: NaN
                     error: NaN
@@ -241,6 +237,9 @@ Models are stored in dataout.models. Each model is a `drEEMmodel` object contain
               convergence: NaN
               constraints: ""
                   toolbox: ""
+                modelName: "PARAFAC"
+           loadingsMatrix: []
+
 
 
 

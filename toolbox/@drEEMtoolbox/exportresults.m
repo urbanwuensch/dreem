@@ -162,50 +162,64 @@ for j=2:numel(fs)
     end
     mover=[mover;mhere];
 end
-writetable(mover,filename,"FileType","spreadsheet",...
-    "WriteMode","overwritesheet","Sheet",'PARAFAC model overview')
+if matches(data.models(f).modelName,'PARAFAC')
+    writetable(mover,filename,"FileType","spreadsheet",...
+        "WriteMode","overwritesheet","Sheet",'PARAFAC model overview')
+elseif matches(data.models(f).modelName,'PCA')
+    writetable(mover,filename,"FileType","spreadsheet",...
+        "WriteMode","overwritesheet","Sheet",'PCA model overview')
+end
 disp('    Finished spreadsheet: PARAFAC model overview')
 
 % Export splitdataset settings
-split_i=drEEMhistory.searchhistory(data.history,'splitdataset','all');
-if not(isempty(split_i))
-    splitH=data.history(split_i(1));
-    splittable=struct2table(splitH.details);
-    splittable.Properties.VariableNames={'Split approach','Metadata column used','Number of splits'};
-    if isempty(splittable.("Metadata column used"))
-        splittable.("Metadata column used")='not used.';
-    end
-    if matches(splittable.('Split approach'),"byMetadata")
-        splittable.('Split assignment')='Metadata used.';
-    end
-    
-    splittable.('Date / time created')=splitH.timestamp;
-    splittable.('Dataset history entry #')=split_i(1);
-    if numel(split_i)>1
-        for j=2:numel(split_i)
-            splitH=data.history(split_i(j));
-            temp=struct2table(splitH.details);
-            temp.Properties.VariableNames={'Split approach','Metadata column used','Number of splits'};
-            if isempty(temp.("Metadata column used"))
-                temp.("Metadata column used")='not used.';
-            end
-            temp.('Date / time created')=splitH.timestamp;
-            temp.('Dataset history entry #')=split_i(j);
-            splittable=[splittable;temp];
+if matches(data.models(f).modelName,'PARAFAC')
+    split_i=drEEMhistory.searchhistory(data.history,'splitdataset','all');
+    if not(isempty(split_i))
+        splitH=data.history(split_i(1));
+        splittable=struct2table(splitH.details);
+        splittable.Properties.VariableNames={'Split approach','Metadata column used','Number of splits'};
+        if isempty(splittable.("Metadata column used"))
+            splittable.("Metadata column used")='not used.';
         end
+        if matches(splittable.('Split approach'),"byMetadata")
+            splittable.('Split assignment')='Metadata used.';
+        end
+        
+        splittable.('Date / time created')=splitH.timestamp;
+        splittable.('Dataset history entry #')=split_i(1);
+        if numel(split_i)>1
+            for j=2:numel(split_i)
+                splitH=data.history(split_i(j));
+                temp=struct2table(splitH.details);
+                temp.Properties.VariableNames={'Split approach','Metadata column used','Number of splits'};
+                if isempty(temp.("Metadata column used"))
+                    temp.("Metadata column used")='not used.';
+                end
+                temp.('Date / time created')=splitH.timestamp;
+                temp.('Dataset history entry #')=split_i(j);
+                splittable=[splittable;temp];
+            end
+        end
+        writetable(splittable,filename,"FileType","spreadsheet",...
+            "WriteMode","overwritesheet","Sheet",'Split-validation approach')
+        disp('    Finished spreadsheet: Split-validation approach')
+    
     end
-    writetable(splittable,filename,"FileType","spreadsheet",...
-        "WriteMode","overwritesheet","Sheet",'Split-validation approach')
-    disp('    Finished spreadsheet: Split-validation approach')
-
 end
 % Model
 loads=data.models(f).loads;
 scores=loads{1};
 
-FMax=nan(size(scores,1),size(loads{2},2));
-for i=1:size(FMax,1)
-    FMax(i,:)=(scores(i,:)).*(max(loads{2}).*max(loads{3}));
+if matches(data.models(f).modelName,'PARAFAC')
+    FMax=nan(size(scores,1),size(loads{2},2));
+    for i=1:size(FMax,1)
+        FMax(i,:)=(scores(i,:)).*(max(loads{2}).*max(loads{3}));
+    end
+elseif matches(data.models(f).modelName,'PCA')
+    FMax=nan(size(scores,1),size(loads{2},2));
+    for i=1:size(FMax,1)
+        FMax(i,:)=(scores(i,:)).*(max(loads{2}));
+    end
 end
 clearvars scores
 
@@ -217,22 +231,34 @@ end
 writetable(scoretable,filename,"FileType","spreadsheet",...
     "WriteMode","overwritesheet","Sheet",[num2str(f),'C Fl. max.'])
 
-load=table;
-load.sample=data.Ex;
-for j=1:size(FMax,2)
-    load.(['C',num2str(j)])=loads{3}(:,j);
+if matches(data.models(f).modelName,'PARAFAC')
+    load=table;
+    load.sample=data.Ex;
+    for j=1:size(FMax,2)
+        load.(['C',num2str(j)])=loads{3}(:,j);
+    end
+    writetable(load,filename,"FileType","spreadsheet",...
+        "WriteMode","overwritesheet","Sheet",[num2str(f),'C ex loadings'])
+    
+    load=table;
+    load.sample=data.Em;
+    for j=1:size(FMax,2)
+        load.(['C',num2str(j)])=loads{2}(:,j);
+    end
+    writetable(load,filename,"FileType","spreadsheet",...
+        "WriteMode","overwritesheet","Sheet",[num2str(f),'C em loadings'])
+    disp('    Finished spreadsheets for selected PARAFAC model (scores and loadings)')
+elseif matches(data.models(f).modelName,'PCA')
+    for j=1:size(FMax,2)
+        
+        mat=squeeze(data.models(f).loadingsMatrix(j,:,:));
+        mat=[data.Em,mat];
+        mat=[nan,data.Ex';mat];
+        writematrix(mat,filename,"FileType","spreadsheet",...
+            "WriteMode","overwritesheet","Sheet",['PC',num2str(j),' re-folded loadings'])
+    end
+    disp('    Finished spreadsheets for selected PCA model (scores and loadings)')
 end
-writetable(load,filename,"FileType","spreadsheet",...
-    "WriteMode","overwritesheet","Sheet",[num2str(f),'C ex loadings'])
-
-load=table;
-load.sample=data.Em;
-for j=1:size(FMax,2)
-    load.(['C',num2str(j)])=loads{2}(:,j);
-end
-writetable(load,filename,"FileType","spreadsheet",...
-    "WriteMode","overwritesheet","Sheet",[num2str(f),'C em loadings'])
-disp('    Finished spreadsheets for selected PARAFAC model (scores and loadings)')
 disp('<strong> Success! Done with result export.</strong>')
 
 drEEMtoolbox.displaycitationinformation

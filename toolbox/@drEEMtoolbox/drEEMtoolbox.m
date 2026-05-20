@@ -198,6 +198,9 @@ classdef drEEMtoolbox < handle
         dataout = fitslopes(data,options)
         dataout = pickpeaks( data,options)
 
+        % PCA
+        dataout = fitpca(data,options)
+
         % PARAFAC
         dataout = fitparafac(data,options)
         dataout = splitdataset(data,options)
@@ -212,6 +215,9 @@ classdef drEEMtoolbox < handle
         %export2netcdf(data,filename)
         exportresults(data,filename,f,name_value)
         %fhandle = reportresidualanalysis(data,ftarget,mdfield)
+        
+        % Data import (archives)
+        dataout = importziparchive(filename)
 
         % Visualization (incl. app workarounds)
         % import functions

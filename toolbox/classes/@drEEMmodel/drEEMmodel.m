@@ -20,13 +20,16 @@ classdef drEEMmodel
         constraints (1,:) {mustBeText}  = [""]
         toolbox  (1,:) {mustBeText}  = [""]
         modelName (1,:) {mustBeText,mustBeMember(modelName,["PARAFAC","PCA","NPLS"])} = "PARAFAC";
+        loadingsMatrix {mustBeNumeric}
     end
+
 
     methods (Static = true)
         function tableout=convert2table(history)
             mustBeA(history,"drEEMmodel")
             flds=fieldnames(history);
-            
+            flds=erase(flds,'loadingsMatrix');
+            flds(cellfun(@isempty, flds)) = [];
             conv=struct;
             for j=1:numel(flds)
                 for k=1:height(history)

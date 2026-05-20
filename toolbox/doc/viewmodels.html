@@ -385,7 +385,7 @@ details:open > summary {
 
 <h1 id="toc_0">viewmodels</h1>
 
-<p>Visualize, evaluate the performance, and compare different aspects of the PARAFAC models.</p>
+<p>Visualize, evaluate the performance, and compare different aspects of the PARAFAC or PCA models.</p>
 
 <h2 id="toc_1">Syntax</h2>
 
@@ -393,10 +393,11 @@ details:open > summary {
 
 <h2 id="toc_2">Description</h2>
 
-<p>The function <code>vieweems</code> opens up the &quot;Diagnose PARAFAC Models&quot; app that is designed for diagnosing and analyzing PARAFAC models built in using <code>firparafac</code> function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of the PARAFAC models.<br>
+<p>The function <code>vieweems</code> opens up a graphical user interface (GUI) that is designed for diagnosing and analyzing PARAFAC or PCA models built in using <code>fitparafac</code> or <code>fitpca</code> function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of models.<br>
 Note: The app does not accept any output arguments!</p>
 
-<p>The app consists of several tab including:<br></p>
+<p><details>
+    <summary><b>Elements in case of PARAFAC model</b></summary></p>
 
 <p><details open>
     <summary><b>Overview</b></summary></p>
@@ -483,6 +484,25 @@ Left-clicking on the <code>view correlations vs. metadata</code> button opens a 
 
 <p></details></p>
 
+<p></details></p>
+
+<p><details>
+    <summary><b>Elements in case of PCA model</b></summary></p>
+
+<p>The app visualizing PCA models consists mainly of three tabs:</p>
+
+<ol>
+<li>Scores</li>
+<li>Loadings</li>
+<li>Score-Score plots</li>
+</ol>
+
+<p>The score tab shows the scores for every PC across the dataset in a seperate plot
+The Loadings tab show the re-folded loadings of every PC in the EEM projection.
+The Score-Score tab allows users to plot scores of PC&#39;s against one another and color the scatter markers by metadata. When a scatter marker is clicked on, the EEM will be shown on the right.</p>
+
+<p></details></p>
+
 <h2 id="toc_3">Input arguments</h2>
 
 <p><details>
@@ -513,7 +533,7 @@ Left-clicking on the <code>view correlations vs. metadata</code> button opens a 
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>startTab</code>- specify which tab the GUI should open on. </b></summary>
+    <summary><b><code>startTab</code>- specify opening tab (only PARAFAC). </b></summary>
     <i>character</i></p>
 
 <p>If desired, the default &quot;Overview&quot; can be replaced by one of the following:</p>
@@ -533,7 +553,7 @@ Left-clicking on the <code>view correlations vs. metadata</code> button opens a 
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>f</code>- which model to show at startup </b></summary>
+    <summary><b><code>f</code>- which model to show at startup (only PARAFAC) </b></summary>
     <i>numeric</i></p>
 
 <p>To start showing a particular model with f-components, the option can be supplied. Can be particularly useful in conjunction with saving figure outputs automatically.</p>

@@ -37,8 +37,22 @@ ncomp=numel(find(arrayfun(@(x) not(isempty(x.loads{1})),data.models)));
 if ncomp==0
     error('Can''t find any models to plot.')
 end
-app=dreemgui.viewmodels_gui(data,options.startTab,options.f);
+idx=drEEMdataset.modelsWithContent(data);
 
+modeltype=unique(arrayfun(@(x) char(x.modelName),data.models(idx),'uni',false));
+
+if numel(modeltype)>1
+    error('Cannot plot different model types in one call')
+else
+    modeltype=modeltype{1};
+end
+
+switch modeltype
+    case 'PARAFAC'
+        app=dreemgui.viewparafac_gui(data,options.startTab,options.f);
+    case 'PCA'
+        app=dreemgui.viewpca_gui(data);
+end
 figurefile=char(options.figurefile);
 if not(isempty(figurefile))
     % Pause for figure rendering

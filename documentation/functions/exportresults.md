@@ -1,6 +1,6 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 # exportresults
-Export a PARAFAC model to a spreadheet file. This includes a comprehensive description of the dataset.
+Export the results from a PARAFAC or PCA model to a spreadheet file. This includes a comprehensive description of the dataset.
 
 ## Syntax
 
@@ -8,7 +8,7 @@ Export a PARAFAC model to a spreadheet file. This includes a comprehensive descr
 
 ## Description
 
-The `exportresults` function takes a drEEMdataset object, `data`, a `filename`, and a PARAFAC model index, `f`, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indicies, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC model exists within the `data` and organizes the data into several sheets within the spreadsheet.
+The `exportresults` function takes a drEEMdataset object, `data`, a `filename`, and a PARAFAC model index, `f`, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indicies, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the `data` and organizes the data into several sheets within the spreadsheet.
 
 > ***Note:*** The function deletes any existing file with the same name before writing the new data.
 
@@ -28,10 +28,10 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 <details open>
 
-<summary><b>`f` - PARAFAC model with f components</b></summary>
+<summary><b>`f` - PARAFAC or PCA model with f components</b></summary>
 <i>numeric</i>
 
-Specify the number of parafac components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.
+Specify the number of components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.
 
 </details>
 

@@ -385,7 +385,7 @@ details:open > summary {
 
 <h1 id="toc_0">exportresults</h1>
 
-<p>Export a PARAFAC model to a spreadheet file. This includes a comprehensive description of the dataset.</p>
+<p>Export the results from a PARAFAC or PCA model to a spreadheet file. This includes a comprehensive description of the dataset.</p>
 
 <h2 id="toc_1">Syntax</h2>
 
@@ -393,7 +393,7 @@ details:open > summary {
 
 <h2 id="toc_2">Description</h2>
 
-<p>The <code>exportresults</code> function takes a drEEMdataset object, <code>data</code>, a <code>filename</code>, and a PARAFAC model index, <code>f</code>, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indicies, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC model exists within the <code>data</code> and organizes the data into several sheets within the spreadsheet.</p>
+<p>The <code>exportresults</code> function takes a drEEMdataset object, <code>data</code>, a <code>filename</code>, and a PARAFAC model index, <code>f</code>, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indicies, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the <code>data</code> and organizes the data into several sheets within the spreadsheet.</p>
 
 <blockquote>
 <p><strong><em>Note:</em></strong> The function deletes any existing file with the same name before writing the new data.</p>
@@ -416,10 +416,10 @@ details:open > summary {
 
 <p><details open></p>
 
-<p><summary><b><code>f</code> - PARAFAC model with f components</b></summary>
+<p><summary><b><code>f</code> - PARAFAC or PCA model with f components</b></summary>
 <i>numeric</i></p>
 
-<p>Specify the number of parafac components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.</p>
+<p>Specify the number of components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.</p>
 
 <p></details></p>
 

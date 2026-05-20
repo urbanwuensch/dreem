@@ -153,47 +153,50 @@ classdef drEEMdataset
 
                 if not(isempty(data.models))
                     f=find(arrayfun(@(x) not(isempty(x.loads{1})),data.models));
-                    for j=1:(numel(f))
-                        m=data.models(f(j));
-                        if not(sz(1)==size(m.loads{1},1))
-                            e{cnt}=['size of EEM dimension 1 not consistent with scores in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
+                    % TODO: Validate PCA models
+                    if matches(data.models(f(1)).modelName,'PARAFAC')
+                        for j=1:(numel(f))
+                            m=data.models(f(j));
+                            if not(sz(1)==size(m.loads{1},1))
+                                e{cnt}=['size of EEM dimension 1 not consistent with scores in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            if not(sz(2)==size(m.loads{2},1))
+                                e{cnt}=['size of EEM dimension 2 not consistent with emission loadings in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            if not(sz(3)==size(m.loads{3},1))
+                                e{cnt}=['size of EEM dimension 3 not consistent with excitation loadings in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            
+                            if not(sz(1)==size(m.leverages{1},1))
+                                e{cnt}=['size of EEM dimension 1 not consistent with leverages in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            if not(sz(2)==size(m.leverages{2},1))
+                                e{cnt}=['size of EEM dimension 2 not consistent with leverages in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            if not(sz(3)==size(m.leverages{3},1))
+                                e{cnt}=['size of EEM dimension 3 not consistent with leverages in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+    
+                            if not(sz(1)==size(m.sse{1},1))
+                                e{cnt}=['size of EEM dimension 1 not consistent with SSE in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            if not(sz(2)==size(m.sse{2},1))
+                                e{cnt}=['size of EEM dimension 2 not consistent with SSE in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+                            if not(sz(3)==size(m.sse{3},1))
+                                e{cnt}=['size of EEM dimension 3 not consistent with SSE in the ',num2str(f(j)),'-component model'];
+                                cnt=cnt+1;
+                            end
+    
                         end
-                        if not(sz(2)==size(m.loads{2},1))
-                            e{cnt}=['size of EEM dimension 2 not consistent with emission loadings in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-                        if not(sz(3)==size(m.loads{3},1))
-                            e{cnt}=['size of EEM dimension 3 not consistent with excitation loadings in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-                        
-                        if not(sz(1)==size(m.leverages{1},1))
-                            e{cnt}=['size of EEM dimension 1 not consistent with leverages in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-                        if not(sz(2)==size(m.leverages{2},1))
-                            e{cnt}=['size of EEM dimension 2 not consistent with leverages in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-                        if not(sz(3)==size(m.leverages{3},1))
-                            e{cnt}=['size of EEM dimension 3 not consistent with leverages in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-
-                        if not(sz(1)==size(m.sse{1},1))
-                            e{cnt}=['size of EEM dimension 1 not consistent with SSE in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-                        if not(sz(2)==size(m.sse{2},1))
-                            e{cnt}=['size of EEM dimension 2 not consistent with SSE in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-                        if not(sz(3)==size(m.sse{3},1))
-                            e{cnt}=['size of EEM dimension 3 not consistent with SSE in the ',num2str(f(j)),'-component model'];
-                            cnt=cnt+1;
-                        end
-
                     end
                 end
             end
@@ -549,7 +552,7 @@ classdef drEEMdataset
         data =  rmsamples(data,index)
         data =  rmemission(data,index)
         data =  rmexcitation(data,index)
-        results = fitpca(data)
+        
         data = restore(data,whichone)
         data = undo(data)
         displayhistory(data)

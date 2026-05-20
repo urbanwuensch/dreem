@@ -1,7 +1,7 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 
 # viewmodels
-Visualize, evaluate the performance, and compare different aspects of the PARAFAC models.
+Visualize, evaluate the performance, and compare different aspects of the PARAFAC or PCA models.
 
 
 
@@ -15,10 +15,11 @@ Visualize, evaluate the performance, and compare different aspects of the PARAFA
 
 ## Description ##
 
-The function `vieweems` opens up the "Diagnose PARAFAC Models" app that is designed for diagnosing and analyzing PARAFAC models built in using `firparafac` function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of the PARAFAC models.<br>
+The function `vieweems` opens up a graphical user interface (GUI) that is designed for diagnosing and analyzing PARAFAC or PCA models built in using `fitparafac` or `fitpca` function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of models.<br>
 Note: The app does not accept any output arguments!
 
-The app consists of several tab including:<br>
+<details>
+	<summary><b>Elements in case of PARAFAC model</b></summary>
 
 <details open>
     <summary><b>Overview</b></summary>
@@ -101,6 +102,23 @@ Left-clicking on the `view correlations vs. metadata` button opens a new app, in
 
 </details>
 
+</details>
+
+<details>
+	<summary><b>Elements in case of PCA model</b></summary>
+
+The app visualizing PCA models consists mainly of three tabs:
+
+1. Scores
+2. Loadings
+3. Score-Score plots
+
+The score tab shows the scores for every PC across the dataset in a seperate plot
+The Loadings tab show the re-folded loadings of every PC in the EEM projection.
+The Score-Score tab allows users to plot scores of PC's against one another and color the scatter markers by metadata. When a scatter marker is clicked on, the EEM will be shown on the right.
+
+</details>
+
 ## Input arguments ##
 <details>
     <summary><b>`data` - dataset containing PARAFAC models</b></summary>
@@ -132,8 +150,9 @@ Default: `""` (i.e. an empty string disabling the figure saving.
 
 
 <details open>
-    <summary><b>`startTab `- specify which tab the GUI should open on. </b></summary>
+    <summary><b>`startTab `- specify opening tab (only PARAFAC). </b></summary>
     <i>character</i>
+
 
 If desired, the default "Overview" can be replaced by one of the following:
 
@@ -152,7 +171,7 @@ This results in a switch of tab focus after the GUI starts up. Can be particular
 
 
 <details open>
-    <summary><b>`f `- which model to show at startup </b></summary>
+    <summary><b>`f `- which model to show at startup (only PARAFAC) </b></summary>
     <i>numeric</i>
 
 To start showing a particular model with f-components, the option can be supplied. Can be particularly useful in conjunction with saving figure outputs automatically.
