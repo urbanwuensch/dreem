@@ -28,6 +28,10 @@ end
 
 drEEMdataset.mustBeModel(data,f)
 
+if not(matches(data.models(f).modelName,'PARAFAC'))
+    error('For export to OpenFluor, your model must be a PARAFAC model (which it is not!)')
+end
+
 filename=strsplit(filename,'.');
 filename=filename{1};
 filename=[filename,'.txt'];
