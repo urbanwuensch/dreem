@@ -68,11 +68,7 @@ classdef viewpca_gui < matlab.apps.AppBase
 
             dataLocal = app.data;
             dataLocal = drEEMtoolbox.fitpca(dataLocal,maxcomp=app.nComp);
-            app.DropDownX.Items = cellstr(num2str((1:app.nComp)'));
-            app.DropDownY.Items = cellstr(num2str((1:app.nComp)'));
-            app.DropDownX.Value = '1';
-            app.DropDownY.Value = '2';
-
+           
             app.data = dataLocal;
             app.selectedSample = nan;
 
@@ -550,7 +546,34 @@ classdef viewpca_gui < matlab.apps.AppBase
 
             % Initialize GUI
             pbaspect(app.eem,[1,1,1])
-            app.fitmodel;
+            runmodel=false;
+            f=drEEMdataset.modelsWithContent(data);
+            if isempty(f)
+                runmodel=true;
+            else
+                for j=1:numel(f)
+                    mname{j}=data.models(f(j)).modelName;
+                end
+                mname=unique(mname);
+                if not(contains(mname,'PCA'))
+                    runmodel=true;
+                end
+            end
+            if runmodel
+                disp('No PCA model to plot. No worries, I will calculate them for you.')
+                app.fitmodel;
+            else
+                if isscalar(f)
+
+                    app.nComp=f;
+                    app.DropDownX.Items = cellstr(num2str((1:app.nComp)'));
+                    app.DropDownY.Items = cellstr(num2str((1:app.nComp)'));
+                    app.DropDownX.Value = '1';
+                    app.DropDownY.Value = '2';
+                else
+                    error('viewpca only supports one PCA model in the dataset at present. Email urban.wunsch@chalmers.se if you would like this to change.')
+                end
+            end
             app.visualize;
         end
 
