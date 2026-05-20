@@ -1,10 +1,22 @@
+%% Script that let's users manually export & plot component fingerprints
+% This script was made in April 2026 based on a user inquiry about
+% exporting PARAFAC componenent spectra as matrices to csv. At the same
+% time, this script also let's users plot the fingerprints.
 
-% Assume your dataset is called "samples"
-C=5;
-model=samples.models(C);
-plot_it=true;
-nContours=10;
-colmap='turbo';
+
+
+% Variables to modify script behavior
+% Script assumes your dataset is called "samples"
+C=5; % number of components
+plot_it=true; % True to plot, false to skip plotting
+nContours=10; % Number of black contour lines 
+% (100 lineless contours will always be plotted)
+colmap='turbo'; % Change colormap (doc colormap for options)
+
+
+
+% Script begins here.
+model=samples.models(C); % extracting the model
 if plot_it
     f=drEEMtoolbox.dreemfig;
     t=tiledlayout('flow', ... % Change this for different layout
