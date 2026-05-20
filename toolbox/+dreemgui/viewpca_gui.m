@@ -56,10 +56,9 @@ classdef viewpca_gui < matlab.apps.AppBase
         data (1,1) {mustBeA(data,'drEEMdataset'),drEEMtoolbox.validatedataset(data)} = drEEMdataset;
         dataBackup (1,1) {mustBeA(dataBackup,'drEEMdataset'),drEEMtoolbox.validatedataset(dataBackup)} = drEEMdataset;
         modelName (1,:) {mustBeText,mustBeMember(modelName,["PCA","oPARAFAC","uPARAFAC"])} = "PCA";
-        nComp (1,1) {mustBeNumeric} = nan
+        nComp (1,1) {mustBeNumeric} = 9
         plotLayout (1,:) {mustBeText,mustBeMember(plotLayout,["Scores only","Loadings only","Scores & loadings"])} = "Scores & loadings";
         model % Description
-        nCompResiModel (1,1) {mustBeNumeric} = 7% Description
         tempstore % Description
         selectedSample (1,1) {mustBeNumeric}% Description
     end
@@ -68,9 +67,9 @@ classdef viewpca_gui < matlab.apps.AppBase
         function fitmodel(app)
 
             dataLocal = app.data;
-            dataLocal = drEEMtoolbox.fitpca(dataLocal,comp=9);
-            app.DropDownX.Items = cellstr(num2str((1:9)'));
-            app.DropDownY.Items = cellstr(num2str((1:9)'));
+            dataLocal = drEEMtoolbox.fitpca(dataLocal,maxcomp=app.nComp);
+            app.DropDownX.Items = cellstr(num2str((1:app.nComp)'));
+            app.DropDownY.Items = cellstr(num2str((1:app.nComp)'));
             app.DropDownX.Value = '1';
             app.DropDownY.Value = '2';
 
@@ -122,20 +121,20 @@ classdef viewpca_gui < matlab.apps.AppBase
 
 
             t=tiledlayout(app.ScoresPanel);
-            for j=1:9
+            for j=1:app.nComp
                 ax=nexttile(t);
-                plot(ax,app.data.models.loads{1}(:,j),'k')
+                plot(ax,app.data.models(app.nComp).loads{1}(:,j),'k')
                 yline(ax,0,LineStyle='--')
-                title(ax,['PC',num2str(j),' (',num2str(round(app.data.models.componentContribution(j),1)),'%)'])
+                title(ax,['PC',num2str(j),' (',num2str(round(app.data.models(app.nComp).componentContribution(j),1)),'%)'])
             end
             xlabel(t,'Sample #')
             ylabel(t,'Scores')
 
 
             t=tiledlayout(app.LoadingsPanel);
-            for j=1:9
+            for j=1:app.nComp
                 ax1=nexttile(t);
-                pltdat=squeeze(app.data.models.loadingsMatrix(j,:,:));
+                pltdat=squeeze(app.data.models(app.nComp).loadingsMatrix(j,:,:));
                 [~,h] = contourf(ax1,app.data.Ex,app.data.Em,pltdat,200,'LineStyle','none');
                 hold(ax1,'on')
                 contour(ax1,app.data.Ex,app.data.Em,pltdat,5,'Color','k');
@@ -145,7 +144,7 @@ classdef viewpca_gui < matlab.apps.AppBase
                 n_pos=sum(levels>0);
 
                 colormap(ax1,app.residualcolormap(n_neg,n_pos))
-                title(ax1,['PC',num2str(j),' (',num2str(round(app.data.models.componentContribution(j),1)),'%)'])
+                title(ax1,['PC',num2str(j),' (',num2str(round(app.data.models(app.nComp).componentContribution(j),1)),'%)'])
 
             end
             ylabel(t,'Emission (nm)')
@@ -227,7 +226,7 @@ classdef viewpca_gui < matlab.apps.AppBase
             value(1) = str2double(app.DropDownX.Value(1));
             value(2) = str2double(app.DropDownY.Value(1));
 
-            mod=app.data.models;
+            mod=app.data.models(app.nComp);
 
 
             colorbar(app.UIAxes,'off')
