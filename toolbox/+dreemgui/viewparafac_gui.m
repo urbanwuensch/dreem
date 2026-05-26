@@ -1,4 +1,4 @@
-classdef viewmodels_gui < matlab.apps.AppBase
+classdef viewparafac_gui < matlab.apps.AppBase
 
     % Properties that correspond to app components
     properties (Access = public)
@@ -718,6 +718,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.core, 'Z')
             app.core.FontName = 'Helvetica';
             app.core.Box = 'on';
+            app.core.TickDirMode = 'manual';
             app.core.Layout.Row = 1;
             app.core.Layout.Column = 1;
             colormap(app.core, 'parula')
@@ -730,6 +731,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.var, 'Z')
             app.var.FontName = 'Helvetica';
             app.var.Box = 'on';
+            app.var.TickDirMode = 'manual';
             app.var.Layout.Row = 1;
             app.var.Layout.Column = 2;
             colormap(app.var, 'parula')
@@ -806,6 +808,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.scs, 'Z')
             app.scs.FontName = 'Helvetica';
             app.scs.Box = 'on';
+            app.scs.TickDirMode = 'manual';
             app.scs.Layout.Row = 1;
             app.scs.Layout.Column = 1;
             colormap(app.scs, 'parula')
@@ -818,6 +821,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.loem, 'Z')
             app.loem.FontName = 'Helvetica';
             app.loem.Box = 'on';
+            app.loem.TickDirMode = 'manual';
             app.loem.Layout.Row = 1;
             app.loem.Layout.Column = 2;
             colormap(app.loem, 'parula')
@@ -830,6 +834,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.loex, 'Z')
             app.loex.FontName = 'Helvetica';
             app.loex.Box = 'on';
+            app.loex.TickDirMode = 'manual';
             app.loex.Layout.Row = 1;
             app.loex.Layout.Column = 3;
             colormap(app.loex, 'parula')
@@ -842,6 +847,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.les, 'Z')
             app.les.FontName = 'Helvetica';
             app.les.Box = 'on';
+            app.les.TickDirMode = 'manual';
             app.les.Layout.Row = 2;
             app.les.Layout.Column = 1;
             colormap(app.les, 'parula')
@@ -854,6 +860,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.leem, 'Z')
             app.leem.FontName = 'Helvetica';
             app.leem.Box = 'on';
+            app.leem.TickDirMode = 'manual';
             app.leem.Layout.Row = 2;
             app.leem.Layout.Column = 2;
             colormap(app.leem, 'parula')
@@ -866,6 +873,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
             zlabel(app.leex, 'Z')
             app.leex.FontName = 'Helvetica';
             app.leex.Box = 'on';
+            app.leex.TickDirMode = 'manual';
             app.leex.Layout.Row = 2;
             app.leex.Layout.Column = 3;
             colormap(app.leex, 'parula')
@@ -904,8 +912,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
             xlabel(app.elsam, 'leverages')
             ylabel(app.elsam, 'sum of squared errors')
             zlabel(app.elsam, 'Z')
+            app.elsam.DataAspectRatioMode = 'manual';
             app.elsam.FontName = 'Helvetica';
             app.elsam.Box = 'on';
+            app.elsam.TickDirMode = 'manual';
             app.elsam.Layout.Row = 1;
             app.elsam.Layout.Column = 1;
             colormap(app.elsam, 'parula')
@@ -916,8 +926,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
             xlabel(app.elem, 'leverages')
             ylabel(app.elem, 'sum of squared errors')
             zlabel(app.elem, 'Z')
+            app.elem.DataAspectRatioMode = 'manual';
             app.elem.FontName = 'Helvetica';
             app.elem.Box = 'on';
+            app.elem.TickDirMode = 'manual';
             app.elem.Layout.Row = 1;
             app.elem.Layout.Column = 2;
             colormap(app.elem, 'parula')
@@ -928,8 +940,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
             xlabel(app.elex, 'leverages')
             ylabel(app.elex, 'sum of squared errors')
             zlabel(app.elex, 'Z')
+            app.elex.DataAspectRatioMode = 'manual';
             app.elex.FontName = 'Helvetica';
             app.elex.Box = 'on';
+            app.elex.TickDirMode = 'manual';
             app.elex.Layout.Row = 1;
             app.elex.Layout.Column = 3;
             colormap(app.elex, 'parula')
@@ -1027,8 +1041,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
             xlabel(app.ssesam, 'Samples')
             ylabel(app.ssesam, 'SSE')
             zlabel(app.ssesam, 'Z')
+            app.ssesam.DataAspectRatioMode = 'manual';
             app.ssesam.FontName = 'Helvetica';
             app.ssesam.Box = 'on';
+            app.ssesam.TickDirMode = 'manual';
             app.ssesam.Layout.Row = 1;
             app.ssesam.Layout.Column = 1;
             colormap(app.ssesam, 'parula')
@@ -1039,8 +1055,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
             xlabel(app.sseem, 'Wavelength (nm)')
             ylabel(app.sseem, 'SSE')
             zlabel(app.sseem, 'Z')
+            app.sseem.DataAspectRatioMode = 'manual';
             app.sseem.FontName = 'Helvetica';
             app.sseem.Box = 'on';
+            app.sseem.TickDirMode = 'manual';
             app.sseem.Layout.Row = 1;
             app.sseem.Layout.Column = 2;
             colormap(app.sseem, 'parula')
@@ -1051,8 +1069,10 @@ classdef viewmodels_gui < matlab.apps.AppBase
             xlabel(app.sseex, 'Wavelength (nm)')
             ylabel(app.sseex, 'SSE')
             zlabel(app.sseex, 'Z')
+            app.sseex.DataAspectRatioMode = 'manual';
             app.sseex.FontName = 'Helvetica';
             app.sseex.Box = 'on';
+            app.sseex.TickDirMode = 'manual';
             app.sseex.Layout.Row = 1;
             app.sseex.Layout.Column = 3;
             colormap(app.sseex, 'parula')
@@ -1134,7 +1154,7 @@ classdef viewmodels_gui < matlab.apps.AppBase
     methods (Access = public)
 
         % Construct app
-        function app = viewmodels_gui(varargin)
+        function app = viewparafac_gui(varargin)
 
             % Create UIFigure and components
             createComponents(app)

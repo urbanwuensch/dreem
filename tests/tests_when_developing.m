@@ -120,3 +120,11 @@ export_cmop.variables.somevariable=somevariable;
 save(export_cmop,'test')
 
 ncdisp("test.nc")
+
+
+%%
+clearvars
+initSession
+tbx=drEEMtoolbox;
+load("HE452drEEM2.mat")
+fitnpls(samples)
