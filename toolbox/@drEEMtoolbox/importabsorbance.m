@@ -1,4 +1,4 @@
-function data = importabsorbance(filePattern,options)
+function data = importabsorbance(filePattern,options,status)
 % <a href = "matlab:drEEMtoolbox.doc('importabsorbance')">data = importabsorbance(filePattern,options) (click to access documentation)</a>
 %
 % <strong>Import absorbance measurements</strong> and create drEEMdataset
@@ -33,6 +33,38 @@ arguments
         options.absColumn (1,:) {mustBeNumeric} = 10
         options.NumHeaderLines (1,1) {mustBeNumeric}= 0
         options.changeStatusMessage (1,:) {mustBeText} = 'New absorbance dataset.';
+
+        % Status (optional input)
+        status.spectralCorrection ...
+            {mustBeText,...
+            mustBeMember(status.spectralCorrection,...
+            ["unknown","not applied","applied by instrument software","applied by toolbox"])} = "applied by instrument software"
+        status.IFEcorrection ...
+            {mustBeText,...
+            mustBeMember(status.IFEcorrection,...
+            ["unknown","not applied","applied by instrument software","applied by toolbox",...
+            "deemed unnecessary"])} = "deemed unnecessary"
+        status.blankSubtraction ...
+            {mustBeText,...
+            mustBeMember(status.blankSubtraction,...
+            ["unknown","not applied","applied by instrument software","applied by toolbox"])} = "unknown"
+        status.signalCalibration ...
+            {mustBeText,...
+            mustBeMember(status.signalCalibration,...
+            ["unknown","not applied","applied by instrument software (QSU)",...
+            "applied by instrument software (RU)",...
+            "applied by toolbox (RU)","applied by toolbox (QSU)"])} = "not applied"
+        status.scatterTreatment ...
+            {mustBeText,...
+            mustBeMember(status.scatterTreatment,...
+            ["unknown","not applied","applied by instrument software","applied by toolbox"])} = "not applied"
+        status.signalScaling ...
+            = "original scale"
+        status.absorbanceUnit ...
+            {mustBeText,...
+            mustBeMember(status.absorbanceUnit,...
+            ["unknown","absorbance per cm","absorbance per 5 cm","absorbance per 10 cm","napierian absorption coefficient","linear decadic absorption coefficient"])} = "unknown"
+
 end
 
 ST = dbstack;
@@ -129,22 +161,38 @@ data.filelist=filelist;
 data.absWave=rcvec(wave,'column');
 data.nSample=size(data.abs,1);
 data.metadata.i=data.i;
-% data.metadata.filelist=data.filelist; % Disabled since it's redundant.
+
+% Assign the status properties that may have been supplied by users.
+flds=fieldnames(status);
+for j=1:numel(flds)
+    data.status=drEEMstatus.change(data.status,flds{j},status.(flds{j}));
+end
+
 
 % Validate the dataset
 data.validate(data);
 
 if not(diagnostic)
     % User needs to tell the toolbox what the status of the dataset is.
-    handle=dreemgui.setstatus_dreem(data,'data',options.changeStatusMessage);
-    options=rmfield(options,'changeStatusMessage');
-    waitfor(handle,"finishedHere",true);
-    try
-        data=handle.data;
-        delete(handle)
-    catch
-        error('setstatus closed before save & exit button was pushed.')
+    % But only if the status contains unknowns
+
+    warning off
+    statusentries=cellfun(@(x) char(x),struct2cell(struct(data.status)),uni=false);
+    warning on
+    call_gui=any(contains(statusentries,"unknown"));
+
+    if call_gui
+        handle=dreemgui.setstatus_dreem(data,'data',options.changeStatusMessage);
+        options=rmfield(options,'changeStatusMessage');
+        waitfor(handle,"finishedHere",true);
+        try
+            data=handle.data;
+            delete(handle)
+        catch
+            error('setstatus closed before save & exit button was pushed.')
         end
+    end
+
     % Make the drEEMhistory entry
     idx=1;
     data.history(idx,1)=...
