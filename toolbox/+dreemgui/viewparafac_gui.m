@@ -229,7 +229,23 @@ classdef viewparafac_gui < matlab.apps.AppBase
             t=tiledlayout(app.scoresloadscanvas,3,app.ncomp,'padding','compact','TileSpacing','compact');
             for j = 1 : 3*app.ncomp
                 ax=nexttile(t);
-                plot(ax,app.data.(fld{j}),app.models(fa(j)).loads{da(j)},'LineStyle',lstyle{j},'Marker','.')
+                p=plot(ax,app.data.(fld{j}),app.models(fa(j)).loads{da(j)},'LineStyle',lstyle{j},'Marker','.');
+                
+                switch da(j)
+                    case 1
+                        row = dataTipTextRow('Sample',app.data.filelist);
+                         for k=1:numel(p)
+                             p(k).DataTipTemplate.DataTipRows(1).Label='.i:';
+                             p(k).DataTipTemplate.DataTipRows(end+1) = row;
+                         end
+                    case 2
+                        for k=1:numel(p),p(k).DataTipTemplate.DataTipRows(1).Label='Em:';end
+                        
+                    case 3
+                        for k=1:numel(p),p(k).DataTipTemplate.DataTipRows(1).Label='Ex:';end
+                      
+                end
+                
                 ax.YLabel.String = Ylab{j};
                 ax.XLabel.String = Xlab{j};
                 if j<=numel(tit)
@@ -284,8 +300,12 @@ classdef viewparafac_gui < matlab.apps.AppBase
                 for i=1:max(app.f)
                     if i<=ncomp
                         hold(ax(cnt),'on')
-                        plot(ax(cnt),app.data.Em,B(:,i),'LineStyle','-','Color',[.3 .3 .3])
-                        plot(ax(cnt),app.data.Ex,C(:,i),'LineStyle','-.','Color',[.3 .3 .3])
+                        p=plot(ax(cnt),app.data.Em,B(:,i),'LineStyle','-','Color',[.3 .3 .3]);
+                        p.DataTipTemplate.DataTipRows(1).Label='wavelength:';
+                        p.DataTipTemplate.DataTipRows(2).Label='loading:';
+                        p=plot(ax(cnt),app.data.Ex,C(:,i),'LineStyle','-.','Color',[.3 .3 .3]);
+                        p.DataTipTemplate.DataTipRows(1).Label='wavelength:';
+                        p.DataTipTemplate.DataTipRows(2).Label='loading:';
                         box(ax(cnt),'on')
                         cnt = cnt + 1;
                     else
@@ -299,6 +319,11 @@ classdef viewparafac_gui < matlab.apps.AppBase
             xlabel(t,'Wavelength (nm)')
             %title(t,'Loadings overview (components reordered by decreasing emission maximum)')
             app.SpectralloadingsTab.Tag='painted';
+        end
+        
+        function drEEMdcm(app,event,source)
+        
+            
         end
     end
 
@@ -479,8 +504,14 @@ classdef viewparafac_gui < matlab.apps.AppBase
             mstyle={'.' '.' '.' '+' '+' '+'};
             ax={'scs','loem','loex','les','leem','leex'};
             for n=1:6
-                plot(app.(ax{n}),xax{n},plotdat{n}, ...
-                    LineStyle=lspec{n},Marker=mstyle{n})
+                p=plot(app.(ax{n}),xax{n},plotdat{n}, ...
+                    LineStyle=lspec{n},Marker=mstyle{n});
+                if matches(ax{n}(end),'s')
+                    row = dataTipTextRow('Sample',app.data.filelist);
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(end+1) = row;
+                    end
+                end
                 axis(app.(ax{n}),'tight')
                 grid(app.(ax{n}),'on')
 
@@ -573,7 +604,27 @@ classdef viewparafac_gui < matlab.apps.AppBase
 
             ax=[app.elsam;app.elem;app.elex];
             for n=1:3
-                scatter(ax(n),lev{n},err{n},25,cax{n},'filled')
+                s=scatter(ax(n),lev{n},err{n},25,cax{n},'filled');
+                switch n
+                    case 1
+                        row = dataTipTextRow('Sample',app.data.filelist);
+                        for k=1:numel(s)
+                            s(k).DataTipTemplate.DataTipRows(end+1) = row;
+                        end
+                        for k=1:numel(s)
+                            s(k).DataTipTemplate.DataTipRows(3).Label = '.i';
+                        end
+                    case 2
+                        for k=1:numel(s)
+                            s(k).DataTipTemplate.DataTipRows(3).Label = 'Em:';
+                        end
+                       
+                    case 3
+                        for k=1:numel(s)
+                            s(k).DataTipTemplate.DataTipRows(3).Label = 'Ex:';
+                        end
+                end
+                
                 colorbar(ax(n))
                 axis(ax(n),'padded')
                 ylim(ax(n),[0 inf])
