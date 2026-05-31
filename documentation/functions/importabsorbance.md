@@ -6,7 +6,10 @@ Import absorbance measurement files and create drEEMdataset object
 
 
 ## Syntax
+
 [`dataout = importabsorbance(filePattern)`](#syntax1)
+
+[`dataout = importabsorbance(filePattern,status)`](#syntax3)
 
 [`dataout = importabsorbance( ___ , Name,Value)`](#syntax2)
 
@@ -20,6 +23,17 @@ The function does two passes of imports. The first is used to read the dimension
 
 > ***All files must contain the same wavelength information. If this is not the case, the function will attempt to resolve the issue but most likely return an error!***
 
+
+
+
+<details open>
+<summary><b>
+`dataout = importabsorbance(filePattern)` - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
+</summary>
+<a name="syntax1"></a><br>
+
+returns a drEEMdataset class object that contains absorbance spectra and their associated information.
+
 Upon successful import, the `changestatus` GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about fluorescence properties. Please ignore these and focus on the property `absorbance unit`.
 
 > ***Take care to specify the correct pathlength in the GUI. If an incorrect pathlength or absorbance unit is specified, the IFE correction will not be accurate.***
@@ -28,13 +42,27 @@ Upon successful import, the `changestatus` GUI will appear on screen and pause t
 
 > ***The GUI must be exited by clicking on "save & exit". Otherwise, the import will be cancelled and no dataset will be created.***
 
+</details>
 
 <details open>
 <summary><b>
-`dataout = importabsorbance(filePattern)` - standard options (fits HYJ Export for AquaLog data)</b>
+`dataout = importabsorbance(filePattern,status)` - explicitly supply processing status</b>
 </summary>
-<a name="syntax1"></a><br>
-returns a drEEMdataset class object that contains absorbance spectra and   their associated information.
+<a name="syntax3"></a>
+
+For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to "unknown", the GUI will still ask for clarification.
+
+Example: 
+
+	blanks_status=drEEMstatus("blankSubtraction","not applied",...
+    	"IFEcorrection","not applied",...
+    	"signalCalibration","not applied",...
+    	"scatterTreatment","not applied",...
+    	"signalScaling",'original scale',...
+    	'spectralCorrection','applied by instrument software',...
+    	absorbanceUnit='absorbance per cm');
+
+	blanks=tbx.importabsorbance(" - Abs Spectra Graphs.dat",blanks_status);
 
 </details>
 
@@ -69,6 +97,23 @@ Examples:
 
 * `'*.csv'`
 * `'* - Abs Spectra Graphs.dat'`
+
+</details>
+
+
+<details open>
+    <summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
+    <i>drEEMstatus</i>
+        
+Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.
+
+	blanks_status=drEEMstatus("blankSubtraction","not applied",...
+	    	"IFEcorrection","not applied",...
+	    	"signalCalibration","not applied",...
+	    	"scatterTreatment","not applied",...
+	    	"signalScaling",'original scale',...
+	    	'spectralCorrection','applied by instrument software',...
+	    	absorbanceUnit='absorbance per cm');
 
 </details>
 

@@ -391,6 +391,8 @@ details:open > summary {
 
 <p><a href="#syntax1"><code>dataout = importabsorbance(filePattern)</code></a></p>
 
+<p><a href="#syntax3"><code>dataout = importabsorbance(filePattern,status)</code></a></p>
+
 <p><a href="#syntax2"><code>dataout = importabsorbance( ___ , Name,Value)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
@@ -402,6 +404,14 @@ details:open > summary {
 <blockquote>
 <p><strong><em>All files must contain the same wavelength information. If this is not the case, the function will attempt to resolve the issue but most likely return an error!</em></strong></p>
 </blockquote>
+
+<p><details open>
+<summary><b>
+<code>dataout = importabsorbance(filePattern)</code> - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
+</summary>
+<a name="syntax1"></a><br></p>
+
+<p>returns a drEEMdataset class object that contains absorbance spectra and their associated information.</p>
 
 <p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about fluorescence properties. Please ignore these and focus on the property <code>absorbance unit</code>.</p>
 
@@ -415,12 +425,27 @@ details:open > summary {
 <p><strong><em>The GUI must be exited by clicking on &quot;save &amp; exit&quot;. Otherwise, the import will be cancelled and no dataset will be created.</em></strong></p>
 </blockquote>
 
+<p></details></p>
+
 <p><details open>
 <summary><b>
-<code>dataout = importabsorbance(filePattern)</code> - standard options (fits HYJ Export for AquaLog data)</b>
+<code>dataout = importabsorbance(filePattern,status)</code> - explicitly supply processing status</b>
 </summary>
-<a name="syntax1"></a><br>
-returns a drEEMdataset class object that contains absorbance spectra and   their associated information.</p>
+<a name="syntax3"></a></p>
+
+<p>For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to &quot;unknown&quot;, the GUI will still ask for clarification.</p>
+
+<p>Example: </p>
+
+<div><pre><code class="language-none">blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
+    &quot;IFEcorrection&quot;,&quot;not applied&quot;,...
+    &quot;signalCalibration&quot;,&quot;not applied&quot;,...
+    &quot;scatterTreatment&quot;,&quot;not applied&quot;,...
+    &quot;signalScaling&quot;,&#39;original scale&#39;,...
+    &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
+    absorbanceUnit=&#39;absorbance per cm&#39;);
+
+blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status);</code></pre></div>
 
 <p></details></p>
 
@@ -458,6 +483,22 @@ returns a drEEMdataset class object that contains absorbance spectra and   their
 <li><code>&#39;*.csv&#39;</code></li>
 <li><code>&#39;* - Abs Spectra Graphs.dat&#39;</code></li>
 </ul>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>status</code> drEEMstatus object with correct parameters preset</b></summary>
+    <i>drEEMstatus</i></p>
+
+<p>Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.</p>
+
+<div><pre><code class="language-none">blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
+        &quot;IFEcorrection&quot;,&quot;not applied&quot;,...
+        &quot;signalCalibration&quot;,&quot;not applied&quot;,...
+        &quot;scatterTreatment&quot;,&quot;not applied&quot;,...
+        &quot;signalScaling&quot;,&#39;original scale&#39;,...
+        &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
+        absorbanceUnit=&#39;absorbance per cm&#39;);</code></pre></div>
 
 <p></details></p>
 

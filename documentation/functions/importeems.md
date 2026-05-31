@@ -8,6 +8,8 @@ Import measurement files and create drEEMdataset object
 ## Syntax
 [`dataout = importeems(filePattern)`](#syntax1)
 
+[`dataout = importeems(filePattern,status)`](#syntax3)
+
 [`dataout = importeems( ___ , Name,Value)`](#syntax2)
 
 
@@ -20,12 +22,6 @@ The function does two passes of imports. The first is used to read the dimension
 
 > ***All files must have the same dimensions. If this is not the case, the function will attempt to resolve the issue but most likely return an error!***
 
-Upon successful import, the `changestatus` GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore these and focus on the property the remainder of the fields.
-
- <img src="newfldata.png" width="auto" height="auto" align="center"/>
-
-> ***It is important to specify the correct properties at this moment. If you are unsure as to what has been done already, please reach out to the instrument manufacturer, collaborator, laboratory manager or similar to ensure that the right information is supplied here.***
-
 
 <details open>
 <summary><b>
@@ -33,6 +29,37 @@ Upon successful import, the `changestatus` GUI will appear on screen and pause t
 </summary>
 <a name="syntax1"></a><br>
 returns a drEEMdataset class object that contains fluorescence EEMs and their associated information.
+
+Upon successful import, the `changestatus` GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore these and focus on the property the remainder of the fields.
+
+ <img src="newfldata.png" width="auto" height="auto" align="center"/>
+
+> ***It is important to specify the correct properties at this moment. If you are unsure as to what has been done already, please reach out to the instrument manufacturer, collaborator, laboratory manager or similar to ensure that the right information is supplied here.***
+
+</details>
+
+<details open>
+<summary><b>
+`dataout = importeems(filePattern,status)` - custom options</b>
+</summary>
+<a name="syntax3"></a>
+
+For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to "unknown", the GUI will still ask for clarification.
+
+Example: 
+
+	blanks_status=drEEMstatus("blankSubtraction","not applied",...
+    	"IFEcorrection","not applied",...
+    	"signalCalibration","not applied",...
+    	"scatterTreatment","not applied",...
+    	"signalScaling",'original scale',...
+    	'spectralCorrection','applied by instrument software',...
+    	absorbanceUnit='absorbance per cm');
+
+	blanks=tbx.importabsorbance(" - Abs Spectra Graphs.dat",blanks_status);
+
+
+</details>
 
 </details>
 
@@ -68,6 +95,23 @@ Example: `'*.csv'`
 Example: `'* - Waterfall Plot Samples.dat'`
 
 </details>
+
+<details open>
+    <summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
+    <i>drEEMstatus</i>
+        
+Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.
+
+	blanks_status=drEEMstatus("blankSubtraction","not applied",...
+	    	"IFEcorrection","not applied",...
+	    	"signalCalibration","not applied",...
+	    	"scatterTreatment","not applied",...
+	    	"signalScaling",'original scale',...
+	    	'spectralCorrection','applied by instrument software',...
+	    	absorbanceUnit='absorbance per cm');
+
+</details>
+
 
 
 ## Name-Value arguments
