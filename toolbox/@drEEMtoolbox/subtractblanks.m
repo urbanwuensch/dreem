@@ -158,7 +158,16 @@ if options.plot
     ysub = y(:,blanks.Em>340&blanks.Em<500);
     yl = min(y(:));
     yl(2) = max(ysub(:),[],1,"omitmissing").*3;
-    plot(ax,blanks.Em,y)
+    p=plot(ax,blanks.Em,y);
+
+    
+    for k=1:numel(p)
+        row1 = dataTipTextRow('Sample',repelem(dataout.filelist(k),dataout.nEm,1));
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+
     ylims=get(ax,"YLim");
     ylim(ax,yl)
     xline(ax,ray1,'Color','r')
@@ -194,7 +203,7 @@ if options.plot
     y = squeeze(samples.X(:,:,drEEMtoolbox.mindist(samples.Ex,275)));
     ysub = y(:,samples.Em>340&samples.Em<500);
     yl = max(ysub(:),[],1,"omitmissing").*1.5;
-    plot(ax,samples.Em,y)
+    p=plot(ax,samples.Em,y);
     ylims=get(ax,"YLim");
     ylim(ax,[ylims(1) yl])
 
@@ -206,11 +215,27 @@ if options.plot
     title(ax,[sam,' - emission scans @275nm'])
     xlabel(ax,'Emission (nm)')
     ylabel(ax,'Fluorescence intensity')
+    
+    for k=1:numel(p)
+        row1 = dataTipTextRow('Sample',repelem(dataout.filelist(k),dataout.nEm,1));
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+
 
     ax=nexttile(t);
     y = squeeze(dataout.X(:,:,drEEMtoolbox.mindist(dataout.Ex,275)));
     ysub = y(:,dataout.Em>340&dataout.Em<500);
-    plot(ax,dataout.Em,y)
+    p=plot(ax,dataout.Em,y);
+
+    for k=1:numel(p)
+        row1 = dataTipTextRow('Sample',repelem(dataout.filelist(k),dataout.nEm,1));
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+
     xline(ax,ray1,'Color','r')
     xline(ax,ray2,'Color','r')
     xline(ax,ram1,'Color','b')

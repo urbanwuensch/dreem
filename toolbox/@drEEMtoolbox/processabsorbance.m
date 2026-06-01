@@ -87,7 +87,14 @@ if options.plot
     % Show the original data
     t=tiledlayout(f,"flow");
     ax=nexttile(t);
-    plot(ax,data.absWave,data.abs,Color=[0 0 0 0.5])
+    p=plot(ax,data.absWave,data.abs,Color=[0 0 0 0.5]);
+    
+    for k=1:numel(p)
+        row1 = dataTipTextRow('Sample',repelem(data.filelist(k),numel(data.absWave),1));
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = 'Wave';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
     yline(ax,0,LineStyle="-",Color='b')
     xlabel(ax,'Wavelength (nm)')
     ylabel(ax,'Absorbance')
@@ -161,13 +168,30 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         % show intermediate results
         if options.plot
             ax=nexttile(t);
-            plot(ax,data.absWave,data.abs,Color=[0 0 0 0.5])
+            p=plot(ax,data.absWave,data.abs,Color=[0 0 0 0.5]);
+            
+            for k=1:numel(p)
+                row1 = dataTipTextRow('Sample',repelem(data.filelist(k),numel(data.absWave),1));
+                p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+                p(k).DataTipTemplate.DataTipRows(1).Label = 'Wave';
+                p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+            end
             hold(ax,'on')
-            plot(ax,extrawave,new,Color=[1 0 0 0.5])
+
+            p=plot(ax,extrawave,new,Color=[1 0 0 0.5]);
             xlabel(ax,'Wavelength (nm)')
             ylabel(ax,'Absorbance')
             title(ax,'Given (black) and extrapl. data (red)')
             yline(ax,0,LineStyle="-",Color='b')
+            
+            
+            for k=1:numel(p)
+                row1 = dataTipTextRow('Sample',repelem(data.filelist(k),numel(extrawave),1));
+                p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+                p(k).DataTipTemplate.DataTipRows(1).Label = 'Wave';
+                p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+            end
+
         end
         
         % Assign the extrapolated data to the output
@@ -226,7 +250,14 @@ end
 % Show the final output
 if options.plot
     ax=nexttile(t);
-    plot(ax,dataout.absWave,dataout.abs,Color=[0 0 0 0.5])
+    p=plot(ax,dataout.absWave,dataout.abs,Color=[0 0 0 0.5]);
+    
+    for k=1:numel(p)
+        row1 = dataTipTextRow('Sample',repelem(data.filelist(k),numel(dataout.absWave),1));
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = 'Wave';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
     xlabel(ax,'Wavelength (nm)')
     ylabel(ax,'Absorbance')
     title(ax,'Final output')

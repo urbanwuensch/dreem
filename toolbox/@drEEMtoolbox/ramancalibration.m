@@ -140,7 +140,15 @@ if options.plot
     t=tiledlayout(f,"flow");
     
     ax=nexttile(t);
-    plot(ax,blanks.Em,Rscan,'k',LineWidth=1.5)
+    p=plot(ax,blanks.Em,Rscan,'k',LineWidth=1.5);
+    
+    for k=1:numel(p)
+        row1 = dataTipTextRow('Blank',repelem(blanks.filelist(k),blanks.nEm,1));
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+
     title(ax,"Raman emission scans")
     ylabel(ax,'Signal intensity'),xlabel(ax,'Wavelength (nm)')
     
@@ -152,21 +160,40 @@ if options.plot
     xlim(ax,[options.iStart-20 options.iEnd+20])
     
     ax=nexttile(t);
-    plot(ax,dataout.i,SignalCalibration.area,'ko')
+    p=plot(ax,dataout.i,SignalCalibration.area,'ko');
+    
+    row1 = dataTipTextRow('Blank',blanks.filelist);
+    for k=1:numel(p)
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
     title(ax,'Raman area across dataset')
     xlabel(ax,"sample #")
     ylabel(ax,'Raman area')
     axis(ax,'padded')
     
     ax=nexttile(t);
-    plot(ax,dataout.i,SignalCalibration.BaseAreaPerc,'ko')
+    p=plot(ax,dataout.i,SignalCalibration.BaseAreaPerc,'ko');
+    row1 = dataTipTextRow('Blank',blanks.filelist);
+    for k=1:numel(p)
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
     title(ax,'Baseline area rel. to Raman area across dataset')
     axis(ax,'padded')
     xlabel(ax,"sample #")
     ylabel(ax,' Baseline / Raman area * 100 (%)')
     
     ax=nexttile(t);
-    plot(ax,dataout.i,SignalCalibration.SNB,'ko')
+    p=plot(ax,dataout.i,SignalCalibration.SNB,'ko');
+    row1 = dataTipTextRow('Blank',blanks.filelist);
+    for k=1:numel(p)
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
     title(ax,'Raman peak max / background signal (SNB)')
     ylabel(ax,'Signal to baseline ratio')
     xlabel(ax,"sample #")
