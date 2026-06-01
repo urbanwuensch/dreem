@@ -320,16 +320,16 @@ switch options.plot
 
     [~,idx]=sort(data.i);
 
-    plot(ax,data.i(idx),slopes.exp_slope_microm(idx), ...
-        'Color','k',LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor='k')
+    p(1)=plot(ax,data.i(idx),slopes.exp_slope_microm(idx), ...
+        'Color','k',LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor='k');
     xlabel(ax,'# Sample')
     ylabel(ax,['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'} (µm^{-1})'])
     yyaxis(ax,"right")
-    plot(ax,data.i(idx),slopes.S_275_295(idx), ...
-        'Color',lines(1),LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor=lines(1))
+    p(2)=plot(ax,data.i(idx),slopes.S_275_295(idx), ...
+        'Color',lines(1),LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor=lines(1));
     hold(ax,"on")
-    plot(ax,data.i(idx),slopes.S_350_400(idx), ...
-        'Color','b',LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor=lines(1))
+    p(3)=plot(ax,data.i(idx),slopes.S_350_400(idx), ...
+        'Color','b',LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor=lines(1));
     xlabel(ax,'Sample identifier (.i)'),
     ylabel(ax,'S_{275-295} & S_{350-400} (µm^{-1})')
     set(ax,'YColor','b')
@@ -338,6 +338,14 @@ switch options.plot
     legend(ax, ...
         ['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'nm}'], ...
         'S_{275-295nm}','S_{350-400nm}','location','northoutside',NumColumns=3)
+
+    row1 = dataTipTextRow('Sample',dataout.filelist(idx));
+    for k=1:numel(p)
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'slope';
+    end
+
     figurefile=char(options.figurefile);
     if not(isempty(figurefile))
         % Pause for figure rendering

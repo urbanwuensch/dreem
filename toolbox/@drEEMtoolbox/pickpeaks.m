@@ -397,29 +397,44 @@ if plt
     ax=nexttile(t);
     hold(ax,'on')
     for n=1:numel(peaks)
-        plot(ax,Cpeak(:,n),'LineWidth',1.5)
+        p=plot(ax,dataout.i,Cpeak(:,n),'LineWidth',1.5);
+
+        row1 = dataTipTextRow('Sample',dataout.filelist);
+        for k=1:numel(p)
+            p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+            p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+            p(k).DataTipTemplate.DataTipRows(2).Label = 'peak int.';
+        end
     end
     legend(ax,[peaks.name]','location','bestoutside');
     title(ax,'Fluorescence peaks')
-    xlabel(ax,'# of sample in dataset')
+    xlabel(ax,'.i of the sample (i = identifier)')
     axis(ax,'tight')
 
     ax=nexttile(t);
     hold(ax,'on')
-    plot(ax,FI,'LineWidth',1.5)
-    plot(ax,FrI,'LineWidth',1.5)
-    plot(ax,BIX,'LineWidth',1.5)
-    plot(ax,arix,'LineWidth',1.5)
+    p(1)=plot(ax,dataout.i,FI,'LineWidth',1.5);
+    p(2)=plot(ax,dataout.i,FrI,'LineWidth',1.5);
+    p(3)=plot(ax,dataout.i,BIX,'LineWidth',1.5);
+    p(4)=plot(ax,dataout.i,arix,'LineWidth',1.5);
     if ~HIX_excl
-        plot(ax,HIX,'LineWidth',1.5)
+        p(5)=plot(ax,dataout.i,HIX,'LineWidth',1.5);
         legend(ax,'Fluorescence index','Freshness index' ,'Biological index','Humification index','Aromaticity index', ...
             'location','bestoutside')
     else
         legend(ax,'Fluorescence index','Freshness index','Biological index','Aromaticity index', ...
             'location','bestoutside')
     end
+    
+    row1 = dataTipTextRow('Sample',dataout.filelist);
+    for k=1:numel(p)
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+        p(k).DataTipTemplate.DataTipRows(2).Label = 'index val.';
+    end
+
     title(ax,'Fluorescence indicies')
-    xlabel(ax,'# of sample in dataset')
+    xlabel(ax,'.i of the sample (i = identifier)')
     hold(ax,'off')
     axis(ax,'tight')
 
