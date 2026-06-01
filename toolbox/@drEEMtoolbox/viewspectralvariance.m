@@ -83,11 +83,25 @@ end
 if pltcase==1||pltcase==3
     %yyaxis(ax(1),'left'),set(ax(1),'YColor',[1 .2 .2 0.5])
     ylabel(ax(1),'Unit scaled absorbance')
-    %h1=plot(ax(1),data.absWave,Y,'Color',[1 .2 .2 0.5],'LineWidth',1,'LineStyle','-','Marker','none');%./sum(Y,2)
-    %yyaxis(ax(1),'right'),set(ax(1),'YColor',[0 0 0 0.8])
+    h1=plot(ax(1),data.absWave,Y,'Color',[1 .2 .2 0.5],'LineWidth',1,'LineStyle','-','Marker','none');%./sum(Y,2)
+    yyaxis(ax(1),'right'),set(ax(1),'YColor',[0 0 0 0.8])
     h2=plot(ax(1),data.absWave,cdom,'Color',[0 0 0 0.8],'LineWidth',2,'LineStyle','-','Marker','none');
     %legend(ax(1),[h1(1), h2],{'All spectra (unit scaled)','Standard deviation'})
     legend(ax(1),h2,{'Standard deviation'})
+
+    for k=1:numel(h1)
+        row1 = dataTipTextRow('Sample',repelem(data.filelist(k),numel(data.absWave),1));
+        h1(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        h1(k).DataTipTemplate.DataTipRows(1).Label = 'Wave';
+        h1(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+    for k=1:numel(h2)
+        %row1 = dataTipTextRow('Overall',repelem({'Standard deviation'},numel(data.absWave),1));
+        %h2(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        h2(k).DataTipTemplate.DataTipRows(1).Label = 'Wave';
+        h2(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+
 end
 axis(ax(1),'tight')
 xlabel(ax(1),'Absorbance wavelength (nm)')
@@ -115,9 +129,22 @@ if pltcase==1||pltcase==2
     pltvec=pltvec./normvec;
     pltvec(pltvec==0)=nan;
     
-    plot(ax(3),pltvec,data.Em,'Color',[1 .2 .2 0.5],'LineWidth',1)
+    h1=plot(ax(3),pltvec,data.Em,'Color',[1 .2 .2 0.5],'LineWidth',1);
     hold(ax(3),'on')
-    plot(ax(3),sum(fdom,2,"omitmissing")./max(sum(fdom,2,"omitmissing")),data.Em,'Color','k','LineWidth',2)
+    h2=plot(ax(3),sum(fdom,2,"omitmissing")./max(sum(fdom,2,"omitmissing")),data.Em,'Color','k','LineWidth',2);
+
+    for k=1:numel(h1)
+        row1 = dataTipTextRow('Sample',repelem(data.filelist(k),data.nEm,1));
+        h1(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        h1(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
+        h1(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+    for k=1:numel(h2)
+        %row1 = dataTipTextRow('Overall',repelem({'Standard deviation'},numel(data.absWave),1));
+        %h2(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        h2(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
+        h2(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
 end
 set(ax(3),'XDir','reverse')
 set(ax(3),'units','pixel')
@@ -135,9 +162,22 @@ if pltcase==1||pltcase==2
     pltvec=squeeze(sum(X,2,"omitmissing"))./(mean(max(squeeze(sum(X,2,"omitmissing"))))*2);
     pltvec(pltvec==0)=nan;
     
-    plot(ax(4),data.Ex,pltvec,'Color',[1 .2 .2 0.5],'LineWidth',1)
+    h1=plot(ax(4),data.Ex,pltvec,'Color',[1 .2 .2 0.5],'LineWidth',1);
     hold(ax(4),'on')
-    plot(ax(4),data.Ex,sum(fdom,"omitmissing")./max(sum(fdom,"omitmissing")),'Color','k','LineWidth',2)
+    h2=plot(ax(4),data.Ex,sum(fdom,"omitmissing")./max(sum(fdom,"omitmissing")),'Color','k','LineWidth',2);
+
+    for k=1:numel(h1)
+        row1 = dataTipTextRow('Sample',repelem(data.filelist(k),data.nEx,1));
+        h1(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        h1(k).DataTipTemplate.DataTipRows(1).Label = 'Ex';
+        h1(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
+    for k=1:numel(h2)
+        %row1 = dataTipTextRow('Overall',repelem({'Standard deviation'},numel(data.absWave),1));
+        %h2(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        h2(k).DataTipTemplate.DataTipRows(1).Label = 'Ex';
+        h2(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+    end
 end
 set(ax(4),'units','pixel')
 xlim(ax(4),refxlim)
