@@ -88,7 +88,13 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             yline(app.cdom,0,Color='r',LineWidth=2),hold(app.cdom,'on')
             switch app.nshownDropDown.Value
                 case 'one'
-                    plot(app.cdom,localData.absWave,localData.abs(app.state.sample,:),Color='k',LineWidth=1.5);
+                    p=plot(app.cdom,localData.absWave,localData.abs(app.state.sample,:),Color='k',LineWidth=1.5);
+                    row = dataTipTextRow('Sample',app.data.filelist{app.state.sample});
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(1).Label='wavelength';
+                        p(k).DataTipTemplate.DataTipRows(2).Label='absorbance';
+                        p(k).DataTipTemplate.DataTipRows(end+1) = row;
+                    end
                     if app.HighlightslopesCheckBox.Value
                         hold(app.cdom,"on")
 
@@ -108,7 +114,12 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                 case 'all'
                     if matches(app.colorbyDropDown.Value,'nothing')
                         app.missingDisclosure.Visible="off";
-                        plot(app.cdom,localData.absWave,localData.abs,Color='k',LineWidth=1.5);
+                        p=plot(app.cdom,localData.absWave,localData.abs,Color='k',LineWidth=1.5);
+                        
+                        for k=1:numel(p)
+                            p(k).DataTipTemplate.DataTipRows(1).Label='wavelength';
+                            p(k).DataTipTemplate.DataTipRows(2).Label='absorbance';
+                        end
                     else
                         fld=app.colorbyDropDown.Value;
                         md=localData.metadata.(fld);
@@ -194,19 +205,55 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                         
 
             if matches(app.colorbyDropDown.Value,'nothing')
-                scatter(app.sourcediagram,a375,app.data.opticalMetadata.exp_slope_microm,35,'k',"filled",MarkerEdgeColor='k');
+                s=scatter(app.sourcediagram,a375,app.data.opticalMetadata.exp_slope_microm,35,'k',"filled",MarkerEdgeColor='k');
+                row = dataTipTextRow('Sample',app.data.filelist);
+                row2 = dataTipTextRow('.i',app.data.i);
+
+                for k=1:numel(s)
+                    s(k).DataTipTemplate.DataTipRows(1).Label='a375';
+                    s(k).DataTipTemplate.DataTipRows(2).Label='slope';
+                    s(k).DataTipTemplate.DataTipRows(end+1) = row;
+                    s(k).DataTipTemplate.DataTipRows(end+1) = row2;
+                end
             else
                 fld=app.colorbyDropDown.Value;
                 md=app.data.metadata.(fld);
 
                 if numel(unique(md))<15
                     %'few';
-                    scatter(app.sourcediagram,a375,app.data.opticalMetadata.exp_slope_microm,35,app.gcolor(md),"filled",MarkerEdgeColor='k');
+                    s=scatter(app.sourcediagram,a375,app.data.opticalMetadata.exp_slope_microm,35,app.gcolor(md),"filled",MarkerEdgeColor='k');
                     app.glegend(app.sourcediagram,app.gcolor(unique(md)),unique(md));
+
+                    row1 = dataTipTextRow('Sample',app.data.filelist);
+                    row2 = dataTipTextRow('.i',app.data.i);
+                    
+
+                    for k=1:numel(s)
+                        s(k).DataTipTemplate.DataTipRows(1).Label='a375';
+                        s(k).DataTipTemplate.DataTipRows(2).Label='slope';
+                        s(k).DataTipTemplate.DataTipRows(3).Label=fld;
+                        s(k).DataTipTemplate.DataTipRows(end+1) = row1;
+                        s(k).DataTipTemplate.DataTipRows(end+1) = row2;
+                        
+                    end
 
                 else
                     %'lots';
-                    scatter(app.sourcediagram,a375,app.data.opticalMetadata.exp_slope_microm,35,md,"filled",MarkerEdgeColor='k');
+                    s=scatter(app.sourcediagram,a375,app.data.opticalMetadata.exp_slope_microm,35,md,"filled",MarkerEdgeColor='k');
+                    
+                    row1 = dataTipTextRow('Sample',app.data.filelist);
+                    row2 = dataTipTextRow('.i',app.data.i);
+                    row3 = dataTipTextRow('metadata',md);
+
+                    for k=1:numel(s)
+                        s(k).DataTipTemplate.DataTipRows(1).Label='a375';
+                        s(k).DataTipTemplate.DataTipRows(2).Label='slope';
+                        s(k).DataTipTemplate.DataTipRows(3).Label=fld;
+                        s(k).DataTipTemplate.DataTipRows(end+1) = row1;
+                        s(k).DataTipTemplate.DataTipRows(end+1) = row2;
+                        
+                    end
+                    
                     legend(app.sourcediagram,'off')
                     ncat=numel(unique(md));
                     if ncat<50
@@ -429,20 +476,43 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                 BoxFaceColor='k')
             ylabel(ax,'Slope values (µm^{-1})',Interpreter='tex')
             set(ax,XTick=categorical(1:3),XTickLabel={'S','S_{275-295}','S_{350-400}'})
+
+            row = dataTipTextRow('Sample',app.data.filelist);
+
             ax=nexttile(t);
-            plot(ax,dataHere.i,dataHere.opticalMetadata.exp_slope_microm, ...
-                Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k')
+            p=plot(ax,dataHere.i,dataHere.opticalMetadata.exp_slope_microm, ...
+                Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k');
+            
+            for k=1:numel(p)
+                p(k).DataTipTemplate.DataTipRows(1).Label='.i';
+                p(k).DataTipTemplate.DataTipRows(2).Label='slope';
+                p(k).DataTipTemplate.DataTipRows(end+1) = row;
+            end
+
             ylabel(ax,'S (µm^{-1})',Interpreter='tex')
             title(ax,'S',Interpreter='tex')
             ax=nexttile(t);
-            plot(ax,dataHere.i,dataHere.opticalMetadata.S_275_295, ...
-                Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k')
+            p=plot(ax,dataHere.i,dataHere.opticalMetadata.S_275_295, ...
+                Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k');
+            
+            for k=1:numel(p)
+                p(k).DataTipTemplate.DataTipRows(1).Label='.i';
+                p(k).DataTipTemplate.DataTipRows(2).Label='slope';
+                p(k).DataTipTemplate.DataTipRows(end+1) = row;
+            end
+
             ylabel(ax,'S_{275-295} (µm^{-1})',Interpreter='tex')
             title(ax,'S_{275-295}',Interpreter='tex')
 
             ax=nexttile(t);
-            plot(ax,dataHere.i,dataHere.opticalMetadata.S_350_400, ...
-                Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k')
+            p=plot(ax,dataHere.i,dataHere.opticalMetadata.S_350_400, ...
+                Marker='.',LineStyle='none',MarkerSize=20,MarkerEdgeColor='k');
+
+            for k=1:numel(p)
+                p(k).DataTipTemplate.DataTipRows(1).Label='.i';
+                p(k).DataTipTemplate.DataTipRows(2).Label='slope';
+                p(k).DataTipTemplate.DataTipRows(end+1) = row;
+            end
             ylabel(ax,'S_{350-400} (µm^{-1})',Interpreter='tex')
             title(ax,'S_{350-400}',Interpreter='tex')
             xlabel(t,'sample sequence identifier (data.i)')
@@ -813,6 +883,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             xlabel(app.cdom, 'Wavelength (nm)')
             zlabel(app.cdom, 'Z')
             app.cdom.Box = 'on';
+            app.cdom.TickDirMode = 'manual';
             app.cdom.Layout.Row = 2;
             app.cdom.Layout.Column = 1;
             colormap(app.cdom, 'parula')
@@ -869,6 +940,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             ylabel(app.sourcediagram, 'S (µm^{-1})')
             zlabel(app.sourcediagram, 'Z')
             app.sourcediagram.Box = 'on';
+            app.sourcediagram.TickDirMode = 'manual';
             app.sourcediagram.Layout.Row = [3 4];
             app.sourcediagram.Layout.Column = [1 5];
             colormap(app.sourcediagram, 'parula')
@@ -951,8 +1023,8 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             % Assign app.ContextMenu
             app.spectra.ContextMenu = app.ContextMenu;
             app.GridLayout10.ContextMenu = app.ContextMenu;
-            app.missingDisclosure.ContextMenu = app.ContextMenu;
             app.cdom.ContextMenu = app.ContextMenu;
+            app.missingDisclosure.ContextMenu = app.ContextMenu;
             app.slopesPanel.ContextMenu = app.ContextMenu;
             app.Panel.ContextMenu = app.ContextMenu;
             app.GridLayout12.ContextMenu = app.ContextMenu;

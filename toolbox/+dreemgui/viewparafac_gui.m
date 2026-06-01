@@ -506,10 +506,35 @@ classdef viewparafac_gui < matlab.apps.AppBase
             for n=1:6
                 p=plot(app.(ax{n}),xax{n},plotdat{n}, ...
                     LineStyle=lspec{n},Marker=mstyle{n});
+                switch ax{n}(1:2)
+                    case 'sc'
+                        for k=1:numel(p)
+                            p(k).DataTipTemplate.DataTipRows(2).Label = 'score';
+                        end
+                    case 'lo'
+                        for k=1:numel(p)
+                            p(k).DataTipTemplate.DataTipRows(2).Label = 'load';
+                        end
+                    case 'le'
+                        for k=1:numel(p)
+                            p(k).DataTipTemplate.DataTipRows(2).Label = 'lev';
+                        end
+
+                end
+
                 if matches(ax{n}(end),'s')
                     row = dataTipTextRow('Sample',app.data.filelist);
                     for k=1:numel(p)
                         p(k).DataTipTemplate.DataTipRows(end+1) = row;
+                        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+                    end
+                elseif matches(ax{n}(end),'x')
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(1).Label = 'ex';
+                    end
+                elseif matches(ax{n}(end),'m')
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(1).Label = 'em';
                     end
                 end
                 axis(app.(ax{n}),'tight')
@@ -586,10 +611,26 @@ classdef viewparafac_gui < matlab.apps.AppBase
 
             ax=[app.ssesam;app.sseem;app.sseex];
             for n=1:3
-                plot(ax(n),xax{n},err{n},'LineStyle',lspec{n},'Marker',mstyle{n},Color='k')
+                p=plot(ax(n),xax{n},err{n},'LineStyle',lspec{n},'Marker',mstyle{n},Color='k');
                 axis(ax(n),'padded')
                 ylim(ax(n),[0 inf])
                 pbaspect(ax(n),[1 1 1])
+                for k=1:numel(p)
+                    p(k).DataTipTemplate.DataTipRows(2).Label = 'SSE';
+                end
+                if n==1
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(1).Label = '.i';
+                    end
+                elseif n==2
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(1).Label = 'em';
+                    end
+                elseif n==3
+                    for k=1:numel(p)
+                        p(k).DataTipTemplate.DataTipRows(1).Label = 'ex';
+                    end
+                end
             end
         end
 
