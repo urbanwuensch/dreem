@@ -95,11 +95,14 @@ classdef drEEMdataset
             data.history(1).fmessage='drEEMdataset created (empty)';
         end
 
-        function validate(data)
-            arguments
+        function data=validate(data,attemptFix)
+            arguments (Input)
                 data (1,1) {mustBeA(data,'drEEMdataset')}
+                attemptFix (1,1) {mustBeA(attemptFix,'logical')} = false;
             end
-            
+            if nargout>0
+                nargoutchk(1,1)
+            end
             cnt=1;
             if not(isempty(data.X))
                 sz=size(data.X);
@@ -109,8 +112,46 @@ classdef drEEMdataset
                 end
 
                 if not(numel(unique(data.filelist))==numel(data.filelist))
-                    e{cnt}='The sample identifiers ("filelist") are not unique. For your dataset to be FAIR-compliant and for the toolbox to work as expected, unique sample identfiers must be used.';
-                    cnt=cnt+1;
+                    
+                    if attemptFix
+                       filelist_fixed = data.filelist;
+
+                       counts = dictionary(string.empty, double.empty);
+                       for k = 1:numel(data.filelist)
+                           fname = string(data.filelist{k});
+
+                           if isKey(counts, fname)
+                               counts(fname) = counts(fname) + 1;
+
+                               % Append counter to duplicates
+                               filelist_fixed{k} = sprintf('%s - %02d', ...
+                                   data.filelist{k}, counts(fname)-1);
+                           else
+                               counts(fname) = 1;
+                           end
+                       end
+                        if not(numel(unique(filelist_fixed))==numel(filelist_fixed))
+                            e{cnt}='The sample identifiers ("filelist") are not unique, even after attempting an automated fix. For your dataset to be FAIR-compliant and for the toolbox to work as expected, unique sample identfiers must be used.';
+                            cnt=cnt+1;
+                        else
+                            data.filelist=filelist_fixed;
+                            warning('The sample identifiers ("filelist") were not unique, but the function automatically rectified this by adding counters')
+                        end
+                    else
+                        [u, ~, idx] = unique(data.filelist);
+
+                        counts = accumarray(idx, 1);
+
+                        duplicates = u(counts > 1);
+                        
+                        message='The sample identifiers ("filelist") are not unique. For your dataset to be FAIR-compliant and for the toolbox to work as expected, unique sample identfiers must be used. Duplicate names:\n';
+                        for j=1:numel(duplicates)
+                            message=[message,'     ',duplicates{j},'\n'];
+                            
+                        end
+                        e{cnt}=message;
+                        cnt=cnt+1;
+                    end
                 end
                 if not(sz(1)==data.nSample)
                     e{cnt}='size of EEM dimension 1 not consistent with data.nSample';
@@ -259,6 +300,9 @@ classdef drEEMdataset
             % drEEMdataset.validate to do the job.
             if matches(stack(end).name,{'drEEMtoolbox.validatedataset','drEEMdataset.validate'})
                 disp('<strong> drEEMdataset validation successful.</strong> Your dataset passed all checks.')
+            end
+            if nargout==0
+                clearvars data
             end
         end
 

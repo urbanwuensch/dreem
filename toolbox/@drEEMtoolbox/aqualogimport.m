@@ -604,4 +604,11 @@ end
 disp(' ')
 
 disp('   Done.')
+
+% Final step: Make the drEEMhistory entry.
+idx=1;
+Xout.history(idx,1)=...
+    drEEMhistory.addEntry(mfilename,'imported rawdata from .opj or .ogw files to a horibaRawdata object.',[],Xout);
+
+
 end

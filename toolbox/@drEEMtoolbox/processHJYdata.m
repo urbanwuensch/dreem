@@ -6,6 +6,13 @@ function [DS,DSb] = processHJYdata(Xin,opt)
 % Department of Architecture and Civil Engineering
 % Sven Hultins Gata 6
 % 41296 Gothenburg (Sweden)
+
+arguments (Input)
+    Xin  {Xinvalidator(Xin)}
+    opt {mustBeA(opt,"struct")} = defaultopts
+end
+
+
 if strcmp(Xin,'options')
     opt=defaultopts;
     if strcmp(Xin,'options')
@@ -13,16 +20,6 @@ if strcmp(Xin,'options')
         return
     end
 end
-
-if isstruct(Xin)&&nargin==1
-    opt=defaultopts;
-    disp(' ')
-    warning(sprintf(['No options were provided, the defaults were assumed.\n'...
-        '     Please inspect the result and see if adjustments are necessary.\n'...
-        '     Options can be obtained by calling ''processHJYdata(''options'')'''])) %#ok<SPWRN>
-    disp(' ')
-end
-
 
 DS=drEEMdataset.create;
 DS.Ex=(Xin.Ex);
@@ -246,6 +243,13 @@ stat=drEEMstatus.change(stat,"absorbanceUnit","absorbance per cm");
 
 DS.status=stat;
 DSb.status=stat;
+
+
+DS = drEEMdataset.validate(DS,true);
+DSb = drEEMdataset.validate(DSb,true);
+
+
+
 end
 %% Internal functions used above
 
@@ -253,6 +257,11 @@ function opt = defaultopts
 opt.visualize=false;
 opt.doublebinning=false;
 opt.nanoversat=true;
+disp(' ')
+warning(sprintf(['No options were provided, the defaults were assumed.\n'...
+    '     Please inspect the result and see if adjustments are necessary.\n'...
+    '     Options can be obtained by calling ''processHJYdata(''options'')'''])) %#ok<SPWRN>
+disp(' ')
 end
 
 
@@ -410,4 +419,28 @@ else
 end
 dataout.pixeltagged=(pixelvar>0.01)';
 dataout.pixelvariance=pixelvar';
+end
+
+function Xinvalidator(Xin)
+
+Xin_class = class(Xin);
+
+pass=false;
+
+if isstruct(Xin)
+    pass=true;
+elseif ischar(Xin)
+    if matches(Xin,'options')
+        pass=true;
+    end
+elseif isstring(Xin)
+    if matches(Xin,"options")
+        pass=true;
+    end
+end
+
+
+if not(pass)
+    error('Xin must either be a structure (HoribaRawdata) or ''options''')
+end
 end
