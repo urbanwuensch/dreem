@@ -52,7 +52,7 @@ catch
 end
 %% Finding files
 disp('   Importing samples...')
-if not(exist('file','var'))
+if not(exist('file','var'))|isempty(file)
     disp('   Idefify projects/samples to import (*.ogw first)')
     oldpath=pwd;
     patt='*.ogw';
@@ -273,6 +273,8 @@ clearvars -except alldata workbookNames opjname sampletype workingpath selector
 
 %% Now digest the data and transform
 disp('   Digisting the read-out data and converting them into a single dataset')
+
+Xout=horibaRawdata;
 
 % Delete blanks (no sample fluorescence or absorbance measured) 
 blanksamples    = cellfun(@(x) not(any(contains(fieldnames(x),'Blank'))),alldata);
@@ -605,10 +607,46 @@ disp(' ')
 
 disp('   Done.')
 
-% Final step: Make the drEEMhistory entry.
+
+
+
+% Make the drEEMhistory entry.
 idx=1;
 Xout.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,'imported rawdata from .opj or .ogw files to a horibaRawdata object.',[],Xout);
+    drEEMhistory.addEntry(mfilename,'imported rawdata from .opj or .ogw files to a horibaRawdata object.',[],drEEMdataset.create);
+
+
+% Check for filename duplications. This happens sometimes in large
+% campaigns and should be handled here (but documented)
+
+if not(numel(unique(Xout.filelist))==numel(Xout.filelist))
+
+    filelist_fixed = Xout.filelist;
+
+    counts = dictionary(string.empty, double.empty);
+    for k = 1:numel(Xout.filelist)
+        fname = string(Xout.filelist{k});
+
+        if isKey(counts, fname)
+            counts(fname) = counts(fname) + 1;
+
+            % Append counter to duplicates
+            filelist_fixed{k} = sprintf('%s - %02d', ...
+                Xout.filelist{k}, counts(fname)-1);
+
+            idx=numel(Xout.history)+1;
+            Xout.history(idx,1)=...
+                drEEMhistory.addEntry(mfilename,...
+                ['Duplicate filename changed from ',Xout.filelist{k},' to ',filelist_fixed{k}],...
+                [],drEEMdataset.create);
+
+        else
+            counts(fname) = 1;
+        end
+    end
+    Xout.filelist=filelist_fixed;
+
+end
 
 
 end
