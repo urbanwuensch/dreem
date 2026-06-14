@@ -427,7 +427,7 @@ Xin_class = class(Xin);
 
 pass=false;
 
-if isstruct(Xin)
+if matches(Xin_class,'struct')||matches(Xin_class,'horibaRawdata')
     pass=true;
 elseif ischar(Xin)
     if matches(Xin,'options')
@@ -441,6 +441,6 @@ end
 
 
 if not(pass)
-    error('Xin must either be a structure (HoribaRawdata) or ''options''')
+    error('Xin must either be a structure (horibaRawdata) or ''options''')
 end
 end
