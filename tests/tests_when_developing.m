@@ -124,7 +124,24 @@ ncdisp("test.nc")
 
 %%
 clearvars
+close all force
 initSession
 tbx=drEEMtoolbox;
 load("HE452drEEM2.mat")
+
+samples=tbx.processabsorbance(samples,plot=false);
+samples=tbx.ifecorrection(samples,plot=false);
+samples=tbx.subtractblanks(samples,blanks,plot=false);
+samples=tbx.ramancalibration(samples,blanks,"method","gauss1",plot=false);
+
+samples=tbx.subdataset(samples,outEm=samples.Em<330|samples.Em>550,outEx=samples.Ex<260|samples.Ex>450);
+load("HE452scatteroptions.mat")
+samples=tbx.handlescatter(samples,scatteroptions);
+samples=misc.XMcorrect(samples,3);
+out=samples.absWave<240;
+samples.abs(:,out)=[];
+samples.absWave(out)=[];
+out=samples.absWave>600;
+samples.abs(:,out)=[];
+samples.absWave(out)=[];
 fitnpls(samples)
