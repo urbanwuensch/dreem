@@ -191,9 +191,9 @@ classdef drEEMdataset
                     e{cnt}=['Some of the EEMs contain only missing numbers (sample(s): ',num2str(sidx),')'];
                     cnt=cnt+1;
                 end
-
-                if not(isempty(data.models))
-                    f=find(arrayfun(@(x) not(isempty(x.loads{1})),data.models));
+                f=find(arrayfun(@(x) not(isempty(x.loads{1})),data.models));
+                if not(isempty(f))
+                    
                     % TODO: Validate PCA models
                     if matches(data.models(f(1)).modelName,'PARAFAC')
                         for j=1:(numel(f))
