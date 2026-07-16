@@ -401,7 +401,7 @@ classdef drEEMtoolbox < handle
 
             switch answer
                 case 'Open File exchange'
-                    web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
+                    web("https://mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                     setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                 case 'Update now'
                     % Kick off the ? parts of the URL
