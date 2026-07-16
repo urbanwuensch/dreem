@@ -162,10 +162,11 @@ if options.plot
 
     
     for k=1:numel(p)
-        row1 = dataTipTextRow('Sample',repelem(dataout.filelist(k),dataout.nEm,1));
-        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
+        row1 = dataTipTextRow('Sample',repelem(dataout.filelist(k),blanks.nEm,1));
+        
         p(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
         p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
+        p(k).DataTipTemplate.DataTipRows(end+1) = row1;
     end
 
     ylims=get(ax,"YLim");
