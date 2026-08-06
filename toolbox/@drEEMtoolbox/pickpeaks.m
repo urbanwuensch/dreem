@@ -480,8 +480,22 @@ end
 
 
 function X = naninterp(X,method)
-% Interpolate over NaNs
-X(isnan(X)) = interp1(find(~isnan(X)), X(~isnan(X)), find(isnan(X)),method);
+total=numel(X);
+missing=sum(isnan(X));
+present=sum(~isnan(X));
+
+if total==missing
+    warning('Cannot interpolate over missing entries if all are missing')
+    return
+elseif (present/total)<0.5
+    warning('More than 50% missing entries. Depending on the array, this might produce strange results.')
+end
+
+% Interpolate over NaNs (but catch if errors occur, not worth the trouble)
+try %#ok<TRYNC>
+    X(isnan(X)) = interp1(find(~isnan(X)), X(~isnan(X)), find(isnan(X)),method);
+
+end
 end
 
 %%
