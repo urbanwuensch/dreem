@@ -22,7 +22,7 @@ classdef drEEMtoolbox < handle
 
     % These are not meant for the general public, Origin Pro is required.
     methods (Hidden = true,Static = true)
-        Xout = aqualogimport(workingpath,selector,deselector)
+        
         dataout = sampleQimport(workingpath,data)
         [DS,DSb] = processHJYdata(Xin,opt)
 
