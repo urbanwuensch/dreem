@@ -37,7 +37,13 @@ classdef horibaRawdata
         nSample
         history (:,1) drEEMhistory
     end
+    methods (Static,Access=public,Hidden=true)
+        varargout = importNetCDF(file,version)
+        varargout = importAqualogOPJ(folder,version)
+    end
     methods (Access=public,Static)
+        
+        
 
         function dataout = deletesamples(data,options)
             arguments
@@ -200,7 +206,7 @@ classdef horibaRawdata
                 disp([fullName,' called, but no offset was found.'])
                 return
             else
-                disp(['Added an emission offset of ',num2str(offset),' nm. (Emission + Emission Parkposition)'])
+                disp(['<strong>Added</strong> an emission offset of ',num2str(offset),' nm. (Emission + Emission Parkposition)'])
             end
             dataout.Em=dataout.Em+offset;
             dataout.Em_parkpos=dataout.Em_parkpos+offset;
@@ -208,7 +214,7 @@ classdef horibaRawdata
             % drEEMhistory entry
             idx=height(dataout.history)+1;
             dataout.history(idx,1)=...
-                drEEMhistory.addEntry(fullName,['Changed Park position of emission detector (incl. emission axis!) by ',num2str(offset),'nm'],[],drEEMdataset.create);
+                drEEMhistory.addEntry(fullName,['Changed Park position of emission detector (incl. emission axis!) by adding ',num2str(offset),' nm'],[],drEEMdataset.create);
         end
 
         function dataout = autofixS1DarkSpectra(data,options)
@@ -220,22 +226,33 @@ classdef horibaRawdata
             dataout=data;
 
 
-            % Replace lit up dark spectra
+            %% Replace lit up dark spectra
             % Find the Excitation of the Park position (Rayleigh will be
-            % there)
+            % there if the scan wasn't dark)
             monopark=dataout.Ex(end);
-            idx=drEEMtoolbox.mindist(dataout.Em,monopark);
+            monopark=drEEMtoolbox.mindist(dataout.Em,monopark);
+
             % Extract sample and blank spectra for the purpose of flagging
             checkspectra=[dataout.S1DarkSample;dataout.S1DarkBlank];
             % Center and square the spectra (to avoid negative medians)
             checkspectra=(checkspectra-median(checkspectra,2,"omitmissing"));
+            
+            % Extract the median across all spectra. The trigger will
+            % involve only the mono-park position, but the median does
+            % involve the whole spectrum of all spectra. I think that's
+            % more stable.
             medianDark=median(trapz(checkspectra,2));
 
             % The replacement part...
-            thresholdFactor=5;
+            % Threshold factor... I set this myself, no user option.
+            % For now, that seems to work just fine
+            % times higher than the median will get flagged
+            thresholdFactor=5; 
+            
 
 
-            if any(trapz(checkspectra,2)>(thresholdFactor*medianDark))
+            if any(checkspectra(:,monopark)>(thresholdFactor*medianDark))
+                % option to make the plots a new figure
                 newfig=false;
                 if options.plot
                     if drEEMtoolbox.options.uifig
@@ -248,7 +265,7 @@ classdef horibaRawdata
                     ax=nexttile(t);
                 end
                 % Extract the indices of lit up spectra
-                replacethese=checkspectra(:,idx)>(thresholdFactor*medianDark);
+                replacethese=checkspectra(:,monopark)>(thresholdFactor*medianDark);
                 if options.plot
                     yax=[dataout.S1DarkSample;dataout.S1DarkBlank];
                     p1=plot(ax,dataout.Em,yax,'k');
@@ -314,11 +331,11 @@ classdef horibaRawdata
                     ,[],drEEMdataset.create);
             else
                 newfig=true;
-                disp('Good news, all your dark spectra appear to be truly dark.')
+                disp('Good news, all your dark spectra (S1DarkSample + S1DarkBlank appear to be dark.')
             end
 
 
-            % Fix noisy S1Dark spectra (noisy pixels)
+            %% Fix noisy S1Dark spectra (noisy pixels), main purpose of the function
             % Extract S1Dark spectra (samples + blanks)
             spectra=dataout.S1DarkSample;
             blankspectra=dataout.S1DarkBlank;
@@ -367,6 +384,7 @@ classdef horibaRawdata
                     'Found noisy S1Dark measurements and replaced them with valid neighboring samples', ...
                     [],drEEMdataset.create);
             else
+                disp('No noisy S1DarkSample or S1DarkBlank found')
                 return
             end
 

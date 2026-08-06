@@ -25,6 +25,13 @@ classdef drEEMtoolbox < handle
         Xout = aqualogimport(workingpath,selector,deselector)
         dataout = sampleQimport(workingpath,data)
         [DS,DSb] = processHJYdata(Xin,opt)
+
+        function dataout = aqualogimport(folder)
+            arguments
+                folder (1,:) {mustBeFolder(folder)} = pwd;
+            end
+            dataout=horibaRawdata.importAqualogOPJ(folder,'horibaRawdata');
+        end
     end
 
 
