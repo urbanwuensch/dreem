@@ -18,6 +18,14 @@ classdef timezoneselector_gui < matlab.apps.AppBase
         finished {mustBeA(finished,'logical')} = false
     end
     
+    methods (Access = private)
+        
+        function tz = localtimezone(app)
+            t = datetime('now','TimeZone','local');
+            tz = t.TimeZone;
+        end
+    end
+    
 
     % Callbacks that handle component events
     methods (Access = private)
@@ -35,7 +43,14 @@ classdef timezoneselector_gui < matlab.apps.AppBase
             end
             app.mainmessage.Text=message;
             movegui(app.UIFigure,"center")
-            app.AreaDropDownValueChanged
+
+            default=app.localtimezone;
+            default=strsplit(default,'/');
+
+            app.AreaDropDown.Value=default{1};
+            app.AreaDropDownValueChanged;
+            app.RegionDropDown.Value=default{2};
+            
         end
 
         % Value changed function: AreaDropDown
@@ -106,10 +121,10 @@ classdef timezoneselector_gui < matlab.apps.AppBase
 
             % Create RegionDropDown
             app.RegionDropDown = uidropdown(app.GridLayout);
-            app.RegionDropDown.Items = {};
+            app.RegionDropDown.Items = {''};
             app.RegionDropDown.Layout.Row = 3;
             app.RegionDropDown.Layout.Column = [3 4];
-            app.RegionDropDown.Value = {};
+            app.RegionDropDown.Value = '';
 
             % Create savecloseButton
             app.savecloseButton = uibutton(app.GridLayout, 'push');
