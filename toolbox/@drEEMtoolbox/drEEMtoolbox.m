@@ -13,8 +13,8 @@ classdef drEEMtoolbox < handle
     % Sven Hultins Gata 6
     % 41296 Gothenburg (Sweden)
     properties (Constant = true, Hidden = false)
-        version = "2.26.07"
-        url = "https://zenodo.org/records/21379277/files/drEEM-2.26.07.mltbx?download=1"
+        version = "2.26.08"
+        url = "https://zenodo.org/records/xxxxxxx/files/drEEM-2.26.08.mltbx?download=1"
         requiredVersion = 'R2024b'
         rootfolder = drEEMtoolbox.tbxpath;
         options=drEEMtoolbox.defaultOptions;

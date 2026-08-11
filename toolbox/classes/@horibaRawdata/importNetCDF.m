@@ -36,13 +36,17 @@ varmap={'AbsI1darkSample','AbsI1dark_Sample','att';...
     'R1DarkSample','R1dark_Sample','att';...
     'AbsR1darkSample','R1dark_Sample','att';...
     'filelist','workbook_name','att';...
-    'opjfile','source_opj_file','att'};
+    'opjfile','source_opj_file','att';...
+    'Em_parkpos','park_wavelength_nm','att';...
+    'Em_PixelBin','ccd_xbin','att';...
+    'CCD_gain','ccd_gain_factor','att';...
+    'date_measured','creation_time','att'};
 
 disp('NetCDF Aqualog file conversion to horibaRawdata (drEEM-specific rawdata format)')
 disp(' ')
-disp(['   Found ',num2str(numel(groups)),' samples'])
+disp(['   Found ',num2str(numel(groups)),' samples in the NetCDF file...'])
 disp(' ')
-disp('    Importing...')
+disp('    Converting to a drEEM-specific format...')
 dataout=horibaRawdata;
 
 dataout.nSample=numel(groups);
@@ -75,6 +79,7 @@ dataout.R1DarkSample=nan(dataout.nSample,1);
 dataout.AbsR1darkSample=dataout.R1DarkSample;
 dataout.filelist=cell(dataout.nSample,1);
 dataout.opjfile=cell(dataout.nSample,1);
+dataout.date_measured=cell(dataout.nSample,1);
 ncid = netcdf.open(file,'NOWRITE');
 
 for j=1:dataout.nSample
@@ -98,7 +103,7 @@ disp('    Success... All samples have identical emission and excitation axes')
 for j=1:dataout.nSample
     sample=groups{j};
     grpid = netcdf.inqNcid(ncid,sample);
-    disp(['       ',sample])
+    %disp(['       ',sample])
     
     for k=1:height(varmap)
         drEEM_field=varmap{k,1};
@@ -143,6 +148,9 @@ disp(['   Success. Imported ',num2str(numel(groups)),' samples'])
 
 switch version
     case 'horibaRawdata'
+        idx=1;
+        dataout.history(idx,1)=...
+            drEEMhistory.addEntry(mfilename,'created horibaRawdata dataset from opj/ogw files with NetCDF intermediate',[],drEEMdataset);
         varargout{1} = dataout;
     case 'drEEMdataset'
         [varargout{1},varargout{2}]=drEEMtoolbox.processHJYdata(dataout);

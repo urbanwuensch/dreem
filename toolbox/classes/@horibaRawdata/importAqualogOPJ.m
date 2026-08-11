@@ -19,18 +19,22 @@ end
 
 switch platform
     case 'mac'
-        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.3.0/aqualog2nc-macos-arm64';
+        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.4.0/aqualog2nc-macos-arm64';
         toolname='aqualog2nc-macos-arm64';
     case 'windows'
-        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.3.0/aqualog2nc-windows-x64.exe';
+        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.4.0/aqualog2nc-windows-x64.exe';
         toolname='aqualog2nc-windows-x64.exe';
     case 'linux'
-        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.3.0/aqualog2nc-linux-x64';
+        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.4.0/aqualog2nc-linux-x64';
         toolname='aqualog2nc-linux-x64';
 end
 
 toolpath=char(fullfile(drEEMtoolbox.rootfolder,'external resources',toolname));
 ncfile=char(fullfile(folder,'NetCDF_rawdata.nc'));
+
+if isfile(ncfile)
+    delete(ncfile)
+end
 
 if not(isfile(toolpath))
     disp('Downloading OS-specific version of aqualog2nc...')
@@ -42,7 +46,7 @@ end
 
 
 switch platform
-    case 'mac'
+    case {'mac','linux'}
         if system(['chmod +x',' "',toolpath,'"'])==0
             disp(['Good news: ',toolname,' is working fine and seems executable..'])
         else
@@ -61,9 +65,6 @@ switch platform
         else
             error(['Something went wrong during the use of ',toolname,'. Email author for help: urban.wunsch@chalmers.se'])
         end
-    case 'linux'
-        error('Linux not yet suported. Get in touch... urban.wunsch@chalmers.se')
-
 end
 
 if isfile(ncfile)

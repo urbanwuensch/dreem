@@ -36,6 +36,7 @@ classdef horibaRawdata
         opjfile
         nSample
         history (:,1) drEEMhistory
+        date_measured
     end
     methods (Static,Access=public,Hidden=true)
         varargout = importNetCDF(file,version)
