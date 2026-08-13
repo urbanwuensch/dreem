@@ -15,10 +15,8 @@ end
 
 if strcmp(Xin,'options')
     opt=defaultopts;
-    if strcmp(Xin,'options')
-        DS=opt;
-        return
-    end
+    DS=opt;
+    return
 end
 
 DS=drEEMdataset.create;
@@ -93,8 +91,8 @@ end
 for j=1:DS.nSample
     
     % Fluorescence
-    S1_s=squeeze(Xin.S1Sample(j,:,:));
-    S1_b=squeeze(Xin.S1Blank(j,:,:));
+    S1_s=reshape(Xin.S1Sample(j,:,:),DS.nEm,DS.nEx);
+    S1_b=reshape(Xin.S1Blank(j,:,:),DS.nEm,DS.nEx);
     if opt.nanoversat
         nanmat=(S1_s>65000)|(S1_b>65000);
     else
@@ -104,21 +102,32 @@ for j=1:DS.nSample
     S1dark_s=repmat(Xin.S1DarkSample(j,:),DS.nEx,1)';
     S1dark_b=repmat(Xin.S1DarkBlank(j,:),DS.nEx,1)';
     
-    S1c_s=(S1_s-S1dark_s).*repmat(Xin.MCorrect(j,:)',1,numel(Xin.Ex));
-    S1c_b=(S1_b-S1dark_b).*repmat(Xin.MCorrect(j,:)',1,numel(Xin.Ex));
+    % If else for old: COM-interface generated files vs. NetCDF style.
+    if height(Xin.MCorrect)==Xin.nSample&&width(Xin.MCorrect)==numel(Xin.Em)
+        S1c_s=(S1_s-S1dark_s).*repmat(Xin.MCorrect(j,:)',1,numel(Xin.Ex));
+        S1c_b=(S1_b-S1dark_b).*repmat(Xin.MCorrect(j,:)',1,numel(Xin.Ex));
+    elseif height(Xin.MCorrect)==numel(Xin.Em)&&width(Xin.MCorrect)==1
+        S1c_s=(S1_s-S1dark_s).*repmat(Xin.MCorrect,1,numel(Xin.Ex));
+        S1c_b=(S1_b-S1dark_b).*repmat(Xin.MCorrect,1,numel(Xin.Ex));
+
+    end
     
     R1_s=Xin.R1Sample(j,:);
     R1_b=Xin.R1Blank(j,:);
     
     R1dark_s=Xin.R1DarkSample(j);
     R1dark_b=Xin.R1DarkBlank(j);
-
-    R1c_s=(R1_s-R1dark_s).*Xin.XCorrect(j,:);
-    R1c_b=(R1_b-R1dark_b).*Xin.XCorrect(j,:);
+    
+    if height(Xin.XCorrect)==Xin.nSample&&width(Xin.XCorrect)==numel(Xin.Ex)
+        R1c_s=(R1_s-R1dark_s).*Xin.XCorrect(j,:);
+        R1c_b=(R1_b-R1dark_b).*Xin.XCorrect(j,:);
+    elseif height(Xin.XCorrect)==numel(Xin.Ex)&&width(Xin.XCorrect)==1
+        R1c_s=(R1_s-R1dark_s).*Xin.XCorrect';
+        R1c_b=(R1_b-R1dark_b).*Xin.XCorrect';
+    end
     
     S1c_R1c_s=S1c_s./repmat(R1c_s,numel(Xin.Em),1);
     S1c_R1c_b=S1c_b./repmat(R1c_b,numel(Xin.Em),1);
-        
     Xblank(j,:,:)=S1c_R1c_b;
     
 
@@ -134,18 +143,27 @@ for j=1:DS.nSample
     I1dark_s=Xin.AbsI1darkSample(j,1);
     I1dark_b=Xin.AbsI1darkBlank(j,1);
     I1_b=Xin.AbsI1Blank(j,:);
-    
-    I1c_s=(I1_s-I1dark_s).*Xin.AbsXCorrect(j,:);
-    I1c_b=(I1_b-I1dark_b).*Xin.AbsXCorrect(j,:);
+    if height(Xin.XCorrect)==Xin.nSample&&width(Xin.XCorrect)==numel(Xin.Ex)
+        I1c_s=(I1_s-I1dark_s).*Xin.AbsXCorrect(j,:);
+        I1c_b=(I1_b-I1dark_b).*Xin.AbsXCorrect(j,:);
+    elseif height(Xin.XCorrect)==numel(Xin.Ex)&&width(Xin.XCorrect)==1
+        I1c_s=(I1_s-I1dark_s).*Xin.AbsXCorrect';
+        I1c_b=(I1_b-I1dark_b).*Xin.AbsXCorrect';
+
+    end
     
     R1_s=Xin.AbsR1Sample(j,:);
     R1_b=Xin.AbsR1Blank(j,:);
     
     R1dark_s=Xin.AbsR1darkSample(j);
     R1dark_b=Xin.AbsR1darkBlank(j);
-
-    R1c_s=(R1_s-R1dark_s).*Xin.AbsXCorrect(j,:);
-    R1c_b=(R1_b-R1dark_b).*Xin.AbsXCorrect(j,:);
+    if height(Xin.XCorrect)==Xin.nSample&&width(Xin.XCorrect)==numel(Xin.Ex)
+        R1c_s=(R1_s-R1dark_s).*Xin.AbsXCorrect(j,:);
+        R1c_b=(R1_b-R1dark_b).*Xin.AbsXCorrect(j,:);
+    elseif height(Xin.XCorrect)==numel(Xin.Ex)&&width(Xin.XCorrect)==1
+        R1c_s=(R1_s-R1dark_s).*Xin.AbsXCorrect';
+        R1c_b=(R1_b-R1dark_b).*Xin.AbsXCorrect';
+    end
 
     I1c_R1c_s=I1c_s./R1c_s;
     I1c_R1c_b=I1c_b./R1c_b;
@@ -240,6 +258,17 @@ DSb.abs=[];
 DSb.absWave=[];
 DSb.X=Xblank;
 
+% The edge-case fix
+if DS.nEx==1
+    warning('You only have one Excitation measurement. MATLAB removes the trailing singleton dimension. We have no choice but to store your data in the suppSpectra property instead and remove the X (EEM) data.')
+    DS.suppSpectra=DS.X;
+    DS.suppSpectraAxis=DS.Em;
+    DS.X=[];
+    DSb.suppSpectra=DSb.X;
+    DSb.suppSpectraAxis=DSb.Em;
+    DSb.X=[];
+end
+
 idx=numel(DS.history)+1;
 DS.history(idx,1)=...
     drEEMhistory.addEntry(mfilename,'created dataset',[],DS);
@@ -274,11 +303,6 @@ function opt = defaultopts
 opt.visualize=false;
 opt.doublebinning=false;
 opt.nanoversat=true;
-disp(' ')
-warning(sprintf(['No options were provided, the defaults were assumed.\n'...
-    '     Please inspect the result and see if adjustments are necessary.\n'...
-    '     Options can be obtained by calling ''processHJYdata(''options'')'''])) %#ok<SPWRN>
-disp(' ')
 end
 
 

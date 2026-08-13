@@ -38,9 +38,11 @@ classdef horibaRawdata
         history (:,1) drEEMhistory
         date_measured
     end
+    % These are specific import functions. They need not be visible.
     methods (Static,Access=public,Hidden=true)
         varargout = importNetCDF(file,version)
         varargout = importAqualogOPJ(folder,version)
+        [DS,DSb] = processHJYdata(Xin,opt)
     end
     methods (Access=public,Static)
         

@@ -1,61 +1,92 @@
-function varargout = importNetCDF(file,version)
+function dataout = importNetCDF(file,bucket)
 %IMPORTNETCDF Summary of this function goes here
 %   Detailed explanation goes here
 arguments (Input)
     file (1,:) {mustBeText(file),mustBeFile(file)}
-    version (1,:) {mustBeMember(version,["drEEMdataset","horibaRawdata"])} = "drEEMdataset"
+    bucket (1,1) {mustBeNumeric,mustBePositive} = 1
     
 end
-if matches(version,'drEEMdataset')
-    nargoutchk(1,2)
-elseif matches(version,'horibaRawdata')
-    nargoutchk(1,1)
-end
+
 
 info = ncinfo(file);
-groups = {info.Groups(:).Name}';
+if not(isempty(info.Groups))&&bucket==1
+    warning('off','backtrace')
+    warning('Multiple measurement types are stored in the NetCDF file, due to differences in measurement settings. By default, the first group with the most samples gets exported. If another group should be imported, the option "bucket" must be changed')
+    warning('on','backtrace')
+    groups = {info.Groups(:).Name}';
+    selectedGroup=groups{bucket};
+    type='group';
+elseif isempty(info.Groups)
+    disp('The sample record consist of only one, entirely compatible measurement set.')
+    type='root';
+elseif not(isempty(info.Groups))&&bucket~=1
+    disp(['Multiple measurement types are stored in the NetCDF file, due to differences in measurement settings. measurement_type_',num2str(bucket),' was imported (not the default)'])
+    groups = {info.Groups(:).Name}';
+    selectedGroup=groups{bucket};
+    type='group';
+end
+
+% Extract key variables (needed for pre-allocation)
+ncid = netcdf.open(file,'NOWRITE');
+switch type
+    case 'group'
+        ncid = netcdf.open(file,'NOWRITE');
+        grpid = netcdf.inqNcid(ncid,selectedGroup);
+    case 'root'
+        grpid = ncid;
+end
+
+varid = netcdf.inqVarID(grpid,'data_identifier');
+value = netcdf.getVar(grpid,varid);
+nSample=height(value);
+varid = netcdf.inqVarID(grpid,'excitation');
+value = netcdf.getVar(grpid,varid);
+excitation=value;
+varid = netcdf.inqVarID(grpid,'emission');
+value = netcdf.getVar(grpid,varid);
+emission=value;
+netcdf.close(ncid);
 
 
-varmap={'AbsI1darkSample','AbsI1dark_Sample','att';...
+
+varmap={'AbsI1darkSample','AbsI1dark_Sample','var';...
     'AbsI1Sample','AbsI1_Sample','var';...
-    'AbsI1darkBlank','AbsI1dark_Blank','att';...
+    'AbsI1darkBlank','AbsI1dark_Blank','var';...
     'AbsI1Blank','AbsI1_Blank','var';...
     'S1Blank','S1Blank','var';...
     'S1DarkBlank','S1Dark_Blank','var';...
     'MCorrect','MCorrect','var';...
     'R1Blank','R1_Blank','var';...
     'AbsR1Blank','R1_Blank','var';...
-    'R1DarkBlank','R1dark_Blank','att';...
-    'AbsR1darkBlank','R1dark_Blank','att';...
+    'R1DarkBlank','R1dark_Blank','var';...
+    'AbsR1darkBlank','R1dark_Blank','var';...
     'XCorrect','XCorrect','var';...
     'AbsXCorrect','XCorrect','var';...
     'S1Sample','S1Sample','var';...
     'S1DarkSample','S1Dark_Sample','var';...
     'R1Sample','R1_Sample','var';...
     'AbsR1Sample','R1_Sample','var';...
-    'R1DarkSample','R1dark_Sample','att';...
-    'AbsR1darkSample','R1dark_Sample','att';...
-    'filelist','workbook_name','att';...
-    'opjfile','source_opj_file','att';...
-    'Em_parkpos','park_wavelength_nm','att';...
-    'Em_PixelBin','ccd_xbin','att';...
-    'CCD_gain','ccd_gain_factor','att';...
-    'date_measured','creation_time','att'};
+    'R1DarkSample','R1dark_Sample','var';...
+    'AbsR1darkSample','R1dark_Sample','var';...
+    'filelist','data_identifier','var';...
+    'opjfile','source_opj_file','var';...
+    'Em_parkpos','park_wavelength_nm','var';...
+    'Em_PixelBin','ccd_xbin','var';...
+    'CCD_gain','ccd_gain_factor','var';...
+    'date_measured','creation_time','var';...
+    'integrationtime','integration_time','var'};
 
-disp('NetCDF Aqualog file conversion to horibaRawdata (drEEM-specific rawdata format)')
-disp(' ')
-disp(['   Found ',num2str(numel(groups)),' samples in the NetCDF file...'])
-disp(' ')
-disp('    Converting to a drEEM-specific format...')
 dataout=horibaRawdata;
 
-dataout.nSample=numel(groups);
-dataout.Ex=ncread(file,[groups{1},'/excitation']);
-dataout.Abs_wave=ncread(file,[groups{1},'/excitation']);
+dataout.nSample=nSample;
+dataout.Ex=excitation;
+dataout.Abs_wave=excitation;
 
 nEx=numel(dataout.Ex);
-dataout.Em=ncread(file,[groups{1},'/emission']);
+dataout.Em=emission;
 nEm=numel(dataout.Em);
+
+clearvars excitation emission nSample
 
 % Initialize the variables
 dataout.AbsI1darkSample=nan(dataout.nSample,1);
@@ -80,78 +111,74 @@ dataout.AbsR1darkSample=dataout.R1DarkSample;
 dataout.filelist=cell(dataout.nSample,1);
 dataout.opjfile=cell(dataout.nSample,1);
 dataout.date_measured=cell(dataout.nSample,1);
+
 ncid = netcdf.open(file,'NOWRITE');
 
-for j=1:dataout.nSample
-    sample=groups{j};
-    grpid = netcdf.inqNcid(ncid,sample);
-    varid = netcdf.inqVarID(grpid,'excitation');
-    value = netcdf.getVar(grpid,varid);
-    if not(isequal(value,dataout.Ex))
-        error('There was a mismatch in Excitation. Cannot import...')
-    end
-
-    varid = netcdf.inqVarID(grpid,'emission');
-    value = netcdf.getVar(grpid,varid);
-    if not(isequal(value,dataout.Em))
-        error('There was a mismatch in Emission. Cannot import...')
-    end
-end
-
-disp('    Success... All samples have identical emission and excitation axes')
-
-for j=1:dataout.nSample
-    sample=groups{j};
-    grpid = netcdf.inqNcid(ncid,sample);
-    %disp(['       ',sample])
     
-    for k=1:height(varmap)
-        drEEM_field=varmap{k,1};
-        nc_field=varmap{k,2};
-        field_type=varmap{k,3};
-        switch field_type
-            case 'att'
-                
-                grpid = netcdf.inqNcid(ncid,sample);
-                value = netcdf.getAtt(grpid,netcdf.getConstant('NC_GLOBAL'),nc_field);
-
-                if isnumeric(value)
-                    dataout.(drEEM_field)(j,1)=value;
-                else
-                    dataout.(drEEM_field){j,1}=value;
-                end
-            case 'var'
-                varid = netcdf.inqVarID(grpid,nc_field);
-                value = netcdf.getVar(grpid,varid);
-                if size(value,2)==1
-                    try
-                        dataout.(drEEM_field)(j,:)=value';
-                    catch
-                        asd
-                    end
-                else
-                    dataout.(drEEM_field)(j,:,:)=value;
-                end
-        end
+for k=1:height(varmap)
+    drEEM_field=varmap{k,1};
+    nc_field=varmap{k,2};
+    field_type=varmap{k,3};
+    switch field_type
+        case 'att'
+            % Entirely unused now.
+        case 'var'
+            varid = netcdf.inqVarID(grpid,nc_field);
+            try
+                value = getVarFull(grpid, varid,[dataout.nSample,numel(dataout.Em),numel(dataout.Ex)]);
+            catch
+                error(['Sample ',sample,' variable ',nc_field,' could not be retreived. This is a terminal failure.'])
+            end
+            if isnumeric(value)
+                dataout.(drEEM_field)=value;
+            elseif isstring(value)
+                dataout.(drEEM_field)=cellstr(value);
+            end
     end
-
-
-
-
-
 end
-
 netcdf.close(ncid);
 
-disp(['   Success. Imported ',num2str(numel(groups)),' samples'])
+disp(['Imported ',num2str(dataout.nSample),' samples from NetCDF file ',file])
 
 
-switch version
-    case 'horibaRawdata'
-        idx=1;
-        dataout.history(idx,1)=...
-            drEEMhistory.addEntry(mfilename,'created horibaRawdata dataset from opj/ogw files with NetCDF intermediate',[],drEEMdataset);
-        varargout{1} = dataout;
-    case 'drEEMdataset'
-        [varargout{1},varargout{2}]=drEEMtoolbox.processHJYdata(dataout);
+idx=1;
+dataout.history(idx,1)=...
+    drEEMhistory.addEntry(mfilename,'created horibaRawdata dataset from opj/ogw files with NetCDF intermediate',[],drEEMdataset);
+end
+
+function value = getVarFull(grpid, varid, dims)
+% value = getVarFull(grpid, varid, [nSample, em, ex])
+%
+% Reads a variable via netcdf.getVar and restores its full shape using
+% the caller-supplied dimension counts (read once from the coordinate
+% variables data_identifier/emission/excitation) instead of introspecting
+% dimids order - sidesteps the getVar/inqVar reversal question entirely.
+
+nSample = dims(1);
+em      = dims(2);
+ex      = dims(3);
+
+value = netcdf.getVar(grpid, varid);
+n = numel(value);
+
+if n == nSample * em * ex
+    value = reshape(value, [nSample, em, ex]);
+elseif n == nSample * ex
+    value = reshape(value, [nSample, ex]);
+elseif n == nSample * em
+    value = reshape(value, [nSample, em]);
+elseif n == nSample
+    % already a plain per-sample vector/string array - nothing to reshape
+elseif n == ex
+    % excitation-only, not per-sample (XCorrect, or the excitation
+    % coordinate variable itself) - already 1D, nothing to reshape
+elseif n == em
+    % emission-only, not per-sample (MCorrect, or the emission
+    % coordinate variable itself) - already 1D, nothing to reshape
+else
+    error('getVarFull:unexpectedSize', ...
+        'Variable element count (%d) does not match any expected shape for nSample=%d, em=%d, ex=%d.', ...
+        n, nSample, em, ex);
+end
+
 end

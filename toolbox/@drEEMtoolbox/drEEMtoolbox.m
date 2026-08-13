@@ -20,18 +20,24 @@ classdef drEEMtoolbox < handle
         options=drEEMtoolbox.defaultOptions;
     end
 
-    % These are not meant for the general public, Origin Pro is required.
+    % These are only meant to keep backward-compatibility of old scripts.
     methods (Hidden = true,Static = true)
-        
-        dataout = sampleQimport(workingpath,data)
-        [DS,DSb] = processHJYdata(Xin,opt)
+        function dataout = sampleQimport(workingpath,~)
+            dataout=horibaRawdata.importAqualogOPJ(workingpath,'horibaRawdata');
+        end
+        function [DS,DSb] = processHJYdata(Xin,opt)
+            [DS,DSb] = horibaRawdata.processHJYdata(Xin,opt);
+        end
 
-        function dataout = aqualogimport(folder)
+        function ds=aqualogimport(folder,options)
             arguments
                 folder (1,:) {mustBeFolder(folder)} = pwd;
+                options.bucket (1,:) {mustBeNumeric} = 1;
             end
-            dataout=horibaRawdata.importAqualogOPJ(folder,'horibaRawdata');
+            ds=horibaRawdata.importAqualogOPJ(folder,'horibaRawdata',options.bucket);
         end
+
+        
     end
 
 
@@ -166,8 +172,10 @@ classdef drEEMtoolbox < handle
 
         data = importeems(filePattern,options)
         data = importabsorbance(filePattern,options)
+        varargout = importaqualog(folder,options)
         dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
-        dataout=upgradedataset(data,atypicalFieldnames)
+        dataout = upgradedataset(data,atypicalFieldnames)
+        importwizard
 
         % Merging function
         data = mergedatasets(varargin)
@@ -223,19 +231,14 @@ classdef drEEMtoolbox < handle
         exportresults(data,filename,f,name_value)
         %fhandle = reportresidualanalysis(data,ftarget,mdfield)
         
-        % Data import (archives)
-        dataout = importziparchive(filename)
 
         % Visualization (incl. app workarounds)
-        % import functions
-        importwizard
         viewspectralvariance(data)
         vieweems(data) % mlapp with m-file
         viewmodels(data,startTab,f) % mlapp with m-file
         viewdmr(data,f) % mlapp with m-file
         viewcompcorr(data) % mlapp with m-file
         viewhistory(data) % mlapp with m-file
-        %explorevariability(data) % not shipping yet.
         viewscatter(data)
         viewabsorbance(data)
         [summary,M]  =  viewopenfluormatches(filename)
