@@ -297,6 +297,8 @@ for j=1:numel(metadata.Properties.VariableNames)
                     mdconv=md;
                 case 'numeric'
                     mdconv=md;
+                case 'int32'
+                    mdconv=double(md);
                 otherwise
                     error('Metadata type: cell, subtype not accounted for.')
 
@@ -311,6 +313,8 @@ for j=1:numel(metadata.Properties.VariableNames)
             mdconv=md;
         case 'categorical'
             mdconv=md;
+        case 'int32'
+            mdconv=double(md);
         otherwise
             error('Metadata type not accounted for.')
     end
