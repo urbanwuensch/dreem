@@ -397,26 +397,24 @@ details:open > summary {
 
 <p>This function scans the current working directory (<code>pwd</code>) for .opj and / or .ogw files and uses aqualog2nc (C++ software) to grab all rawdata to reprocess into absorbance spectra and fluorescence EEMs.</p>
 
-<p>If the C++ tool detects incompatible settings, it will flag this and by default import the group with the most samples. If you wish to change this, use the &quot;bucket&quot; option.</p>
+<p>If the C++ tool detects incompatible settings, <code>importaqualog</code> will import the group with the most samples by default. If you wish to change this, use the &quot;bucket&quot; option.</p>
 
-<p>During the import, a ACDD/CF-compliant NetCDF file gets generated. This is an excellent archive for your data as it is about 10x smaller than your OPJ/OGW files.</p>
+<p>During the import, an ACDD/CF-compliant NetCDF file gets generated. This is an excellent archive for your data as it is about 10x smaller than your OPJ/OGW files.</p>
 
 <p><details open>
 <summary><b>
-<code>dataout = importaqualog(folder)</code> - standard options</b>
+<code>[samples,blanks] = importaqualog(folder)</code> - standard options</b>
 </summary>
 <a name="syntax1"></a><br>
-returns two drEEMdataset opjects (samples, blanks) that contains fluorescence EEMs and their associated information. Samples.metadata contains date/time of measurement, integration time, and other useful extracted information.</p>
+returns two drEEMdataset objects (samples, blanks) that contains fluorescence EEMs and their associated information. Samples.metadata contains date/time of measurement, integration time, and other useful extracted information.</p>
 
 <p>The drEEMstatus is auto-populated since the import is aware of the processing status and instrument properties.</p>
 
 <p></details></p>
 
-<p></details></p>
-
 <p><details open>
 <summary><b>
-<code>dataout = importaqualog([ ___ ], Name,Value)</code> - custom options</b>
+<code>[samples,blanks] = importaqualog([ ___ ], Name,Value)</code> - custom options</b>
 </summary>
 <a name="syntax2"></a></p>
 
@@ -449,12 +447,12 @@ returns two drEEMdataset opjects (samples, blanks) that contains fluorescence EE
 
 <h2 id="toc_5">Name-Value arguments</h2>
 
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>folder</code> in this case, but the order of the pairs does not matter. 
 <a name="NameValue"></a></p>
 
 <p><details open>
     <summary><b><code>bucket</code>- specify which group (&quot;bucket&quot;) to import from</b></summary>
-    <i>numeric | logical</i></p>
+    <i>numeric</i></p>
 
 <p>In case the opj/ogw files contain absorbance+fluorescence measurements with incompatible settings (e.g. different excitation wavelengths), the C++ converter will create groups within the NetCDF file. Here, you specify the numeric group. The larger the number, the fewer samples there will be (decending ordering).</p>
 
@@ -466,7 +464,7 @@ returns two drEEMdataset opjects (samples, blanks) that contains fluorescence EE
     <summary><b><code>samples</code> - contains EEMs </b></summary>
     <i>drEEMdataset</i></p>
 
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. </p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>. </p>
 
 <p>The fluorescence data is stored using the properties <code>.X</code>, <code>.Ex</code>, <code>.Em</code>, <code>.nEx</code>, <code>.nEm</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
 
@@ -476,7 +474,7 @@ returns two drEEMdataset opjects (samples, blanks) that contains fluorescence EE
     <summary><b><code>blanks</code> - contains EEMs of pure water </b></summary>
     <i>drEEMdataset</i></p>
 
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. </p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>. </p>
 
 <p>The fluorescence data is stored using the properties <code>.X</code>, <code>.Ex</code>, <code>.Em</code>, <code>.nEx</code>, <code>.nEm</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
 
