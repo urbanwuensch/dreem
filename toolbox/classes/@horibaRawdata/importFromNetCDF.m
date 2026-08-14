@@ -15,20 +15,20 @@ if not(isempty(info.Groups))&&bucket==1
     warning('on','backtrace')
     groups = {info.Groups(:).Name}';
     selectedGroup=groups{bucket};
-    type='group';
+    importtype='group';
 elseif isempty(info.Groups)
     disp('The sample record consist of only one, entirely compatible measurement set.')
-    type='root';
+    importtype='root';
 elseif not(isempty(info.Groups))&&bucket~=1
     disp(['Multiple measurement types are stored in the NetCDF file, due to differences in measurement settings. measurement_type_',num2str(bucket),' was imported (not the default)'])
     groups = {info.Groups(:).Name}';
     selectedGroup=groups{bucket};
-    type='group';
+    importtype='group';
 end
 
 % Extract key variables (needed for pre-allocation)
 ncid = netcdf.open(file,'NOWRITE');
-switch type
+switch importtype
     case 'group'
         ncid = netcdf.open(file,'NOWRITE');
         grpid = netcdf.inqNcid(ncid,selectedGroup);
@@ -127,7 +127,7 @@ for k=1:height(varmap)
             try
                 value = getVarFull(grpid, varid,[dataout.nSample,numel(dataout.Em),numel(dataout.Ex)]);
             catch
-                error(['Sample ',sample,' variable ',nc_field,' could not be retreived. This is a terminal failure.'])
+                error(['variable ',nc_field,' could not be retreived. This is a terminal failure.'])
             end
             if isnumeric(value)
                 dataout.(drEEM_field)=value;
