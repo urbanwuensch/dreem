@@ -140,10 +140,10 @@ netcdf.close(ncid);
 
 disp(['Imported ',num2str(dataout.nSample),' samples from NetCDF file ',file])
 importhistory=char(ncreadatt("NetCDF_rawdata.nc",'/','history'));
-
+versioncpp=char(ncreadatt("NetCDF_rawdata.nc",'/','version_aqualog2nc'));
 idx=1;
 dataout.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,[importhistory,newline,'finished drEEM-import via aqualog2nc C++ software & NetCDF intermediate (still on disk)'],[],drEEMdataset);
+    drEEMhistory.addEntry(mfilename,[importhistory,newline,'finished drEEM-import via aqualog2nc C++ software (',versioncpp,') & NetCDF intermediate (still on disk)'],[],drEEMdataset);
 end
 
 function value = getVarFull(grpid, varid, dims)
