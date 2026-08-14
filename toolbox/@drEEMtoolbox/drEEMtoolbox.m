@@ -26,6 +26,9 @@ classdef drEEMtoolbox < handle
             dataout=horibaRawdata.importFromOrigin(workingpath,'horibaRawdata');
         end
         function [DS,DSb] = processHJYdata(Xin,opt)
+            if not(exist('opt','var'))
+                opt=horibaRawdata.convertTodrEEMdataset('options');
+            end
             [DS,DSb] = horibaRawdata.convertTodrEEMdataset(Xin,opt);
         end
 
