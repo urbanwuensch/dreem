@@ -9,7 +9,7 @@ disp('<strong> starting to pack...</strong>')
 % Never change this unless you want this to be treated as a seperate toolbox
 uuid="186c884d-4f97-4318-9f12-cbf90a332379";
 % Change these for the release!!!
-version='2.26.07';
+version='2.26.08';
 OutputFile=string(['/Users/wuensch/git repros/dreem-2/release/drEEM-',version,'.mltbx']);
 if isfile(OutputFile),delete(OutputFile),disp('deleted existing mltbx file'),end
 releaseMax=matlabRelease.Release;

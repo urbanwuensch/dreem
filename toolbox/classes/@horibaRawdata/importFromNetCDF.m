@@ -1,4 +1,4 @@
-function dataout = importNetCDF(file,bucket)
+function dataout = importFromNetCDF(file,bucket)
 %IMPORTNETCDF Summary of this function goes here
 %   Detailed explanation goes here
 arguments (Input)
@@ -139,11 +139,11 @@ end
 netcdf.close(ncid);
 
 disp(['Imported ',num2str(dataout.nSample),' samples from NetCDF file ',file])
-
+importhistory=char(ncreadatt("NetCDF_rawdata.nc",'/','history'));
 
 idx=1;
 dataout.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,'created horibaRawdata dataset from opj/ogw files with NetCDF intermediate',[],drEEMdataset);
+    drEEMhistory.addEntry(mfilename,[importhistory,newline,'finished drEEM-import via aqualog2nc C++ software & NetCDF intermediate (still on disk)'],[],drEEMdataset);
 end
 
 function value = getVarFull(grpid, varid, dims)

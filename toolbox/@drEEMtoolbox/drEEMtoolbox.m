@@ -23,10 +23,10 @@ classdef drEEMtoolbox < handle
     % These are only meant to keep backward-compatibility of old scripts.
     methods (Hidden = true,Static = true)
         function dataout = sampleQimport(workingpath,~)
-            dataout=horibaRawdata.importAqualogOPJ(workingpath,'horibaRawdata');
+            dataout=horibaRawdata.importFromOrigin(workingpath,'horibaRawdata');
         end
         function [DS,DSb] = processHJYdata(Xin,opt)
-            [DS,DSb] = horibaRawdata.processHJYdata(Xin,opt);
+            [DS,DSb] = horibaRawdata.convertTodrEEMdataset(Xin,opt);
         end
 
         function ds=aqualogimport(folder,options)
@@ -34,7 +34,7 @@ classdef drEEMtoolbox < handle
                 folder (1,:) {mustBeFolder(folder)} = pwd;
                 options.bucket (1,:) {mustBeNumeric} = 1;
             end
-            ds=horibaRawdata.importAqualogOPJ(folder,'horibaRawdata',options.bucket);
+            ds=horibaRawdata.importFromOrigin(folder,'horibaRawdata',options.bucket);
         end
 
         

@@ -40,9 +40,9 @@ classdef horibaRawdata
     end
     % These are specific import functions. They need not be visible.
     methods (Static,Access=public,Hidden=true)
-        varargout = importNetCDF(file,version)
-        varargout = importAqualogOPJ(folder,version)
-        [DS,DSb] = processHJYdata(Xin,opt)
+        varargout = importFromNetCDF(file,version)
+        varargout = importFromOrigin(folder,version)
+        [DS,DSb] = convertTodrEEMdataset(Xin,opt)
     end
     methods (Access=public,Static)
         

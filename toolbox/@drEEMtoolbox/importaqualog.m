@@ -31,12 +31,12 @@ arguments
     options.type (1,:) {mustBeMember(options.type,["rawdata","processed"])} = "processed";
 
 end
-ds=horibaRawdata.importAqualogOPJ(folder,'horibaRawdata',options.bucket);
+ds=horibaRawdata.importFromOrigin(folder,'horibaRawdata',options.bucket);
 if matches(options.type,"rawdata")
     varargout{1}=ds;
     disp("use drEEMtoolbox.processHYJdata() to process the dataset. Your output is unprocessed rawdata")
 else
-    opt=horibaRawdata.processHJYdata('options');
-    [varargout{1},varargout{2}]=horibaRawdata.processHJYdata(ds,opt);
+    opt=horibaRawdata.convertTodrEEMdataset('options');
+    [varargout{1},varargout{2}]=horibaRawdata.convertTodrEEMdataset(ds,opt);
 end
 end

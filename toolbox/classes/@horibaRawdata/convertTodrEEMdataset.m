@@ -1,4 +1,4 @@
-function [DS,DSb] = processHJYdata(Xin,opt)
+function [DS,DSb] = convertTodrEEMdataset(Xin,opt)
 % This function is part of undocumented drEEM and not intended for general use
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
@@ -28,7 +28,7 @@ DS.nSample=size(Xin.S1Blank,1);
 DS.i=(1:DS.nSample)';
 DS.X=nan(DS.nSample,DS.nEm,DS.nEx);
 DS.absWave=Xin.Abs_wave;
-DS.history=[Xin.history;DS.history];
+DS.history=Xin.history;
 
 flds=fieldnames(Xin);
 flds(contains(flds, ...
@@ -271,12 +271,12 @@ end
 
 idx=numel(DS.history)+1;
 DS.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,'created dataset',[],DS);
+    drEEMhistory.addEntry(mfilename,'Manually re-processed rawdata to fully corrected EEMs (identical to Aqualog software)',[],DS);
 
 
 idx=numel(DS.history)+1;
 DSb.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,'created dataset',[],DSb);
+    drEEMhistory.addEntry(mfilename,'Manually re-processed rawdata to fully corrected EEMs (identical to Aqualog software)',[],DSb);
 
 stat=drEEMstatus;
 stat=drEEMstatus.change(stat,"spectralCorrection","applied by instrument software");

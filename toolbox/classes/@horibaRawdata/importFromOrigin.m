@@ -1,4 +1,4 @@
-function [varargout] = importAqualogOPJ(folder,version,bucket)
+function [varargout] = importFromOrigin(folder,version,bucket)
 %IMPORTAQUALOGOPJ Summary of this function goes here
 %   Detailed explanation goes here
 arguments (Input)
@@ -18,17 +18,17 @@ elseif isunix&&not(ismac)
     platform='linux';
 end
 
+urlbase='https://zenodo.org/records/21928518/files/';
+
 switch platform
     case 'mac'
-        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.8.0/aqualog2nc-macos-arm64';
         toolname='aqualog2nc-macos-arm64';
     case 'windows'
-        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.8.0/aqualog2nc-windows-x64.exe';
         toolname='aqualog2nc-windows-x64.exe';
     case 'linux'
-        url='https://github.com/urbanwuensch/aqualog2nc/releases/download/v0.8.0/aqualog2nc-linux-x64';
         toolname='aqualog2nc-linux-x64';
 end
+url=[urlbase,toolname,'?download=1'];
 
 toolpath=char(fullfile(drEEMtoolbox.rootfolder,'external resources',toolname));
 ncfile=char(fullfile(folder,'NetCDF_rawdata.nc'));
@@ -69,9 +69,9 @@ switch platform
 end
 
 if isfile(ncfile)
-    rawdata=horibaRawdata.importNetCDF(ncfile,bucket);
+    rawdata=horibaRawdata.importFromNetCDF(ncfile,bucket);
     if matches(version,'drEEMdataset')
-        [samples,blanks]=drEEMtoolbox.processHJYdata(rawdata);
+        [samples,blanks]=drEEMtoolbox.importFromNetCDF(rawdata);
         varargout{1}=samples;
         varargout{2}=blanks;
     else
