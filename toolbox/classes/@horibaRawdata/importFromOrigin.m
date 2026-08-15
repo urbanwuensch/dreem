@@ -17,9 +17,10 @@ elseif ispc
 elseif isunix&&not(ismac)
     platform='linux';
 end
-
-urlbase='https://zenodo.org/records/21928518/files/';
-
+% Get the URL of the latest version of the tool from Github.
+urlbase=webread("https://raw.githubusercontent.com/urbanwuensch/aqualog2nc/refs/heads/master/versionlink.txt");
+urlbase=strsplit(urlbase,{';'});
+urlbase=urlbase{1};
 switch platform
     case 'mac'
         toolname='aqualog2nc-macos-arm64';
