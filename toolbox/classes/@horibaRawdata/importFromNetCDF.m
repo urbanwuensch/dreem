@@ -136,11 +136,15 @@ for k=1:height(varmap)
             end
     end
 end
-netcdf.close(ncid);
 
 disp(['Imported ',num2str(dataout.nSample),' samples from NetCDF file ',file])
-importhistory=char(ncreadatt("NetCDF_rawdata.nc",'/','history'));
-versioncpp=char(ncreadatt("NetCDF_rawdata.nc",'/','version_aqualog2nc'));
+value = netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'history');
+importhistory=char(value);
+versioncpp = char(netcdf.getAtt(ncid, netcdf.getConstant('NC_GLOBAL'), 'version_aqualog2nc'));
+
+
+netcdf.close(ncid);
+
 idx=1;
 dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename,[importhistory,newline,'finished drEEM-import via aqualog2nc C++ software (',versioncpp,') & NetCDF intermediate (still on disk)'],[],drEEMdataset);
