@@ -58,14 +58,14 @@ switch platform
         if response==0
             %disp([toolname,' has exported measurements in your OPJ files..'])
         else
-            error(['Something went wrong during the use of ',toolname,'. Email author for help: urban.wunsch@chalmers.se'])
+            error(response)
         end
     case 'windows'
         response=system(['"',toolpath,'" "',folder,'" "',ncfile,'"']);
         if response==0
             %disp([toolname,' has exported measurements in your OPJ files..'])
         else
-            error(['Something went wrong during the use of ',toolname,'. Email author for help: urban.wunsch@chalmers.se'])
+            error(response)
         end
 end
 
