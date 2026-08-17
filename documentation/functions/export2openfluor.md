@@ -31,7 +31,7 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 <summary><b>`f` - PARAFAC model with f components</b></summary>
     <i>numeric</i>
 
-Specify the number of parafac components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.
+Specify the number of PARAFAC components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.
 
 </details>
 

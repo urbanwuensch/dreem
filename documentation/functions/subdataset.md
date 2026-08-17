@@ -49,8 +49,8 @@ You can specify any combination of `outSample`,`outEm`, or `outEx`. If one of th
 `samples = tbx.subdataset(samples,outSample=samples.i==2);`
 
 3. Delete emission ranges
-`samples = tbx.subdataset(samples,outEm=samples.Em<300|samples.Em>700);
-`
+`samples = tbx.subdataset(samples,outEm=samples.Em<300|samples.Em>700);`
+
 4. Delete excitation ranges
 `samples = tbx.subdataset(samples,outEx=samples.Ex<240|samples.Ex>450);`
 
@@ -89,7 +89,7 @@ Example: `outSample=matches(data.filelist,'sample01)'`
     <summary><b>`outEm ` - emission wavelengths to delete</b></summary>
     <i>logical [`1x data.nEm`]</i>
         
-Specifies which samples are to be deleted from the dataset. Functions to use include: `==`, `~`, `<`, `>`, `drEEMtoolbox.isNearest(data.Em,___)`
+Specifies which emission wavelengths are to be deleted from the dataset. Functions to use include: `==`, `~`, `<`, `>`, `drEEMtoolbox.isNearest(data.Em,___)`
 
 </details>
 
@@ -97,7 +97,7 @@ Specifies which samples are to be deleted from the dataset. Functions to use inc
     <summary><b>`outEx ` - excitation to delete</b></summary>
     <i>logical [`1x data.nEx`]</i>
         
-Specifies which samples are to be deleted from the dataset. Functions to use include: `==`, `~`, `<`, `>`, `drEEMtoolbox.isNearest(data.Ex,___)`
+Specifies which excitation wavelengths are to be deleted from the dataset. Functions to use include: `==`, `~`, `<`, `>`, `drEEMtoolbox.isNearest(data.Ex,___)`
 
 </details>
 

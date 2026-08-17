@@ -39,11 +39,11 @@ If models are present in `data` they will be transferred to the `models` field.
 
 * Models loadings should be stored in the `Model1`, `Model2`, `Model3` and `ModelN` fields in the `data`.
 * All other properties are calculated and not transferred.
-* The property `Initialization` is set to `'random'` since previous versions of the toolbox did not officially support other methods
-* `Starts` is set to `NaN`, there is no way to retrieve the information
-* `Convergence` is retrieved from `data`, if it exists, otherwise is set to `NaN`.
-* `Constraints` is retrieved from `data`, if it exists, otherwise is set to `'unknown'`.
-* `Toolbox` is set to `'nway'`. Though PLS_toolbox could have been used, this information was never stored by the older versions of the toolbox.
+* The property `initialization` is set to `'random'` since previous versions of the toolbox did not officially support other methods
+* `starts` is set to `NaN`, there is no way to retrieve the information
+* `convergence` is retrieved from `data`, if it exists, otherwise is set to `NaN`.
+* `constraints` is retrieved from `data`, if it exists, otherwise is set to `'unknown'`.
+* `toolbox` is set to `'nway'`. Though PLS_toolbox could have been used, this information was never stored by the older versions of the toolbox.
 
 </details>
 
@@ -59,6 +59,26 @@ If some of the mandatory information in `data` is stored in fields that differ f
 For example, use `{'EEM','X'}` if the information that the function expects to find as `X` is stored in field `EEM` inside `data`.
 
 </details>
+
+## Examples
+1. Simple upgrade if dataset was constructed as advised in drEEM tutorials (>0.5.x)
+
+ `data = tbx.upgradedataset(Xin);`
+
+2. Upgrade if dataset was constructed with alternative variable name for filelist
+
+ `data = tbx.upgradedataset(Xin,{'samplename';'filelist'});`
+
+3. Upgrade if dataset was constructed with alternative variable name for the old notation Abs_wave
+
+ `data = tbx.upgradedataset(Xin,{'wave';'absWave'});`
+
+4. Upgrade drEEM tutorial dataset from previous version (produces warning due to non-existent absorbance data)
+
+ `load(which('drEEM_tutorial_DS_old.mat'))`
+
+ `samples = tbx.upgradedataset(dreemdata,{'longID','filelist'})`
+
 
 ## Input arguments
 <details>

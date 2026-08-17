@@ -8,7 +8,7 @@ Export the results from a PARAFAC or PCA model to a spreadsheet file. This inclu
 
 ## Description
 
-The `exportresults` function takes a drEEMdataset object, `data`, a `filename`, and a PARAFAC model index, `f`, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indicies, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the `data` and organizes the data into several sheets within the spreadsheet.
+The `exportresults` function takes a drEEMdataset object, `data`, a `filename`, and a PARAFAC model index, `f`, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indices, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the `data` and organizes the data into several sheets within the spreadsheet.
 
 > ***Note:*** The function deletes any existing file with the same name before writing the new data.
 

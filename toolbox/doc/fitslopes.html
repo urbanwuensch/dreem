@@ -389,7 +389,7 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>dataout = fitslopes( ___ , Name,Value)</code></a></p>
+<p><a href="#syntax1"><code>dataout = fitslopes( data , Name,Value)</code></a></p>
 
 <p><a href="#syntax2"><code>fitslopes( ___ )</code></a></p>
 
@@ -404,7 +404,7 @@ details:open > summary {
 <p>When reporting slopes in publications, please refer to the original studies that presented the methodology (see &quot;Fitting methods&quot;)</p>
 
 <blockquote>
-<p><strong><em><code>fitslopes</code> is automatically called in <code>viewabsorbance</code>, <code>export2zip</code>, and <code>exportresults</code> to present CDOM slopes for futher analysis.</em></strong></p>
+<p><strong><em><code>fitslopes</code> is automatically called in <code>viewabsorbance</code>, <code>export2zip</code>, and <code>exportresults</code> to present CDOM slopes for further analysis.</em></strong></p>
 </blockquote>
 
 <p><details open>
@@ -427,7 +427,7 @@ details:open > summary {
 <p><details open>
 <summary><b><code>dataout = fitslopes(data,Name,Value)</code></b>
 </summary>
-<a name="syntax2"></a></p>
+<a name="syntax1"></a></p>
 
 <p>Specifies additional options using one or more name-value pair arguments. For example, you can specify the Wavelength range for long-range exponential slope fitting using <code>LongRange</code> or turn plotting options on or off. <br>
 Example: </p>
@@ -500,10 +500,10 @@ Default is <code>0.95</code>.</p>
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
 
 <p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>fitslopes</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-fitslopes.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-fitslopes.jpg&quot;.</p>
 

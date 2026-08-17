@@ -11,11 +11,11 @@ Fit PCA models to fluorescence data.
 
 ## Description
 
-The `fitpca ` function uses a principal component analysis to the fluorescence EEMs provided in `data`. The models are saved in `data.models`. 
+The `fitpca` function uses a principal component analysis to the fluorescence EEMs provided in `data`. The models are saved in `data.models`. 
 
 Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions). The EEM is thus transformed to a matrix with the dimensions `[data.nSample,data.nEm*data.nEx]`. 
 
-PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so the origial data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.
+PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so the original data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.
 
 Results can be inspected with the `viewmodels` GUI.
 
@@ -26,7 +26,7 @@ Results can be inspected with the `viewmodels` GUI.
 PCA in the way fitted here cannot handle missing data. We therefore:
 
 1. delete all data that is missing in all samples (scatter diagonals)
-2. delete any samples that have missing data remaining (i.e. those that have been zapped with e.g. `zapnoise` or handled with `rmspikes`. However, the function offers an interpolation option (enabled by default) which would prevent sample deletion in this case. This might however introduce interpolation artefacts.
+2. delete any samples that have missing data remaining, i.e. those that have been zapped with e.g. `zapnoise` or handled with `rmspikes`. However, the function offers an interpolation option (enabled by default) which would prevent sample deletion in this case. This might however introduce interpolation artefacts.
 
 Note that since PCA models are nested, there is only one model present with `maxcomp` components (default = 5).
 

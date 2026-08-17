@@ -28,7 +28,7 @@ Possible values are:
 * applied by instrument software
 * applied by toolbox
 
-**Default is `unknown`**, but during [`importeems`](html), the default value is changed to `applied by instrument software`.
+**Default is `unknown`**, but during [`importeems`](importeems.html), the default value is changed to `applied by instrument software`.
 
 </details>
 

@@ -13,7 +13,7 @@ Document an analysis process through comments.
 <summary><b>
 `dataout = addcomment(data,'new comment here')` - add user comment to previous function call</b>
 </summary>
-<a name="s1"></a> adds a comment to a drEEMdataset that describes an observation, justifies a decision, or documents any other kind of process. The comment field will be stored in the document's history and can be retrieved with [`viewhistory`](viewhistory.html) and [`displayhistory`](displayhistory.html) and will be exported with [`exportresults`](exportresults.html) and [`export2zip`](export2zip.html). 
+<a name="s1"></a> adds a comment to a drEEMdataset that describes an observation, justifies a decision, or documents any other kind of process. The comment field will be stored in the document's history and can be retrieved with [`viewhistory`](viewhistory.html) and `displayhistory` and will be exported with [`exportresults`](exportresults.html) and [`export2zip`](export2zip.html). 
 
 By default, the function assumes that a comment is being made on a previous operation, such as noise removal, a PARAFAC fit, or similar. The comment will thus be added to the most recent history entry (no new "line" will be added. This will look as follows:
 
@@ -27,7 +27,7 @@ As you can see above, the comment is added as a "Comments by user" in history en
 
 <details open>
 <summary><b>
-`dataout = addcomments(data,'new comment here','newline')` - add user comment as independent entry</b>
+`dataout = addcomment(data,'new comment here','newline')` - add user comment as independent entry</b>
 </summary>
  <a name="s2"></a> 
 

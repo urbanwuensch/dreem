@@ -66,7 +66,7 @@ If no output is specified, the function will simply give a visual overview over 
 3. Do something, but please don't show that final plot
 `samples = tbx.processabsorbance(samples,...,plot=false);`
 
-## Input arguments ##
+## Input arguments
 <details>
     <summary><b>`data` - contains CDOM spectra to correct</b></summary>
     <i>drEEMdataset</i>
@@ -143,7 +143,7 @@ Default is `true`.
     <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
-If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`processabsorbance`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-processabsorbance.png". Likewise, providing "projectX.jpg" will result in "projectX-processabsorbance.jpg".
 

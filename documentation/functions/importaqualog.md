@@ -74,7 +74,7 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
     <summary><b>`bucket`- specify which group ("bucket") to import from</b></summary>
     <i>numeric</i>
 
-In case the opj/ogw files contain absorbance+fluorescence measurements with incompatible settings (e.g. different excitation wavelengths), the C++ converter will create groups within the NetCDF file. Here, you specify the numeric group. The larger the number, the fewer samples there will be (decending ordering).
+In case the opj/ogw files contain absorbance+fluorescence measurements with incompatible settings (e.g. different excitation wavelengths), the C++ converter will create groups within the NetCDF file. Here, you specify the numeric group. The larger the number, the fewer samples there will be (descending ordering).
 
 </details>
 

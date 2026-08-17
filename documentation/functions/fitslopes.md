@@ -7,7 +7,7 @@ Fit slopes to the CDOM absorbance data in a drEEMdataset object.
 
 ## Syntax
 
-[`dataout = fitslopes( ___ , Name,Value)`](#syntax1)
+[`dataout = fitslopes( data , Name,Value)`](#syntax1)
 
 [`fitslopes( ___ )`](#syntax2)
 
@@ -19,7 +19,7 @@ The function `fitslopes` fits slopes to the CDOM absorbance data in `data`. The 
 
 When reporting slopes in publications, please refer to the original studies that presented the methodology (see "Fitting methods")
 
-> ***`fitslopes` is automatically called in `viewabsorbance`, `export2zip`, and `exportresults` to present CDOM slopes for futher analysis.***
+> ***`fitslopes` is automatically called in `viewabsorbance`, `export2zip`, and `exportresults` to present CDOM slopes for further analysis.***
 
 <details open>
 <summary><b><i>Fitting methods</b></i>
@@ -41,7 +41,7 @@ An entry will be added to the `history` field of the `dataout`, detailing the  o
 <details open>
 <summary><b>`dataout = fitslopes(data,Name,Value)`</b>
 </summary>
-<a name="syntax2"></a>
+<a name="syntax1"></a>
 
 Specifies additional options using one or more name-value pair arguments. For example, you can specify the Wavelength range for long-range exponential slope fitting using `LongRange` or turn plotting options on or off. <br>
 Example: 
@@ -64,7 +64,7 @@ Runs the function in diagnostic mode. In this mode, options are automatically se
 `data = fitslopes(data,  'plot',false, LongRange=[300 700], rsq=0.9)` 
 Fit slopes using a custom wavelength range for the exponential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.
 
-## Input arguments ##
+## Input arguments
 <details>
     <summary><b>`data` - contains CDOM spectra to fit slopes to</b></summary>
     <i>drEEMdataset</i>
@@ -118,10 +118,10 @@ Default is `false`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
-If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`fitslopes`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-fitslopes.png". Likewise, providing "projectX.jpg" will result in "projectX-fitslopes.jpg".
 

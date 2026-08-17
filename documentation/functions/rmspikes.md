@@ -9,9 +9,9 @@ Removes spikes from fluorescence excitation-emission matrix (EEM) data by identi
 ## Syntax
 [`dataout = rmspikes(data)`](#syntax1)
 
-[`dataout = rmspikes( ___ , Name,Value)`](#syntax2)
+[`dataout = rmspikes( data , Name,Value)`](#syntax2)
 
-[`rmspikes( ___ , Name,Value)`](#syntax3)
+[`rmspikes( data , Name,Value)`](#syntax3)
 
 
 
@@ -87,7 +87,7 @@ This example figures show the diagnostic plot (`details=true`) that can help to 
 3. Delete signals 20x above the noise floor and interpolate over deletions
 `samples = tbx.rmspikes(samples,thresholdFactor=20,interpolate=true);`
 
-## Input arguments ##
+## Input arguments
 <details>
     <summary><b>`data` - dataset with fluorescence data.</b></summary>
     <i>drEEMdataset</i>
@@ -104,7 +104,7 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
     <summary><b>`thresholdFactor `- sensitivity to excessive noise (sample by sample)</b></summary>
     <i>numeric</i>
 
-Adjust the sensitivity of the spike detection. A lower values results in more sensitivity. 
+Adjust the sensitivity of the spike detection. A lower value results in more sensitivity. 
 
 Default is `10`. 
 
@@ -152,7 +152,7 @@ Default is `false`.
     <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
-If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
+If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`rmspikes`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-rmspikes.png". Likewise, providing "projectX.jpg" will result in "projectX-rmspikes.jpg".
 

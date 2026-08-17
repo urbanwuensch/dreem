@@ -107,7 +107,7 @@ The function adds an entry to the dataset's history where the unscaled data is s
 5. Don't know what to do? Get decision help
 `samples = tbx.scalesamples(samples,'help');`
 
-## Input arguments ##
+## Input arguments
 
 <details>
     <summary><b>`data` - dataset containing EEMs to be scaled.</b></summary>

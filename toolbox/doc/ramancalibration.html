@@ -433,7 +433,8 @@ details:open > summary {
 <p><details open>
 <summary>
 <b><code>dataout = ramancalibration( ___ , Name,Value)</code> diagnostic mode</b>
-</summary></p>
+</summary>
+ <a name="syntax3"></a></p>
 
 <p>If no output arguments are assigned, you are left with diagnostic plots to see how the function would modify your data if it would assign output arguments. Use to verify options before running the function with effect.</p>
 
@@ -487,7 +488,7 @@ details:open > summary {
     <summary><b><code>ExWave</code>- excitation wavelength for extracting Raman scan</b></summary>
     <i>numeric </i></p>
 
-<p>Indicates the excitation wavelength that the function uses to extract Raman scans. The function checks if the specified <code>ExWave</code> is present in the <code>blanksdataset</code>. If present, the function extracts the corresponding scans directly. Otherwise, it interpolates the data in <code>blanksdataset</code> to approximate the scans at the specified excitation wavelength.</p>
+<p>Indicates the excitation wavelength that the function uses to extract Raman scans. The function checks if the specified <code>ExWave</code> is present in the <code>blanks</code>. If present, the function extracts the corresponding scans directly. Otherwise, it interpolates the data in <code>blanks</code> to approximate the scans at the specified excitation wavelength.</p>
 
 <p>Default excitation wavelength is <code>350</code>.</p>
 
@@ -523,7 +524,7 @@ details:open > summary {
     <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
 
 <p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>ramancalibration</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-ramancalibration.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-ramancalibration.jpg&quot;.</p>
 

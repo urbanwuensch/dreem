@@ -1,6 +1,6 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 # export2zip
-Export absorbance and fluorescence data in current form, along with its processing status (& history), scatter treatment settings, absorbance slopes (if applicable) and FDOM peaks & indicies.
+Export absorbance and fluorescence data in current form, along with its processing status (& history), scatter treatment settings, absorbance slopes (if applicable) and FDOM peaks & indices.
 
 ## Syntax
 
@@ -20,7 +20,7 @@ The export includes:
 * The dataset status entries
 * A detailed README.txt to explain the contents of the archive
 
-The dataset is exported in interoperable csv files, but a .mat file is added for convenience of Matlab users. Note that, while a drEEMdataset can only be used while the drEEM toolbox is installed (i.e. the class definition is known), the exported .mat file is converted to a conventional structure and can thus be read independed of the Matlab configuration.
+The dataset is exported in interoperable csv files, but a .mat file is added for convenience of Matlab users. Note that, while a drEEMdataset can only be used while the drEEM toolbox is installed (i.e. the class definition is known), the exported .mat file is converted to a conventional structure and can thus be read independent of the Matlab configuration.
 
 
 ## Input arguments

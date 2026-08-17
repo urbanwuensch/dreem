@@ -57,6 +57,7 @@ The `associatemetadata` function reads metadata information from a  file or tabl
 
 <details open>
 <summary><b>`associatemetadata(data,___)`- diagnostic mode</b></summary>
+<a name="syntax4"></a>
 
 
 With this syntax (**by providing no output arguments**), the function runs in diagnostic mode. It will simply return statistics on how many of the table rows and drEEMdataset variables have been associated successfully. If the number is lower than expected, you should investigate, fix the issues, and re-run the function.

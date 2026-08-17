@@ -32,7 +32,7 @@ Match sample names across multiple datasets (`N≥2`) and remove the unmatched s
 </details>
 
 <details open>
-	<summary><b>`alignsamples([dsin1, __, dsinN])` - diagnostic mode</b>
+	<summary><b>`alignsamples(dsin1, __, dsinN)` - diagnostic mode</b>
 	</summary>
  <a name="syntax2"></a>
 

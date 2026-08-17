@@ -30,7 +30,7 @@ The function does two passes of imports. The first is used to read the dimension
 <a name="syntax1"></a><br>
 returns a drEEMdataset class object that contains fluorescence EEMs and their associated information.
 
-Upon successful import, the `changestatus` GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore these and focus on the property for the remainder of the fields.
+Upon successful import, the `changestatus` GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore the absorbance-focused properties, they convey no meaning for a fluorescence-only dataset.
 
  <img src="newfldata.png" width="auto" height="auto" align="center"/>
 
@@ -56,7 +56,7 @@ Example:
     	'spectralCorrection','applied by instrument software',...
     	absorbanceUnit='absorbance per cm');
 
-	blanks=tbx.importeems("* - Waterfall Plot Blank.dat"",blanks_status);
+	blanks=tbx.importeems("* - Waterfall Plot Blank.dat",blanks_status);
 
 </details>
 
@@ -66,7 +66,7 @@ Example:
 </summary>
 <a name="syntax2"></a>
 
-Custom options are specifed with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orientation of the EEM, or the wavelength vector if it is not given in each file.
+Custom options are specified with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orientation of the EEM, or the wavelength vector if it is not given in each file.
 
 </details>
 
@@ -112,7 +112,7 @@ Provide an already customized drEEMstatus object to prevent the GUI from appeari
 
 
 ## Name-Value arguments
-Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `filePattern` in this case, but the order of the pairs does not matter. 
 <a name="NameValue"></a>
 
 <details open>

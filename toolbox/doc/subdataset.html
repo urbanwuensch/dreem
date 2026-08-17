@@ -431,8 +431,7 @@ details:open > summary {
 <li><p>Delete sample based identifier
 <code>samples = tbx.subdataset(samples,outSample=samples.i==2);</code></p></li>
 <li><p>Delete emission ranges
-<code>samples = tbx.subdataset(samples,outEm=samples.Em&lt;300|samples.Em&gt;700);
-</code></p></li>
+<code>samples = tbx.subdataset(samples,outEm=samples.Em&lt;300|samples.Em&gt;700);</code></p></li>
 <li><p>Delete excitation ranges
 <code>samples = tbx.subdataset(samples,outEx=samples.Ex&lt;240|samples.Ex&gt;450);</code></p></li>
 <li><p>Delete specific excitation
@@ -469,7 +468,7 @@ details:open > summary {
     <summary><b><code>outEm</code> - emission wavelengths to delete</b></summary>
     <i>logical [<code>1x data.nEm</code>]</i></p>
 
-<p>Specifies which samples are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Em,___)</code></p>
+<p>Specifies which emission wavelengths are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Em,___)</code></p>
 
 <p></details></p>
 
@@ -477,7 +476,7 @@ details:open > summary {
     <summary><b><code>outEx</code> - excitation to delete</b></summary>
     <i>logical [<code>1x data.nEx</code>]</i></p>
 
-<p>Specifies which samples are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Ex,___)</code></p>
+<p>Specifies which excitation wavelengths are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Ex,___)</code></p>
 
 <p></details></p>
 

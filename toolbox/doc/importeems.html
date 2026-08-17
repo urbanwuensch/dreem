@@ -412,7 +412,7 @@ details:open > summary {
 <a name="syntax1"></a><br>
 returns a drEEMdataset class object that contains fluorescence EEMs and their associated information.</p>
 
-<p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore these and focus on the property for the remainder of the fields.</p>
+<p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore the absorbance-focused properties, they convey no meaning for a fluorescence-only dataset.</p>
 
 <p><img src="newfldata.png" width="auto" height="auto" align="center"/></p>
 
@@ -440,7 +440,7 @@ returns a drEEMdataset class object that contains fluorescence EEMs and their as
     &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
     absorbanceUnit=&#39;absorbance per cm&#39;);
 
-blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;&quot;,blanks_status);</code></pre></div>
+blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;,blanks_status);</code></pre></div>
 
 <p></details></p>
 
@@ -450,7 +450,7 @@ blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;&quot;,blanks_stat
 </summary>
 <a name="syntax2"></a></p>
 
-<p>Custom options are specifed with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orientation of the EEM, or the wavelength vector if it is not given in each file.</p>
+<p>Custom options are specified with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orientation of the EEM, or the wavelength vector if it is not given in each file.</p>
 
 <p></details></p>
 
@@ -495,7 +495,7 @@ blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;&quot;,blanks_stat
 
 <h2 id="toc_5">Name-Value arguments</h2>
 
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filePattern</code> in this case, but the order of the pairs does not matter. 
 <a name="NameValue"></a></p>
 
 <p><details open>

@@ -399,13 +399,13 @@ details:open > summary {
 
 <p><img src="openfluor_matching.png" width="auto" height="auto" /></p>
 
-<p>When calling the downloaded file (&quot;OpenFluorSearch<em>ModelName</em>YYYMMDD.csv&quot;) with <a href="viewopenfluormatches.html">viewopenfluormatches</a>, the results will be replotted in MATLAB. Note that the datacursor is active and hovering over the loadings plots will reveal additional information about the model that the selected component belongs to:</p>
+<p>When calling the downloaded file (&quot;OpenFluorSearch<em>ModelName</em>YYYYMMDD.csv&quot;) with <a href="viewopenfluormatches.html">viewopenfluormatches</a>, the results will be replotted in MATLAB. Note that the datacursor is active and hovering over the loadings plots will reveal additional information about the model that the selected component belongs to:</p>
 
 <p><img src="openfluor_match_plotting.png" width="auto" height="auto" /></p>
 
 <p><strong>Note</strong>: When hovering over any of the components, the datacursor will display additional information &amp; the respective model&#39;s DOI is automatically copied to the clipboard. Simply paste into a browser (Windows: <code>Ctrl+v</code> and you will arrive at the landing page for most of the models in the database).</p>
 
-<h2 id="toc_3">Input Arguments</h2>
+<h2 id="toc_3">Input arguments</h2>
 
 <p><details>
     <summary><b><code>filename</code> - filename of the OpenFluor results</b></summary>
@@ -424,7 +424,7 @@ details:open > summary {
     <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
 
 <p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewopenfluormatches</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewopenfluormatches.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewopenfluormatches.jpg&quot;.</p>
 
@@ -434,7 +434,7 @@ details:open > summary {
 
 <p></details></p>
 
-<h2 id="toc_5">Output Arguments</h2>
+<h2 id="toc_5">Output arguments</h2>
 
 <p><details>
     <summary><b><code>summary</code> - overview table</b></summary>

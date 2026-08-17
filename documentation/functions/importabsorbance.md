@@ -118,7 +118,7 @@ Provide an already customized drEEMstatus object to prevent the GUI from appeari
 </details>
 
 ## Name-Value arguments
-Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `data` in this case, but the order of the pairs does not matter. 
+Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is the argument name and `Value` is the corresponding value. The notation `"Name",Value` is also supported. Name-value arguments must appear after other arguments, `filePattern` in this case, but the order of the pairs does not matter. 
 <a name="NameValue"></a>
 
 

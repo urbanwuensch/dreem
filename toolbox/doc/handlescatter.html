@@ -397,7 +397,7 @@ details:open > summary {
 
 <p><a href="#syntax4"><code>scatteroptions = handlescatter(&#39;options&#39;)</code></a></p>
 
-<h2 id="toc_2">Description</h2>
+<h2 id="toc_2">DescriptionÉ</h2>
 
 <p>The function <code>handlescatter</code> handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to <code>zero</code> at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no <code>options</code> is provided as input, the function will use the default <code>options</code> for its processing. That includes cutting out all the four scatters from all samples and no interpolation. See Input arguments section for <code>options</code> default values.</p>
 
@@ -478,8 +478,7 @@ negativetozero: 1
 
 <p><details open>
     <summary><b><code>dataout = handlescatter(data)</code> - default options (for quick visualization)</b></summary>
-    <a name="syntax1"></a>
-<a name="syntax1"></a></p>
+    <a name="syntax1"></a></p>
 
 <p>This syntax will automatically apply some default settings for scatter removal. This can be useful to take a quick look at EEMs without scatter having a dominant visual effect in the graphs. However, the settings <em>will not work well for PARAFAC</em>.</p>
 
@@ -487,8 +486,7 @@ negativetozero: 1
 
 <p><details open>
     <summary><b><code>dataout = handlescatter(data, &#39;gui&#39;)</code> - GUI decision support</b></summary>
-    <a name="syntax2"></a>
-<a name="syntax2"></a></p>
+    <a name="syntax2"></a></p>
 
 <p>Running <code>handlescatter</code> with <code>gui</code> options opens up the <code>viewscatter</code> user interface app. The interface allows users to apply settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.
 Interface Components include:</p>

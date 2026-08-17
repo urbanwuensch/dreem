@@ -1,5 +1,26 @@
 function dataout = spectralcorrection(data,options)
-
+% <a href = "matlab:drEEMtoolbox.doc('spectralcorrection')">data = spectralcorrection(data,options) (click to access documentation)</a>
+%
+% <strong>Correct instrument biases of excitation-emission matrices with correction factors</strong>
+%
+% <strong>INPUTS - Required</strong>
+% data (1,:)                 {mustBeA('drEEMdataset'}
+% 
+% <strong>INPUTS - Name-Value (required)</strong>
+%    options.XCor (:,2) {mustBeNumeric}
+%    options.MCor (:,2) {mustBeNumeric}
+%
+% <strong>INPUTS - optional</strong>
+%    options.plot (1,1) {mustBeNumericOrLogical} = true;
+%    options.figurefile (1,:) {mustBeText} = "";
+%
+% <strong>EXAMPLE(S)</strong>
+% From import_tutorial_02.mlx:
+% xcor=readmatrix("spectral_correction_factors.xlsx",Sheet="xcor");
+% mcor=readmatrix("spectral_correction_factors.xlsx",Sheet="mcor");
+% samples=tbx.spectralcorrection(samples,"MCor",mcor,"XCor",xcor);
+%
+% <a href = "matlab:drEEMtoolbox.doc('spectralcorrection')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology

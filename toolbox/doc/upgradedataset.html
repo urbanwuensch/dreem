@@ -418,11 +418,11 @@ details:open > summary {
 <ul>
 <li>Models loadings should be stored in the <code>Model1</code>, <code>Model2</code>, <code>Model3</code> and <code>ModelN</code> fields in the <code>data</code>.</li>
 <li>All other properties are calculated and not transferred.</li>
-<li>The property <code>Initialization</code> is set to <code>&#39;random&#39;</code> since previous versions of the toolbox did not officially support other methods</li>
-<li><code>Starts</code> is set to <code>NaN</code>, there is no way to retrieve the information</li>
-<li><code>Convergence</code> is retrieved from <code>data</code>, if it exists, otherwise is set to <code>NaN</code>.</li>
-<li><code>Constraints</code> is retrieved from <code>data</code>, if it exists, otherwise is set to <code>&#39;unknown&#39;</code>.</li>
-<li><code>Toolbox</code> is set to <code>&#39;nway&#39;</code>. Though PLS_toolbox could have been used, this information was never stored by the older versions of the toolbox.</li>
+<li>The property <code>initialization</code> is set to <code>&#39;random&#39;</code> since previous versions of the toolbox did not officially support other methods</li>
+<li><code>starts</code> is set to <code>NaN</code>, there is no way to retrieve the information</li>
+<li><code>convergence</code> is retrieved from <code>data</code>, if it exists, otherwise is set to <code>NaN</code>.</li>
+<li><code>constraints</code> is retrieved from <code>data</code>, if it exists, otherwise is set to <code>&#39;unknown&#39;</code>.</li>
+<li><code>toolbox</code> is set to <code>&#39;nway&#39;</code>. Though PLS_toolbox could have been used, this information was never stored by the older versions of the toolbox.</li>
 </ul>
 
 <p></details></p>
@@ -439,7 +439,26 @@ details:open > summary {
 
 <p></details></p>
 
-<h2 id="toc_3">Input arguments</h2>
+<h2 id="toc_3">Examples</h2>
+
+<ol>
+<li><p>Simple upgrade if dataset was constructed as advised in drEEM tutorials (&gt;0.5.x)</p>
+
+<p><code>data = tbx.upgradedataset(Xin);</code></p></li>
+<li><p>Upgrade if dataset was constructed with alternative variable name for filelist</p>
+
+<p><code>data = tbx.upgradedataset(Xin,{&#39;samplename&#39;;&#39;filelist&#39;});</code></p></li>
+<li><p>Upgrade if dataset was constructed with alternative variable name for the old notation Abs_wave</p>
+
+<p><code>data = tbx.upgradedataset(Xin,{&#39;wave&#39;;&#39;absWave&#39;});</code></p></li>
+<li><p>Upgrade drEEM tutorial dataset from previous version (produces warning due to non-existent absorbance data)</p>
+
+<p><code>load(which(&#39;drEEM_tutorial_DS_old.mat&#39;))</code></p>
+
+<p><code>samples = tbx.upgradedataset(dreemdata,{&#39;longID&#39;,&#39;filelist&#39;})</code></p></li>
+</ol>
+
+<h2 id="toc_4">Input arguments</h2>
 
 <p><details>
     <summary><b><code>data</code> - structure made with a previous version of drEEM</b></summary>
@@ -464,7 +483,7 @@ details:open > summary {
 
 <p></details></p>
 
-<h2 id="toc_4">Optional input arguments</h2>
+<h2 id="toc_5">Optional input arguments</h2>
 
 <p><details open>
     <summary><b><code>atypicalFieldnames</code>- names of non-typical fields and their corresponding new field names</b></summary>
@@ -478,7 +497,7 @@ details:open > summary {
 
 <p></details></p>
 
-<h2 id="toc_5">Output arguments</h2>
+<h2 id="toc_6">Output arguments</h2>
 
 <p><details>
     <summary><b><code>dataout</code> - upgraded dataset</b></summary>
