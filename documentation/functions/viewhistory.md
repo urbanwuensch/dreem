@@ -38,7 +38,7 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
     <summary><b>`figurefile `- option to save the grapical user interface  </b></summary>
     <i>character</i>
 
-If a character vector is supplied (e.g. "output.png", the function will save the current GUI.
+If a character vector is supplied (e.g. "output.png"), the function will save the current GUI.
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`viewhistory`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewhistory.png". Likewise, providing "projectX.jpg" will result in "projectX-viewhistory.jpg".
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
