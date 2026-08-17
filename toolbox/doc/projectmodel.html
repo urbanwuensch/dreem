@@ -385,50 +385,62 @@ details:open > summary {
 
 <h1 id="toc_0">projectmodel</h1>
 
-<p>Project existing PARAFAC models (OpenFluor format) onto datasets (drEEMdataset format).</p>
+<p>Force-fit an externally published PARAFAC model (OpenFluor format) onto a <code>drEEMdataset</code></p>
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>dataout = projectmodel(data, file)</code></a></p>
+<p><a href="#syntax1"><code>dataout = projectmodel(data,file)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
-<p>The function projects an existing PARAFAC model onto a new dataset. To do so, it loads an OpenFluor model, interpolates the model loadings to the provided dataset, and forces a fit onto a provided dataset.</p>
-
 <p><details open>
-<summary><b><code>dataout = projectdataset(data, file)</code> - force-fit a PARAFAC model</b>
-</summary></p>
+    <summary><b><code>dataout = projectmodel(data,file)</code> - project a published model onto <code>data</code></b></summary>
+<a name="syntax1"></a></p>
 
-<p>This syntax loads the OpenFluor model specified in <code>file</code> and interpolates its loadings to be identical to the axes in <code>data</code>. Any wavelengths not covered by the model will however be deleted from <code>data</code> since no extrapolations will be carried out.</p>
+<p>Loads a PARAFAC model that was exported in OpenFluor format (see <a href="https://openfluor.lablicate.com/">www.openfluor.org</a>) from the text file <code>file</code>, and force-fits it onto <code>data</code>. The model&#39;s excitation and emission loadings are interpolated onto the wavelengths of <code>data</code> and held fixed. Only the sample-mode loadings (scores) are re-estimated for the samples in <code>data</code>. You can either force one of your old, pre-existing models onto your new data or check if someone else&#39;s model fits your data well.</p>
 
-<p>After the forced fitting of the existing model, the common model metrics (% explained variance, core consistency, leverages, sum-of-squared error, ...) will be calculated. Some of these may be more meaningful than others since not all are appropriate for model projections.</p>
+<p>Since the loadings are not re-estimated, <code>data</code> is first trimmed to the wavelength range shared by <code>data</code> and the model (<code>projectmodel</code> does not extrapolate).</p>
+
+<p>The constraints stated in the OpenFluor file (e.g. non-negativity) are honored during the forced fit. The resulting model is stored in <code>dataout.models</code> at the index matching its number of components, <code>model.status</code> is set to <code>&quot;forced projection&quot;</code> to distinguish it from a normally-fitted model, and <code>model.initialization</code> records the name of the file the model was projected from.</p>
+
+<p>An entry will be added to the <code>history</code> field of <code>dataout</code>, detailing the file the model was projected from.</p>
 
 <p></details></p>
 
 <h2 id="toc_3">Examples</h2>
 
 <ol>
-<li>Project OpenFluor model to existing dataset 
+<li>project a published 4-component OpenFluor model onto a dataset
 <code>samples = tbx.projectmodel(samples,&#39;openfluormodel.txt&#39;);</code></li>
 </ol>
 
 <h2 id="toc_4">Input arguments</h2>
 
 <p><details>
-    <summary><b><code>data</code> - dataset for model projections</b></summary>
+    <summary><b><code>data</code> - dataset to project the model onto</b></summary>
     <i>drEEMdataset</i></p>
 
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
 
 <p></details></p>
 
+<p><details open>
+    <summary><b><code>file</code> - PARAFAC model in OpenFluor format</b></summary>
+    <i>character</i></p>
+
+<p>Path to a text file containing a PARAFAC model in the OpenFluor format, e.g. one downloaded from <a href="https://openfluor.lablicate.com/">www.openfluor.org</a> or created with <a href="export2openfluor.html"><code>export2openfluor</code></a>. The file must exist.</p>
+
+<p></details></p>
+
 <h2 id="toc_5">Output arguments</h2>
 
 <p><details>
-    <summary><b><code>dataout</code> - dataset incl. scores of projected model</b></summary>
+    <summary><b><code>dataout</code> - dataset with the projected model added</b></summary>
     <i>drEEMdataset</i></p>
 
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
+
+<p>The projected model is added to <code>dataout.models</code>, at the index matching its number of components. If a model with that many components already existed in <code>dataout.models</code>, it is overwritten.</p>
 
 <p></details></p>
 
