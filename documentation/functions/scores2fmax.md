@@ -1,7 +1,7 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 # scores2fmax
 
-Convert model scores to Fmax.
+Convert model scores to instrument (observed / calibrated) units.
 
 ## Syntax
 

@@ -14,7 +14,7 @@ Excise and treat Excitation-Emission Matrix (EEM) scatter and optionally interpo
 
 [`scatteroptions = handlescatter('options')`](#syntax4)
 
-## DescriptionÉ
+## Description
 The function `handlescatter` handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to `zero` at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no `options` is provided as input, the function will use the default `options` for its processing. That includes cutting out all the four scatters from all samples and no interpolation. See Input arguments section for `options` default values.
 
 >**Important:** The status-property "scatterTreatment" must be "not applied". Otherwise, the function returns a validation error. Upon completion, the status of the dataset is changed to "applied by toolbox".

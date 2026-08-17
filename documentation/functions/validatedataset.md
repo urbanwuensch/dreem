@@ -9,7 +9,7 @@ Check for the correct dimensions and consistency of various fields within a `drE
 `validatedataset(data)`
 
 
-## Description ##
+## Description
 	
 The validatedataset function performs several validation checks on the dataset object. These checks include:
 
@@ -30,7 +30,7 @@ If no errors were found and the function was called from the `drEEMtoolbox`, a s
 1. Check if a dataset is a valid drEEM dataset.
 `tbx.validatedataset(samples)`
 
-## Input arguments ##
+## Input arguments
 <details>
     <summary><b>`data` - a drEEMdataset</b></summary>
     <i>drEEMdataset</i>

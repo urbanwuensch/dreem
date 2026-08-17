@@ -100,7 +100,7 @@ Specifies a column in `data.metadata` to sort `data` before splitting. Must be a
 
 If `metadataColumn` is provided as optional input, it takes precedence over `splitType`, i.e. you can but don't have to set `splitType="byMetadata"` (a message will be displayed to inform you that the toolbox has interpreted your intention).
 
-Default is `[]`, since `splitType="blind"` by default.
+Default is `string.empty`, since `splitType="blind"` by default.
 
 
 </details>
@@ -111,7 +111,7 @@ Default is `[]`, since `splitType="blind"` by default.
  
 The number of subsets to split the data into. Must be a positive integer.
 
-Any input to this argument is ignored if `splitType="byMetadata"` and / or an Value is supplied to the argument `metadataColumn`.
+Any input to this argument is ignored if `splitType="byMetadata"` and / or a Value is supplied to the argument `metadataColumn`.
 
 Default is `2`.
 
