@@ -403,7 +403,7 @@ details:open > summary {
 <p><strong>Note:</strong> When <code>subdataset</code> is called:</p>
 
 <ul>
-<li>If the function <code>scalesamples</code> has been used prior to using the <code>subdataset</code>, the orginal unscaled data will also be cut.</li>
+<li>If the function <code>scalesamples</code> has been used prior to using the <code>subdataset</code>, the original unscaled data will also be cut.</li>
 <li>any existing PARAFAC models are deleted since they no longer reflect the data.</li>
 <li>the removal will automatically be carried out in any splits as well!</li>
 </ul>
@@ -413,7 +413,7 @@ details:open > summary {
 <summary><b><code>dataout = subdataset(data, Name,Value)</code> - remove parts of a dataset entirely</b>
 </summary></p>
 
-<p>Contrary to previous version of <code>subdataset</code>, only two inputs are required and the <a href="#NameValue">&#39;name-value&#39;</a>-pair notation is used to specify which parts of the dataset should be deleted.</p>
+<p>Contrary to previous version of <code>subdataset</code>, only two inputs are required and the name-value pair notation is used to specify which parts of the dataset should be deleted.</p>
 
 <p>You can specify any combination of <code>outSample</code>,<code>outEm</code>, or <code>outEx</code>. If one of these is not explicitly specified as input, it is automatically set to <code>false</code>, resulting in no action along that dimension of the dataset.</p>
 
@@ -453,15 +453,15 @@ details:open > summary {
 
 <p></details></p>
 
-<h2 id="toc_5">Optional arguments</h2>
+<h2 id="toc_5">Name-Value arguments</h2>
 
 <p><details open>
     <summary><b><code>outSample</code> - samples to delete</b></summary>
     <i>logical [<code>1x data.nSample</code>]</i></p>
 
-<p>Specifies which samples are to be deleted from the dataset. Must be logical. Is comparative statements and functions as input to the option.</p>
+<p>Specifies which samples are to be deleted from the dataset. Matlab-internal functions you can use here include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code> </p>
 
-<p>Matlab-internal functions include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code> </p>
+<p>Example: <code>outSample=matches(data.filelist,&#39;sample01)&#39;</code></p>
 
 <p></details></p>
 
@@ -469,9 +469,7 @@ details:open > summary {
     <summary><b><code>outEm</code> - emission wavelengths to delete</b></summary>
     <i>logical [<code>1x data.nEm</code>]</i></p>
 
-<p>Specifies which emission wavelengths are to be deleted from the dataset. Must be logical. Is comparative statements and functions as input to the option.</p>
-
-<p>Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Em,___)</code></p>
+<p>Specifies which samples are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Em,___)</code></p>
 
 <p></details></p>
 
@@ -479,9 +477,7 @@ details:open > summary {
     <summary><b><code>outEx</code> - excitation to delete</b></summary>
     <i>logical [<code>1x data.nEx</code>]</i></p>
 
-<p>Specifies which excitation wavelengths are to be deleted from the dataset. Must be logical. Is comparative statements and functions as input to the option.</p>
-
-<p>Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Em,___)</code></p>
+<p>Specifies which samples are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Ex,___)</code></p>
 
 <p></details></p>
 

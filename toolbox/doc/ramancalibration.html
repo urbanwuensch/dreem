@@ -414,7 +414,8 @@ details:open > summary {
 <p><details open>
 <summary>
 <b><code>dataout = ramancalibration(samples, blanks)</code> default options</b>
-</summary></p>
+</summary>
+ <a name="syntax1"></a></p>
 
 <p>Run the function with the default options. This will pick the emission scan at excitation 350nm and integrate from 378 to 424nm. The baseline between start and end of the Raman peak will be subtracted.
  <a name="syntax1"></a>
@@ -424,8 +425,17 @@ details:open > summary {
 <summary>
 <b><code>dataout = ramancalibration( ___ , Name,Value)</code> custom options</b>
 </summary>
- <a name="syntax3"></a>
+ <a name="syntax2"></a>
  specifies additional options using one or more name-value pair arguments. For example, you can specify the excitation wavelength for extracting Raman scan using <code>ExWave</code> or specify the emission range for the integration of the area under the peak using <code>iStart</code>, <code>iEnd</code>. <br></p>
+
+<p></details></p>
+
+<p><details open>
+<summary>
+<b><code>dataout = ramancalibration( ___ , Name,Value)</code> diagnostic mode</b>
+</summary></p>
+
+<p>If no output arguments are assigned, you are left with diagnostic plots to see how the function would modify your data if it would assign output arguments. Use to verify options before running the function with effect.</p>
 
 <p></details></p>
 
@@ -448,7 +458,7 @@ details:open > summary {
     <summary><b><code>samples</code> - contains EEMs of samples</b></summary>
     <i>drEEMdataset</i></p>
 
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbs.validatedataset(samples)</code>.</p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>.</p>
 
 <blockquote>
 <p>The property <code>samples.status.signalCalibration</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
@@ -495,7 +505,7 @@ details:open > summary {
     <summary><b><code>iEnd</code>- emission wavelength to end Raman peak area integration</b></summary>
     <i>numeric </i></p>
 
-<p>The function calculates the Raman area and baseline area over the specified integration range ending at <code>iEnd</code>. Default starting wavelength is <code>424</code>.</p>
+<p>The function calculates the Raman area and baseline area over the specified integration range ending at <code>iEnd</code>. Default ending wavelength is <code>424</code>.</p>
 
 <p></details></p>
 
@@ -510,7 +520,7 @@ details:open > summary {
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
 <p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
@@ -519,7 +529,7 @@ details:open > summary {
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
 
 <p></details></p>
 

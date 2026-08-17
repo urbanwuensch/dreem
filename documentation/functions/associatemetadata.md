@@ -10,9 +10,7 @@ Associate a metadata file with a `drEEMdataset`
 
 [`dataout = associatemetadata(data, metadataTable, metadatakey, datakey)`](#syntax3)
 
-[`associatemetadata(data, filename, metadatakey, datakey)`](#syntax4)
-
-[`associatemetadata(data, metadataTable, metadatakey, datakey)`](#syntax4)
+[`associatemetadata(data, ___)`](#syntax4)
 
 
 ## Description
@@ -50,7 +48,7 @@ The `associatemetadata` function reads metadata information from a  file or tabl
 </details>
 
 <details open>
-<summary><b>`dataout = associatemetadata(data, metadataTable, metadatakey)`- provide table variable</b></summary>
+<summary><b>`dataout = associatemetadata(data, metadataTable, metadatakey,datakey)`- provide table variable</b></summary>
 <a name="syntax3"></a>
 
 `metadataTable` is a variable of the class table that exists in the workspace. This can be useful if a table needed modification prior to associating it with the metadata table. The default syntax with `filename` will make `associatemetadata` load the table itself, whereas providing `metadataTable` will assume that a table is handed to the function.
@@ -58,11 +56,10 @@ The `associatemetadata` function reads metadata information from a  file or tabl
 </details>
 
 <details open>
-<summary><b>`associatemetadata(data, metadataTable, metadatakey)`- diagnostic mode</b></summary>
+<summary><b>`associatemetadata(data,___)`- diagnostic mode</b></summary>
 
-Also `associatemetadata(data, metadataTable, metadatakey, datakey)`<a name="syntax4"></a>
 
-With this syntax (by providing no output arguments), the function runs in diagnostic mode. It will simply return statistics on how many of the table rows and drEEMdataset variables have been associated sucessfully. If the number is lower than expected, you should investigate, fix the issues, and re-run the function.
+With this syntax (**by providing no output arguments**), the function runs in diagnostic mode. It will simply return statistics on how many of the table rows and drEEMdataset variables have been associated successfully. If the number is lower than expected, you should investigate, fix the issues, and re-run the function.
 
 </details>
 

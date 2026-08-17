@@ -52,7 +52,7 @@ In case things went wrong and you'd like to have control over which settings-bat
    3. <strong>Same as 2. but now you want to process the samples that got measured with different settings</strong>
        `[samples,blanks] = tbx.importaqualog(pwd,bucket=N); % Choose your N, depends on case.`
 
-## Input arguments ##
+## Input arguments
 
 <details open>
     <summary><b>`folder ` Folder containing the measurements in OPJ or OGW files</b></summary>

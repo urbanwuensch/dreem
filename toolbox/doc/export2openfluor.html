@@ -393,7 +393,7 @@ details:open > summary {
 
 <h2 id="toc_2">Description</h2>
 
-<p>The <code>export2openfluor</code> function exports the excitation and emission loadings of a parafac model, specified by the number of components, <code>f</code>, from <code>data.models</code> to a text file formatted for OpenFluor. If wavelengths are not whole numbers (integers) the function ensures the data is interpolated using a spline method to fit the new wavelength ranges. The function ensures the data properly formatted before writing it to the specified <code>filename</code>.</p>
+<p>The <code>export2openfluor</code> function exports the excitation and emission loadings of a PARAFAC model, specified by the number of components, <code>f</code>, from <code>data.models</code> to a text file formatted for OpenFluor. If wavelengths are not whole numbers (integers) the function ensures the data is interpolated using a spline method to fit the new wavelength ranges. The function also ensures the data is a valid drEEMdataset before writing it to the specified <code>filename</code>.</p>
 
 <h2 id="toc_3">Examples</h2>
 

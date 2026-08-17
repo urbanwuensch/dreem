@@ -28,6 +28,7 @@ The function validates the input datasets to ensure that the calibration is only
 <summary>
 <b>`dataout = ramancalibration(samples, blanks)` default options</b>
 </summary>
+ <a name="syntax1"></a>
 
 Run the function with the default options. This will pick the emission scan at excitation 350nm and integrate from 378 to 424nm. The baseline between start and end of the Raman peak will be subtracted.
  <a name="syntax1"></a>
@@ -38,8 +39,18 @@ Run the function with the default options. This will pick the emission scan at e
 <summary>
 <b>`dataout = ramancalibration( ___ , Name,Value)` custom options</b>
 </summary>
- <a name="syntax3"></a>
+ <a name="syntax2"></a>
  specifies additional options using one or more name-value pair arguments. For example, you can specify the excitation wavelength for extracting Raman scan using `ExWave` or specify the emission range for the integration of the area under the peak using `iStart`, `iEnd`. <br>
+
+
+</details>
+
+<details open>
+<summary>
+<b>`dataout = ramancalibration( ___ , Name,Value)` diagnostic mode</b>
+</summary>
+
+If no output arguments are assigned, you are left with diagnostic plots to see how the function would modify your data if it would assign output arguments. Use to verify options before running the function with effect.
 
 
 </details>
@@ -61,7 +72,7 @@ Run the function with the default options. This will pick the emission scan at e
     <summary><b>`samples` - contains EEMs of samples</b></summary>
     <i>drEEMdataset</i>
         
-A dataset of the class `drEEMdataset` that passes the validation function `tbs.validatedataset(samples)`.
+A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(samples)`.
 
 > The property `samples.status.signalCalibration` must be `"not applied"`. Otherwise, the function returns a validation error.
 
@@ -108,7 +119,7 @@ The function calculates the Raman area and baseline area over the specified inte
     <summary><b>`iEnd `- emission wavelength to end Raman peak area integration</b></summary>
     <i>numeric </i>
     
-The function calculates the Raman area and baseline area over the specified integration range ending at `iEnd`. Default starting wavelength is `424`.
+The function calculates the Raman area and baseline area over the specified integration range ending at `iEnd`. Default ending wavelength is `424`.
 
 
 </details>
@@ -124,7 +135,7 @@ Default is `true`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
 If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
@@ -133,7 +144,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving)
 
 </details>
 

@@ -389,7 +389,7 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>dataout = zapnoise(data, sampleIdent, emRange, exRange)</code></a></p>
+<p><code>dataout = zapnoise(data, sampleIdent, emRange, exRange)</code></p>
 
 <h2 id="toc_2">Description</h2>
 
@@ -417,9 +417,9 @@ details:open > summary {
 <li>Zap entire emission scans at Ex 255 and 300 in sample data.i==7</li>
 </ul>
 
-<p><code>samples = tbx.zapnoise(samples,data.i==5,[],255);</code></p>
+<p><code>samples = tbx.zapnoise(samples,data.i==7,[],255);</code></p>
 
-<p><code>samples = tbx.zapnoise(samples,data.i==5,[],300);</code></p>
+<p><code>samples = tbx.zapnoise(samples,data.i==7,[],300);</code></p>
 
 <h2 id="toc_4">Input arguments</h2>
 
@@ -435,9 +435,8 @@ details:open > summary {
     <summary><b><code>sampleIdent</code> - sample(s) to affect</b></summary>
     <i>logical [<code>1x data.nSample</code>]</i></p>
 
-<p>Specifies which samples are to be affected . Must be logical. Is comparative statements and functions as input to the option.</p>
-
-<p>Matlab-internal functions include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code> </p>
+<p>Specifies which samples are to be affected. Must be logical, 
+some Matlab-internal functions to use here include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code> </p>
 
 <p></details></p>
 
@@ -466,12 +465,6 @@ Example: <code>(__, __, [min(data.Em):350], __)</code> to remove emission data b
 <p>Example: <code>(__, __, __, [min(data.Ex):max(data.Ex)])</code> to remove data between  the first and last excitation wavelengths.</p>
 
 <p></details></p>
-
-<p>Example: <code>(__, __, __, [400 410])</code> to remove data between excitation <code>400</code> and <code>410</code> nm.</p>
-
-<p>Example: <code>(__, __, __, 400)</code> to remove data between the first excitation wavelengths below and above <code>400</code> nm.</p>
-
-<p>Example: <code>(__, __, __, [min(data.Ex):max(data.Ex)])</code> to remove data between  the first and last excitation wavelengths.</p>
 
 <h2 id="toc_5">Output arguments</h2>
 

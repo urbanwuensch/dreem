@@ -389,13 +389,20 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><code>Fmax=scores2fmax(data,f)</code></p>
+<p><code>fmax=scores2fmax(data,f)</code></p>
 
 <h2 id="toc_2">Description</h2>
 
 <p>Convert model scores to fluorescence maxima in the original intensity units. While scores have no unit, conversion of scores (A) by multiplication with the maxima in B and C for each component yields their intensities in the units of the original dataset.</p>
 
-<h2 id="toc_3">Input Arguments</h2>
+<h2 id="toc_3">Examples</h2>
+
+<ol>
+<li>Get fmax-values for the 5-component model:
+<code>fmax = tbx.scores2fmax(data,5)</code></li>
+</ol>
+
+<h2 id="toc_4">Input arguments</h2>
 
 <p><details>
     <summary><b><code>data</code> - dataset with PARAFAC models</b></summary>
@@ -415,10 +422,10 @@ details:open > summary {
 
 <p></details></p>
 
-<h2 id="toc_4">Output Arguments</h2>
+<h2 id="toc_5">Output arguments</h2>
 
 <p><details open>
-    <summary><b><code>Fmax</code> - matrix with fluorescence maxima</b></summary>
+    <summary><b><code>fmax</code> - matrix with fluorescence maxima</b></summary>
     <i>numeric</i></p>
 
 <p><code>[data.nSample x f]</code> matrix containing the fluorescence maxima of components.</p>

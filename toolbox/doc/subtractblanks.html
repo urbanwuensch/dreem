@@ -391,21 +391,21 @@ details:open > summary {
 
 <p><a href="#syntax1"><code>samplesout = subtractblanks(samples, blanks)</code></a></p>
 
-<p><a href="#syntax2"><code>dataout = subtractblanks( ___ , Name,Value)</code></a></p>
+<p><a href="#syntax2"><code>samplesout = subtractblanks( ___ , Name,Value)</code></a></p>
 
 <p><a href="#syntax3"><code>subtractblanks( ___ , Name,Value)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
 <p>Subtracts EEMs of blank stored in <code>blanks</code> from EEMs stored in <code>samples</code>.
-The function <code>subtractblanks</code> makes sure the <code>blanks</code> and <code>samples</code>  have the same wavelengths, as this can be the case, especially,
-after the <code>ifecorrection</code> function has been applied on <code>samples</code> and some parts are deleted due to lacking absorbance coverage. <code>subtractblanks</code> makes sure that the <code>blanks</code> will also be cut to be compatible.</p>
+The function <code>subtractblanks</code> makes sure the <code>blanks</code> and <code>samples</code>  have the same wavelength axes. Mismatches can occur especially
+after the <code>ifecorrection</code> function has been applied on <code>samples</code>; parts of the EEM may have ben deleted due to lacking absorbance coverage. <code>subtractblanks</code> makes sure that the <code>blanks</code> will also be cut to be compatible.</p>
 
 <p>Next, if the subtraction was successful, the function will plot the EEMs stored in <code>samples</code>, <code>blanks</code>, and <code>samplesout</code> at an excitation of 275, where protein-like and humic-like fluorescence signal is likely to be observed, for the user to check the performance of the subtraction.</p>
 
 <p><img src="blankdiag.png" width="auto" height="auto" align="left"/></p>
 
-<p>All plots above show the predicted position of the different types of scatter. Take care that predictiona and observation match, otherwise an issue with the wavelength accuracy might exist.</p>
+<p>All plots above show the predicted position of the different types of scatter. Take care that predictions and observations match, otherwise an issue with the wavelength accuracy might exist.</p>
 
 <p>Observe that the area between 1st and 2nd order scatter in the top right corner is flat, otherwise your blanks contain significant levels of fluorescence.</p>
 
@@ -426,7 +426,7 @@ after the <code>ifecorrection</code> function has been applied on <code>samples<
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>samplesout = rmspikes( ___ , Name,Value)</code> - custom options</b></summary>
+    <summary><b><code>samplesout = subtractblanks( ___ , Name,Value)</code> - custom options</b></summary>
 <a name="syntax2"></a></p>
 
 <p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments.</p>
@@ -482,7 +482,7 @@ Default is <code>true</code>.</p>
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
 <p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
@@ -491,7 +491,7 @@ Default is <code>true</code>.</p>
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
 
 <p></details></p>
 

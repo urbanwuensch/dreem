@@ -4,7 +4,7 @@ Compare sample names between datasets and remove the unmatched samples.
 
 ## Syntax
 
-[`dsout1, __, dsoutN = alignsamples(dsin1, __, dsinN)`](#syntax1)
+[`[dsout1, __, dsoutN] = alignsamples(dsin1, __, dsinN)`](#syntax1)
 
 [`alignsamples(dsin1, __, dsinN)`](#syntax2)
 

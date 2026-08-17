@@ -399,7 +399,7 @@ details:open > summary {
 
 <p><details open>
 <summary><b>
-<code>dataout = upgradedataset (data)</code> - conversion of data as desribed in tutorials</b></summary></p>
+<code>dataout = upgradedataset (data)</code> - conversion of data as described in tutorials</b></summary></p>
 
 <p><a name="syntax1"></a></p>
 
@@ -412,20 +412,18 @@ details:open > summary {
 
 <p><details>
 <summary>
-<strong>Details on the model ransfer</strong>
+<strong>Details on the model transfer</strong>
 </summary></p>
 
 <ul>
 <li>Models loadings should be stored in the <code>Model1</code>, <code>Model2</code>, <code>Model3</code> and <code>ModelN</code> fields in the <code>data</code>.</li>
 <li>All other properties are calculated and not transferred.</li>
 <li>The property <code>Initialization</code> is set to <code>&#39;random&#39;</code> since previous versions of the toolbox did not officially support other methods</li>
-<li><code>Starts</code> is set to <code>NaN</code>, there is no way to retreive the information</li>
+<li><code>Starts</code> is set to <code>NaN</code>, there is no way to retrieve the information</li>
 <li><code>Convergence</code> is retrieved from <code>data</code>, if it exists, otherwise is set to <code>NaN</code>.</li>
 <li><code>Constraints</code> is retrieved from <code>data</code>, if it exists, otherwise is set to <code>&#39;unknown&#39;</code>.</li>
 <li><code>Toolbox</code> is set to <code>&#39;nway&#39;</code>. Though PLS_toolbox could have been used, this information was never stored by the older versions of the toolbox.</li>
 </ul>
-
-<p></details></p>
 
 <p></details></p>
 
@@ -470,13 +468,13 @@ details:open > summary {
 
 <p><details open>
     <summary><b><code>atypicalFieldnames</code>- names of non-typical fields and their corresponding new field names</b></summary>
-    <i>logical</i></p>
+    <i>cell array containing character arrays</i></p>
 
 <p>A cell array of size N x 2. Each row should contain a pair of field names where the first column is the old field name (should exist in <code>data</code>), and the second column is the new field name (should exist in drEEMdataset class object, see <code>drEEMdataset</code> for more information).</p>
 
 <p>Example <code>{&#39;EEM&#39;,&#39;X&#39;}</code> if fluorescence data in <code>data</code> was stored in the field <code>EEM</code> and should therefore now be stored as <code>X</code>.</p>
 
-<p>Default is <code>[]</code>, meaning the option remains unused.</p>
+<p>Default is <code>{}</code>, meaning the option remains unused.</p>
 
 <p></details></p>
 
@@ -486,7 +484,7 @@ details:open > summary {
     <summary><b><code>dataout</code> - upgraded dataset</b></summary>
     <i>drEEMdataset</i></p>
 
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
 
 <p></details></p>
 

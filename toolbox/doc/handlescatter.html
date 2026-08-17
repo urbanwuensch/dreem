@@ -393,13 +393,13 @@ details:open > summary {
 
 <p><a href="#syntax2"><code>dataout = handlescatter(data, &#39;gui&#39;)</code></a></p>
 
-<p><a href="#syntax3"><code>dataout = handlescatter(data, options</code>)</a></p>
+<p><a href="#syntax3"><code>dataout = handlescatter(data, options)</code></a></p>
 
 <p><a href="#syntax4"><code>scatteroptions = handlescatter(&#39;options&#39;)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
-<p>The function <code>handlescatter</code> handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to <code>zero</code> at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no <code>options</code> is provided as input, the function will use the default <code>options</code> for its processing. That include cutting out all the four scatters from all samples and no interpolation. See Input arguments section for <code>options</code> default values.</p>
+<p>The function <code>handlescatter</code> handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to <code>zero</code> at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no <code>options</code> is provided as input, the function will use the default <code>options</code> for its processing. That includes cutting out all the four scatters from all samples and no interpolation. See Input arguments section for <code>options</code> default values.</p>
 
 <blockquote>
 <p><strong>Important:</strong> The status-property &quot;scatterTreatment&quot; must be &quot;not applied&quot;. Otherwise, the function returns a validation error. Upon completion, the status of the dataset is changed to &quot;applied by toolbox&quot;.</p>
@@ -438,7 +438,7 @@ negativetozero: 1
 <li><strong>cutout:</strong> Specify which scatter to cut from the data in the following order: [Ray1 Ram1 Ray2 Ram2]. To cut choose <code>1</code> and to leave out choose <code>0</code>. Default values are <code>[1 1 1 1]</code> 
 <br>
 <br></li>
-<li><strong>interpolate:</strong> Specifies whether to interpolate over the cut scatter regions. <code>1</code> indicates interpolation, <code>0</code> indicates no interpolation over the specified scatter in the following order for scatters:[Ray1 Ram1 Ray2 Ram2]. Default values are <code>[0 1 1 1]</code>
+<li><strong>interpolate:</strong> Specifies whether to interpolate over the cut scatter regions. <code>1</code> indicates interpolation, <code>0</code> indicates no interpolation over the specified scatter in the following order for scatters:[Ray1 Ram1 Ray2 Ram2]. Default values are <code>[0 0 0 0]</code>
 <br>
 <br></li>
 <li><strong>ray1:</strong> Specifies the range around the 1st Rayleigh scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[10 10]</code>.
@@ -462,13 +462,13 @@ negativetozero: 1
 <li><strong>imethod:</strong> Specifies the interpolation method to use for filling cut scatters.<code>&#39;inpaint&#39;</code> uses an inpainting algorithm, <code>&#39;fillmissing&#39;</code> uses MATLAB&#39;s fillmissing function. &#39;<code>inpaint&#39;</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. &#39;<code>inpaint&#39;</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>fillmissing</code> options fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>inpaint</code>.
 <br>
 <br></li>
-<li><strong>negativetozero:</strong> Specifies whether to convert all negative values in the data to <code>zero</code>. It is useful for ensuring non-negative data values. Default is <code>&#39;on&#39;</code>.
+<li><strong>negativetozero:</strong> Specifies whether to convert all negative values in the data to <code>zero</code>. It is useful for ensuring non-negative data values. Default is <code>true</code>.
 <br>
 <br></li>
-<li><strong>plot:</strong> Specifies whether to plot the raw, cut, and final Excitation-Emission Matrices (EEMs). <code>&#39;on&#39;</code> enables plotting, <code>&#39;off&#39;</code> disables it. NOTE: Plots will always be shown for all samples, but simply closing the window will terminate plotting and return the smoothed data.
+<li><strong>plot:</strong> Specifies whether to plot the raw, cut, and final Excitation-Emission Matrices (EEMs). <code>true</code> enables plotting, <code>false</code> disables it. NOTE: If <code>true</code> is set, plots will always loop through all samples if desired, but prematurely closing the window will terminate plotting and return the smoothed data.
 <br>
 <br></li>
-<li><strong>samples:</strong> Specifies which samples to process. <code>&#39;all&#39;</code> means process all samples. A numeric vector specifies which samples to process, for example <code>[2 3 4 5]</code>, will only apply the function on samples <code>2</code> to <code>5</code>. Default is <code>&#39;all&#39;</code>..
+<li><strong>samples:</strong> Specifies which samples to process. <code>&#39;all&#39;</code> means process all samples. A numeric vector specifies which samples to process, for example <code>[2 3 4 5]</code>, will only apply the function on samples <code>2</code> to <code>5</code>. Default is <code>&#39;all&#39;</code>.
 <br>
 <br></li>
 <li><strong>plottype:</strong> Specifies the type of plot to display when plotting is enabled. Options are <code>&#39;mesh&#39;</code>, <code>&#39;surface&#39;</code>, or <code>&#39;contourf&#39;</code>. Default is <code>mesh</code>.</li>
@@ -487,7 +487,7 @@ negativetozero: 1
 
 <p><details open>
     <summary><b><code>dataout = handlescatter(data, &#39;gui&#39;)</code> - GUI decision support</b></summary>
-    <a name="syntax1"></a>
+    <a name="syntax2"></a>
 <a name="syntax2"></a></p>
 
 <p>Running <code>handlescatter</code> with <code>gui</code> options opens up the <code>viewscatter</code> user interface app. The interface allows users to apply settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.
@@ -538,7 +538,7 @@ Interface Components include:</p>
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>scatteroptions = handlescatter(&#39;options&#39;)</code> - Retreive option structure for modification</b></summary>
+    <summary><b><code>scatteroptions = handlescatter(&#39;options&#39;)</code> - Retrieve option structure for modification</b></summary>
     <a name="syntax4"></a></p>
 
 <p>Obtains the default <code>options</code> of the function and save them in <code>scatteroptions</code>. These can be modified and later passed down to function by calling <code>data = handlescatter(data, scatteroptions)</code>.</p>
@@ -547,7 +547,7 @@ Interface Components include:</p>
 
 <h2 id="toc_3">Examples</h2>
 
-<p>Retreive and modify options to apply them:</p>
+<p>Retrieve and modify options to apply them:</p>
 
 <div><pre><code class="language-none">scatteroptions = handlescatter(&#39;options&#39;);
 scatteroptions.ray1 = [25 15];
@@ -573,9 +573,8 @@ dataout = handlescatter(data, scatteroptions);</code></pre></div>
 <p></details></p>
 
 <p><details open>
-<summary><b><code>options</code> - function mode switch (apply or retreive options or start GUI)</b></summary>
-    <i>char | handlescatterOptions</i>
-    </summary></p>
+<summary><b><code>options</code> - function mode switch (apply or retrieve options or start GUI)</b></summary>
+    <i>char | handlescatterOptions</i></p>
 
 <p>This variable serves multiple purposes and is thus best described as a mode switch.</p>
 

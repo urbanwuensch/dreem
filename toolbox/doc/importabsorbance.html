@@ -389,11 +389,11 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>dataout = importabsorbance(filePattern)</code></a></p>
+<p><a href="#syntax1"><code>data = importabsorbance(filePattern)</code></a></p>
 
-<p><a href="#syntax3"><code>dataout = importabsorbance(filePattern,status)</code></a></p>
+<p><a href="#syntax3"><code>data = importabsorbance(filePattern,status)</code></a></p>
 
-<p><a href="#syntax2"><code>dataout = importabsorbance( ___ , Name,Value)</code></a></p>
+<p><a href="#syntax2"><code>data = importabsorbance( ___ , Name,Value)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
@@ -407,7 +407,7 @@ details:open > summary {
 
 <p><details open>
 <summary><b>
-<code>dataout = importabsorbance(filePattern)</code> - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
+<code>data = importabsorbance(filePattern)</code> - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
 </summary>
 <a name="syntax1"></a><br></p>
 
@@ -429,7 +429,7 @@ details:open > summary {
 
 <p><details open>
 <summary><b>
-<code>dataout = importabsorbance(filePattern,status)</code> - explicitly supply processing status</b>
+<code>data = importabsorbance(filePattern,status)</code> - explicitly supply processing status</b>
 </summary>
 <a name="syntax3"></a></p>
 
@@ -445,13 +445,13 @@ details:open > summary {
     &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
     absorbanceUnit=&#39;absorbance per cm&#39;);
 
-blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status);</code></pre></div>
+blanks=tbx.importabsorbance(&quot;* - Abs Spectra Graphs.dat&quot;,blanks_status);</code></pre></div>
 
 <p></details></p>
 
 <p><details open>
 <summary><b>
-<code>dataout = importabsorbance([ ___ ], Name,Value)</code> - custom options</b>
+<code>data = importabsorbance([ ___ ], Name,Value)</code> - custom options</b>
 </summary>
 <a name="syntax2"></a></p>
 
@@ -463,11 +463,11 @@ blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status)
 
 <p><strong>Horiba AquaLog exported .dat-files:</strong></p>
 
-<p><code>absorbance = tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;);</code></p>
+<p><code>absorbance = tbx.importabsorbance(&quot;* - Abs Spectra Graphs.dat&quot;);</code></p>
 
 <p><strong>csv-export of data from spectrophotometer software:</strong></p>
 
-<p><code>absorbance = tbx.importabsorbance(&quot;.csv&quot;,waveColumn=1,absColumn=2);</code></p>
+<p><code>absorbance = tbx.importabsorbance(&quot;*.csv&quot;,waveColumn=1,absColumn=2);</code></p>
 
 <h2 id="toc_4">Input arguments</h2>
 
@@ -520,15 +520,14 @@ blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status)
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>AbsorbanceColumn</code>- which column of data contains absorbance data data</b></summary>
+    <summary><b><code>absColumn</code>- which column of data contains absorbance data</b></summary>
     <i>numeric</i></p>
 
 <p>Specify which column of data in the measurement files contains the absorbance data. </p>
 
-<p>Default is column <code>10</code>.
-</details></p>
+<p>Default is column <code>10</code>.</p>
 
-<p>Example: <code>&#39;AbsorbanceColumn&#39;, 10</code> if the tenth column contains the absorbance data.</p>
+<p>Example: <code>&#39;absColumn&#39;, 10</code> if the tenth column contains the absorbance data.</p>
 
 <p></details></p>
 
@@ -550,7 +549,7 @@ blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status)
     <summary><b><code>data</code> - contains CDOM spectra </b></summary>
     <i>drEEMdataset</i></p>
 
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
 The absorbance data is stored using the properties <code>.abs</code>, <code>.absWave</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
 
 <p></details></p>

@@ -25,9 +25,9 @@ In large datasets, the quality inspection of every EEM can take a long time. `rm
 `rmspikes` performs an analysis that estimates the baseline noise level across the dataset. The analysis sequence is as follows:
 
 * The dataset is replicated four times. In each copy, every 2nd excitation or emission scan is NaN'ed. Once starting at the first, then at the second scan.
-* The missing data in each copy is replaced with a 2D-inpaiting algorithm ([`inpaint_nans`](https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans)).
+* The missing data in each copy is replaced with a 2D-inpainting algorithm ([`inpaint_nans`](https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans)).
 * The difference between the original and interpolated EEMs is calculated for each copy. The differences are accumulated in one 3D array.
-* A threshold matrix is calculated based on the median difference between observed and interpolated. Since data tends to get noisier toward the UV in the excitation direction, the noise floor estimate is transformed into a vector along the excitation direction (noise along the emission is thus assumed to not change with wavelength). The vector is transformed by multiplication with the square root to make the method more sensitive in the UV. The vector is then transformed back into a matrix with `repmat`. `thresholdFactor` is multiplied onto this matrix to saveguard against excessive flagging.
+* A threshold matrix is calculated based on the median difference between observed and interpolated. Since data tends to get noisier toward the UV in the excitation direction, the noise floor estimate is transformed into a vector along the excitation direction (noise along the emission is thus assumed to not change with wavelength). The vector is transformed by multiplication with the square root to make the method more sensitive in the UV. The vector is then transformed back into a matrix with `repmat`. `thresholdFactor` is multiplied onto this matrix to safeguard against excessive flagging.
 * For points in the EEM where the difference between interpolated and observed data exceeds the threshold matrix, the data is NaN'ed
 * If interpolation is enabled, the removed data is finally replaced with a 2D interpolation guess.
 
@@ -104,7 +104,7 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
     <summary><b>`thresholdFactor `- sensitivity to excessive noise (sample by sample)</b></summary>
     <i>numeric</i>
 
-Adjust the sensitivity of the spike detection. A lower values means more sensitivity. 
+Adjust the sensitivity of the spike detection. A lower values results in more sensitivity. 
 
 Default is `10`. 
 
@@ -137,7 +137,7 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`details `- switch to enable diangostics plots (sample by sample)</b></summary>
+    <summary><b>`details `- switch to enable diagnostics plots (sample by sample)</b></summary>
     <i>logical</i>
 
 detailed diagnostic plots each sample. This plot depicts original and final EEMs, original EEM with marked removal points and, finally, the difference between original data and smoothed data.
@@ -149,7 +149,7 @@ Default is `false`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
 If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
@@ -158,7 +158,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving)
 
 </details>
 

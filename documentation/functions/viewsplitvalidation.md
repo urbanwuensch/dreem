@@ -7,7 +7,7 @@ Visualize a split validation on a specific model present in data.
 
 ## Syntax
 
-	dataout = viewsplitvalidation(data, fac,Name,Value)
+	viewsplitvalidation(data, fac,Name,Value)
 
 ## Description
 
@@ -41,7 +41,7 @@ PARAFAC models should be present in the overall dataset and all splits for full 
 
 
 <details open>
-    <summary><b>`fac` - number of PARAFAC compoents in the validated model</b></summary>
+    <summary><b>`fac` - number of PARAFAC components in the validated model</b></summary>
     <i>numeric</i>
         
 Specifies the number of components in the model you wish to validate.

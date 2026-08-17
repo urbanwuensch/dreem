@@ -45,13 +45,13 @@ specifies additional options using one or more [name-value](#NameValue) pair arg
 Please refer to the [Name,Value](#NameValue) section to see the defaults for optional arguments. In the examples, some defaults are used. To make this clear, the full function call with redundant arguments is shown below (redundant since default).
 
 1. Randomly split into `4` subsets:
-`data=splitdataset(data,"blind","numsplit",4,"blindType"="random")`
+`data=splitdataset(data,"blind","numSplit",4,"blindType"="random")`
 
  
 2. Split the dataset into 3 subsets using alternating splitting:
-`data=splitdataset(data,"blind", "numsplit", 3,);`
+`data=splitdataset(data,"blind", "numSplit", 3);`
 Is the same as:
-`data=splitdataset(data,"blind","numsplit",3,"blindType"="alternating")`
+`data=splitdataset(data,"blind","numSplit",3,"blindType"="alternating")`
 
 3. Split the dataset exactly according to `SampleType` in metadata:
 `data=splitdataset(data,"byMetadata",metadataColumn="SampleType")` 
@@ -72,7 +72,7 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
     <summary><b>`splitType`- switch between "blind" and "byMetadata"</b></summary>
     <i>text</i>
  
- With this argument, yo specifically state whether a blind split (no information) should be performed, or whether the splitting operation is informed by metadata.
+ With this argument, you specifically state whether a blind split (no information) should be performed, or whether the splitting operation is informed by metadata.
  
  If `"byMetadata"` is specified, the option "metadataColumn" *must* also be specified. Otherwise, an error will be displayed.
 
@@ -96,9 +96,9 @@ When `splitType="blind"`, use this option to specify how the splits should be as
     <summary><b>`metadataColumn`- metadata to use for split assignment</b></summary>
     <i>text</i>
  
-Specifies a column in `data.metadata` to sort `data` before splitting. Must be a valid metadata column name that exists in `data.metadata`. <br>Note: When `bysort` is provided, the `stype` must be set to `"exact"`. <br>
+Specifies a column in `data.metadata` to sort `data` before splitting. Must be a valid metadata column name that exists in `data.metadata`.
 
-If `metadataColumn` is provided as optional input, it takes precedent over `splitType`, i.e. you can but don't have to set `splitType="byMetadata"` (a message will be displayed to inform you that the toolbox has interpreted your intention).
+If `metadataColumn` is provided as optional input, it takes precedence over `splitType`, i.e. you can but don't have to set `splitType="byMetadata"` (a message will be displayed to inform you that the toolbox has interpreted your intention).
 
 Default is `[]`, since `splitType="blind"` by default.
 

@@ -383,16 +383,16 @@ details:open > summary {
 
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
 
-<h1 id="toc_0">The dataset status</h1>
+<h1 id="toc_0">drEEMstatus</h1>
 
 <p>Since version 2.0.0, drEEM keeps a detailed record of operations it performs on a dataset. To be able to do this meaningful, the toolbox first needs to know some details about your dataset. After that, it can assist as much as possible with doing things properly. And the best thing is that since it knows about your dataset, it can document the dataset details and fully prepare your dataset for an Open Science repository such as Pangaea.</p>
 
 <p>How do we do this? <strong><em>With the <code>drEEMstatus</code> property.</em></strong></p>
 
-<p>It is one one of the properties (i.e. a field in a Matlab structure) of the <a href="dreemdataset.html"><code>drEEMdataset</code></a> object, so you&#39;ll find a status field in each dataset you&#39;ll work with.</p>
+<p>It is one of the properties (i.e. a field in a Matlab structure) of the <a href="dreemdataset.html"><code>drEEMdataset</code></a> object, so you&#39;ll find a status field in each dataset you&#39;ll work with.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The status property of each dataset is protected. It can only be changed with the <a href="changestatus.html"><code>changestatus</code></a> GUI during import or by the appropriate drEEM functions that modify the data and thus need to modify the dataset status. This is to support tracability.</p>
+<p><strong>Note:</strong> The status property of each dataset is protected. It can only be changed with the <a href="changestatus.html"><code>changestatus</code></a> GUI during import or by the appropriate drEEM functions that modify the data and thus need to modify the dataset status. This is to support traceability.</p>
 </blockquote>
 
 <p>The changestatus GUI looks as follows: 
@@ -414,7 +414,7 @@ details:open > summary {
 <li>applied by toolbox</li>
 </ul>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.hmtl"><code>importeems</code></a>, the default value is changed to <code>applied by instrument software</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="html"><code>importeems</code></a>, the default value is changed to <code>applied by instrument software</code>.</p>
 
 <p></details></p>
 
@@ -433,7 +433,7 @@ details:open > summary {
 <li>deemed unnecessary</li>
 </ul>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.hmtl"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
 
 <p></details></p>
 
@@ -451,7 +451,7 @@ details:open > summary {
 <li>applied by toolbox</li>
 </ul>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.hmtl"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
 
 <p></details></p>
 
@@ -471,7 +471,7 @@ details:open > summary {
 <li>applied by toolbox (QSU)</li>
 </ul>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.hmtl"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
 
 <p></details></p>
 
@@ -489,7 +489,7 @@ details:open > summary {
 <li>applied by toolbox</li>
 </ul>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.hmtl"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
 
 <p></details></p>
 
@@ -500,13 +500,13 @@ details:open > summary {
 
 <p>This property is not restricted to a set of possibilities since signal scaling comes in many forms.</p>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.hmtl"><code>importeems</code></a>, the default value is changed to <code>orignal scale</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>original scale</code>.</p>
 
 <p></details></p>
 
 <p><details open>
 <summary>
-<strong>Absorbance Unit:</strong> In which unit is the absorbanc data stored?
+<strong>Absorbance Unit:</strong> In which unit is the absorbance data stored?
 </summary>
 Possible values are:</p>
 
@@ -515,11 +515,11 @@ Possible values are:</p>
 <li>absorbance per cm</li>
 <li>absorbance per 5 cm</li>
 <li>absorbance per 10 cm</li>
-<li>Napierian absorption coefficient</li>
-<li>Linear decadic absorption coefficient</li>
+<li>napierian absorption coefficient</li>
+<li>linear decadic absorption coefficient</li>
 </ul>
 
-<p><strong>Default is <code>unknown</code></strong>, but during <a href="importabsorbance.html"><code>importabsorbance</code></a>, the default value is changed to <code>not applied</code>.</p>
+<p><strong>Default is <code>unknown</code></strong>, but during <a href="importabsorbance.html"><code>importabsorbance</code></a>, the default value is changed to <code>absorbance per cm</code>.</p>
 
 <p></details></p>
 

@@ -389,7 +389,7 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>validatedataset(dataset)</code></a> </p>
+<p><code>validatedataset(data)</code></p>
 
 <h2 id="toc_2">Description</h2>
 
@@ -408,10 +408,17 @@ details:open > summary {
 
 <p>If no errors were found and the function was called from the <code>drEEMtoolbox</code>, a success message is displayed.</p>
 
-<h2 id="toc_3">Input arguments</h2>
+<h2 id="toc_3">Examples</h2>
+
+<ol>
+<li>Check if a dataset is a valid drEEM dataset.
+<code>tbx.validatedataset(samples)</code></li>
+</ol>
+
+<h2 id="toc_4">Input arguments</h2>
 
 <p><details>
-    <summary><b><code>dataout</code> - a drEEMdataset</b></summary>
+    <summary><b><code>data</code> - a drEEMdataset</b></summary>
     <i>drEEMdataset</i></p>
 
 <p>A dataset of the class <code>drEEMdataset</code> that will be evaluated with the validation function.</p>

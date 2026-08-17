@@ -404,7 +404,7 @@ details:open > summary {
 
 <ul>
 <li>If a single wavelength is given, the average absorbance <em>above</em> the value <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
-<li>If two wavelength values are give, the average absorbance <em>between</em> both values <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
+<li>If two wavelength values are given, the average absorbance <em>between</em> both values <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
 </ul></li>
 <li>extrapolating the longer wavelength (needed for inner filter effects correction). This is done via the exponential slope that is fitted to the existing data and then extracted to the longest wavelength in the EEM (excitation or emission). Note that this extrapolation will only work well for CDOM spectra. If non-CDOM-type absorbance above 300 nm is found, the method will produce invalid results.</li>
 <li>Replacing negative values with zeroes. This option is not intended to improve the quality of CDOM spectra but only to avoid IFE correction artefacts.</li>
@@ -426,7 +426,7 @@ If no option is specified, the function will perform a baseline correction and a
 <summary><b><code>dataout = processabsorbance(___ , Name,Value)</code> - perform corrections as specified with custom options</b>
 </summary>
 <a name="syntax2"></a>
-specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if a baseline correction must be performed, and whether the absorbance data must be extrapolate or not. <br>
+specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if a baseline correction must be performed, and whether the absorbance data must be extrapolated or not. <br>
 Example: <code>data = processabsorbance(data,&#39;correctBase&#39;,false)</code> to skip the baseline correction step. </p>
 
 <p></details></p>
@@ -521,7 +521,7 @@ Default is <code>false</code>.</p>
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
 <p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
@@ -530,7 +530,7 @@ Default is <code>false</code>.</p>
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
 
 <p></details></p>
 

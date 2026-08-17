@@ -395,9 +395,7 @@ details:open > summary {
 
 <p><a href="#syntax3"><code>dataout = associatemetadata(data, metadataTable, metadatakey, datakey)</code></a></p>
 
-<p><a href="#syntax4"><code>associatemetadata(data, filename, metadatakey, datakey)</code></a></p>
-
-<p><a href="#syntax4"><code>associatemetadata(data, metadataTable, metadatakey, datakey)</code></a></p>
+<p><a href="#syntax4"><code>associatemetadata(data, ___)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
@@ -435,7 +433,7 @@ If no output argument is specified, the function overwrites the original object 
 <p></details></p>
 
 <p><details open>
-<summary><b><code>dataout = associatemetadata(data, metadataTable, metadatakey)</code>- provide table variable</b></summary>
+<summary><b><code>dataout = associatemetadata(data, metadataTable, metadatakey,datakey)</code>- provide table variable</b></summary>
 <a name="syntax3"></a></p>
 
 <p><code>metadataTable</code> is a variable of the class table that exists in the workspace. This can be useful if a table needed modification prior to associating it with the metadata table. The default syntax with <code>filename</code> will make <code>associatemetadata</code> load the table itself, whereas providing <code>metadataTable</code> will assume that a table is handed to the function.</p>
@@ -443,11 +441,9 @@ If no output argument is specified, the function overwrites the original object 
 <p></details></p>
 
 <p><details open>
-<summary><b><code>associatemetadata(data, metadataTable, metadatakey)</code>- diagnostic mode</b></summary></p>
+<summary><b><code>associatemetadata(data,___)</code>- diagnostic mode</b></summary></p>
 
-<p>Also <code>associatemetadata(data, metadataTable, metadatakey, datakey)</code><a name="syntax4"></a></p>
-
-<p>With this syntax (by providing no output arguments), the function runs in diagnostic mode. It will simply return statistics on how many of the table rows and drEEMdataset variables have been associated sucessfully. If the number is lower than expected, you should investigate, fix the issues, and re-run the function.</p>
+<p>With this syntax (<strong>by providing no output arguments</strong>), the function runs in diagnostic mode. It will simply return statistics on how many of the table rows and drEEMdataset variables have been associated successfully. If the number is lower than expected, you should investigate, fix the issues, and re-run the function.</p>
 
 <p></details></p>
 

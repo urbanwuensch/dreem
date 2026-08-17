@@ -397,9 +397,9 @@ details:open > summary {
 
 <p>The <code>fitpca</code> function uses a principal component analysis to the fluorescence EEMs provided in <code>data</code>. The models are saved in <code>data.models</code>. </p>
 
-<p>Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions. The EEM is thus transformed to a matrix with the dimensions <code>[data.nSample,data.nEm*data.nEm]</code>. </p>
+<p>Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions). The EEM is thus transformed to a matrix with the dimensions <code>[data.nSample,data.nEm*data.nEx]</code>. </p>
 
-<p>PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so your origial data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.</p>
+<p>PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so the origial data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.</p>
 
 <p>Results can be inspected with the <code>viewmodels</code> GUI.</p>
 
@@ -416,7 +416,7 @@ details:open > summary {
 
 <p>Note that since PCA models are nested, there is only one model present with <code>maxcomp</code> components (default = 5).</p>
 
-<p>An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the  options used for <code>fitparafac</code>. 
+<p>An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the  options used for <code>fitpca</code>. 
 <details open>
     <summary><b><code>dataout = fitpca(data)</code> - Default options</b></summary>
     <a name="syntax1"></a></p>
@@ -473,10 +473,10 @@ The interpolation happens with a 2D inpainting algorithm.</p>
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>delteLow</code> - should low-intensity samples be deleted?</b></summary>
+    <summary><b><code>deleteLow</code> - should low-intensity samples be deleted?</b></summary>
     <i> logical </i></p>
 
-<p>If present, low-intensity samples can distract PCA from fitting meaningful components. This option will delete samples that have less than 5 x the median overall fluorescence (sum).</p>
+<p>If present, low-intensity samples can distract PCA from fitting meaningful components. This option will delete samples that have less than 1/5th the median overall fluorescence (sum).</p>
 
 <p></details></p>
 

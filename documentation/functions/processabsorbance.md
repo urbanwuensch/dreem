@@ -19,7 +19,7 @@ The `processabsorbance` function reads `absorbance` values from `data` and perfo
 
 * baseline correction.
 	- If a single wavelength is given, the average absorbance _above_ the value [`baseWave`](#NameValue) are subtracted.
-	- If two wavelength values are give, the average absorbance _between_ both values [`baseWave`](#NameValue) are subtracted.
+	- If two wavelength values are given, the average absorbance _between_ both values [`baseWave`](#NameValue) are subtracted.
 * extrapolating the longer wavelength (needed for inner filter effects correction). This is done via the exponential slope that is fitted to the existing data and then extracted to the longest wavelength in the EEM (excitation or emission). Note that this extrapolation will only work well for CDOM spectra. If non-CDOM-type absorbance above 300 nm is found, the method will produce invalid results.
 * Replacing negative values with zeroes. This option is not intended to improve the quality of CDOM spectra but only to avoid IFE correction artefacts.
 
@@ -41,7 +41,7 @@ When the processing is finished, the function will plot the original absorbance 
 <summary><b>`dataout = processabsorbance(___ , Name,Value)` - perform corrections as specified with custom options</b>
 </summary>
 <a name="syntax2"></a>
-specifies additional options using one or more [name-value](#NameValue) pair arguments. For example, you can specify if a baseline correction must be performed, and whether the absorbance data must be extrapolate or not. <br>
+specifies additional options using one or more [name-value](#NameValue) pair arguments. For example, you can specify if a baseline correction must be performed, and whether the absorbance data must be extrapolated or not. <br>
 Example: `data = processabsorbance(data,'correctBase',false)` to skip the baseline correction step. 
 
 </details>
@@ -140,7 +140,7 @@ Default is `true`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
 If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
@@ -149,7 +149,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving)
 
 </details>
 

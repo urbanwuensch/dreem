@@ -15,7 +15,7 @@ The function `viewhistory` opens up the drEEM viewhistory app that contains a su
 
 Functions that appear more than once are color-coded for easier navigation through the list.
 
-Hovering over any cell will show the detailed content of the cell if their length exceed the cell's space.
+Hovering over any cell will show the detailed content of the cell if their length exceeds the cell's space.
 
 Use the `Save list as spreadsheet` button to export the history in `.ods` (OpenDocument Spreadsheet) file format. The exported spreadsheet will contain all the history fields, timestamps, function names, user comments, and function messages.
 

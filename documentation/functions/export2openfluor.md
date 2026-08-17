@@ -8,7 +8,7 @@ Export a PARAFAC model to text file formatted for OpenFluor.
 
 ## Description
 
-The `export2openfluor` function exports the excitation and emission loadings of a parafac model, specified by the number of components, `f`, from `data.models` to a text file formatted for OpenFluor. If wavelengths are not whole numbers (integers) the function ensures the data is interpolated using a spline method to fit the new wavelength ranges. The function ensures the data properly formatted before writing it to the specified `filename`.
+The `export2openfluor` function exports the excitation and emission loadings of a PARAFAC model, specified by the number of components, `f`, from `data.models` to a text file formatted for OpenFluor. If wavelengths are not whole numbers (integers) the function ensures the data is interpolated using a spline method to fit the new wavelength ranges. The function also ensures the data is a valid drEEMdataset before writing it to the specified `filename`.
 
 ## Examples
 

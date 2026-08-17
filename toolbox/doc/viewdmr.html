@@ -385,11 +385,11 @@ details:open > summary {
 
 <h1 id="toc_0">viewdmr</h1>
 
-<p>Visualize the raw data, modeled data, and residual EEM plots for every sample in each parafac model.</p>
+<p>Visualize the raw data, modeled data, and residual EEM plots for every sample in each PARAFAC model.</p>
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>viewdmr(data,Name,Value)</code></a></p>
+<p><code>viewdmr(data,Name,Value)</code></p>
 
 <h2 id="toc_2">Description</h2>
 
@@ -419,16 +419,16 @@ details:open > summary {
 <a name="NameValue"></a></p>
 
 <p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
 <p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
 
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewcompcorr</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewcompcorr.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewcompcorr.jpg&quot;.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewdmr</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewdmr.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewcompcorr.jpg&quot;.</p>
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
 
 <p></details></p>
 

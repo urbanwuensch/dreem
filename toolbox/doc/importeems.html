@@ -412,7 +412,7 @@ details:open > summary {
 <a name="syntax1"></a><br>
 returns a drEEMdataset class object that contains fluorescence EEMs and their associated information.</p>
 
-<p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore these and focus on the property the remainder of the fields.</p>
+<p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore these and focus on the property for the remainder of the fields.</p>
 
 <p><img src="newfldata.png" width="auto" height="auto" align="center"/></p>
 
@@ -424,7 +424,7 @@ returns a drEEMdataset class object that contains fluorescence EEMs and their as
 
 <p><details open>
 <summary><b>
-<code>dataout = importeems(filePattern,status)</code> - custom options</b>
+<code>dataout = importeems(filePattern,status)</code> - explicitly supply processing status</b>
 </summary>
 <a name="syntax3"></a></p>
 
@@ -440,9 +440,7 @@ returns a drEEMdataset class object that contains fluorescence EEMs and their as
     &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
     absorbanceUnit=&#39;absorbance per cm&#39;);
 
-blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status);</code></pre></div>
-
-<p></details></p>
+blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;&quot;,blanks_status);</code></pre></div>
 
 <p></details></p>
 
@@ -452,14 +450,14 @@ blanks=tbx.importabsorbance(&quot; - Abs Spectra Graphs.dat&quot;,blanks_status)
 </summary>
 <a name="syntax2"></a></p>
 
-<p>Custom options are specifed with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orentation of the EEM, or the wavelength vector if it is not given in each file.</p>
+<p>Custom options are specifed with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orientation of the EEM, or the wavelength vector if it is not given in each file.</p>
 
 <p></details></p>
 
 <h2 id="toc_3">Examples</h2>
 
 <p><strong>Horiba AquaLog:</strong>
-<code>blanks = tbx.importeems(&quot; - Waterfall Plot Blank.dat&quot;);</code></p>
+<code>blanks = tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;);</code></p>
 
 <p><strong>Horiba FluoroMax:</strong>     <code>blanks=tbx.importeems(&#39;*.dat&#39;,&#39;columnIsExcitation&#39;,true,&#39;columnWave&#39;,240:10:450);</code></p>
 

@@ -13,9 +13,9 @@ Fit PCA models to fluorescence data.
 
 The `fitpca ` function uses a principal component analysis to the fluorescence EEMs provided in `data`. The models are saved in `data.models`. 
 
-Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions. The EEM is thus transformed to a matrix with the dimensions `[data.nSample,data.nEm*data.nEm]`. 
+Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions). The EEM is thus transformed to a matrix with the dimensions `[data.nSample,data.nEm*data.nEx]`. 
 
-PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so your origial data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.
+PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so the origial data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.
 
 Results can be inspected with the `viewmodels` GUI.
 
@@ -30,7 +30,7 @@ PCA in the way fitted here cannot handle missing data. We therefore:
 
 Note that since PCA models are nested, there is only one model present with `maxcomp` components (default = 5).
 
-An entry will be added to the `history` field of the `data`, detailing the  options used for `fitparafac`. 
+An entry will be added to the `history` field of the `data`, detailing the  options used for `fitpca`. 
 <details open>
     <summary><b>`dataout = fitpca(data)` - Default options</b></summary>
     <a name="syntax1"></a>
@@ -91,10 +91,10 @@ The interpolation happens with a 2D inpainting algorithm.
 </details>
 
 <details open>
-    <summary><b>`delteLow` - should low-intensity samples be deleted?</b></summary>
+    <summary><b>`deleteLow` - should low-intensity samples be deleted?</b></summary>
     <i> logical </i>
 
-If present, low-intensity samples can distract PCA from fitting meaningful components. This option will delete samples that have less than 5 x the median overall fluorescence (sum).
+If present, low-intensity samples can distract PCA from fitting meaningful components. This option will delete samples that have less than 1/5th the median overall fluorescence (sum).
 
 </details>
 

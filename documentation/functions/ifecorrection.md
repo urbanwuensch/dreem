@@ -23,7 +23,7 @@ Additional settings can be changed with the [name-value](#NameValue) pair notati
 
 > Reference: Parker, C. A.; Barnes, W. J., Some experiments with spectrofluorimeters and filter fluorimeters. Analyst 1957, 82, 606-618.
 
-A inner-filter effect correction matrix will be calculated for every sample. For inspection purposes, the function will show the average correction matrix:
+An inner-filter effect correction matrix will be calculated for every sample. For inspection purposes, the function will show the average correction matrix:
 
 <img src="ifcmatrix.png" width="auto" height="auto" align="center"/>
 
@@ -39,7 +39,7 @@ An entry will be added to the `history` field of the `data`, detailing the proce
 </details>
 
 <details open>
-    <summary><b>`ifecorrection(data)` - diagnostic mode</b></summary>
+    <summary><b>`ifecorrection(data,Name,Value)` - diagnostic mode</b></summary>
 <a name="syntax2"></a>
 
 By not supplying an output argument, the function will run in diagnostic mode. IFEs will be calculated and the average IFE will be shown, but the IFE correction will not be applied to the dataset.
@@ -47,7 +47,7 @@ By not supplying an output argument, the function will run in diagnostic mode. I
 </details>
 
 
-## Input arguments ##
+## Input arguments
 <details>
     <summary><b>`data` - dataset with fluorescence and absorbance data</b></summary>
     <i>drEEMdataset</i>
@@ -72,7 +72,6 @@ Default is `true`.
 
 </details>
 
-</details>
 
 <details open>
     <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
@@ -84,7 +83,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving)
 
 </details>
 

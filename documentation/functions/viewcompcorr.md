@@ -1,7 +1,7 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 
 # viewcompcorr #
-Investigate the correlations between scores of different components in parafac models.
+Investigate the correlations between scores of different components in PARAFAC models.
 
 
 ## Syntax
@@ -10,7 +10,7 @@ Investigate the correlations between scores of different components in parafac m
 
 ## Description
 
-The function `viewcompcorr` opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled base on the information stored in metadata columns.
+The function `viewcompcorr` opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information stored in metadata columns.
 This app can also be opened from the `view correlations vs. metadata` button in the `Score Correlation` tab of the `viewmodels` app.
 
 

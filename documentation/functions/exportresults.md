@@ -1,10 +1,10 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 # exportresults
-Export the results from a PARAFAC or PCA model to a spreadheet file. This includes a comprehensive description of the dataset.
+Export the results from a PARAFAC or PCA model to a spreadsheet file. This includes a comprehensive description of the dataset.
 
 ## Syntax
 
-`exportresults (data, f, filename)`
+`exportresults(data, f, filename)`
 
 ## Description
 

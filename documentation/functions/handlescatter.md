@@ -10,12 +10,12 @@ Excise and treat Excitation-Emission Matrix (EEM) scatter and optionally interpo
 
 [`dataout = handlescatter(data, 'gui')`](#syntax2)
 
-[`dataout = handlescatter(data, options`)](#syntax3)
+[`dataout = handlescatter(data, options)`](#syntax3)
 
 [`scatteroptions = handlescatter('options')`](#syntax4)
 
 ## Description ##
-The function `handlescatter` handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to `zero` at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no `options` is provided as input, the function will use the default `options` for its processing. That include cutting out all the four scatters from all samples and no interpolation. See Input arguments section for `options` default values.
+The function `handlescatter` handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to `zero` at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no `options` is provided as input, the function will use the default `options` for its processing. That includes cutting out all the four scatters from all samples and no interpolation. See Input arguments section for `options` default values.
 
 >**Important:** The status-property "scatterTreatment" must be "not applied". Otherwise, the function returns a validation error. Upon completion, the status of the dataset is changed to "applied by toolbox".
 
@@ -49,7 +49,7 @@ The function uses a defined class `handlescatterOptions` for all settings. A cop
 - <strong>cutout:</strong> Specify which scatter to cut from the data in the following order: [Ray1 Ram1 Ray2 Ram2]. To cut choose `1` and to leave out choose `0`. Default values are `[1 1 1 1]` 
 <br>
 <br>
-- <strong>interpolate:</strong> Specifies whether to interpolate over the cut scatter regions. `1` indicates interpolation, `0` indicates no interpolation over the specified scatter in the following order for scatters:[Ray1 Ram1 Ray2 Ram2]. Default values are `[0 1 1 1]`
+- <strong>interpolate:</strong> Specifies whether to interpolate over the cut scatter regions. `1` indicates interpolation, `0` indicates no interpolation over the specified scatter in the following order for scatters:[Ray1 Ram1 Ray2 Ram2]. Default values are `[0 0 0 0]`
 <br>
 <br>
 - <strong>ray1:</strong> Specifies the range around the 1st Rayleigh scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is `[10 10]`.
@@ -73,13 +73,13 @@ The function uses a defined class `handlescatterOptions` for all settings. A cop
 - <strong>imethod:</strong> Specifies the interpolation method to use for filling cut scatters.`'inpaint'` uses an inpainting algorithm, `'fillmissing'` uses MATLAB's fillmissing function. '`inpaint'` applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. '`inpaint'` uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. `fillmissing` options fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in `handlescatter` is `inpaint`.
 <br>
 <br>
-- <strong>negativetozero:</strong> Specifies whether to convert all negative values in the data to `zero`. It is useful for ensuring non-negative data values. Default is `'on'`.
+- <strong>negativetozero:</strong> Specifies whether to convert all negative values in the data to `zero`. It is useful for ensuring non-negative data values. Default is `true`.
 <br>
 <br>
-- <strong>plot:</strong> Specifies whether to plot the raw, cut, and final Excitation-Emission Matrices (EEMs). `'on'` enables plotting, `'off'` disables it. NOTE: Plots will always be shown for all samples, but simply closing the window will terminate plotting and return the smoothed data.
+- <strong>plot:</strong> Specifies whether to plot the raw, cut, and final Excitation-Emission Matrices (EEMs). `true` enables plotting, `false` disables it. NOTE: If `true` is set, plots will always loop through all samples if desired, but prematurely closing the window will terminate plotting and return the smoothed data.
 <br>
 <br>
-- <strong>samples:</strong> Specifies which samples to process. `'all'` means process all samples. A numeric vector specifies which samples to process, for example `[2 3 4 5]`, will only apply the function on samples `2` to `5`. Default is `'all'`..
+- <strong>samples:</strong> Specifies which samples to process. `'all'` means process all samples. A numeric vector specifies which samples to process, for example `[2 3 4 5]`, will only apply the function on samples `2` to `5`. Default is `'all'`.
 <br>
 <br>
 - <strong>plottype:</strong> Specifies the type of plot to display when plotting is enabled. Options are `'mesh'`, `'surface'`, or `'contourf'`. Default is `mesh`.
@@ -98,7 +98,7 @@ This syntax will automatically apply some default settings for scatter removal. 
 
 <details open>
     <summary><b>`dataout = handlescatter(data, 'gui')` - GUI decision support</b></summary>
-    <a name="syntax1"></a>
+    <a name="syntax2"></a>
 <a name="syntax2"></a>
 
 Running `handlescatter` with `gui` options opens up the `viewscatter` user interface app. The interface allows users to apply settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.
@@ -147,7 +147,7 @@ Interface Components include:
 </details>
 
 <details open>
-    <summary><b>`scatteroptions = handlescatter('options')` - Retreive option structure for modification</b></summary>
+    <summary><b>`scatteroptions = handlescatter('options')` - Retrieve option structure for modification</b></summary>
     <a name="syntax4"></a>
 
 Obtains the default `options` of the function and save them in `scatteroptions `. These can be modified and later passed down to function by calling `data = handlescatter(data, scatteroptions)`.
@@ -156,7 +156,7 @@ Obtains the default `options` of the function and save them in `scatteroptions `
 
 ## Examples
 
-Retreive and modify options to apply them:
+Retrieve and modify options to apply them:
 
 
 	scatteroptions = handlescatter('options');
@@ -181,9 +181,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 </details>
 
 <details open>
-<summary><b>`options` - function mode switch (apply or retreive options or start GUI)</b></summary>
+<summary><b>`options` - function mode switch (apply or retrieve options or start GUI)</b></summary>
     <i>char | handlescatterOptions</i>
-    </summary>
 
 This variable serves multiple purposes and is thus best described as a mode switch.
 

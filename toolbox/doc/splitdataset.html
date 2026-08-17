@@ -425,11 +425,11 @@ details:open > summary {
 
 <ol>
 <li><p>Randomly split into <code>4</code> subsets:
-<code>data=splitdataset(data,&quot;blind&quot;,&quot;numsplit&quot;,4,&quot;blindType&quot;=&quot;random&quot;)</code></p></li>
+<code>data=splitdataset(data,&quot;blind&quot;,&quot;numSplit&quot;,4,&quot;blindType&quot;=&quot;random&quot;)</code></p></li>
 <li><p>Split the dataset into 3 subsets using alternating splitting:
-<code>data=splitdataset(data,&quot;blind&quot;, &quot;numsplit&quot;, 3,);</code>
+<code>data=splitdataset(data,&quot;blind&quot;, &quot;numSplit&quot;, 3);</code>
 Is the same as:
-<code>data=splitdataset(data,&quot;blind&quot;,&quot;numsplit&quot;,3,&quot;blindType&quot;=&quot;alternating&quot;)</code></p></li>
+<code>data=splitdataset(data,&quot;blind&quot;,&quot;numSplit&quot;,3,&quot;blindType&quot;=&quot;alternating&quot;)</code></p></li>
 <li><p>Split the dataset exactly according to <code>SampleType</code> in metadata:
 <code>data=splitdataset(data,&quot;byMetadata&quot;,metadataColumn=&quot;SampleType&quot;)</code> </p></li>
 </ol>
@@ -448,7 +448,7 @@ Is the same as:
     <summary><b><code>splitType</code>- switch between &quot;blind&quot; and &quot;byMetadata&quot;</b></summary>
     <i>text</i></p>
 
-<p>With this argument, yo specifically state whether a blind split (no information) should be performed, or whether the splitting operation is informed by metadata.</p>
+<p>With this argument, you specifically state whether a blind split (no information) should be performed, or whether the splitting operation is informed by metadata.</p>
 
 <p>If <code>&quot;byMetadata&quot;</code> is specified, the option &quot;metadataColumn&quot; <em>must</em> also be specified. Otherwise, an error will be displayed.</p>
 
@@ -473,9 +473,9 @@ Is the same as:
     <summary><b><code>metadataColumn</code>- metadata to use for split assignment</b></summary>
     <i>text</i></p>
 
-<p>Specifies a column in <code>data.metadata</code> to sort <code>data</code> before splitting. Must be a valid metadata column name that exists in <code>data.metadata</code>. <br>Note: When <code>bysort</code> is provided, the <code>stype</code> must be set to <code>&quot;exact&quot;</code>. <br></p>
+<p>Specifies a column in <code>data.metadata</code> to sort <code>data</code> before splitting. Must be a valid metadata column name that exists in <code>data.metadata</code>.</p>
 
-<p>If <code>metadataColumn</code> is provided as optional input, it takes precedent over <code>splitType</code>, i.e. you can but don&#39;t have to set <code>splitType=&quot;byMetadata&quot;</code> (a message will be displayed to inform you that the toolbox has interpreted your intention).</p>
+<p>If <code>metadataColumn</code> is provided as optional input, it takes precedence over <code>splitType</code>, i.e. you can but don&#39;t have to set <code>splitType=&quot;byMetadata&quot;</code> (a message will be displayed to inform you that the toolbox has interpreted your intention).</p>
 
 <p>Default is <code>[]</code>, since <code>splitType=&quot;blind&quot;</code> by default.</p>
 

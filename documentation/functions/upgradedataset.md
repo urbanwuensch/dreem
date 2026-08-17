@@ -21,7 +21,7 @@ This function converts datasets from the older, non-standard format that `drEEM`
 
 <details open>
 <summary><b>
-`dataout = upgradedataset (data)` - conversion of data as desribed in tutorials</b></summary>
+`dataout = upgradedataset (data)` - conversion of data as described in tutorials</b></summary>
 
  <a name="syntax1"></a>
 
@@ -34,19 +34,16 @@ If models are present in `data` they will be transferred to the `models` field.
 
 <details>
 <summary>
-**Details on the model ransfer**
+**Details on the model transfer**
 </summary>
 
 * Models loadings should be stored in the `Model1`, `Model2`, `Model3` and `ModelN` fields in the `data`.
 * All other properties are calculated and not transferred.
 * The property `Initialization` is set to `'random'` since previous versions of the toolbox did not officially support other methods
-* `Starts` is set to `NaN`, there is no way to retreive the information
+* `Starts` is set to `NaN`, there is no way to retrieve the information
 * `Convergence` is retrieved from `data`, if it exists, otherwise is set to `NaN`.
 * `Constraints` is retrieved from `data`, if it exists, otherwise is set to `'unknown'`.
 * `Toolbox` is set to `'nway'`. Though PLS_toolbox could have been used, this information was never stored by the older versions of the toolbox.
-
-</details>
-
 
 </details>
 
@@ -89,13 +86,13 @@ If one of these fields does not exist, a warning will be displayed. If the resul
 
 <details open>
     <summary><b>`atypicalFieldnames`- names of non-typical fields and their corresponding new field names</b></summary>
-    <i>logical</i>
+    <i>cell array containing character arrays</i>
 
 A cell array of size N x 2. Each row should contain a pair of field names where the first column is the old field name (should exist in `data`), and the second column is the new field name (should exist in drEEMdataset class object, see `drEEMdataset` for more information).
 
 Example `{'EEM','X'}` if fluorescence data in `data` was stored in the field `EEM` and should therefore now be stored as `X`.
 
-Default is `[]`, meaning the option remains unused.
+Default is `{}`, meaning the option remains unused.
 
 
 
@@ -107,7 +104,7 @@ Default is `[]`, meaning the option remains unused.
     <summary><b>`dataout` - upgraded dataset</b></summary>
     <i>drEEMdataset</i>
         
-A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
+A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 
 </details>
 

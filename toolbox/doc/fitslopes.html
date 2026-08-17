@@ -389,11 +389,9 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>dataout = fitslopes(data)</code></a></p>
-
 <p><a href="#syntax1"><code>dataout = fitslopes( ___ , Name,Value)</code></a></p>
 
-<p><a href="#syntax2"><code>fitslopes( ___ , Name,Value)</code></a></p>
+<p><a href="#syntax2"><code>fitslopes( ___ )</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
@@ -403,7 +401,7 @@ details:open > summary {
 <p><strong><em>Results are reported in the unit per µm and expressed as positive values (though CDOM absorbance is decreasing with increasing wavelength)</em></strong></p>
 </blockquote>
 
-<p>When reporting slopes in publications, please refer to the original studies that presented the methodolog (see &quot;Fitting methods&quot;)</p>
+<p>When reporting slopes in publications, please refer to the original studies that presented the methodology (see &quot;Fitting methods&quot;)</p>
 
 <blockquote>
 <p><strong><em><code>fitslopes</code> is automatically called in <code>viewabsorbance</code>, <code>export2zip</code>, and <code>exportresults</code> to present CDOM slopes for futher analysis.</em></strong></p>
@@ -437,18 +435,18 @@ Example: </p>
 <p></details></p>
 
 <p><details>
-<summary><b><code>fitslopes(data,Name,Value)</code>- Diagnostic mode</b>
+<summary><b><code>fitslopes( ___ )</code>- Diagnostic mode</b>
 </summary>
  <a name="syntax2"></a></p>
 
-<p>Runs the function in diagnostic mode. In this mode, opeions are automatically set to <code>details=true</code> and <code>plot=true</code> to inspect fits and adjust the default value of <code>rsq</code> or the wavelength range for the exponential slope before obtaining the slopes.</p>
+<p>Runs the function in diagnostic mode. In this mode, options are automatically set to <code>details=true</code> and <code>plot=true</code> to inspect fits and adjust the default value of <code>rsq</code> or the wavelength range for the exponential slope before obtaining the slopes.</p>
 
 <p></details></p>
 
 <h2 id="toc_3">Examples</h2>
 
 <p><code>data = fitslopes(data,  &#39;plot&#39;,false, LongRange=[300 700], rsq=0.9)</code> 
-Fit slopes using a custom wavelength range for the expoential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.</p>
+Fit slopes using a custom wavelength range for the exponential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.</p>
 
 <h2 id="toc_4">Input arguments</h2>
 
@@ -511,7 +509,7 @@ Default is <code>0.95</code>.</p>
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving).</p>
 
 <p></details></p>
 

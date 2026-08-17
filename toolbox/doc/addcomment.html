@@ -389,19 +389,19 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#s1"><code>dataout = addcomments(data,comment)</code></a></p>
+<p><a href="#s1"><code>dataout = addcomment(data,comment)</code></a></p>
 
-<p><a href="#s2"><code>dataout = addcomments(data,comment,&#39;newline&#39;)</code></a></p>
+<p><a href="#s2"><code>dataout = addcomment(data,comment,&#39;newline&#39;)</code></a></p>
 
 <h2 id="toc_2">Description</h2>
 
 <p><details open>
 <summary><b>
-<code>dataout = addcomments(data,&#39;new comment here&#39;)</code> - add user comment to previous function call</b>
+<code>dataout = addcomment(data,&#39;new comment here&#39;)</code> - add user comment to previous function call</b>
 </summary>
-<a name="s1"></a> adds a comment to a drEEMdataset that describes an observation, justifies a decision, or documents any other kind of process. The comment field will be stored in the document&#39;s history and can be retreived with <a href="viewhistory.html"><code>viewistory</code></a> and <a href="displayhistory.html"><code>displayhistory</code></a> and will be exported with <a href="exportresults.html"><code>exportresults</code></a> and <a href="export2zip.html"><code>export2zip</code></a>. </p>
+<a name="s1"></a> adds a comment to a drEEMdataset that describes an observation, justifies a decision, or documents any other kind of process. The comment field will be stored in the document&#39;s history and can be retrieved with <a href="viewhistory.html"><code>viewhistory</code></a> and <a href="displayhistory.html"><code>displayhistory</code></a> and will be exported with <a href="exportresults.html"><code>exportresults</code></a> and <a href="export2zip.html"><code>export2zip</code></a>. </p>
 
-<p>By default, the function assumes that a comment is being made on a previous operation, such as noise removal, a PARAFAC fit, or similar. The comment will thus be in the same line and belong to the entry of the as the last function call. This will look as follows:</p>
+<p>By default, the function assumes that a comment is being made on a previous operation, such as noise removal, a PARAFAC fit, or similar. The comment will thus be added to the most recent history entry (no new &quot;line&quot; will be added. This will look as follows:</p>
 
 <p><img src="addcomment_inline.png" width="auto" height="auto" align="right"/></p>
 
@@ -419,7 +419,7 @@ details:open > summary {
 
 <p><img src="addcomment_newline.png" width="auto" height="auto" align="right"/></p>
 
-<p>This will result in the comment being it&#39;s own, independent entry in the dataset history. Above your comment shows up as an entry in &quot;details&quot;, not under comments by user.</p>
+<p>This will result in the comment being its own, independent entry in the dataset history. Above your comment shows up as an entry in &quot;details&quot;, not under comments by user.</p>
 
 <p></details></p>
 

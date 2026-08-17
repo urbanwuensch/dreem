@@ -1,6 +1,6 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
 
-# scalesamples #
+# scalesamples
 Scale fluorescence signals to focus on qualitative difference and (potentially) lessen autocorrelation.
 
 
@@ -9,11 +9,13 @@ Scale fluorescence signals to focus on qualitative difference and (potentially) 
 
 [`dataout = scalesamples(data, option)`](#syntax1)
 
+[`dataout = scalesamples(data, 'max')`](#syntax4)
+
 [`dataout = scalesamples(data, 'reverse')`](#syntax3)
 
 [`scalesamples(data, 'help')`](#syntax2)
 
-## Description ##
+## Description
 
 In many datasets, the differences between fluorescence signals are not qualitative but quantitative. Since highly correlated signals can violate the variability assumption behind PARAFAC, a method to scale the signals is needed to remove quantitative differences between samples and instead focus on qualitative differences.
 
@@ -45,7 +47,7 @@ The function adds an entry to the dataset's history where the unscaled data is s
 <summary>
 <b>`dataout = scalesamples(data, 'max')` - apply max-normalization</b>
 </summary>
- <a name="syntax1"></a>
+ <a name="syntax4"></a>
  
  This syntax is used to apply the max-normalization. Each EEM is divided by the maximum intensity observed in the sample.
  
@@ -132,7 +134,7 @@ Default is `2`.
 
 </details>
 
-## Output arguments (optional)##
+## Output arguments (optional)
 
 <details>
     <summary><b>`dataout` - dataset containing scaled or original (restored) EEMs.</b></summary>
@@ -140,6 +142,6 @@ Default is `2`.
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`. 
 
-> If the status property `data.status.signalScaling` follows any changes made by the function.
+> Once the status property `data.status.signalScaling` is set by the function, modifications made using functions such as `subdataset` will be mirrored on the original X stored as backup in the drEEMhistory belonging to the `scalesamples` entry. 
 
 </details>

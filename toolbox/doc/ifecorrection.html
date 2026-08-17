@@ -407,7 +407,7 @@ details:open > summary {
 <p>Reference: Parker, C. A.; Barnes, W. J., Some experiments with spectrofluorimeters and filter fluorimeters. Analyst 1957, 82, 606-618.</p>
 </blockquote>
 
-<p>A inner-filter effect correction matrix will be calculated for every sample. For inspection purposes, the function will show the average correction matrix:</p>
+<p>An inner-filter effect correction matrix will be calculated for every sample. For inspection purposes, the function will show the average correction matrix:</p>
 
 <p><img src="ifcmatrix.png" width="auto" height="auto" align="center"/></p>
 
@@ -424,7 +424,7 @@ details:open > summary {
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>ifecorrection(data)</code> - diagnostic mode</b></summary>
+    <summary><b><code>ifecorrection(data,Name,Value)</code> - diagnostic mode</b></summary>
 <a name="syntax2"></a></p>
 
 <p>By not supplying an output argument, the function will run in diagnostic mode. IFEs will be calculated and the average IFE will be shown, but the IFE correction will not be applied to the dataset.</p>
@@ -460,8 +460,6 @@ details:open > summary {
 
 <p></details></p>
 
-<p></details></p>
-
 <p><details open>
     <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
     <i>character</i></p>
@@ -472,7 +470,7 @@ details:open > summary {
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
 
 <p></details></p>
 

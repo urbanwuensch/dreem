@@ -6,11 +6,10 @@ Fit slopes to the CDOM absorbance data in a drEEMdataset object.
 
 
 ## Syntax
-[`dataout = fitslopes(data)`](#syntax1)
 
 [`dataout = fitslopes( ___ , Name,Value)`](#syntax1)
 
-[`fitslopes( ___ , Name,Value)`](#syntax2)
+[`fitslopes( ___ )`](#syntax2)
 
 ## Description ##
 
@@ -18,7 +17,7 @@ The function `fitslopes` fits slopes to the CDOM absorbance data in `data`. The 
 
 > ***Results are reported in the unit per µm and expressed as positive values (though CDOM absorbance is decreasing with increasing wavelength)***
 
-When reporting slopes in publications, please refer to the original studies that presented the methodolog (see "Fitting methods")
+When reporting slopes in publications, please refer to the original studies that presented the methodology (see "Fitting methods")
 
 > ***`fitslopes` is automatically called in `viewabsorbance`, `export2zip`, and `exportresults` to present CDOM slopes for futher analysis.***
 
@@ -53,17 +52,17 @@ Example:
 
 
 <details>
-<summary><b>`fitslopes(data,Name,Value)`- Diagnostic mode</b>
+<summary><b>`fitslopes( ___ )`- Diagnostic mode</b>
 </summary>
  <a name="syntax2"></a>
 
-Runs the function in diagnostic mode. In this mode, opeions are automatically set to `details=true` and `plot=true` to inspect fits and adjust the default value of `rsq` or the wavelength range for the exponential slope before obtaining the slopes.
+Runs the function in diagnostic mode. In this mode, options are automatically set to `details=true` and `plot=true` to inspect fits and adjust the default value of `rsq` or the wavelength range for the exponential slope before obtaining the slopes.
 
 </details>
 
 ## Examples
 `data = fitslopes(data,  'plot',false, LongRange=[300 700], rsq=0.9)` 
-Fit slopes using a custom wavelength range for the expoential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.
+Fit slopes using a custom wavelength range for the exponential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.
 
 ## Input arguments ##
 <details>
@@ -128,7 +127,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving).
 
 </details>
 

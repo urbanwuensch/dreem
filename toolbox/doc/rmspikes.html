@@ -407,9 +407,9 @@ details:open > summary {
 
 <ul>
 <li>The dataset is replicated four times. In each copy, every 2nd excitation or emission scan is NaN&#39;ed. Once starting at the first, then at the second scan.</li>
-<li>The missing data in each copy is replaced with a 2D-inpaiting algorithm (<a href="https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans"><code>inpaint_nans</code></a>).</li>
+<li>The missing data in each copy is replaced with a 2D-inpainting algorithm (<a href="https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans"><code>inpaint_nans</code></a>).</li>
 <li>The difference between the original and interpolated EEMs is calculated for each copy. The differences are accumulated in one 3D array.</li>
-<li>A threshold matrix is calculated based on the median difference between observed and interpolated. Since data tends to get noisier toward the UV in the excitation direction, the noise floor estimate is transformed into a vector along the excitation direction (noise along the emission is thus assumed to not change with wavelength). The vector is transformed by multiplication with the square root to make the method more sensitive in the UV. The vector is then transformed back into a matrix with <code>repmat</code>. <code>thresholdFactor</code> is multiplied onto this matrix to saveguard against excessive flagging.</li>
+<li>A threshold matrix is calculated based on the median difference between observed and interpolated. Since data tends to get noisier toward the UV in the excitation direction, the noise floor estimate is transformed into a vector along the excitation direction (noise along the emission is thus assumed to not change with wavelength). The vector is transformed by multiplication with the square root to make the method more sensitive in the UV. The vector is then transformed back into a matrix with <code>repmat</code>. <code>thresholdFactor</code> is multiplied onto this matrix to safeguard against excessive flagging.</li>
 <li>For points in the EEM where the difference between interpolated and observed data exceeds the threshold matrix, the data is NaN&#39;ed</li>
 <li>If interpolation is enabled, the removed data is finally replaced with a 2D interpolation guess.</li>
 </ul>
@@ -490,7 +490,7 @@ details:open > summary {
     <summary><b><code>thresholdFactor</code>- sensitivity to excessive noise (sample by sample)</b></summary>
     <i>numeric</i></p>
 
-<p>Adjust the sensitivity of the spike detection. A lower values means more sensitivity. </p>
+<p>Adjust the sensitivity of the spike detection. A lower values results in more sensitivity. </p>
 
 <p>Default is <code>10</code>. </p>
 
@@ -517,7 +517,7 @@ details:open > summary {
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>details</code>- switch to enable diangostics plots (sample by sample)</b></summary>
+    <summary><b><code>details</code>- switch to enable diagnostics plots (sample by sample)</b></summary>
     <i>logical</i></p>
 
 <p>detailed diagnostic plots each sample. This plot depicts original and final EEMs, original EEM with marked removal points and, finally, the difference between original data and smoothed data.</p>
@@ -529,7 +529,7 @@ details:open > summary {
 <p></details></p>
 
 <p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
+    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
     <i>character</i></p>
 
 <p>If a character vector is supplied (e.g. &quot;output.png&quot;, the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
@@ -538,7 +538,7 @@ details:open > summary {
 
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
 
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
+<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
 
 <p></details></p>
 

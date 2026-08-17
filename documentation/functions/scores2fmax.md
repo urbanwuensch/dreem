@@ -6,15 +6,19 @@ Convert model scores to Fmax.
 ## Syntax
 
 	
-`Fmax=scores2fmax(data,f)`
+`fmax=scores2fmax(data,f)`
 
 ## Description
 
 Convert model scores to fluorescence maxima in the original intensity units. While scores have no unit, conversion of scores (A) by multiplication with the maxima in B and C for each component yields their intensities in the units of the original dataset.
 
+## Examples
+
+1. Get fmax-values for the 5-component model:
+`fmax = tbx.scores2fmax(data,5)`
 
 
-## Input Arguments
+## Input arguments
 
 <details>
     <summary><b>`data` - dataset with PARAFAC models</b></summary>
@@ -36,10 +40,10 @@ The f-component model must exist!
 </details>
 
 
-## Output Arguments
+## Output arguments
 
 <details open>
-    <summary><b>`Fmax` - matrix with fluorescence maxima</b></summary>
+    <summary><b>`fmax` - matrix with fluorescence maxima</b></summary>
     <i>numeric</i>
         
 `[data.nSample x f]` matrix containing the fluorescence maxima of components.

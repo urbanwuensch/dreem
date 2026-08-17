@@ -24,7 +24,7 @@ Interface components include:<br>
 
 - `Sample `: Dropdown menu to select the sample to be visualized.
 - `Data type`: Specify the type of data to be used for visualization. If models have been fit to the `data`, the modeled data or model residuals can be selected and plotted.
-- `Number of component`: If models have been fit to the `data`, any of the fitted models can be selected and plotted. <comment> [I have to come back here and check] </comment>
+- `Number of component`: If models have been fit to the `data`, any of the fitted models can be selected and plotted.
 
 <strong>EEM Format panel:<br></strong>
 

@@ -26,7 +26,7 @@ Merges two datasets of the class drEEMdataset. Each dataset is validated before 
 
 The function does **not** currently interpolate to create comparable datasets with identical axes.
 
-> Note: The tracability of the resulting dataset `dataout` is limited since the history's of `a` and `b` are not preserved.
+> Note: The traceability of the resulting dataset `dataout` is limited since the histories of `a` and `b` cannot be preserved in `dataout`
 
 
 </details>
@@ -34,7 +34,7 @@ The function does **not** currently interpolate to create comparable datasets wi
 
 
 
-## Input arguments ##
+## Input arguments
 <details>
     <summary><b>`a` - dataset with fluorescence and / or absorbance data</b></summary>
     <i>drEEMdataset</i>
@@ -59,7 +59,5 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 
-
-The status of the dataset is changed to reflect the fact that an IFE correction has been applied by the drEEM toolbox.
 
 </details>

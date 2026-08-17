@@ -7,11 +7,11 @@ Import absorbance measurement files and create drEEMdataset object
 
 ## Syntax
 
-[`dataout = importabsorbance(filePattern)`](#syntax1)
+[`data = importabsorbance(filePattern)`](#syntax1)
 
-[`dataout = importabsorbance(filePattern,status)`](#syntax3)
+[`data = importabsorbance(filePattern,status)`](#syntax3)
 
-[`dataout = importabsorbance( ___ , Name,Value)`](#syntax2)
+[`data = importabsorbance( ___ , Name,Value)`](#syntax2)
 
 
 
@@ -28,7 +28,7 @@ The function does two passes of imports. The first is used to read the dimension
 
 <details open>
 <summary><b>
-`dataout = importabsorbance(filePattern)` - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
+`data = importabsorbance(filePattern)` - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
 </summary>
 <a name="syntax1"></a><br>
 
@@ -46,7 +46,7 @@ Upon successful import, the `changestatus` GUI will appear on screen and pause t
 
 <details open>
 <summary><b>
-`dataout = importabsorbance(filePattern,status)` - explicitly supply processing status</b>
+`data = importabsorbance(filePattern,status)` - explicitly supply processing status</b>
 </summary>
 <a name="syntax3"></a>
 
@@ -62,13 +62,13 @@ Example:
     	'spectralCorrection','applied by instrument software',...
     	absorbanceUnit='absorbance per cm');
 
-	blanks=tbx.importabsorbance(" - Abs Spectra Graphs.dat",blanks_status);
+	blanks=tbx.importabsorbance("* - Abs Spectra Graphs.dat",blanks_status);
 
 </details>
 
 <details open>
 <summary><b>
-`dataout = importabsorbance([ ___ ], Name,Value)` - custom options</b>
+`data = importabsorbance([ ___ ], Name,Value)` - custom options</b>
 </summary>
 <a name="syntax2"></a>
 
@@ -80,11 +80,11 @@ Custom options are specifed with optional pairs of arguments using one or more n
 
 <strong>Horiba AquaLog exported .dat-files:</strong>
 
-`absorbance = tbx.importabsorbance(" - Abs Spectra Graphs.dat");`
+`absorbance = tbx.importabsorbance("* - Abs Spectra Graphs.dat");`
       
 <strong>csv-export of data from spectrophotometer software:</strong>
 
-`absorbance = tbx.importabsorbance(".csv",waveColumn=1,absColumn=2);`
+`absorbance = tbx.importabsorbance("*.csv",waveColumn=1,absColumn=2);`
 
 ## Input arguments
 <details open>
@@ -136,15 +136,14 @@ Default is `1`.
 </details>
 
 <details open>
-    <summary><b>`AbsorbanceColumn `- which column of data contains absorbance data data</b></summary>
+    <summary><b>`absColumn `- which column of data contains absorbance data</b></summary>
     <i>numeric</i>
 
 Specify which column of data in the measurement files contains the absorbance data. 
 
 Default is column `10`.
-</details>
 
-Example: `'AbsorbanceColumn', 10` if the tenth column contains the absorbance data.
+Example: `'absColumn', 10` if the tenth column contains the absorbance data.
     
 </details>
 
@@ -165,7 +164,7 @@ Default is `0`.
     <summary><b>`data` - contains CDOM spectra </b></summary>
     <i>drEEMdataset</i>
         
-A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
+A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 The absorbance data is stored using the properties `.abs`, `.absWave`, and sample names are stored in `.filelist`. Read the documentation on the `drEEMdataset` for more information.
 
 </details>

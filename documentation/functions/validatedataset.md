@@ -6,7 +6,7 @@ Check for the correct dimensions and consistency of various fields within a `drE
 
 
 ## Syntax
-[`validatedataset(dataset)`](#syntax1) 
+`validatedataset(data)`
 
 
 ## Description ##
@@ -26,10 +26,13 @@ The function generally collects and then reports errors if any inconsistencies a
 If no errors were found and the function was called from the `drEEMtoolbox`, a success message is displayed.
 
 
+## Examples
+1. Check if a dataset is a valid drEEM dataset.
+`tbx.validatedataset(samples)`
 
 ## Input arguments ##
 <details>
-    <summary><b>`dataout` - a drEEMdataset</b></summary>
+    <summary><b>`data` - a drEEMdataset</b></summary>
     <i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that will be evaluated with the validation function.

@@ -16,7 +16,7 @@ Extract common fluorescence peaks and indices from a drEEMdataset object and sto
 
 ## Description
 
-The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample. Please refer to the primary references provided below to indicate the use of peaks or indicies.
+The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample. Please refer to the primary references provided below to indicate the use of peaks or indices.
 
 Data coverage differs between datasets. If a peak or index is out of the range covered by the measurements, NaNs will be returned. If the distance between the peak definition and the measurements is equal to or greater than 5nm, a message will be displayed to disclose this. The function does not and cannot perform interpolations to solve the issue.
 
@@ -123,7 +123,7 @@ Pickes predefined peaks and fluorescence indices in the EEM and stores the resul
 <b>`dataout = pickpeaks(data)` - extract peaks and indices from dataset</b>
 </summary>
  <a name="syntax1"></a>
-Th function `pickpeaks` extracts predefined fluorescence peaks, including Peak B, T, A, M, C, D, and N, and computes several fluorescence indices, including Fluorescence index (FluI), Freshness Index (FrI), Biological Index (BIX) and Humification Index (HIX), from `data`. The peaks and indices will be plotted for all the samples in `data`.
+The function `pickpeaks` extracts predefined fluorescence peaks, including Peak B, T, A, M, C, D, and N, and computes several fluorescence indices, including Fluorescence index (FluI), Freshness Index (FrI), Biological Index (BIX) and Humification Index (HIX), from `data`. The peaks and indices will be plotted for all the samples in `data`.
 
 </details>
 
@@ -144,7 +144,7 @@ specifies additional options using one or more [name-value](#NameValue) pair arg
 </summary>
 <a name="syntax3"></a>
 
-If no output argument is provided, the function will automatically set `plot=true` and `details=true` to provide diagnostic plots that describe the peack picking process in more detail.
+If no output argument is provided, the function will automatically set `plot=true` and `details=true` to provide diagnostic plots that describe the peak picking process in more detail.
 
 </details>
 
@@ -205,7 +205,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving)
 
 </details>
 

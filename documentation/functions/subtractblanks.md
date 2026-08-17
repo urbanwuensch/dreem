@@ -8,7 +8,7 @@ subtract blanks from the samples
 ## Syntax
 [`samplesout = subtractblanks(samples, blanks)`](#syntax1)
 
-[`dataout = subtractblanks( ___ , Name,Value)`](#syntax2)
+[`samplesout = subtractblanks( ___ , Name,Value)`](#syntax2)
 
 [`subtractblanks( ___ , Name,Value)`](#syntax3)
 
@@ -19,14 +19,14 @@ subtract blanks from the samples
 
 
 Subtracts EEMs of blank stored in `blanks` from EEMs stored in `samples`.
-The function `subtractblanks` makes sure the `blanks` and `samples`  have the same wavelengths, as this can be the case, especially,
-after the `ifecorrection` function has been applied on `samples` and some parts are deleted due to lacking absorbance coverage. `subtractblanks` makes sure that the `blanks` will also be cut to be compatible.
+The function `subtractblanks` makes sure the `blanks` and `samples`  have the same wavelength axes. Mismatches can occur especially
+after the `ifecorrection` function has been applied on `samples`; parts of the EEM may have ben deleted due to lacking absorbance coverage. `subtractblanks` makes sure that the `blanks` will also be cut to be compatible.
 
 Next, if the subtraction was successful, the function will plot the EEMs stored in `samples`, `blanks`, and `samplesout ` at an excitation of 275, where protein-like and humic-like fluorescence signal is likely to be observed, for the user to check the performance of the subtraction.
 
 <img src="blankdiag.png" width="auto" height="auto" align="left"/>
 
-All plots above show the predicted position of the different types of scatter. Take care that predictiona and observation match, otherwise an issue with the wavelength accuracy might exist.
+All plots above show the predicted position of the different types of scatter. Take care that predictions and observations match, otherwise an issue with the wavelength accuracy might exist.
 
 Observe that the area between 1st and 2nd order scatter in the top right corner is flat, otherwise your blanks contain significant levels of fluorescence.
 
@@ -45,7 +45,7 @@ Simply subtracts blanks and shows plots
 </details>
 
 <details open>
-    <summary><b>`samplesout = rmspikes( ___ , Name,Value)` - custom options</b></summary>
+    <summary><b>`samplesout = subtractblanks( ___ , Name,Value)` - custom options</b></summary>
 <a name="syntax2"></a>
 
 specifies additional options using one or more [name-value](#NameValue) pair arguments.
@@ -95,7 +95,7 @@ Default is `true`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
     <i>character</i>
 
 If a character vector is supplied (e.g. "output.png", the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
@@ -104,7 +104,7 @@ A file extension can be supplied if desired (any extension supported by MATLAB's
 
 A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.
 
-Default: `""` (i.e. an empty string disabling the figure saving.
+Default: `""` (i.e. an empty string disabling the figure saving)
 
 </details>
 

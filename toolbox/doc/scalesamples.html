@@ -391,6 +391,8 @@ details:open > summary {
 
 <p><a href="#syntax1"><code>dataout = scalesamples(data, option)</code></a></p>
 
+<p><a href="#syntax4"><code>dataout = scalesamples(data, &#39;max&#39;)</code></a></p>
+
 <p><a href="#syntax3"><code>dataout = scalesamples(data, &#39;reverse&#39;)</code></a></p>
 
 <p><a href="#syntax2"><code>scalesamples(data, &#39;help&#39;)</code></a></p>
@@ -425,7 +427,7 @@ details:open > summary {
 <summary>
 <b><code>dataout = scalesamples(data, &#39;max&#39;)</code> - apply max-normalization</b>
 </summary>
- <a name="syntax1"></a></p>
+ <a name="syntax4"></a></p>
 
 <p>This syntax is used to apply the max-normalization. Each EEM is divided by the maximum intensity observed in the sample.</p>
 
@@ -519,7 +521,7 @@ details:open > summary {
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. </p>
 
 <blockquote>
-<p>If the status property <code>data.status.signalScaling</code> follows any changes made by the function.</p>
+<p>Once the status property <code>data.status.signalScaling</code> is set by the function, modifications made using functions such as <code>subdataset</code> will be mirrored on the original X stored as backup in the drEEMhistory belonging to the <code>scalesamples</code> entry. </p>
 </blockquote>
 
 <p></details></p>

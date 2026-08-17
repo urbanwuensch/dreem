@@ -15,7 +15,7 @@ Visualize, evaluate the performance, and compare different aspects of the PARAFA
 
 ## Description ##
 
-The function `vieweems` opens up a graphical user interface (GUI) that is designed for diagnosing and analyzing PARAFAC or PCA models built in using `fitparafac` or `fitpca` function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of models.<br>
+The function `viewmodels` opens up a graphical user interface (GUI) that is designed for diagnosing and analyzing PARAFAC or PCA models built in using `fitparafac` or `fitpca` function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of models.<br>
 Note: The app does not accept any output arguments!
 
 <details>
@@ -46,7 +46,7 @@ The bottom section of this tab includes:
 </details>
 
 <details open>
-    <summary><b>Scores & Loadings</b></summary>
+    <summary><b>Scores & loadings</b></summary>
 
  This tab provides scores and loadings visualizations for each model:
 
@@ -56,7 +56,7 @@ The bottom section of this tab includes:
 </details>
 
 <details open>
-    <summary><b>Spectral Loadings</b></summary>
+    <summary><b>Spectral loadings</b></summary>
 
 This tab provides spectral loadings plots for each component in each model separately:
 Note: each row of plots correspond to one model.
@@ -65,21 +65,21 @@ Note: each row of plots correspond to one model.
 
 
 <details open>
-    <summary><b>Loadings & Leverages</b></summary>
+    <summary><b>Loadings & leverages</b></summary>
 
 This tab provides plots of scores for samples, excitation and emission loadings for each wavelength and leverages in each mode (samples, excitation, emission) to visualize the influence of each data point on the model. You can go through different models by using the drop-down menu button on top of the plots.
  
  </details>
 
 <details open>
-    <summary><b>Errors & Leverages</b></summary>
+    <summary><b>Errors & leverages</b></summary>
 
 To visualize the sum of squared error against leverages in each mode (samples, excitation, emission). You can go through different models by using the drop-down menu button on top of the plots.
  
 </details>
 
 <details open>
-    <summary><b>Fingerprint Plots</b></summary>
+    <summary><b>Fingerprint plots</b></summary>
 
 Use this tab to plot Excitation Emission Matrix (EEM) of each component in each model. Go through different models by using the drop-down menu button on top of the plots.
 
@@ -95,7 +95,7 @@ You can go through different models by using the drop-down menu button on top of
 
 
 <details open>
-    <summary><b>Score Correlation</b></summary>
+    <summary><b>Score correlation</b></summary>
 
 This tab plots a heatmap of correlations between different components in each model. This provides insights into the relationships between different components.
 Left-clicking on the `view correlations vs. metadata` button opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information in metadata columns.

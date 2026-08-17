@@ -6,16 +6,16 @@ Import absorbance spectra along with sample and blank EEMs and associated metada
 
 
 ## Syntax
-[`importwizard`](#syntax1)
+`importwizard`
 
 
 
 
-## Description ##
+## Description
 
 Opens up the `importwizard`'s user interface app. This GUI is designed to offer an interactive option for file imports and troubleshooting. 
 
-The import-Wizard offers the same functionality as `importeems`, `importabsorbance`, and `associatemetadata`.
+`importwizard` offers the same functionality as `importeems`, `importabsorbance`, and `associatemetadata`.
 
 **Interface Components include:**<br>
 

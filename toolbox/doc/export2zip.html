@@ -385,11 +385,11 @@ details:open > summary {
 
 <h1 id="toc_0">export2zip</h1>
 
-<p>Export a PARAFAC model to a spreadheet file. This includes a comprehensive description of the dataset.</p>
+<p>Export absorbance and fluorescence data in current form, along with its processing status (&amp; history), scatter treatment settings, absorbance slopes (if applicable) and FDOM peaks &amp; indicies.</p>
 
 <h2 id="toc_1">Syntax</h2>
 
-<div><pre><code class="language-none">exportresults(data,filename)</code></pre></div>
+<div><pre><code class="language-none">export2zip(data,filename)</code></pre></div>
 
 <h2 id="toc_2">Description</h2>
 
@@ -407,7 +407,7 @@ details:open > summary {
 <li>A detailed README.txt to explain the contents of the archive</li>
 </ul>
 
-<p>The dataset is exported in interoperable csv files, but a .mat file is added for convenience of Matlab users. Note that, while a drEEMdataset can only be used while the drEEM toolbox is installed (i.e. the class definition is known), the exported .mat file is converted to a conventional structure and can this be read independed of the Matlab configuration.</p>
+<p>The dataset is exported in interoperable csv files, but a .mat file is added for convenience of Matlab users. Note that, while a drEEMdataset can only be used while the drEEM toolbox is installed (i.e. the class definition is known), the exported .mat file is converted to a conventional structure and can thus be read independed of the Matlab configuration.</p>
 
 <h2 id="toc_3">Input arguments</h2>
 

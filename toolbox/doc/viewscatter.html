@@ -389,14 +389,14 @@ details:open > summary {
 
 <h2 id="toc_1">Syntax</h2>
 
-<p><a href="#syntax1"><code>viewscatter(data,Name,Value)</code></a></p>
+<p><code>viewscatter(data,Name,Value)</code></p>
 
 <h2 id="toc_2">Description</h2>
 
 <p>Opens up the <code>viewscatter</code>&#39;s user interface app. The interface allows users to investigate settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.</p>
 
 <blockquote>
-<p>The app can also be opened using <code>handlescatter</code> function with <code>gui</code> option. For more information see <code>handlescatter</code>. In contrast to  <code>viewscatter</code> does not allow user to save the settings to the original <code>data</code>, but instead is used to explore different options and hence does not accept any output argument. To apply and save the setting use the <code>handlescatter</code> function.</p>
+<p>The app can also be opened using <code>handlescatter</code> function with <code>gui</code> option. For more information see <code>handlescatter</code>. In contrast <code>dataout=handlescatter(data,&#39;gui&#39;)</code>,  <code>viewscatter(data)</code> is not designed to apply settings to the original <code>data</code>, but instead is used to explore different options and hence does not accept any output argument. To apply the settings directly, use the <code>handlescatter</code> function instead. Otherwise, <code>viewscatter</code> can save the settings themselves to the workspace as the variable <code>scatteroptions</code> which can then be saved to the disk and loaded in a script.</p>
 </blockquote>
 
 <p><strong>Interface Components include:</strong><br></p>
@@ -444,7 +444,7 @@ details:open > summary {
 
 <p><details open><summary><b>Interpolation methods</b></summary></p>
 
-<p>Specifies the interpolation method to use for filling cut scatters.<code>&#39;inpaint&#39;</code> uses an inpainting algorithm, <code>&#39;fillmissing&#39;</code> uses MATLAB&#39;s fillmissing function. &#39;<code>inpaint&#39;</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. &#39;<code>inpaint&#39;</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>fillmissing</code> options fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>inpaint</code>.</p>
+<p>Specifies the interpolation method to use for filling cut scatters.<code>&#39;inpaint&#39;</code> uses an inpainting algorithm, <code>&#39;fillmissing&#39;</code> uses MATLAB&#39;s &quot;fillmissing&quot; function. <code>&#39;inpaint&#39;</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. <code>&#39;inpaint&#39;</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>&#39;fillmissing&#39;</code> options fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>&#39;inpaint&#39;</code>.</p>
 
 <p></details></p>
 

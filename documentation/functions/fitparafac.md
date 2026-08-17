@@ -15,7 +15,7 @@ Fit PARAFAC models to fluorescence data.
 
 ## Description
 
-The `fitparafac` function performs Parallel Factor Analysis (PARAFAC) on the provided `data`. The models are saved in `data.models`. The function supports various configurations, including different constraints, convergence criteria, initialization methods, and etc.
+The `fitparafac` function performs Parallel Factor Analysis (PARAFAC) on the provided `data`. The models are saved in `data.models`. The function supports various configurations, including different constraints, convergence criteria, initialization methods, and more (see below).
 The function supports parallelization performance-optimization, but the parallel computing toolbox is required. The function uses default values of input arguments (see Input arguments section) when options are not specified.
 An entry will be added to the `history` field of the `data`, detailing the  options used for `fitparafac`. 
 
@@ -26,11 +26,11 @@ An entry will be added to the `history` field of the `data`, detailing the  opti
 
 
 
-The function supports fitting models with default options, where mode specifies if the function is to fit a model to the overall (global) dataset or to the splitdatasets stored within. Note that the default are conservative in nature with low convergence and many consecutive starts with random numbers. The defaults are:
+The function supports fitting models with default options, where mode specifies if the function is to fit a model to the overall (global) dataset or to the splitdatasets stored within. Note that the defaults are conservative in nature with low convergence and many consecutive starts with random numbers. The defaults are:
 
 * fitting 2-7 component models
 * nonnegativity constraints in all modes
-* 40 starts (5*40 = 200 model initializations with one call)
+* 40 starts (6*40 = 240 model initializations with one call)
 * convergence when relative change between iterations is smaller or equal to 1e-8
 * Model initialization with random numbers
 * Parallelization is active and console output is kept to a minimum
@@ -119,8 +119,8 @@ Specify the constraints to apply to the models. You can choose from: <br>
 - `"unconstrained"`: there are no restrictions on the values that the elements of the factor matrices can take. They can be positive, negative, or zero. While this option provides greater flexibility in fitting the data, the resulting factors might be harder to interpret, especially where negative values do not make sense (e.g., physical quantities like concentrations or intensities). 
 
 - `"nonnegativity"`: Nonnegativity constraints ensure that all the elements in the factor matrices are greater than or equal to zero.
-This option can sometimes make it harder to achieve the best possible fit to the data because the model is less flexible but is particularly useful in where the factors represent quantities that cannot be negative.
-- `"unimodnonneg"`:T his constraint ensures that the factor matrices are both nonnegative and unimodal. A factor is unimodal if it has a single peak or mode, meaning it increases to a maximum value and then decreases. This constraint can help in obtaining more realistic and interpretable factors, while, meantime, making it more challenging to achieve the best fit to the data. 
+This option can sometimes make it harder to achieve the best possible fit to the data because the model is less flexible but is particularly useful where the factors represent quantities that cannot be negative.
+- `"unimodnonneg"`: This constraint ensures that the factor matrices are both nonnegative and unimodal. A factor is unimodal if it has a single peak or mode, meaning it increases to a maximum value and then decreases. This constraint can help in obtaining more realistic and interpretable factors, while, meantime, making it more challenging to achieve the best fit to the data. 
  
 Default constraint is `"nonnegativity"`.
 
@@ -194,7 +194,6 @@ Default is `"minimum"`.
 
 </details>
 
-</details>
 <details open>
     <summary><b>`toolbox` - PARAFAC algorithm</b></summary>
     <i> string  | char</i>
