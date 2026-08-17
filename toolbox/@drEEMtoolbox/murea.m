@@ -3,7 +3,7 @@ function murea(data)
 %
 % <strong>GUI-assisted visualization of fluorescence datasets</strong>
 %
-% <a href = "matlab:drEEMtoolbox.doc('vieweems')"><strong>-> full documentation</strong></a>
+% <a href = "matlab:drEEMtoolbox.doc('murea')"><strong>-> full documentation</strong></a>
 
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology
