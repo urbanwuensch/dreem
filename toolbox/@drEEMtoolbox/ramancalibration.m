@@ -48,6 +48,7 @@ arguments
     options.plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
     options.method (1,:) {mustBeText,mustBeMember(options.method,["raw","gauss1"])} = 'raw';
     options.figurefile (1,:) {mustBeText} = "";
+    options.convertToQSU (1,1) {mustBeA(options.convertToQSU,'logical')} = false;
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -105,12 +106,26 @@ signal=max(Rscan(:,blanks.Em>options.iStart&blanks.Em<options.iEnd),[],2,"omitmi
 background=median(Rscan(:,blanks.Em > options.iEnd & blanks.Em < options.iEnd + 50),2,"omitmissing");
 
 SignalCalibration.SNB=round(signal./background);
-% Change dataset status
-dataout.status=...
-    drEEMstatus.change(dataout.status,"signalCalibration","applied by toolbox (RU)");
+
+
 
 % Carry out signal calibration
 dataout.X=dataout.X./RA;
+
+% Optional conversion to QSU
+if options.convertToQSU
+    dataout.X=dataout.X*49.4;
+end
+
+% Change dataset status
+if not(options.convertToQSU)
+    dataout.status=...
+        drEEMstatus.change(dataout.status,"signalCalibration","applied by toolbox (RU)");
+else
+    dataout.status=...
+        drEEMstatus.change(dataout.status,"signalCalibration","applied by toolbox (QSU)");
+end
+
 
 
 % Carry out an alignment check based on Raman peaks (if desired)
@@ -125,6 +140,13 @@ dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename, ...
     ['Raman Units at Ex=',num2str(options.ExWave),' nm with peak integration range = ',num2str(options.iStart),' - ',num2str(options.iEnd),' nm'], ...
     SignalCalibration,dataout);
+if options.convertToQSU
+    idx=height(dataout.history)+1;
+    dataout.history(idx,1)=...
+        drEEMhistory.addEntry(mfilename, ...
+        'Based on the molar fluorescence of 20.2 RU of 1milligram/L (1 ppm) of Quinine sulfate (Ex/Em 350/450), fluorescence was converted from Raman Units to Quinine sulfate units (QSU) by multiplying a conversion factor of 49.4 nm microg L-1 (1ppb)', ...
+        SignalCalibration,dataout);
+end
 
 % validate the dataset (should not be a problem, but best be sure)
 dataout.validate(dataout);
