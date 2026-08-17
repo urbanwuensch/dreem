@@ -12,7 +12,7 @@ Set part of emission or excitation spectra from one or more samples to NaN.
 
 ## Description
 
-Removes bad fluorescence data (set to `NaN`) in the emission range of `EmRange` and excitation range of `ExRange` from specified `sampleIdent `, in `data`.
+Removes bad fluorescence data (set to `NaN`) in the emission range of `emRange` and excitation range of `exRange` from specified `sampleIdent `, in `data`.
 
 
 > If the function `scalesamples` has been used prior to using the `zapnoise` function, the `zapnoise` will automatically perform the zapping on the unscaled dataset. This will ensure the toolbox works smoothly if the scaling is reverted. For more information see `scalesamples` function.

@@ -28,7 +28,7 @@ Interface components include:<br>
 
 <strong>EEM Format panel:<br></strong>
 
-- `Colormap`: Dropdown menu to select the colormap for visualizing EEM data. Available colormaps include: `turbo`, `parula`, `jet`, `hsv`, `blue-red`.
+- `Colormap`: Dropdown menu to select the colormap for visualizing EEM data. Available colormaps include: `turbo`, `imola`, `hawaii`, `batlow`, `parula` (plus `vik`/`berlin`/`roma` for residuals).
 - `Number of Contours.`: Specify the number of contour levels displayed on the EEM plot.
 - `remember rotation`: Specify to remember the rotation settings of the EEM plot, if the plot has been rotated, when moving across samples.
 - `remember colorlimits`: Retain the colormap limits across different samples.
@@ -46,7 +46,7 @@ Interface components include:<br>
 
 <strong>Excitation Emission Matrix:<br></strong>
 
-- EEM Plot:: Displays the EEM for the selected sample. The axes represent excitation (nm) and emission (nm) wavelengths, while the color scale represents fluorescence intensity.
+- EEM Plot: Displays the EEM for the selected sample. The axes represent excitation (nm) and emission (nm) wavelengths, while the color scale represents fluorescence intensity.
 - `Color Limit (percentiles):`: Slider to adjust the percentile limits for the colormap, allowing users to focus on different intensity ranges, e.g. to ignore scatter, highlight weak signals or compensate for negative values. The slider is disabled for residual plots as is expected behavior.
 
 <strong>2D spectra panel:<br></strong>
