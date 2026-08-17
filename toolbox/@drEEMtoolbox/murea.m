@@ -1,5 +1,5 @@
 function murea(data)
-% <a href = "matlab:drEEMtoolbox.doc('vieweems')">vieweems(data)</a>
+% <a href = "matlab:drEEMtoolbox.doc('murea')">murea(data)</a>
 %
 % <strong>GUI-assisted visualization of fluorescence datasets</strong>
 %

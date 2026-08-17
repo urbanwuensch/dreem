@@ -7,7 +7,7 @@ function dataout = processabsorbance(data,options)
 % data (1,:) {mustBeA("drEEMdataset"),drEEMdataset.validate,drEEMdataset.sanityCheckAbsorbance}
 %
 % <strong>INPUTS - Optional</strong>
-% correctBase           {mustBeNumericOrLogical} = true
+% correctBase           {MustBeLogical} = true
 % baseWave              {mustBeNumeric,mustBeGreaterThan(580),mustBeBetween(numel(baseWave),1,2)} = 595
 % zero                  {mustBeNumericOrLogical} = false
 % extrapolate           {mustBeNumericOrLogical} = true

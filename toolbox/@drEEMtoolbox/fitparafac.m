@@ -8,10 +8,10 @@ function dataout = fitparafac(data,mode,options)
 % 
 % <strong>INPUTS - Optional</strong> 
 % f (1,:)                 {mustBeNumeric,mustBeNonempty} = 2:7
-% mode (1,:)              {mustBeMember(["overall","split"])} = 'overall'
+% mode (1,:)              {mustBeMember(["fitoverall","fitsplit"])} = 'fitoverall'
 % constraints (1,:)       {mustBeMember(["unconstrained", "nonnegativity", "unimodnonneg"])} = 'nonnegativity'
 % starts  (1,:)           {mustBeNumeric} = 40
-% convergence (1,:)       {mustBeLessThanOrEqual(1e-2)} = 1e-6
+% convergence (1,:)       {mustBeLessThanOrEqual(1e-2)} = 1e-8
 % maxIteration (1,1)      {mustBeNumeric} = 3000
 % initialization (1,:)    {mustBeMember(["svd", "random","multiplesmall"])} = 'random'
 % parallelization (1,1)   {mustBeNumericOrLogical}= true
@@ -573,7 +573,7 @@ end
 function [cncl] = blockbar(names,state,col)
 % Blockbar is similar to a multiwaitbar, but visualizes the state of
 % individual jobs rather than a % completed bar.
-% (c) Urban Wünsch, 2019 (first version).
+% (c) Urban WÃ¼nsch, 2019 (first version).
 % Modified for drEEM 2.0
 %% Default options
 icalpha = 0.2;
@@ -705,7 +705,7 @@ end
 
 %%
 function [Model,Iter,Err,ttc] = trackprogress(futures,numtry,facCalls,consoleoutput,splitsource)
-% Monitor parfeval progress supervision (c) Urban Wünsch, 2016-2019
+% Monitor parfeval progress supervision (c) Urban WÃ¼nsch, 2016-2019
 
 % Allocation of PARAFAC outputs
 Model = cell(numtry,1);            % Allocate Model cell

@@ -1,24 +1,24 @@
 function dataout = splitdataset(data,splitType,options)
-% <a href = "matlab:drEEMtoolbox.doc('subdataset')">dataout = splitdataset(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('splitdataset')">dataout = splitdataset(data,splitType,options) (click to access documentation)</a>
 %
 % <strong>Split dataset into subsets</strong> for split-validation of PARAFAC models
 %
 % <strong>INPUTS - Required</strong>
 % data {drEEMdataset.validate}
-% 
+% % splitType (1,:) {mustBeMember(["blind","byMetadata"])} = "blind"
+%
 % <strong>INPUTS - Optional</strong>
-% splitType (1,:) {mustBeMember(["blind","byMetadata"])}
 % options.blindType (1,:)     {mustBeMember(["alternating","random","contiguous"])} = "alternating"
 % options.metadataColumn (1,:)    {drEEMdataset.mustBeMetadataColumn} = []
 % options.numsplit (1,1)  {mustBePositive} = 2
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. The <strong>DOMfluor-type</strong> split (two splits, alternating split assignment)
-%       samples = splitdataset(samples);
+%       samples = tbx.splitdataset(samples);
 %   2. Four splits with random sample assignment
-%       samples = splitdataset(samples,splitType='blind',blindType='random',numSplit=4);
+%       samples = tbx.splitdataset(samples,splitType='blind',blindType='random',numSplit=4);
 %   3. Split dataset according to metadata variable "origin" (must exist, needs to be adopted to your dataset)
-%       samples = splitdataset(samples,splitType='byMetadata',metadataColumn='origin');
+%       samples = tbx.splitdataset(samples,splitType='byMetadata',metadataColumn='origin');
 %
 % <a href = "matlab:drEEMtoolbox.doc('splitdataset')"><strong>-> full documentation</strong></a>
 

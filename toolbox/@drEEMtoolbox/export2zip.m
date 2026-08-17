@@ -1,5 +1,5 @@
 function export2zip(data,filename)
-% <a href = "matlab:drEEMtoolbox.doc('export2zip')"">export2zip(data,filename) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('export2zip')">export2zip(data,filename) (click to access documentation)</a>
 %
 % <strong>Export entire dataset</strong> in accordance to FAIR principles
 %
@@ -10,7 +10,7 @@ function export2zip(data,filename)
 % <strong>EXAMPLE(S)</strong>
 %   1. Export sample and blank EEMs, dataset status, history, and
 %   processing steps to a zip file including README.txt for upload to data  repository
-%       tbx.export2zip(samples,'project_XY_asPublished',char(datetime('today'))]);
+%       tbx.export2zip(samples,['project_XY_asPublished_',char(datetime('today'))]);
 %
 % <a href = "matlab:drEEMtoolbox.doc('export2zip')"><strong>-> full documentation</strong></a>
 

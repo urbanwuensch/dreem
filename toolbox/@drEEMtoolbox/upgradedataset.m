@@ -1,7 +1,7 @@
 function dataout = upgradedataset(data,atypicalFieldnames)
-% <a href = "matlab:drEEMtoolbox.doc('upgradedataset')">dataout=subdataset(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('upgradedataset')">dataout=upgradedataset(data,atypicalFieldnames) (click to access documentation)</a>
 %
-% Upgrade drEEM datasets to the drEEMdataset class
+% <strong>Upgrade drEEM datasets to the drEEMdataset class</strong>
 %
 % <strong>INPUTS - Required</strong>
 % data (1,1) {mustBeA(data,'struct')}

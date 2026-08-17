@@ -1,5 +1,5 @@
 function viewspectralvariance(data,options)
-% <a href = "matlab:drEEMtoolbox.doc('viewspectralvariance')">spectralvariance(data) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('viewspectralvariance')">viewspectralvariance(data) (click to access documentation)</a>
 %
 % <strong>Inspect the spectral variability</strong> of a drEEMdataset
 %
@@ -11,7 +11,7 @@ function viewspectralvariance(data,options)
 %
 
 % <strong>EXAMPLE(S)</strong>
-%   viewspectralvariance(data);
+%   tbx.viewspectralvariance(data);
 %
 % <a href = "matlab:drEEMtoolbox.doc('viewspectralvariance')"><strong>-> full documentation</strong></a>
 

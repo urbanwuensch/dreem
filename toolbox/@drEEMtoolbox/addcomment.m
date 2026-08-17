@@ -6,7 +6,7 @@ function dataout = addcomment(data,comment,newopt)
 % <strong>INPUTS - Required</strong>
 %   data (1,1)    {mustBeA("drEEMdataset"),drEEMdataset.validate}
 %   comment (1,:) {mustBeText}
-%   newopt (1,:) {mustBe(["","newline"])} = string.empty
+%   newopt (1,:) {mustBeMember(["","newline"])} = string.empty
 %
 % <strong>EXAMPLE(S)</strong>
 %   samples = tbx.addcomment(data,'This last modification really made a difference');

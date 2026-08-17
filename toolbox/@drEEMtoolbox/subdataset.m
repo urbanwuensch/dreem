@@ -7,7 +7,7 @@ function dataout=subdataset(data,options)
 % data (1,1) {mustBeA("drEEMdataset"),drEEMdataset.validate}
 % 
 % <strong>Inputs - Optional</strong>
-% options.outSample (1,:)   {mustBeNumericOrLogical} = false
+% options.outSample (1,:)   {mustBeA('logical')} = false
 % options.outEm (1,:)       {mustBeA('logical')} = false
 % options.outEx (1,:)       {mustBeA('logical')} = false
 %

@@ -6,15 +6,15 @@ function dataout = zapnoise(data,sampleIdent,emRange,exRange)
 % <strong>INPUTS - Required</strong>
 % data (1,1)    {mustBeA("drEEMdataset"),drEEMdataset.validate}
 % sampleIdent   {mustBeNonempty(sampleIdent),mustBeA('logical'),outSampleVal(data,sampleIdent)}
-% emRange (1,:) {mustBeNumeric,mustBeNonempty,drEEMdataset.mustBeInRangeEm}
-% exRange (1,:) {mustBeNumeric,mustBeNonempty,drEEMdataset.mustBeInRangeEx}
+% emRange (1,:) {mustBeNumeric,drEEMdataset.mustBeInRangeEm}
+% exRange (1,:) {mustBeNumeric,drEEMdataset.mustBeInRangeEx}
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. Zap noise at Ex 255 Em 450 in data.i==5
 %       samples = tbx.zapnoise(samples,data.i==5,450,255)
 %   2. Zap entire emission scan at Ex 255 in sample data.i==5
 %       samples = tbx.zapnoise(samples,data.i==5,[],255)
-%   1. Zap entire emission scans at Ex 255 and 300 in sample data.i==7
+%   3. Zap entire emission scans at Ex 255 and 300 in sample data.i==7
 %       like example 2., but in two calls since [255 300] would delete the
 %       entire block between both.
 %

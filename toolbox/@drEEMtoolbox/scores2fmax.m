@@ -1,6 +1,8 @@
 function fmax = scores2fmax(data,f)
 % <a href = "matlab:drEEMtoolbox.doc('scores2fmax')">fmax = scores2fmax(data,f) (click to access documentation)</a>
 %
+% <strong>Return maximum fluorescence intensity of PARAFAC components in samples</strong>
+%
 % <strong>Inputs - Required</strong>
 % data (1,1) {mustBeA('drEEMdataset'),drEEMdataset.validate}
 % f (1,1)    {drEEMdataset.mustBeModel}

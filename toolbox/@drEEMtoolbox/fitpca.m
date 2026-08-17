@@ -1,4 +1,21 @@
 function dataout = fitpca(data,options)
+% <a href = "matlab:drEEMtoolbox.doc('fitpca')">dataout = fitpca(data,options) (click to access documentation)</a>
+%
+% <strong>Fit PCA models to fluorescence data</strong>
+%
+% <strong>INPUTS - Required</strong>
+% data (1,1)                {drEEMdataset.sanityCheckPARAFAC(data)}
+%
+% <strong>INPUTS - Optional</strong>
+% maxcomp (1,1)             {mustBeNumeric,mustBeLessThan(10)} = 5
+% interpolateMissing (1,1)  {mustBeA('logical')} = true
+% deleteLow (1,1)           {mustBeA('logical')} = false
+%
+% <strong>EXAMPLE(S)</strong>
+%   samples = tbx.fitpca(samples,maxcomp=8,deleteLow=true);
+%
+% <a href = "matlab:drEEMtoolbox.doc('fitpca')"><strong>-> full documentation</strong></a>
+
 % Copyright (C) 2025 Urban J. Wuensch - wuensch@chalmers.se
 % Chalmers University of Technology
 % Department of Architecture and Civil Engineering

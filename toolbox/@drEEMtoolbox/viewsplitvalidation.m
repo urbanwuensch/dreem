@@ -1,11 +1,11 @@
 function viewsplitvalidation(data,fac,options)
-% <a href = "matlab:drEEMtoolbox.doc('viewsplitvalidation')">dataout = viewsplitvalidation(data,fac) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('viewsplitvalidation')">viewsplitvalidation(data,fac) (click to access documentation)</a>
 %
 % <strong>Compare PARAFAC models</strong> of a dataset to validate a model
 %
 % <strong>INPUTS - Required</strong>
-% data (1,1) {mustBeNonempty,drEEMdataset.validate}
-% fac (1,1)  {mustBeInteger,drEEMdataset.mustBeModel}
+% data (1,1) {drEEMdataset.validate}
+% fac (1,1)  {mustBeNumeric,drEEMdataset.mustBeModel}
 %
 % <strong>INPUTS - Optional</strong>
 % figurefile (1,:)      {mustBeText} = "";

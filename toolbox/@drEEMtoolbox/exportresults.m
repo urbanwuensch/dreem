@@ -1,5 +1,5 @@
 function exportresults(data,f,filename)
-% <a href = "matlab:drEEMtoolbox.doc('exportresults')">exportresults(data,filename,f) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('exportresults')">exportresults(data,f,filename) (click to access documentation)</a>
 %
 % <strong>Export PARAFAC model</strong> and basic information about drEEMdataset
 %
@@ -10,7 +10,7 @@ function exportresults(data,f,filename)
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. Export the details of the PARAFAC model incl. dataset status and history as well as optical indicies
-%       tbx.exportresults(samples,5,'PARAFAC_asPublished',char(datetime('today'))]);
+%       tbx.exportresults(samples,5,['PARAFAC_asPublished',char(datetime('today'))]);
 %
 % <a href = "matlab:drEEMtoolbox.doc('exportresults')"><strong>-> full documentation</strong></a>
 

@@ -1,5 +1,5 @@
 function dataout = fitslopes(data,options)
-% <a href = "matlab:drEEMtoolbox.doc('fitslopes')">[dataout,slopes,metadata,model] = fitslopes(data,options) (click to access documentation)</a>
+% <a href = "matlab:drEEMtoolbox.doc('fitslopes')">dataout = fitslopes(data,options) (click to access documentation)</a>
 %
 % <strong>Fit slopes to CDOM absorbance data</strong>
 %

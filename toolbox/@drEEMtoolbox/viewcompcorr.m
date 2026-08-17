@@ -1,7 +1,7 @@
 function viewcompcorr(data,options)
 % <a href = "matlab:drEEMtoolbox.doc('viewcompcorr')">viewcompcorr(data) (click to access documentation)</a>
 %
-% <strong>Inspect PARAFAC models of fluorescence EEMs</strong>
+% <strong>Inspect PARAFAC level of autocorrelation between scores of a PARAFAC model</strong>
 %
 % <strong>INPUTS - Required</strong>
 % data      {mustBeA("drEEMdataset")}

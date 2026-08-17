@@ -4,7 +4,7 @@ function dataout = ramancalibration(samples,blanks,options)
 % <strong>Calibrate fluorescence signals</strong> and convert from arbitrary to Raman Units
 %
 % <strong>INPUTS - Required</strong>
-% samples (1,1) {mustBeA(,"drEEMdataset"),drEEMdataset.validate,...
+% samples (1,1) {mustBeA("drEEMdataset"),drEEMdataset.validate,...
 %     drEEMdataset.sanityCheckSignalCalibration}
 % blanks  (1,1) {mustBeA("drEEMdataset"),drEEMdataset.validate,...
 %     drEEMdataset.sanityCheckSignalCalibration}
@@ -13,7 +13,7 @@ function dataout = ramancalibration(samples,blanks,options)
 % ExWave (1,1) {mustBeNumeric} = 350
 % iStart (1,1) {mustBeNumeric} = 378
 % iEnd   (1,1) {mustBeNumeric} = 424
-% plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
+% plot (1,1) {mustBeNumericOrLogical} = samples.toolboxOptions.plotByDefault;
 % figurefile (1,:) {mustBeText} = ""
 %
 % <strong>EXAMPLE(S)</strong>
