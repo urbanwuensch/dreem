@@ -401,7 +401,7 @@ if plt
     ax=nexttile(t);
     hold(ax,'on')
     for n=1:numel(peaks)
-        p=plot(ax,dataout.i,Cpeak(:,n),'LineWidth',1.5);
+        p=plot(ax,dataout.i,Cpeak(:,n),"Marker","+",'LineStyle','none','LineWidth',1.5);
 
         row1 = dataTipTextRow('Sample',dataout.filelist);
         for k=1:numel(p)
@@ -417,13 +417,13 @@ if plt
 
     ax=nexttile(t);
     hold(ax,'on')
-    p(1)=plot(ax,dataout.i,FI,'LineWidth',1.5);
-    p(2)=plot(ax,dataout.i,FrI,'LineWidth',1.5);
-    p(3)=plot(ax,dataout.i,BIX,'LineWidth',1.5);
-    p(4)=plot(ax,dataout.i,arix,'LineWidth',1.5);
+    p(1)=plot(ax,dataout.i,FI,"Marker","+",'LineStyle','none','LineWidth',1.5);
+    p(2)=plot(ax,dataout.i,FrI,"Marker","+",'LineStyle','none','LineWidth',1.5);
+    p(3)=plot(ax,dataout.i,BIX,"Marker","+",'LineStyle','none','LineWidth',1.5);
+    p(4)=plot(ax,dataout.i,arix,"Marker","+",'LineStyle','none','LineWidth',1.5);
     if ~HIX_excl
         p(5)=plot(ax,dataout.i,HIX,'LineWidth',1.5);
-        legend(ax,'Fluorescence index','Freshness index' ,'Biological index','Humification index','Aromaticity index', ...
+        legend(ax,'Fluorescence index','Freshness index' ,'Biological index','Aromaticity index','Humification index', ...
             'location','bestoutside')
     else
         legend(ax,'Fluorescence index','Freshness index','Biological index','Aromaticity index', ...
