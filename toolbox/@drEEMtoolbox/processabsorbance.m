@@ -113,11 +113,15 @@ if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
     % Baseline possible, wanted, and no extrapolation necessary
     % Otherwise, the baseline subtraction is done later.
     if blcor_allowed&&options.correctBase
-        idx=dataout.absWave>=options.baseWave;
+        if isscalar(options.baseWave)
+            idx=dataout.absWave>=options.baseWave;
+        else
+            idx=dataout.absWave>=options.baseWave(1)&dataout.absWave<=options.baseWave(2);
+        end
         if not(any(idx))
             warning('Please double-check the baseline correction wavelength. Could not perform the baseline correction.')
         else
-            bl=mean(dataout.abs(:,i),2,'omitmissing');
+            bl=mean(dataout.abs(:,idx),2,'omitmissing');
             dataout.abs=dataout.abs-bl;
         end
     end
@@ -203,11 +207,11 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         
         if blcor_allowed&&options.correctBase
             if isscalar(options.baseWave)
-                i=dataout.absWave>options.baseWave;
+                idx=dataout.absWave>options.baseWave;
             else
-                i=dataout.absWave>=options.baseWave(1)&dataout.absWave<=options.baseWave(2);
+                idx=dataout.absWave>=options.baseWave(1)&dataout.absWave<=options.baseWave(2);
             end
-            bl=mean(dataout.abs(:,i),2,'omitnan');
+            bl=mean(dataout.abs(:,idx),2,'omitnan');
             dataout.abs=dataout.abs-bl;
         end
         
