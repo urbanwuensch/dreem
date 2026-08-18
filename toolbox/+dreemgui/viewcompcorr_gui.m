@@ -124,6 +124,11 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
                 colmap(i,:) = col;
             end
         end
+        
+        function nout = pullModel(~,string)
+            string=strsplit(string,'-');
+            nout=str2double(string{1});
+        end
     end
     
 
@@ -159,7 +164,7 @@ classdef viewcompcorr_gui < matlab.apps.AppBase
         % Value changed function: MetadatavariableDropDown, ModelsDropDown
         function updatePlots(app, event)
             mdl = app.ModelsDropDown.Value;
-            mdl = str2num(mdl(1));
+            mdl = app.pullModel(mdl);
             md = app.MetadatavariableDropDown.Value;
             md=app.data.metadata.(md);
 

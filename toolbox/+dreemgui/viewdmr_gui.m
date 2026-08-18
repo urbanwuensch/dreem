@@ -74,7 +74,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             m = app.ModelDropDown.Value;
             s = sample;
 
-            m = str2double(m(1));
+            m = app.pullModel(m);
             s = matches(app.data.filelist,s);
 
             dt = squeeze(app.data.X(s,:,:));
@@ -142,6 +142,11 @@ classdef viewdmr_gui < matlab.apps.AppBase
             title(ax(1),[sample,' meas.'])
             title(ax(2),[sample,' mod.'])
             title(ax(3),[sample,' res.'])
+        end
+        
+        function nout = pullModel(~,string)
+            string=strsplit(string,'-');
+            nout=str2double(string{1});
         end
     end
     
@@ -513,6 +518,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             xlabel(app.measured, 'Excitation (nm)')
             ylabel(app.measured, 'Emission (nm)')
             zlabel(app.measured, 'Z')
+            app.measured.TickDirMode = 'manual';
             app.measured.Layout.Row = 1;
             app.measured.Layout.Column = 1;
 
@@ -522,6 +528,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             xlabel(app.modelled, 'Excitation (nm)')
             ylabel(app.modelled, 'Emission (nm)')
             zlabel(app.modelled, 'Z')
+            app.modelled.TickDirMode = 'manual';
             app.modelled.Layout.Row = 1;
             app.modelled.Layout.Column = 2;
 
@@ -531,6 +538,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             xlabel(app.residuals, 'Excitation (nm)')
             ylabel(app.residuals, 'Emission (nm)')
             zlabel(app.residuals, 'Z')
+            app.residuals.TickDirMode = 'manual';
             app.residuals.Layout.Row = 1;
             app.residuals.Layout.Column = 3;
 

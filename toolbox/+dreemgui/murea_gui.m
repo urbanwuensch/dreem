@@ -372,8 +372,8 @@ classdef murea_gui < matlab.apps.AppBase
         end
 
         function updatescoreplots(app)
-            value(1) = str2double(app.DropDownX.Value(1));
-            value(2) = str2double(app.DropDownY.Value(1));
+            value(1) = app.pullModel(app.DropDownX.Value(1));
+            value(2) = app.pullModel(app.DropDownY.Value(1));
 
             mod=app.model;
 
@@ -678,6 +678,11 @@ classdef murea_gui < matlab.apps.AppBase
                 colmap(i,:) = col;
             end
         end
+
+        function nout = pullModel(~,string)
+            string=strsplit(string,'-');
+            nout=str2double(string{1});
+        end
         
 
     end
@@ -717,7 +722,7 @@ classdef murea_gui < matlab.apps.AppBase
         % Value changed function: PARAFACcomponentsDropDown
         function PARAFACcomponentsDropDownValueChanged(app, event)
             value = app.PARAFACcomponentsDropDown.Value;
-            app.nComp=str2double(value);
+            app.nComp=app.pullModel(value);
             app.processdata;
             app.runmodels;
             app.visualize;

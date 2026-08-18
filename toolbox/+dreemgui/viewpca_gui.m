@@ -219,8 +219,8 @@ classdef viewpca_gui < matlab.apps.AppBase
         end
 
         function updatescoreplots(app)
-            value(1) = str2double(app.DropDownX.Value(1));
-            value(2) = str2double(app.DropDownY.Value(1));
+            value(1) = app.pullModel(app.DropDownX.Value(1));
+            value(2) = app.pullModel(app.DropDownY.Value(1));
 
             mod=app.data.models(app.nComp);
 
@@ -519,6 +519,11 @@ classdef viewpca_gui < matlab.apps.AppBase
                 col=repmat(cmap(j,:),sum(i),1);
                 colmap(i,:) = col;
             end
+        end
+
+        function nout = pullModel(~,string)
+            string=strsplit(string,'-');
+            nout=str2double(string{1});
         end
         
 

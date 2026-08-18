@@ -325,6 +325,11 @@ classdef viewparafac_gui < matlab.apps.AppBase
         
             
         end
+
+        function nout = pullModel(~,string)
+            string=strsplit(string,'-');
+            nout=str2double(string{1});
+        end
     end
 
 
@@ -492,7 +497,7 @@ classdef viewparafac_gui < matlab.apps.AppBase
         % Value changed function: LinelegendCheckBox, lldrop
         function lldropValueChanged(app, event)
             value = app.lldrop.Value;
-            value=erase(value,' ');
+            value=app.pullModel(value);
             f=str2double(value(1));
             factors=app.models(f).loads;
             lev=app.models(f).leverages;
@@ -555,7 +560,7 @@ classdef viewparafac_gui < matlab.apps.AppBase
         function fingerdropValueChanged(app, event)
             value = app.fingerdrop.Value;
             value=erase(value,' ');
-            f=str2double(value(1));
+            f=app.pullModel(value);
             factors=app.models(f).loads;
             app.fingergrid = tiledlayout(app.fingerpanel,'flow','padding','normal','TileSpacing','compact');
 
@@ -602,7 +607,7 @@ classdef viewparafac_gui < matlab.apps.AppBase
         function ssedropValueChanged(app, event)
             value = app.ssedrop.Value;
             value=erase(value,' ');
-            f=str2double(value(1));
+            f=app.pullModel(value);
             err=app.models(f).sse;
             xax={app.data.i app.data.Em app.data.Ex};
 
@@ -638,7 +643,7 @@ classdef viewparafac_gui < matlab.apps.AppBase
         function eldropValueChanged(app, event)
             value = app.eldrop.Value;
             value=erase(value,' ');
-            f=str2double(value(1));
+            f=app.pullModel(value);
             err=app.models(f).sse;
             lev=app.models(f).leverages;
             cax={app.data.i app.data.Em app.data.Ex};
