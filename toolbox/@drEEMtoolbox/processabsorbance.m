@@ -337,7 +337,7 @@ cleanupWarn=onCleanup(@() warning(warnstate));
 x=x(:); y=y(:);
 beta=beta0(:);
 lambda=1e-3;
-maxIter=2500;
+maxIter=10000;
 tolFun=1e-10;
 
 r=y-CDOMexp_K(beta,x);
