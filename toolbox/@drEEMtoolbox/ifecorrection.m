@@ -56,9 +56,10 @@ dataout=drEEMtoolbox.subdataset(dataout,outEm=emout,outEx=exout);
 % Calculate the IFE correction factors based on ABA
 IFCmat=ABAife(dataout.Ex,dataout.Em,[rcvec(dataout.absWave,'row');dataout.abs]);  %or use Abs.Aug here
 IFCmat=real(IFCmat);
-if any(data.abs(:)>2)
-    message=[message,'Some samples had very high absorbance (>2). These areas were NaN''ed. '];
-    warning('Some samples had very high absorbance (>2). This function produces NaN correction factors and thus deletes the affected data.')
+if any(isnan(IFCmat(:)))&&any(data.abs(:)>2)
+    message=[message,'Some samples had very high absorbance (>2). These EEM areas were NaN''ed.'];
+elseif any(isnan(IFCmat(:)))
+    message=[message,'Some of the IFC matrix contained NaNs. This results in NaNs in the fluorescence EEMs.'];
 end
 % Perform the correction
 dataout.X=dataout.X.*IFCmat;
@@ -221,13 +222,13 @@ for i=1:N_samples
             Aex_t=Aex(k,2);
             Aem_t=Aem(j,2);
             
-            % if Aex_t>2
-            %     Aex_t=NaN;
-            % end
-            % if Aem_t>2
-            %     Aem_t=NaN;
-            % end
-            % 
+            if Aex_t>2
+                Aex_t=NaN;
+            end
+            if Aem_t>2
+                Aem_t=NaN;
+            end
+
             Atot(j,k)=Aex_t+Aem_t;
         end
     end
