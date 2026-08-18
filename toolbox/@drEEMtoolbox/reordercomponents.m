@@ -50,7 +50,7 @@ for j=1:numel(f)
     switch method
         case 'emmax'
             [~,idx]=max(M{2});
-            [~,seq]=sort(idx);
+            [~,seq]=sort(idx,"ascend");
         case 'emmaxinv'
             [~,idx]=max(M{2});
             [~,seq]=sort(idx,'descend');
@@ -89,13 +89,13 @@ if n==1
     neworder=neworder{1};
 end
 
-message={'emmax','emission maximum';...
-    'waveem','weigted average emission maximum';...
-    'apparentstokes','apparent Stokes shift (max. Ex/Em)';...
-    'contribution','component contribution (drEEM/N-way default)'};
+% message={'emmax','emission maximum';...
+%     'waveem','weigted average emission maximum';...
+%     'apparentstokes','apparent Stokes shift (max. Ex/Em)';...
+%     'contribution','component contribution (drEEM/N-way default)'};
+% 
+% midx=contains(message(:,1),method);
 
-midx=contains(message(:,1),method);
-
-disp(sprintf(['\nModels with [',num2str(f'),'] components reordered according to the ',message{midx,2},'\n'])) %#ok<DSPS>
+disp(sprintf(['\nModels with [',num2str(f'),'] components reordered.'])) %#ok<DSPS>
 
 end
