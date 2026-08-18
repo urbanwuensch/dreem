@@ -384,9 +384,11 @@ end
 
 end
 
-function baseValidator(input)
+function baseValidator(in)
 
-if not(isscalar(input))|numel(input)<=2
+n=numel(in);
+
+if not(isbetween(n,1,2))
     error('baseWave must be a scalar or at most two values. E.g. "600" or "[590 600]"')
 end
 
