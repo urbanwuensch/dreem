@@ -492,14 +492,18 @@ end
 function beta = CDOMexp_fit(x,y,beta0)
 % CDOMexp_fit: fits the CDOMexp_K model (b1*exp(b2/1000*(350-x))+b3) to
 % data with a small Levenberg-Marquardt solver. Written to replace the
-% Statistics and Machine Learning Toolbox's nlinfit so that exponential
-% slope fitting works without that toolbox installed. Uses only core
-% MATLAB (matrix algebra, no toolbox functions). Mirrors the MaxIter=10000
-% budget the original nlinfit call used here.
+% Statistics and Machine Learning Toolbox's nlinfit so that CDOM
+% extrapolation works without that toolbox installed. Uses only core
+% MATLAB (matrix algebra, no toolbox functions).
+warnstate=warning('off','MATLAB:singularMatrix');
+warnstate(2)=warning('off','MATLAB:nearlySingularMatrix');
+warnstate(3)=warning('off','MATLAB:illConditionedMatrix');
+cleanupWarn=onCleanup(@() warning(warnstate));
+
 x=x(:); y=y(:);
 beta=beta0(:);
 lambda=1e-3;
-maxIter=10000;
+maxIter=2500;
 tolFun=1e-10;
 
 r=y-CDOMexp_K(beta,x);
@@ -517,15 +521,32 @@ for iter=1:maxIter
     improved=false;
     for inner=1:60
         H=JTJ+lambda*diag(scale);
-        if rcond(H)<eps
+        % rcond(H) itself returns NaN (not a small number) once H holds
+        % any NaN/Inf, and "NaN<eps" is false -- so a plain rcond check
+        % alone silently misses that case. Guard on finiteness first.
+        if not(all(isfinite(H(:)))) || rcond(H)<eps
             delta=pinv(H)*JTr;
         else
             delta=H\JTr;
         end
+        if not(all(isfinite(delta)))
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+            continue
+        end
         betaNew=beta+delta;
+        if not(all(isfinite(betaNew)))
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+            continue
+        end
         rNew=y-CDOMexp_K(betaNew,x);
         costNew=sum(rNew.^2);
-        if costNew<cost
+        if isfinite(costNew) && costNew<cost
             improvement=cost-costNew;
             beta=betaNew;
             r=rNew;
