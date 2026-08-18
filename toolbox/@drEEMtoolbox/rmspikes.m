@@ -183,8 +183,11 @@ end
 
 for j=1:nSample
     xhere=squeeze(Xmarked1(j,:,:));
-    pEx(j,:)=sum(not(isnan(xhere)),1)./data.nEx;
-    pEm(j,:)=sum(not(isnan(xhere)),2)./data.nEm;
+    % xhere is (nEm x nEx). Summing along dim 1 collapses the nEm rows,
+    % leaving one count per Ex column -- so that count is a fraction of
+    % nEm (not nEx), and vice versa for the dim-2 sum.
+    pEx(j,:)=sum(not(isnan(xhere)),1)./data.nEm;
+    pEm(j,:)=sum(not(isnan(xhere)),2)./data.nEx;
 end
 
 
@@ -196,7 +199,7 @@ if not(isempty(remEx))
 end
 
 if not(isempty(remEm))
-    warning(['More than 80% of samples have more than 20% noisy datapoints at em = ',num2str(remEx')])
+    warning(['More than 80% of samples have more than 20% noisy datapoints at em = ',num2str(remEm')])
 end
 
 
