@@ -146,45 +146,7 @@ end
 
 % (6) NaN areas of intersecting scatter (if desired)
 if strcmp(options.iopt,'conservative')
-    ex=200:800;
-    em=200:1000;
-    imattemplate=ones(numel(em),numel(ex)); % imat: 1(don't handle) 2(interpolate) 3(do no interpolate) (2&3 are set by labeler)
-    types={'ray1';'ram1';'ray2';'ram2'};
-    for n=1:numel(types)
-        if options.cutout(n)
-            % labeler(nanin,iin,x,y,type,below,above,iswitch,cutswitch)
-            [~,imat2{n}]=labeler([],imattemplate,ex,em,types{n},options.(types{n})(1),options.(types{n})(2),1,0,ramanShift);
-            [compmat{n},]=labeler(false(data.nEm,data.nEx),[],data.Ex,data.Em,types{n},options.(types{n})(1),options.(types{n})(2),1,0,ramanShift);
-        end
-    end
-
-    firstorderexcl=imat2{1}+imat2{2};
-    secondorderexcl=imat2{3}+imat2{4};
-
-    clearvars imattemplate imat2 types n
-
-    exlim=ex(find(any(firstorderexcl==4,1),1,'last'));
-    emlim=em(find(any(firstorderexcl==4,2),1,'last'));
-
-    nanmat2=false(data.nEm,data.nEx);
-    if exlim>=min(data.Ex)&&emlim>=min(data.Em)
-        nanmat2(:,1:drEEMtoolbox.mindist(data.Ex,exlim))=true;
-        nanmat2(1:drEEMtoolbox.mindist(data.Ex,exlim),:)=true;
-    end
-    nanmat3=nanmat2&compmat{1}|nanmat2&compmat{2};
-    exlim=ex(find(any(secondorderexcl==4,1),1,'last'));
-    emlim=em(find(any(secondorderexcl==4,2),1,'last'));
-
-    nanmat2=false(data.nEm,data.nEx);
-    if exlim>=min(data.Ex)&&emlim>=min(data.Em)
-        nanmat2(:,1:drEEMtoolbox.mindist(data.Ex,exlim))=true;
-        nanmat2(1:drEEMtoolbox.mindist(data.Ex,exlim),:)=true;
-    end
-    nanmat4=nanmat2==true&compmat{1}==true|nanmat2==true&compmat{2}==true;
-    
-    nanmat5=nanmat3|nanmat4;
-    clearvars nanmat4 nanmat3 nanmat2 exlim emlim firstorderexcl secondorderexcl
-    Xi(:,nanmat5)=NaN;
+    warning('options.iopt="conservative" is no longer enforced (dropped support due to complexity of the feature as of v2.26.08')
 end
 
 %% Output variable definition

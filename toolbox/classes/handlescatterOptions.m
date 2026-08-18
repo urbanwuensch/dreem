@@ -47,8 +47,7 @@ classdef handlescatterOptions
                 disp(' ')
                 disp(sprintf(['    You are planning to cut and interpolate Rayleigh 1st order scatter\n'...
                     '    and then to force part of the interpolation to zero.'])); %#ok<DSPS>
-                disp(sprintf(['    It is advisable to leave some room between interpolation and forced zeros.\n'...
-                    '    options.d2zero was reset to options.ray1(1)+5 '])); %#ok<DSPS>
+                disp(sprintf('    It is advisable to leave some room between interpolation and forced zeros.')); %#ok<DSPS>
                 disp(' ')
                 pause(1)
                 options.d2zero=options.ray1(1)+5;
