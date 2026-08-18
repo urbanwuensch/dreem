@@ -179,7 +179,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             
             if not(isnan(f))
                 drEEMdataset.mustBeModel(eem,f)
-                app.ModelDropDown.Value(1) = num2str(f);
+                app.ModelDropDown.Value = [num2str(f),' - component model'];
             end
             app.SampleDropDown.Items = eem.filelist;
             linkaxes([app.measured,app.modelled,app.residuals],'xy')
@@ -203,7 +203,7 @@ classdef viewdmr_gui < matlab.apps.AppBase
             m = app.ModelDropDown.Value;
             s = app.SampleDropDown.Value;
 
-            m = str2double(m(1));
+            m = app.pullModel(m);
             s = matches(app.data.filelist,s);
 
             dt = squeeze(app.data.X(s,:,:));

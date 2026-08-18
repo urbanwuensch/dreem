@@ -219,8 +219,8 @@ classdef viewpca_gui < matlab.apps.AppBase
         end
 
         function updatescoreplots(app)
-            value(1) = app.pullModel(app.DropDownX.Value(1));
-            value(2) = app.pullModel(app.DropDownY.Value(1));
+            value(1) = app.pullModel(app.DropDownX.Value);
+            value(2) = app.pullModel(app.DropDownY.Value);
 
             mod=app.data.models(app.nComp);
 

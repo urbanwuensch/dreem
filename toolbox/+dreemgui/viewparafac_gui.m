@@ -381,10 +381,10 @@ classdef viewparafac_gui < matlab.apps.AppBase
             
             if not(isnan(f))
                 drEEMdataset.mustBeModel(models,f)
-                app.lldrop.Value(1) = num2str(f);
-                app.eldrop.Value(1) = num2str(f);
-                app.fingerdrop.Value(1) = num2str(f);
-                app.ssedrop.Value(1) = num2str(f);
+                app.lldrop.Value = [num2str(f),' - component model'];
+                app.eldrop.Value = [num2str(f),' - component model'];
+                app.fingerdrop.Value = [num2str(f),' - component model'];
+                app.ssedrop.Value = [num2str(f),' - component model'];
             end
             %% Change to default tab
             
@@ -497,10 +497,9 @@ classdef viewparafac_gui < matlab.apps.AppBase
         % Value changed function: LinelegendCheckBox, lldrop
         function lldropValueChanged(app, event)
             value = app.lldrop.Value;
-            value=app.pullModel(value);
-            f=str2double(value(1));
-            factors=app.models(f).loads;
-            lev=app.models(f).leverages;
+            value = app.pullModel(value);
+            factors=app.models(value).loads;
+            lev=app.models(value).leverages;
            
 
             plotdat=[factors lev];
