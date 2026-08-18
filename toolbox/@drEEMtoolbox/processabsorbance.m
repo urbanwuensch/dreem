@@ -33,23 +33,22 @@ function dataout = processabsorbance(data,options)
 % 41296 Gothenburg (Sweden)
 arguments
     % Required
-    data (1,:) {mustBeNonempty,mustBeA(data,"drEEMdataset"),...
-        drEEMdataset.validate(data),drEEMdataset.sanityCheckAbsorbance(data),drEEMdataset.mustContainSamples(data)}
+    data (1,:) {mustBeNonempty,...
+        mustBeA(data,"drEEMdataset"),...
+        drEEMdataset.validate(data),...
+        drEEMdataset.sanityCheckAbsorbance(data),...
+        drEEMdataset.mustContainSamples(data)}
 
     % Optional
     options.correctBase (1,:)   {mustBeA(options.correctBase,'logical')} = true
-    options.baseWave (1,:)      {mustBeNumeric,mustBeGreaterThan(options.baseWave,580),baseValidator(options.baseWave)} = 595
+    options.baseWave (1,:)      {mustBeNumeric,mustBeGreaterThan(options.baseWave,580)} = 595
     options.zero (1,:)          {mustBeNumericOrLogical} = false
     options.extrapolate (1,:)   {mustBeNumericOrLogical} = true
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
     options.figurefile (1,:) {mustBeText} = "";
 end
-mv=ver;
-stool=any(contains({mv(:).Name},'Statistics and Machine Learning'));
-if options.extrapolate&&not(stool)
-    options.extrapolate=false;
-    warning('Statistics and Machine Learning Toolbox not installed. CDOM spectra extrapolation disabled.')
-end
+
+
 % Check if the function has already been run
 idx=drEEMhistory.searchhistory(data.history,'processabsorbance','first');
 if not(isempty(idx))
@@ -114,8 +113,8 @@ if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
     % Baseline possible, wanted, and no extrapolation necessary
     % Otherwise, the baseline subtraction is done later.
     if blcor_allowed&&options.correctBase
-        i=dataout.absWave>=options.baseWave;
-        if not(any(i))
+        idx=dataout.absWave>=options.baseWave;
+        if not(any(idx))
             warning('Please double-check the baseline correction wavelength. Could not perform the baseline correction.')
         else
             bl=mean(dataout.abs(:,i),2,'omitmissing');
@@ -132,10 +131,7 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         abswave=dataout.absWave(drEEMtoolbox.mindist(dataout.absWave,300):end);
         absspec=dataout.abs(:,drEEMtoolbox.mindist(dataout.absWave,300):end)';
 
-        % This bit sets options for a non-linear exponential CDOM spectra
-        % fit and carries it out ( (c) Stedmon 2001)
-        opts=statset;
-        opts.MaxIter=2500;
+      
         % Anonymous function to fit data to the model afteer parameters
         % were found
         afit=@(b1,b2,b3,lambda) b1*exp(b2/1000*(350-lambda))+b3;
@@ -150,7 +146,7 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         warning off
         for n=1:size(absspec,2)
             try
-                beta(n,:) = nlinfit(abswave,absspec(:,n),@CDOMexp_K,[mean(absspec(:,n)); 18; 0],opts);
+                beta(n,:) = CDOMexp_fit(abswave,absspec(:,n),[mean(absspec(:,n)); 18; 0]);
                 new(n,:)=afit(beta(n,1),beta(n,2),beta(n,3),[abswave;extrawave]);
             catch
                 new(n,:)=0;
@@ -206,7 +202,11 @@ elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
         end
         
         if blcor_allowed&&options.correctBase
-            i=dataout.absWave>options.baseWave;
+            if isscalar(options.baseWave)
+                i=dataout.absWave>options.baseWave;
+            else
+                i=dataout.absWave>=options.baseWave(1)&dataout.absWave<=options.baseWave(2);
+            end
             bl=mean(dataout.abs(:,i),2,'omitnan');
             dataout.abs=dataout.abs-bl;
         end
@@ -319,12 +319,63 @@ yhat = b1*exp(b2/1000*(350-x))+b3;
 
 end
 
-function baseValidator(input)
+function beta = CDOMexp_fit(x,y,beta0)
+% CDOMexp_fit: fits the CDOMexp_K model (b1*exp(b2/1000*(350-x))+b3) to
+% data with a small Levenberg-Marquardt solver. Written to replace the
+% Statistics and Machine Learning Toolbox's nlinfit so that CDOM
+% extrapolation works without that toolbox installed. Uses only core
+% MATLAB (matrix algebra, no toolbox functions).
+x=x(:); y=y(:);
+beta=beta0(:);
+lambda=1e-3;
+maxIter=2500;
+tolFun=1e-10;
 
-nel=numel(input);
+r=y-CDOMexp_K(beta,x);
+cost=sum(r.^2);
 
-if nel<1|nel>2
-    error('Input must be either be a scalar (e.g. 585) or a row vector of two elements (e.g. [585 600]')
+for iter=1:maxIter
+    e=350-x;
+    ex=exp(beta(2)/1000*e);
+    % Analytical Jacobian of the model w.r.t. [b1;b2;b3]
+    J=[ex, beta(1)*ex.*e/1000, ones(size(x))];
+    JTJ=J'*J;
+    JTr=J'*r;
+    scale=max(diag(JTJ),eps);
+
+    improved=false;
+    for inner=1:60
+        H=JTJ+lambda*diag(scale);
+        if rcond(H)<eps
+            delta=pinv(H)*JTr;
+        else
+            delta=H\JTr;
+        end
+        betaNew=beta+delta;
+        rNew=y-CDOMexp_K(betaNew,x);
+        costNew=sum(rNew.^2);
+        if costNew<cost
+            improvement=cost-costNew;
+            beta=betaNew;
+            r=rNew;
+            cost=costNew;
+            lambda=max(lambda/10,1e-12);
+            improved=true;
+            break
+        else
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+        end
+    end
+
+    if not(improved)
+        break
+    end
+    if improvement<tolFun*max(1,cost)
+        break
+    end
 end
 
 end

@@ -52,12 +52,6 @@ if options.quiet
     options.details = false;
 end
 
-
-mv=ver;
-stool=any(contains({mv(:).Name},'Statistics and Machine Learning'));
-if ~stool
-    warning('Statistics and Machine Learning Toolbox not installed. No exponential slopes will be calculated.')
-end
 if isempty(data.abs)
     error('fitslopes fits CDOM absorbance slopes and requires data to do so. data.abs is empty.')
 end
@@ -83,10 +77,6 @@ end
 
 %% Fitting
 
-if stool
-    opts=statset;
-    opts.MaxIter=2500;
-end
 if not(options.quiet)
     wb=waitbar(0,'Fitting spectral slopes...','CreateCancelBtn','setappdata(gcbf,''canceling'',1)');cnt=0;
     cleanup = onCleanup(@()closeWaitbar(wb));
@@ -95,9 +85,6 @@ end
 for j=1:3%numel(fitSpecs)
     switch fitSpecs(j).ident
         case 'exponential'
-            if not(stool)
-                continue
-            end
             for i=1:data.nSample
                 x=fitSpecs(j).absWave;
                 y=fitSpecs(j).abs(i,:);
@@ -456,10 +443,8 @@ function results=customexpofit(x,y,options)
 results=struct;
 results.Coefficients=table;
 try
-    opts=statset;
-    opts.MaxIter=10000;
     warning off
-    beta=nlinfit(x,y',@CDOMexp_K,[mean(y,"omitmissing"); 18; 0],opts);
+    beta=CDOMexp_fit(x,y',[mean(y,"omitmissing"); 18; 0]);
     warning on
     idx=not(isnan(y));
     if sum(~idx)>ceil(0.7*numel(y))
@@ -503,6 +488,69 @@ if results.Rsquared<options.rsq
 end
 
 end
+
+function beta = CDOMexp_fit(x,y,beta0)
+% CDOMexp_fit: fits the CDOMexp_K model (b1*exp(b2/1000*(350-x))+b3) to
+% data with a small Levenberg-Marquardt solver. Written to replace the
+% Statistics and Machine Learning Toolbox's nlinfit so that exponential
+% slope fitting works without that toolbox installed. Uses only core
+% MATLAB (matrix algebra, no toolbox functions). Mirrors the MaxIter=10000
+% budget the original nlinfit call used here.
+x=x(:); y=y(:);
+beta=beta0(:);
+lambda=1e-3;
+maxIter=10000;
+tolFun=1e-10;
+
+r=y-CDOMexp_K(beta,x);
+cost=sum(r.^2);
+
+for iter=1:maxIter
+    e=350-x;
+    ex=exp(beta(2)/1000*e);
+    % Analytical Jacobian of the model w.r.t. [b1;b2;b3]
+    J=[ex, beta(1)*ex.*e/1000, ones(size(x))];
+    JTJ=J'*J;
+    JTr=J'*r;
+    scale=max(diag(JTJ),eps);
+
+    improved=false;
+    for inner=1:60
+        H=JTJ+lambda*diag(scale);
+        if rcond(H)<eps
+            delta=pinv(H)*JTr;
+        else
+            delta=H\JTr;
+        end
+        betaNew=beta+delta;
+        rNew=y-CDOMexp_K(betaNew,x);
+        costNew=sum(rNew.^2);
+        if costNew<cost
+            improvement=cost-costNew;
+            beta=betaNew;
+            r=rNew;
+            cost=costNew;
+            lambda=max(lambda/10,1e-12);
+            improved=true;
+            break
+        else
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+        end
+    end
+
+    if not(improved)
+        break
+    end
+    if improvement<tolFun*max(1,cost)
+        break
+    end
+end
+
+end
+
 function pltnext(sosurce,event) %#ok<INUSD>
 uiresume(sosurce.Parent)
 end
