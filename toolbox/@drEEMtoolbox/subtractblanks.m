@@ -73,6 +73,7 @@ blanks_mod=drEEMtoolbox.subdataset(blanks, ...
 % s_miss=setdiff(1:samples_mod.nSample,is);
 % b_miss=setdiff(1:blanks_mod.nSample,ib);
 cnt=1;
+cnt_missmatch=1;
 is=[];ib=[];s_miss=[];b_miss=[];
 for j=1:samples_mod.nSample
     res=matches(samples_mod.filelist{j},blanks_mod.filelist{j});
@@ -80,8 +81,9 @@ for j=1:samples_mod.nSample
         is(cnt)=cnt;
         ib(cnt)=cnt;
     else
-        s_miss(cnt)=cnt;
-        b_miss(cnt)=cnt;
+        s_miss(cnt_missmatch)=cnt;
+        b_miss(cnt_missmatch)=cnt;
+        cnt_missmatch=cnt_missmatch+1;
     end
     cnt=cnt+1;
 end
