@@ -245,9 +245,10 @@ if not(isempty(data.abs))
         writetable(absData,[data.filelist{j},'.csv'],"Delimiter",',','WriteMode','overwrite')
     end
     disp('    Finished files: Absorbance spectra')
+    cd ..
 end
-cd ..
-zip(filename,{'absorbance spectra','EEMs','*.csv','*.mat','*.txt','*.xlsx'});
+
+zip(filename,"*")
 movefile([pwd,filesep,filename],[rootdir,filesep,filename])
 disp(['    Finished files: ',filename])
 cd(rootdir)
