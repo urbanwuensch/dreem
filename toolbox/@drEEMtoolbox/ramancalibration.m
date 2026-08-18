@@ -394,8 +394,8 @@ for n=1:data.nSample
     for i=1:data.nEx
         Xn=interp1(em(i,:),squeeze(data.X(n,:,i)),dem);
         try
-            f=fit(dem,Xn,'gauss1');
-            Xn_f=feval(f,dem_i);
+            beta=gauss1_fit(dem,Xn);
+            Xn_f=gauss1_eval(beta,dem_i);
             results.peakposition(n,i)=dem_i(maxi(Xn_f));
         catch ME
             %warning(ME.message)
