@@ -85,7 +85,7 @@ end
 
 
 % In case f was just one specific component, neworder need not be a cell array
-if n==1
+if isscalar(f)
     neworder=neworder{1};
 end
 
