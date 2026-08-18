@@ -535,6 +535,11 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                 delete(app)
                 throwAsCaller(MException("drEEM:invalidData",'Input is not a valid dataset'))
             end
+
+            if matches(data.status.absorbanceUnit,'unknown')
+                delete(app)
+                throwAsCaller(MException("drEEM:invalidData",'The app does not work when the data.status.absorbanceUnit = "unknown".'))
+            end
             movegui(app.viewabsorbanceUIFigure,"center")
             data=drEEMtoolbox.fitslopes(data,plot=false,details=false,quiet=true);
             app.data=data;
