@@ -72,7 +72,7 @@ end
 if isfile(ncfile)
     rawdata=horibaRawdata.importFromNetCDF(ncfile,bucket);
     if matches(version,'drEEMdataset')
-        [samples,blanks]=drEEMtoolbox.importFromNetCDF(rawdata);
+        [samples,blanks]=horibaRawdata.importFromNetCDF(rawdata);
         varargout{1}=samples;
         varargout{2}=blanks;
     else
