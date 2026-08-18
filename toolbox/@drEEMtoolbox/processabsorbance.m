@@ -41,7 +41,7 @@ arguments
 
     % Optional
     options.correctBase (1,:)   {mustBeA(options.correctBase,'logical')} = true
-    options.baseWave (1,:)      {mustBeNumeric,mustBeGreaterThan(options.baseWave,580)} = 595
+    options.baseWave (1,:)      {mustBeNumeric,mustBeGreaterThan(options.baseWave,580),baseValidator(options.baseWave)} = 595
     options.zero (1,:)          {mustBeNumericOrLogical} = false
     options.extrapolate (1,:)   {mustBeNumericOrLogical} = true
     options.plot (1,1) {mustBeNumericOrLogical} = data.toolboxOptions.plotByDefault;
@@ -380,6 +380,14 @@ for iter=1:maxIter
     if improvement<tolFun*max(1,cost)
         break
     end
+end
+
+end
+
+function baseValidator(input)
+
+if not(isscalar(input))|numel(input)<=2
+    error('baseWave must be a scalar or at most two values. E.g. "600" or "[590 600]"')
 end
 
 end
