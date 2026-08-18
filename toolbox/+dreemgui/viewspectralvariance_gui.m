@@ -123,18 +123,20 @@ classdef viewspectralvariance_gui < matlab.apps.AppBase
 
             if pltcase==1||pltcase==2
                 [X,~,fscales]=nway.tools.nprocess(dat,[0 0 0],[1 0 0],[],[],1,-1);
+                fscales{1}(isinf(fscales{1}))=nan;
                 fdom=squeeze(std(X,'omitmissing'));
+                if any(fscales{1}>5*median(fscales{1}))
+                    warning('Some samples have very little signal (e.g. blanks) and thus likely negatively impact the the spectralvariance plots')
+                    disp(['Consider removing the sample(s):  ',num2str(find(fscales{1}>5*median(fscales{1},2)))])
+                    disp('If no blanks (or similar) samples are present, the issue may be samples with high fluorescence values instead.')
+                end
             end
             if pltcase==1||pltcase==3
                 [Y,~,~]=nway.tools.nprocess(data.abs,[0 0],[1 0],[],[],1,-1);
                 cdom=std(Y,'omitmissing');
             end
-            fscales{1}(isinf(fscales{1}))=nan;
-            if any(fscales{1}>5*median(fscales{1}))
-                warning('Some samples have very little signal (e.g. blanks) and thus likely negatively impact the the spectralvariance plots')
-                disp(['Consider removing the sample(s):  ',num2str(find(fscales{1}>5*median(fscales{1},2)))])
-                disp('If no blanks (or similar) samples are present, the issue may be samples with high fluorescence values instead.')
-            end
+            
+            
 
             hold(app.absorbance,"on");
             if pltcase==1||pltcase==3
