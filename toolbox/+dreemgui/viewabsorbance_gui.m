@@ -440,7 +440,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                         case "naperian absorption coefficient"
                             dataout.abs=dataout.abs./10./0.01.*2.303;
                     end
-                case "Napierian absorption coefficient"
+                case "napierian absorption coefficient"
                     switch unitOut
                         case "per cm"
                             dataout.abs=dataout.abs.*0.01./2.303;
@@ -449,7 +449,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
                         case "naperian absorption coefficient"
                             return
                     end
-                case "Linear decadic absorption coefficient"
+                case "linear decadic absorption coefficient"
                     switch unitOut
                         case "per cm"
                             dataout.abs=dataout.abs.*0.01;
