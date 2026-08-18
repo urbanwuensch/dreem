@@ -80,8 +80,8 @@ for j=1:samples_mod.nSample
         is(cnt)=cnt;
         ib(cnt)=cnt;
     else
-        s_miss=cnt;
-        b_miss=cnt;
+        s_miss(cnt)=cnt;
+        b_miss(cnt)=cnt;
     end
     cnt=cnt+1;
 end
