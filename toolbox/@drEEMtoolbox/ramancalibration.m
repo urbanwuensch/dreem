@@ -299,14 +299,17 @@ switch opt
         % Alternative with gaussian fit
         x = waves;
         y = Mpt5;
+        Y=nan(height(y),1);
+        BaseArea=nan(height(y),1);
+        RamanPeak=nan(height(y),width(y));
         for j=1:height(y)
-            f=fit(x,y(j,:)','gauss1'); % Fit Gaussian with two terms to cut scan
-            yfull=feval(f,x)'; % Evaluate Gaussian function over whole Raman peak area to extrapolate
-            fb=fit([x(1) x(end)]', [yfull(1) yfull(end)]', 'poly1'); % fit linear model to baseline
-            yb=feval(fb,x)'; % Evaluate baseline function under  Raman peak area
+             beta=gauss1_fit(x,y(j,:)'); % Fit Gaussian to cut scan (no toolbox dependency)
+            yfull=gauss1_eval(beta,x)'; % Evaluate Gaussian function over whole Raman peak area to extrapolate
+            % Baseline is the straight line through the two endpoints of
+            % the Gaussian fit -- an exact 2-point line, not a "fit".
+            yb=interp1([x(1) x(end)],[yfull(1) yfull(end)],x,'linear','extrap')'; % Evaluate baseline function under Raman peak area
             Y(j,1)=trapz(x,yfull,2);%;
             BaseArea(j,1)=trapz(x,yb,2);%;
-
             RamanPeak(j,:)=yfull-yb;
 
         end
@@ -428,4 +431,127 @@ end
 
 function [idx] = maxi(y)
 [~,idx]=max(y);
+end
+
+
+function beta = gauss1_fit(x,y)
+% gauss1_fit: fits a single Gaussian (a1*exp(-((x-b1)/c1)^2)) to data with
+% a small Levenberg-Marquardt solver. Written to replace the Curve Fitting
+% Toolbox's fit(...,'gauss1') so Raman peak fitting works without that
+% toolbox installed. Uses only core MATLAB (matrix algebra, no toolbox
+% functions). Matches the same "gauss1" library model Curve Fitting
+% Toolbox uses: no additive baseline term.
+% Ill-conditioned steps are already routed to pinv below (via the rcond
+% check); this just silences mldivide's own, more sensitive warning about
+% the same near-singular systems so a normal iteration doesn't look like
+% a problem.
+warnstate=warning('off','MATLAB:singularMatrix');
+warnstate(2)=warning('off','MATLAB:nearlySingularMatrix');
+warnstate(3)=warning('off','MATLAB:illConditionedMatrix');
+cleanupWarn=onCleanup(@() warning(warnstate));
+
+x=x(:); y=y(:);
+
+% Initial guess: amplitude & center from the data's own peak, width from
+% an approximate half-maximum crossing (falls back to a quarter of the
+% x-range if that's not well defined, e.g. too few points or a flat peak).
+[a1_0,idxmax]=max(y);
+b1_0=x(idxmax);
+halfmax=a1_0/2;
+above=y>=halfmax;
+if sum(above)>=2
+    xw=x(above);
+    fwhm=max(xw)-min(xw);
+else
+    fwhm=0;
+end
+if fwhm>0
+    c1_0=fwhm/(2*sqrt(log(2)));
+else
+    c1_0=(max(x)-min(x))/4;
+end
+if not(isfinite(c1_0))||c1_0<=0
+    c1_0=(max(x)-min(x))/4;
+end
+
+beta=[a1_0;b1_0;c1_0];
+lambda=1e-3;
+maxIter=2500;
+tolFun=1e-12;
+
+r=y-gauss1_eval(beta,x);
+cost=sum(r.^2);
+
+for iter=1:maxIter
+    a1=beta(1); b1=beta(2); c1=beta(3);
+    e=exp(-((x-b1)/c1).^2);
+    % Analytical Jacobian of the model w.r.t. [a1;b1;c1]
+    J=[e, a1*e.*2.*(x-b1)/c1^2, a1*e.*2.*(x-b1).^2/c1^3];
+    JTJ=J'*J;
+    JTr=J'*r;
+    scale=max(diag(JTJ),eps);
+
+    improved=false;
+    for inner=1:60
+        H=JTJ+lambda*diag(scale);
+        % rcond(H) itself returns NaN (not a small number) once H holds
+        % any NaN/Inf, and "NaN<eps" is false -- so a plain rcond check
+        % alone silently misses that case. Guard on finiteness first.
+        if not(all(isfinite(H(:)))) || rcond(H)<eps
+            delta=pinv(H)*JTr;
+        else
+            delta=H\JTr;
+        end
+        if not(all(isfinite(delta)))
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+            continue
+        end
+        betaNew=beta+delta;
+        if not(all(isfinite(betaNew)))
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+            continue
+        end
+        rNew=y-gauss1_eval(betaNew,x);
+        costNew=sum(rNew.^2);
+        if isfinite(costNew) && costNew<cost
+            improvement=cost-costNew;
+            beta=betaNew;
+            r=rNew;
+            cost=costNew;
+            lambda=max(lambda/10,1e-12);
+            improved=true;
+            break
+        else
+            lambda=lambda*10;
+            if lambda>1e12
+                break
+            end
+        end
+    end
+
+    if not(improved)
+        break
+    end
+    if improvement<tolFun*max(1,cost)
+        break
+    end
+end
+
+end
+
+function yhat = gauss1_eval(beta,x)
+% Evaluates the single-Gaussian model a1*exp(-((x-b1)/c1)^2) used by
+% gauss1_fit. Mirrors MATLAB Curve Fitting Toolbox's built-in "gauss1"
+% library model (no additive baseline term). Output shape matches input x.
+sz=size(x);
+x=x(:);
+a1=beta(1); b1=beta(2); c1=beta(3);
+yhat=a1*exp(-((x-b1)/c1).^2);
+yhat=reshape(yhat,sz);
 end
