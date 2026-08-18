@@ -57,8 +57,12 @@ constOpts.medianDiff_fac=options.thresholdFactor;
 
 %% Set & decide options
 doparallel=true;
-if isempty(gcp('nocreate'))
+if not(exist("gcp","file"))
     doparallel=false;
+else
+    if isempty(gcp('nocreate'))
+        doparallel=false;
+    end
 end
 
 

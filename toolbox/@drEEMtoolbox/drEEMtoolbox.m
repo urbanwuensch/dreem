@@ -265,7 +265,7 @@ classdef drEEMtoolbox < handle
                     error(['You need Matlab ',drEEMtoolbox.requiredVersion,' or newer to use this version of drEEM.'])
                 end
                 mallver=ver;
-                tbs={'Statistics and Machine Learning Toolbox' 'Parallel Computing Toolbox'};
+                tbs={'Parallel Computing Toolbox'};
                 isthere=zeros(1,numel(tbs));
                 for n=1:numel(tbs)
                     isthere(n)=any(~cellfun(@isempty,strfind({mallver.Name},tbs{n})));
@@ -273,7 +273,7 @@ classdef drEEMtoolbox < handle
                 if all(isthere)
                     % No action or information needed.
                 else
-                    warning(['Missing toolbox(es):',tbs{~isthere},'. Some toolbox functionality will not be available.'])
+                    warning(['Missing toolbox(es):',tbs{~isthere},'. Some toolbox functionality will use a fallback, but everything will work.'])
                 end
                 setenv('drEEM ML version check',char(datetime("today"))),if debugging,disp('setenv executed (ML version check + addon tbxs)'),end
             else
