@@ -114,6 +114,11 @@ if options.plot
 
 end
 
+% Since absorbance may have been converted here, we overwrite the variables
+% with the original (so status absorbanceUnit matches).
+dataout.abs=data.abs;
+dataout.absWave=data.absWave;
+
 % Will only run if toolbox is set to overwrite workspace variable and user
 % didn't provide an output argument
 if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
