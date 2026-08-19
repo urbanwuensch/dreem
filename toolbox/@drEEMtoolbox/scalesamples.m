@@ -19,7 +19,7 @@ function dataout = scalesamples(data,option)
 %   5. <strong>reverse scaling </strong> after it had been applied
 %       samples = tbx.scalesamples(samples,'reverse');
 %   6. <strong>Don't know what to do? </strong> Get decision help
-%       samples = tbx.scalesamples(samples,'help');
+%       tbx.scalesamples(samples,'help');
 %
 % <a href = "matlab:drEEMtoolbox.doc('scalesamples')"><strong>-> full documentation</strong></a>
 
