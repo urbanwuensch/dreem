@@ -201,8 +201,8 @@ end
 data.filelist=filelist;
 
 % Final dataset variables can now be assigned.
-data.Ex=rcvec(ex,'column');
-data.Em=rcvec(em,'column');
+data.Ex=rcvec(ex4Check{1},'column');
+data.Em=rcvec(em4Check{1},'column');
 data.nEx=numel(data.Ex);
 data.nEm=numel(data.Em);
 data.nSample=size(data.X,1);
