@@ -113,6 +113,7 @@ if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
     % Baseline possible, wanted, and no extrapolation necessary
     % Otherwise, the baseline subtraction is done later.
     if blcor_allowed&&options.correctBase
+        baseValidator_2(options.baseWave,data)
         if isscalar(options.baseWave)
             idx=dataout.absWave>=options.baseWave;
         else
@@ -128,9 +129,13 @@ if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
 
 %% Scenario 2: Stitch-on (extrapolation)
 elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
-    disp('EEMs were measured at wavelengths longer than CDOM spectra.')
+    
     % The extrapolation bit
     if options.extrapolate
+        if options.correctBase
+            baseValidator_extra(options.baseWave,data)
+        end
+        disp('EEMs were measured at wavelengths longer than CDOM spectra.')
         disp('Extrapolation of CDOM spectra will avoid the automatic deletion of EEM data during IFE correction.')
         abswave=dataout.absWave(drEEMtoolbox.mindist(dataout.absWave,300):end);
         absspec=dataout.abs(:,drEEMtoolbox.mindist(dataout.absWave,300):end)';
@@ -413,5 +418,42 @@ n=numel(in);
 if not(isbetween(n,1,2))
     error('baseWave must be a scalar or at most two values. E.g. "600" or "[590 600]"')
 end
+
+end
+
+function baseValidator_2(in,data)
+
+mima=[min(data.absWave) max(data.absWave)];
+
+if isscalar(in)
+    if not(isbetween(in,mima(1),mima(2)))
+        error('baseWave must be higher than 585 and equal to or shorther than the longest measured absorbance wavelength')
+    end
+else
+    if not(isbetween(min(in),mima(1),mima(2)))&&not(isbetween(max(in),mima(1),mima(2)))
+        error('baseWave must be higher than 585 and equal to or shorther than the longest measured absorbance wavelength')
+    end
+end
+
+
+end
+
+function baseValidator_extra(in,data)
+ewstep=round(mean(diff(data.absWave)));
+ex_start=data.absWave(end)+ewstep;
+extrawave=(data.absWave(end)+ewstep:ewstep:ceil(max([data.Ex;data.Em])))';
+mima=[min(data.absWave) ceil(max([data.absWave;extrawave]))];
+
+
+if isscalar(in)
+    if not(isbetween(in,mima(1),mima(2)))
+        throwAsCaller(MException("processabsorbance:baseWave",['baseWave must be higher than 580 and equal to or shorther than the longest <strong>extrapolated</strong> absorbance wavelength (',num2str(mima(2)),'nm in this specific case)']))
+    end
+else
+    if not(isbetween(min(in),mima(1),mima(2)))||not(isbetween(max(in),mima(1),mima(2)))
+        throwAsCaller(MException("processabsorbance:baseWave",['baseWave must be higher than 580 and equal to or shorther than the longest <strong>extrapolated</strong> absorbance wavelength (',num2str(mima(2)),'nm in this specific case)']))
+    end
+end
+
 
 end
