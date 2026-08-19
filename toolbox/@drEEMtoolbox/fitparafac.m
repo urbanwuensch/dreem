@@ -26,7 +26,7 @@ function dataout = fitparafac(data,mode,options)
 %   3. Explore what happens with <strong>no constraints</strong>
 %       samples = tbx.fitparafac(samples,"fitoverall",f=2:7,constraints="unconstrained",convergence=1e-6,starts=10,maxIteration=5000);
 %   4. Equivalent to the former <strong>splitanalysis</strong>
-%       samples = tbx.fitparafac(samples,"fitsplits,f=2:7,convergence=1e-8,starts=50,maxIteration=5000);
+%       samples = tbx.fitparafac(samples,"fitsplits",f=2:7,convergence=1e-8,starts=50,maxIteration=5000);
 %
 % <a href = "matlab:drEEMtoolbox.doc('fitparafac')"><strong>-> full documentation</strong></a>
 
