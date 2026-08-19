@@ -430,7 +430,7 @@ if isscalar(in)
         error('baseWave must be higher than 585 and equal to or shorther than the longest measured absorbance wavelength')
     end
 else
-    if not(isbetween(min(in),mima(1),mima(2)))&&not(isbetween(max(in),mima(1),mima(2)))
+    if not(isbetween(min(in),mima(1),mima(2)))||not(isbetween(max(in),mima(1),mima(2)))
         error('baseWave must be higher than 585 and equal to or shorther than the longest measured absorbance wavelength')
     end
 end
