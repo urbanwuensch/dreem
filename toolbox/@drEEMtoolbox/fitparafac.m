@@ -84,12 +84,6 @@ if isMATLABReleaseOlderThan("R2022a")
 end
 
 %% Setup
-[oldp,newp]=tboxinit(options.toolbox);
-if options.parallelization==true
-    funmode=parallelcomp(options.consoleoutput);
-else
-    funmode='sequential';
-end
 opt = setoptions(options.toolbox,...
     options.constraints, ...
     options.convergence, ...
@@ -111,6 +105,24 @@ facCalls=reshape(repmat(fac,options.starts*nsplit,1),numstarts,1);
 splitsource=reshape(repmat((1:nsplit),options.starts,nfac),numstarts,1);
 
 ivalsCalls=cell(1,numstarts);
+
+%% Quick sanity check regarding nSample and f
+for i=1:numstarts
+    nSample=size(mdata.split(splitsource(i)).X,1);
+    nFac=facCalls(i);
+    if nSample<=nFac
+        error(['You are trying to model ',num2str(nFac),' components with ',num2str(nSample),' samples. That is too many components and for the number of samples (f must be smaller than or equal to nSample'])
+    end
+end
+
+%% Set up parallel / sequential mode
+[oldp,newp]=tboxinit(options.toolbox);
+if options.parallelization==true
+    funmode=parallelcomp(options.consoleoutput);
+else
+    funmode='sequential';
+end
+
 %% Welcome messages
 if ~matches(options.consoleoutput,'none')
     disp('  ')
