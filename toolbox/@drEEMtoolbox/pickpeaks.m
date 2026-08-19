@@ -379,9 +379,6 @@ VarName{end+1}='BIX';
 VarName{end+1}='HIX';
 VarName{end+1}='ARIX';
 
-metadata=table;
-metadata.C=[md.Ex(:,5) md.Em(:,5)];
-metadata.M=[md.Ex(:,4) md.Em(:,4)];
 if ~HIX_excl
     picklist=array2table([Cpeak FI' FrI' BIX' HIX',arix'],...
         'VariableNames',VarName);
@@ -474,7 +471,7 @@ if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
     return
 else
     if nargout==0
-        clearvars dataout picklist metadata
+        clearvars dataout picklist
     end
 end
 
