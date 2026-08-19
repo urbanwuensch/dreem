@@ -8,7 +8,7 @@ function dataout = fitparafac(data,mode,options)
 % 
 % <strong>INPUTS - Optional</strong> 
 % f (1,:)                 {mustBeNumeric,mustBeNonempty} = 2:7
-% mode (1,:)              {mustBeMember(["fitoverall","fitsplit"])} = 'fitoverall'
+% mode (1,:)              {mustBeMember(["fitoverall","fitsplits"])} = 'fitoverall'
 % constraints (1,:)       {mustBeMember(["unconstrained", "nonnegativity", "unimodnonneg"])} = 'nonnegativity'
 % starts  (1,:)           {mustBeNumeric} = 40
 % convergence (1,:)       {mustBeLessThanOrEqual(1e-2)} = 1e-8
@@ -20,13 +20,13 @@ function dataout = fitparafac(data,mode,options)
 %
 % <strong>EXAMPLE(S)</strong> (see documentation for assumed defaults!)
 %   1. Fit models similar to the previous <strong>outliertest</strong> 
-%       samples = tbx.fitparafac(samples,f=2:7,convergence=1e-4,starts=2);
+%       samples = tbx.fitparafac(samples,"fitoverall",f=2:7,convergence=1e-4,starts=2);
 %   2. Find the <strong>global minimum</strong> for a dataset
-%       samples = tbx.fitparafac(samples,f=4:6,convergence=1e-8,starts=50,maxIteration=5000);
+%       samples = tbx.fitparafac(samples,"fitoverall",f=4:6,convergence=1e-8,starts=50,maxIteration=5000);
 %   3. Explore what happens with <strong>no constraints</strong>
-%       samples = tbx.fitparafac(samples,f=2:7,constraints="unconstrained",convergence=1e-6,starts=10,maxIteration=5000);
+%       samples = tbx.fitparafac(samples,"fitoverall",f=2:7,constraints="unconstrained",convergence=1e-6,starts=10,maxIteration=5000);
 %   4. Equivalent to the former <strong>splitanalysis</strong>
-%       samples = tbx.fitparafac(samples,f=2:7,mode="split",convergence=1e-8,starts=50,maxIteration=5000);
+%       samples = tbx.fitparafac(samples,"fitsplits,f=2:7,convergence=1e-8,starts=50,maxIteration=5000);
 %
 % <a href = "matlab:drEEMtoolbox.doc('fitparafac')"><strong>-> full documentation</strong></a>
 
@@ -62,6 +62,11 @@ if matches(mode,"fitsplits")
         error('mode="fitsplits" requires data.split to be populated with datasets. Have you run "splitdataset.m"?')
     end
 end
+% Convert inputs to char if ever supplied as string (isempty issues)
+mode=char(mode);
+options.constraints=char(options.constraints);
+options.initialization=char(options.initialization);
+options.toolbox=char(options.toolbox);
 
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"

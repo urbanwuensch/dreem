@@ -53,7 +53,7 @@ Most often, the default options will not suffice or do the trick. Custom options
 
 ## Examples
 
-`samples=tbx.fitparafac(samples,f=2:7,convergence=1e-4,starts=2);`
+`samples=tbx.fitparafac(samples,"fitoverall",f=2:7,convergence=1e-4,starts=2);`
 
 Fit models similar to the previous **outliertest**. Note that mode is not specified, so it is assumed a fit to the overall global dataset is requested. State this explicitly to avoid code ambiguity.
 
