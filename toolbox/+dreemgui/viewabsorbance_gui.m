@@ -408,7 +408,7 @@ classdef viewabsorbance_gui < matlab.apps.AppBase
             arguments
                 app
                 data (1,1) {mustBeA(data,'drEEMdataset')}
-                unitIn (1,:) {mustBeText(unitIn),mustBeMember(unitIn,["absorbance per cm","absorbance per 5 cm","absorbance per 10 cm","Napierian absorption coefficient","Linear decadic absorption coefficient"])}
+                unitIn (1,:) {mustBeText(unitIn),mustBeMember(unitIn,["absorbance per cm","absorbance per 5 cm","absorbance per 10 cm","napierian absorption coefficient","linear decadic absorption coefficient"])}
                 unitOut (1,:) {mustBeText(unitOut),mustBeMember(unitOut,["per cm","decadal absorption coefficient","naperian absorption coefficient"])}
             end
             dataout=data;
