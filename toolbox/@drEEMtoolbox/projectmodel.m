@@ -29,10 +29,10 @@ if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
 end
 
 % Load the OpenFluor model
-model=loadOF(file);
+model=loadOF(char(file));
 
 % Convert the contraint to N-Way notation
-constraints=model.constraints;
+constraints=char(model.constraints);
 if contains(constraints,'nonnegativity')
     % Set default: All dims nonnegative
     cdim=1:3;
@@ -92,13 +92,13 @@ end
 % that)
 initLoads={rand(dataout.nSample,model.nComp);mi{2};mi{3}};
 if not(height(initLoads{1})==size(dataout.X,1))
-    error('Model vs. data emission size missmatch.')
+    error('Model vs. data "number of samples" missmatch.')
 end
 if not(height(initLoads{2})==size(dataout.X,2))
-    error('Model vs. data emission size missmatch.')
+    error('Model vs. data "number of emission wavelengths" size missmatch.')
 end
 if not(height(initLoads{3})==size(dataout.X,3))
-    error('Model vs. data excitation size missmatch.')
+    error('Model vs. data "number of excitation wavelengths" size missmatch.')
 end
 
 
