@@ -156,9 +156,6 @@ switch funmode
         Model={modout.model}';
         Iter=arrayfun(@(x) x.iterations,modout,'UniformOutput',false)';
         Err=arrayfun(@(x) x.err,modout,'UniformOutput',false)';
-        for ii=1:numel(Model)
-            corecon{ii,1}=nway.modeleval.corcond(mdata.split(splitsource(i)).X,Model{ii},[],0);
-        end
 
     case 'parallel'
         modout(1:numstarts) = parallel.FevalFuture; % Preallocate output
