@@ -42,7 +42,9 @@ if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
     if matches(opmode,{'apply','reverse'})
         nargoutchk(1,1)
     else
-        nargoutchk(0,0)
+        if nargout>0
+            error('If you supply "help" as second input, no output should be assigned since the function runs in Diagnostics mode.')
+        end
     end
 
 end
