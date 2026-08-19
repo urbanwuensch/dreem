@@ -82,6 +82,7 @@ dataout=data;
 dataout.split=drEEMdataset.create; % Overwrite any preexisting split
 for j=1:options.numSplit
     out=not(splitIdent==j);
+    options.splitType=char(splitType);
     dataout.split(j,1)=cutsamples(data,out);
     dataout.split(j,1).history=...
         drEEMhistory.addEntry(mfilename,'created as a split of a larger dataset',options,drEEMdataset);
