@@ -45,6 +45,11 @@ end
 % This bit is doing the splitting
 switch splitType
     case "blind"
+
+        if options.numSplit>data.nSample
+            error('The number of splits is larger than the number of samples. This would leave some splits empty. Lower options.numSplit please...')
+        end
+
         % #1 Create an alternating-type split allocation by repeating 1:nSplit
         % until number of samples is exceeded.
         % This can be used by several methods
