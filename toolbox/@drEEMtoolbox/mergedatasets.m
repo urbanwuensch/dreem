@@ -50,7 +50,25 @@ end
 C=intersect(a.metadata.Properties.VariableNames,b.metadata.Properties.VariableNames);
 
 if not(numel(C)==width(a.metadata)&&numel(C)==width(b.metadata))
-    messages=[messages,' Metadata table columns identical. \n'];
+    messages=[messages,' Metadata table columns not identical. \n'];
+    pass=false;
+end
+
+new_nSample=numel([a.filelist;b.filelist]);
+if not(new_nSample==size([a.X;b.X],1))
+    messages=[messages,' Number of samples in new X (EEMs) not the same as number of filelist entries. \n'];
+    pass=false;
+end
+
+if not(isempty(a.XBlank))||not(isempty(b.XBlank))
+    if not(new_nSample==size([a.XBlank;b.XBlank],1))
+        messages=[messages,' Number of samples in new XBlank (blank EEMs) not the same as number of filelist entries. \n'];
+        pass=false;
+    end
+end
+
+if not(new_nSample==size([a.abs;b.abs],1))
+    messages=[messages,' Number of samples in new abs (CDOM spectra) not the same as number of filelist entries. \n'];
     pass=false;
 end
 
