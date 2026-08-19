@@ -111,7 +111,7 @@ for i=1:numstarts
     nSample=size(mdata.split(splitsource(i)).X,1);
     nFac=facCalls(i);
     if nSample<=nFac
-        error(['You are trying to model ',num2str(nFac),' components with ',num2str(nSample),' samples. That is too many components and for the number of samples (f must be smaller than or equal to nSample'])
+        error(['You are trying to model ',num2str(nFac),' components with ',num2str(nSample),' samples. That is too many components and for the number of samples (f must be smaller than nSample'])
     end
 end
 
