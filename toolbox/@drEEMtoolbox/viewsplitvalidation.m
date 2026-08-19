@@ -42,7 +42,6 @@ mode='tcc';
 %% Define some functions and central variables
 vec=@(x) x(:); % Function to unfold data
 minimumtcc = 0.95; % Criterion for spectral match
-minimumssc = 0.95;
 passed=true;
 message=[];
 
@@ -85,7 +84,7 @@ similarities=calculatesimilarities(cellOfModels,comparisons,fac,mode);
 for k=1:nComparisons
     simiExtract=squeeze(similarities(k,:,:,:)); % Just so it's easier for developing
     % simiExtract: [m1,m2,em ex]
-    matchingExEm(:,:,1)=simiExtract(:,:,1)>minimumssc;
+    matchingExEm(:,:,1)=simiExtract(:,:,1)>minimumtcc;
     matchingExEm(:,:,2)=simiExtract(:,:,2)>minimumtcc;
     matchingEx{k}=squeeze(matchingExEm(:,:,2));
     matchingEm{k}=squeeze(matchingExEm(:,:,1));
