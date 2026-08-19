@@ -100,7 +100,7 @@ if options.plot
     title(ax,'Absorbance prior to any correction')
 end
 %% Scenario 1, no extrapolation needed
-if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
+if max([dataout.Ex;dataout.Em])<=max(dataout.absWave)
     %% Baseline correction (if possible and wanted)
     % It's only allowed if there's plenty of long-wl information though
     if max(dataout.absWave)>=580
@@ -128,7 +128,7 @@ if max([dataout.Ex;dataout.Em])<max(dataout.absWave)
     end
 
 %% Scenario 2: Stitch-on (extrapolation)
-elseif max([dataout.Ex;dataout.Em])>max(dataout.absWave)
+elseif max([dataout.Ex;dataout.Em])>=max(dataout.absWave)
     
     % The extrapolation bit
     if options.extrapolate
