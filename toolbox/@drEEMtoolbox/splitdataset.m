@@ -30,7 +30,7 @@ function dataout = splitdataset(data,splitType,options)
 arguments
     data {drEEMdataset.validate(data),drEEMdataset.mustContainSamples(data)}
     splitType (1,:) {mustBeText,mustBeMember(splitType,["blind","byMetadata"])} = "blind"
-    options.blindType (1,:)     {mustBeMember(options.blindType,["alternating","random","contiguous"]),optValBT(splitType,options.blindType)} = "alternating"  
+    options.blindType (1,:)     {mustBeMember(options.blindType,["alternating","random","contiguous"])} = "alternating"  
     options.metadataColumn (1,:)    {drEEMdataset.mustBeMetadataColumn(data,options.metadataColumn),optValMC(splitType,options.metadataColumn)} = string.empty
     options.numSplit (1,1)  {mustBePositive} = 2
     
@@ -97,27 +97,14 @@ end
 
 end
 
-
-function optValBT(splitType,option)
-% %option is blindType
-% if not(matches(splitType,'blind'))&&not(isempty(option))
-%     warning('<strong>Conflicting inputs: </strong>splitType", takes precedent over specifying input to "metadataColumn".')
-% end
-% 
-% if matches(splitType,'byMetadata')&&isempty(option)
-%     error(['<strong>Invalid input: </strong> When specifying splitType="byMetadata",' ...
-%         ' option "metadataColumn" cannot be empty.'])
-% end
-
-
-
-end
-
-
 function optValMC(splitType,option)
 %option is metadataColumn
 if matches(splitType,'blind')&&not(isempty(option))
-    warning('<strong>Conflicting inputs: </strong>splitType", takes precedent over specifying input to "metadataColumn".')
+    warning('<strong>Conflicting inputs: </strong>"splitType", takes precedent over specifying input to "metadataColumn".')
+end
+if matches(splitType,'byMetadata')&&isempty(char(option))
+    error(['<strong>Invalid input: </strong> When specifying splitType="byMetadata",' ...
+        ' option "metadataColumn" cannot be empty.'])
 end
 end
 
