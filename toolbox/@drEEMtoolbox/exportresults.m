@@ -175,28 +175,25 @@ disp('    Finished spreadsheet: PARAFAC model overview')
 if matches(data.models(f).modelName,'PARAFAC')
     split_i=drEEMhistory.searchhistory(data.history,'splitdataset','all');
     if not(isempty(split_i))
-        splitH=data.history(split_i(1));
-        splittable=struct2table(splitH.details);
-        splittable.Properties.VariableNames={'Split approach','Metadata column used','Number of splits'};
-        if isempty(splittable.("Metadata column used"))
-            splittable.("Metadata column used")='not used.';
-        end
-        if matches(splittable.('Split approach'),"byMetadata")
-            splittable.('Split assignment')='Metadata used.';
-        end
-        
-        splittable.('Date / time created')=splitH.timestamp;
-        splittable.('Dataset history entry #')=split_i(1);
-        if numel(split_i)>1
-            for j=2:numel(split_i)
-                splitH=data.history(split_i(j));
-                temp=struct2table(splitH.details);
-                temp.Properties.VariableNames={'Split approach','Metadata column used','Number of splits'};
-                if isempty(temp.("Metadata column used"))
-                    temp.("Metadata column used")='not used.';
-                end
-                temp.('Date / time created')=splitH.timestamp;
-                temp.('Dataset history entry #')=split_i(j);
+        for j=1:numel(split_i)
+            splitH=data.history(split_i(j));
+            temp=table;
+            if matches(splitH.details.splitType,'blind')
+                temp.message={[num2str(...
+                    splitH.details.numSplit),' splits created by ',...
+                    char(splitH.details.blindType),' assignment']};
+            elseif matches(splitH.details.splitType,'byMetadata')
+                temp.message={[num2str(splitH.details.numSplit),...
+                    ' splits created by assignment with the data.metadata column "',...
+                    char(splitH.details.metadataColumn),'"']};
+            end
+            temp.Properties.VariableNames={'Split approach (description)'};
+            
+            temp.('Date / time created')=splitH.timestamp;
+            temp.('Dataset history entry #')=split_i(j);
+            if j==1
+                splittable=temp;
+            else
                 splittable=[splittable;temp];
             end
         end
