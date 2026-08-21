@@ -74,8 +74,8 @@ if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
 end
 
 if matches(options.toolbox,'parafac3w')
-    if not(matches(options.constraints,'nonnegativity'))
-        disp('<strong>Notice:</strong> The PARAFAC engine was changed from parafac3w to N-way (fallback)')
+    if not(matches(options.constraints,'nonnegativity'))||not(maches(options.initialization,'random'))
+        disp('<strong>Notice:</strong> The PARAFAC engine was changed from parafac3w to N-way (fallback due to constraints or initialization options)')
         options.toolbox="nway";
     end
 end
