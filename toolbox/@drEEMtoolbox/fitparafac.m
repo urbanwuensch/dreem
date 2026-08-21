@@ -105,8 +105,6 @@ numstarts=nsplit*options.starts*nfac;
 facCalls=reshape(repmat(fac,options.starts*nsplit,1),numstarts,1);
 splitsource=reshape(repmat((1:nsplit),options.starts,nfac),numstarts,1);
 
-ivalsCalls=cell(1,numstarts);
-
 %% Quick sanity check regarding nSample and f
 for i=1:numstarts
     nSample=size(mdata.split(splitsource(i)).X,1);
@@ -146,7 +144,7 @@ switch funmode
          modout = repelem(struct('model',{},'err',{},'iterations',{}),1,numstarts); % Preallocate output
          h=waitbar(0,'PARAFAC models are being calculated');
         for i=1:numstarts
-            modout(i)=dreemparafac(mdata.split(splitsource(i)).X,facCalls(i),opt,options.toolbox,ivalsCalls{i}); 
+            modout(i)=dreemparafac(mdata.split(splitsource(i)).X,facCalls(i),opt,options.toolbox); 
             try
                 h=waitbar(i/numstarts,h,['PARAFAC models are being calculated [',num2str(i),'/',num2str(numstarts),']']);
             catch
@@ -162,7 +160,7 @@ switch funmode
         modout(1:numstarts) = parallel.FevalFuture; % Preallocate output
         
         for i=1:numstarts
-            modout(i)=parfeval(@dreemparafac,1,mdata.split(splitsource(i)).X,facCalls(i),opt,options.toolbox,ivalsCalls{i});
+            modout(i)=parfeval(@dreemparafac,1,mdata.split(splitsource(i)).X,facCalls(i),opt,options.toolbox);
         end
         [Model,Iter,Err,ttc]=...
             trackprogress(modout,numstarts,facCalls,options.consoleoutput,splitsource);
@@ -457,18 +455,10 @@ end
 end
 
 %%
-function [out] = dreemparafac(tensor,f,opt,tbox,initvalues)
+function [out] = dreemparafac(tensor,f,opt,tbox)
 vec=@(x) x(:);
 % Start the PARAFAC model. PLS_toolbox reads a pref-file, which is tricky if
 % that's done in parallel. This here is to catch errors related to that.
-if opt.init==0
-    for n=1:3
-        randvals=rand(size(initvalues{n},1),size(initvalues{n},2));
-        randvals=randvals./vecnorm(randvals,2);
-        idx=isnan(initvalues{n});
-        initvalues{n}(idx)=randvals(idx);
-    end
-end
 % plotfac(initvalues)
 switch tbox
     case 'pls'
