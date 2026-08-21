@@ -77,6 +77,21 @@ if matches(options.toolbox,'parafac3w')
     if not(matches(options.constraints,'nonnegativity'))||not(maches(options.initialization,'random'))
         disp('<strong>Notice:</strong> The PARAFAC engine was changed from parafac3w to N-way (fallback due to constraints or initialization options)')
         options.toolbox="nway";
+    elseif matches(options.toolbox,'pls')
+
+        isthere=exist('parafac','file');
+        if isthere
+            try
+                pls test
+                disp('Testing PLS_toolbox'),evridebug
+            catch
+                options.toolbox='nway';
+                disp('PLS_toolbox PARAFAC not functional -> fallback is N-way PARAFAC.')
+            end
+        else
+            options.toolbox='nway';
+            disp('Could not find parafac.m -> fallback is N-way PARAFAC.')
+        end
     end
 end
 %% Version check
@@ -115,7 +130,6 @@ for i=1:numstarts
 end
 
 %% Set up parallel / sequential mode
-[oldp,newp]=tboxinit(options.toolbox);
 if options.parallelization==true
     funmode=parallelcomp(options.consoleoutput);
 else
@@ -166,7 +180,6 @@ switch funmode
             trackprogress(modout,numstarts,facCalls,options.consoleoutput,splitsource);
 end
 disp('<strong>All models finsished.</strong> Calculating model metrics ...')
-restoreoldpath(oldp,newp); % In case matlabpath was changed, restore it.
 %% Retreive results
 Err=cellfun(@(x) x(:),Err);
 Iter(cellfun(@(x) isempty(x),Iter))={NaN};
@@ -348,41 +361,6 @@ warning on
 end
 
 %%
-function [oldp,newp]=tboxinit(tbox)
-warning off
-oldp = path;
-mlpath = path;mlpath=textscan(mlpath,'%s','delimiter',pathsep);mlpath=mlpath{:};
-nway=contains(mlpath,'drEEM');
-plsp=contains(mlpath,'PLS');
-
-switch tbox
-    case {'nway','parafac3w'}
-        if find(nway,1,'first') > find(plsp,1,'first')
-            rmpath(mlpath{nway|plsp});
-            addpath(mlpath{plsp});
-            addpath(mlpath{nway});
-        end
-    case 'pls'
-        if find(nway,1,'first') < find(plsp,1,'first')
-            rmpath(mlpath{nway|plsp});
-            addpath(mlpath{nway});
-            addpath(mlpath{plsp});
-        end
-        clearvars plsp
-        try
-            pls test
-            disp('Testing PLS_toolbox'),evridebug
-        catch
-            error('PLS_toolbox either not installed or not functional.')
-        end
-    otherwise
-        error('That''s a toolbox I don''t know about.')
-end
-newp = path;
-warning on
-end
-
-%%
 function opt = setoptions(tbox,constraints,convgcrit,maxIt,initstyle)
 if contains(tbox,'pls')
     opt=parafac('options');
@@ -518,12 +496,7 @@ switch tbox
 end
 end
 
-%%
-function restoreoldpath(oldp,newp)
-    if ~isequal(oldp,newp)
-        path(oldp)
-    end
-end
+
 
 function [vout] = rcvec(v,rc)
 % Make row or column vector
