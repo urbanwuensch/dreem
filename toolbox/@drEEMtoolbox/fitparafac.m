@@ -73,11 +73,12 @@ if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
     nargoutchk(1,1)
 end
 
-if not(matches(options.constraints,'nonnegativity'))&&matches(options.toolbox,'parafac3w')
-    disp('<strong>Notice:</strong> Automatically changed from the default toolbox to nway')
-    options.toolbox="nway";
+if matches(options.toolbox,'parafac3w')
+    if not(matches(options.constraints,'nonnegativity'))
+        disp('<strong>Notice:</strong> The PARAFAC engine was changed from parafac3w to N-way (fallback)')
+        options.toolbox="nway";
+    end
 end
-
 %% Version check
 if isMATLABReleaseOlderThan("R2022a")
     error("You need Matlab R2022a or newer to use this function.")
@@ -526,6 +527,7 @@ switch tbox
                 opthere=struct;
                 opthere.ConvCrit=opt.stopcriteria.relativechange;
                 opthere.MaxIt = opt.stopcriteria.iterations;
+                opthere.init=1;
                 res=parafac3w(tensor,f,opthere);
 
                 out.model={res.A res.B res.C};
