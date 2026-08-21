@@ -18,39 +18,39 @@ if nargin<3
     OldOrNew    = options.OldOrNew; init        = options.init;
     LineSe      = optionsDEF.LineSe;
 else
-    try
+    if isfield(options,'ConvCrit')
         ConvCrit    = options.ConvCrit;
-    catch
+    else
         ConvCrit    = optionsDEF.ConvCrit;
     end
-    try 
+    if isfield(options,'LSeveryIt') 
         LSeveryIt = options.LSeveryIt;
-    catch
+    else
         LSeveryIt = optionsDEF.LSeveryIt;
     end
-    try
+    if isfield(options,'MaxIt')
         MaxIt       = options.MaxIt;
-    catch
+    else
         MaxIt       = optionsDEF.MaxIt;
     end
-    try
+    if isfield(options,'UpdateMiss')
         UpdateMiss  = options.UpdateMiss;
-    catch
+    else
         UpdateMiss  = optionsDEF.UpdateMiss;
     end
-    try
+    if isfield(options,'OldOrNew')
         OldOrNew    = options.OldOrNew;
-    catch
+    else
         OldOrNew    = optionsDEF.OldOrNew;
     end
-    try
+    if isfield(options,'init')
         init        = options.init;
-    catch
+    else
         init        = optionsDEF.init;
     end
-    try
+    if isfield(options,'LineSe')
         LineSe      = options.LineSe;
-    catch
+    else
         LineSe      = optionsDEF.LineSe;
     end
 end
