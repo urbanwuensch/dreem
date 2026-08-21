@@ -392,6 +392,8 @@ if contains(tbox,'pls')
         opt.init=2;
     elseif contains(initstyle,'random')
         opt.init=3;
+    elseif contains(initstyle,'multiplesmall')
+        opt.init=4;
     end
     opt.stopcriteria.iterations=maxIt;
     opt.stopcriteria.relativechange=convgcrit;
