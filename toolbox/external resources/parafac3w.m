@@ -2,21 +2,13 @@ function model = parafac3w(X,F,options)
 arguments
     X {mustBeNumeric}
     F {mustBeNumeric,mustBeGreaterThan(F,0),mustBeLessThan(F,20)}
-    options {mustBeA(options,'struct')}
+    options {mustBeA(options,'struct')} = defaultopts;
 end
 
 timer=tic;
 bg=0;
 
-% SETTINGS
-optionsDEF.ConvCrit = 1e-6;
-optionsDEF.LSeveryIt = 5;
-optionsDEF.MaxIt    = 3000;
-optionsDEF.UpdateMiss = 7; % update missing data each xx iteration
-optionsDEF.OldOrNew = 1;
-optionsDEF.LineSe = 3; % When to do linesearch
-optionsDEF.init = 4; % 1 means random numbers, 5 means five small runs
-optionsDEF.orderby2=false; % true will order factors by max in second mode
+optionsDEF=defaultopts;
 if nargin<3
     options = optionsDEF;           LSeveryIt = optionsDEF.LSeveryIt;
     ConvCrit    = options.ConvCrit;
@@ -597,3 +589,15 @@ for f=1:F
    ab=B(:,f)*A(:,f).';
    AB(:,f)=ab(:);
 end
+
+
+function optionsDEF = defaultopts
+% SETTINGS
+optionsDEF.ConvCrit = 1e-6;
+optionsDEF.LSeveryIt = 5;
+optionsDEF.MaxIt    = 3000;
+optionsDEF.UpdateMiss = 7; % update missing data each xx iteration
+optionsDEF.OldOrNew = 1;
+optionsDEF.LineSe = 3; % When to do linesearch
+optionsDEF.init = 4; % 1 means random numbers, 5 means five small runs
+optionsDEF.orderby2=false; % true will order factors by max in second mode
