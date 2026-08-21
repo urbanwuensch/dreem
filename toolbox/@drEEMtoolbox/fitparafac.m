@@ -384,7 +384,7 @@ if contains(tbox,'pls')
             end
         end
         for i=cdim;opt.constraints{i}.type='nonnegativity';end
-    elseif contains(constraints,'unimodality')
+    elseif contains(constraints,'unimodnonneg')
         for i=[1 3];opt.constraints{i}.type='nonnegativity';end
         opt.constraints{2}.type='unimodnonneg';
     end
