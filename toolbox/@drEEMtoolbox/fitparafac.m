@@ -416,8 +416,6 @@ if contains(tbox,'pls')
         opt.init=2;
     elseif contains(initstyle,'random')
         opt.init=3;
-    elseif contains(initstyle,'given')
-        opt.init=0;
     end
     opt.stopcriteria.iterations=maxIt;
     opt.stopcriteria.relativechange=convgcrit;
@@ -451,8 +449,6 @@ elseif contains(tbox,'nway')||contains(tbox,'parafac3w')
         opt.init=2;
     elseif contains(initstyle,'multiplesmall')
         opt.init=10;
-    elseif contains(initstyle,'given')
-        opt.init=0;
     end
     opt.stopcriteria.iterations=maxIt;
     opt.stopcriteria.relativechange=convgcrit;
@@ -480,12 +476,7 @@ switch tbox
         while tries<100
             try
                 disp(datetime)
-                if opt.init~=0
-                    outlocal=parafac(tensor,f,opt);
-                elseif opt.init==0
-                    outlocal=parafac(tensor,initvalues,opt);
-                    disp('Initialization with given values')
-                end
+                outlocal=parafac(tensor,f,opt);
                 tries=102;
             catch ME
                 tries = tries+1;
@@ -505,7 +496,7 @@ switch tbox
         if matches(tbox,'nway')
             optInNew=false;
         end
-        if opt.init~=0&&not(all(constraints==2))
+        if not(all(constraints==2))
             [Factors,it,err,~] = nway.models.parafac(tensor,f,...
                 [opt.stopcriteria.relativechange opt.init 0 0 50 opt.stopcriteria.iterations],...
                 constraints);
@@ -513,16 +504,7 @@ switch tbox
             out.iterations = it;
             out.err = err;
             clearvars Factors it err
-        elseif opt.init==0
-            [Factors,it,err,~] = nway.models.parafac(tensor,f,...
-                [opt.stopcriteria.relativechange opt.init 0 0 50 opt.stopcriteria.iterations],...
-                constraints,...
-                initvalues,[0 0 0]);
-            out.model = Factors;
-            out.iterations = it;
-            out.err = err;
-            clearvars Factors it err
-        elseif opt.init~=0&&all(constraints==2)
+        elseif all(constraints==2)
             if optInNew
                 opthere=struct;
                 opthere.ConvCrit=opt.stopcriteria.relativechange;
@@ -542,10 +524,7 @@ switch tbox
                 out.err = err;
                 clearvars Factors it err
             end
-
-        end
-        
-        
+        end    
 end
 end
 
