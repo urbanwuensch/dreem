@@ -74,24 +74,24 @@ if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
 end
 
 if matches(options.toolbox,'parafac3w')
-    if not(matches(options.constraints,'nonnegativity'))||not(maches(options.initialization,'random'))
+    if not(matches(options.constraints,'nonnegativity'))||not(matches(options.initialization,'random'))
         disp('<strong>Notice:</strong> The PARAFAC engine was changed from parafac3w to N-way (fallback due to constraints or initialization options)')
         options.toolbox="nway";
-    elseif matches(options.toolbox,'pls')
+    end
+elseif matches(options.toolbox,'pls')
 
-        isthere=exist('parafac','file');
-        if isthere
-            try
-                pls test
-                disp('Testing PLS_toolbox'),evridebug
-            catch
-                options.toolbox='nway';
-                disp('PLS_toolbox PARAFAC not functional -> fallback is N-way PARAFAC.')
-            end
-        else
+    isthere=exist('parafac','file');
+    if isthere
+        try
+            pls test
+            disp('Testing PLS_toolbox'),evridebug
+        catch
             options.toolbox='nway';
-            disp('Could not find parafac.m -> fallback is N-way PARAFAC.')
+            disp('PLS_toolbox PARAFAC not functional -> fallback is N-way PARAFAC.')
         end
+    else
+        options.toolbox='nway';
+        disp('Could not find parafac.m -> fallback is N-way PARAFAC.')
     end
 end
 %% Version check
