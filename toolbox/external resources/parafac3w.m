@@ -1,4 +1,10 @@
 function model = parafac3w(X,F,options)
+arguments
+    X {mustBeNumeric}
+    F {mustBeNumeric,mustBeGreaterThan(F,0),mustBeLessThan(F,20)}
+    options {mustBeA(options,'struct')}
+end
+
 timer=tic;
 bg=0;
 
