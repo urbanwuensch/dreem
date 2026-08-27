@@ -139,7 +139,14 @@ classdef viewpca_gui < matlab.apps.AppBase
                 n_neg=sum(levels<0);
                 n_pos=sum(levels>0);
 
-                colormap(ax1,app.residualcolormap(n_neg,n_pos))
+                
+                switch app.ColormapEEMDropDown.Value
+                    case {'imola' 'hawaii' 'batlow','-imola' '-hawaii' '-batlow'}
+                        map=crameri.makemap(app.ColormapEEMDropDown.Value);
+                        colormap(ax1,map)
+                    otherwise
+                        colormap(ax1,app.ColormapEEMDropDown.Value);
+                end
                 title(ax1,['PC',num2str(j),' (',num2str(round(app.data.models(app.nComp).componentContribution(j),1)),'%)'])
 
             end
@@ -591,7 +598,7 @@ classdef viewpca_gui < matlab.apps.AppBase
 
         % Value changed function: ColormapEEMDropDown
         function ColormapEEMDropDownValueChanged(app, event)
-            app.plotEEM;
+            app.visualize;
             
         end
 
