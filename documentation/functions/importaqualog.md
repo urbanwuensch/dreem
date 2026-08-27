@@ -51,6 +51,9 @@ In case things went wrong and you'd like to have control over which settings-bat
        `[samples,blanks] = tbx.importaqualog(pwd,bucket=1);`
    3. <strong>Same as 2. but now you want to process the samples that got measured with different settings</strong>
        `[samples,blanks] = tbx.importaqualog(pwd,bucket=N); % Choose your N, depends on case.`
+   4. <strong>If you'd wish to update (or reset) the aqualog2nc software</strong>
+      `[samples,blanks] = tbx.importaqualog(pwd,toolreset=true);`
+
 
 ## Input arguments
 
@@ -78,6 +81,15 @@ In case the opj/ogw files contain absorbance+fluorescence measurements with inco
 
 </details>
 
+<details open>
+    <summary><b>`toolreset`- trigger a reset / redownload of aqualog2nc</b></summary>
+    <i>numeric</i>
+
+If ou are having trouble during the extraction of OPJ/OGW data (error messages), a re-download of the extraction engine `aqualog2nc` might help (e.g. if an update was posted). Setting `toolreset` to true will locate and delete `aqualog2nc`. The function will then need to fetch a fresh download with the latest version being automatically downloaded.
+
+Note that once downloaded, your local copy of `aqualog2nc` might become outdated. `importaqualog` does not do any version check.
+
+</details>
 
 ## Output arguments
 <details open>

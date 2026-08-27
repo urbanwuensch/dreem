@@ -431,6 +431,8 @@ returns two drEEMdataset objects (samples, blanks) that contains fluorescence EE
    <code>[samples,blanks] = tbx.importaqualog(pwd,bucket=1);</code></li>
 <li><strong>Same as 2. but now you want to process the samples that got measured with different settings</strong>
    <code>[samples,blanks] = tbx.importaqualog(pwd,bucket=N); % Choose your N, depends on case.</code></li>
+<li><strong>If you&#39;d wish to update (or reset) the aqualog2nc software</strong>
+  <code>[samples,blanks] = tbx.importaqualog(pwd,toolreset=true);</code></li>
 </ol>
 
 <h2 id="toc_4">Input arguments</h2>
@@ -455,6 +457,16 @@ returns two drEEMdataset objects (samples, blanks) that contains fluorescence EE
     <i>numeric</i></p>
 
 <p>In case the opj/ogw files contain absorbance+fluorescence measurements with incompatible settings (e.g. different excitation wavelengths), the C++ converter will create groups within the NetCDF file. Here, you specify the numeric group. The larger the number, the fewer samples there will be (descending ordering).</p>
+
+<p></details></p>
+
+<p><details open>
+    <summary><b><code>toolreset</code>- trigger a reset / redownload of aqualog2nc</b></summary>
+    <i>numeric</i></p>
+
+<p>If ou are having trouble during the extraction of OPJ/OGW data (error messages), a re-download of the extraction engine <code>aqualog2nc</code> might help (e.g. if an update was posted). Setting <code>toolreset</code> to true will locate and delete <code>aqualog2nc</code>. The function will then need to fetch a fresh download with the latest version being automatically downloaded.</p>
+
+<p>Note that once downloaded, your local copy of <code>aqualog2nc</code> might become outdated. <code>importaqualog</code> does not do any version check.</p>
 
 <p></details></p>
 

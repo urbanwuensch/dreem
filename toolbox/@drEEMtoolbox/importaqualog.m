@@ -8,6 +8,8 @@ function varargout = importaqualog(folder,options)
 % 
 % <strong>INPUTS - Optional</strong>
 % bucket (1,:)          {mustBeNumericOrLogical} = true
+% toolreset (1,:)       {mustBeLogical} = false;
+
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. <strong>Grab any stored measurements in current folder, identical settings</strong>
@@ -16,6 +18,9 @@ function varargout = importaqualog(folder,options)
 %       [samples,blanks] = tbx.importaqualog(pwd,bucket=1);
 %   3. <strong>Same as 2. but now you want to process the samples that got measured with different settings</strong>
 %       [samples,blanks] = tbx.importaqualog(pwd,bucket=N); % Choose your N, depends on case.
+%   4. <strong>If you'd wish to update (or reset) the aqualog2nc software</strong>
+%       [samples,blanks] = tbx.importaqualog(pwd,toolreset=true); % deletes and re-downloads the OPJ/OGW reader
+
 %
 % <a href = "matlab:drEEMtoolbox.doc('importaqualog')"><strong>-> full documentation</strong></a>
 
@@ -29,8 +34,30 @@ arguments
     folder (1,:) {mustBeFolder(folder)} = pwd;
     options.bucket (1,:) {mustBeNumeric} = 1;
     options.type (1,:) {mustBeMember(options.type,["rawdata","processed"])} = "processed";
+    options.toolreset (1,:) {mustBeA(options.toolreset,'logical')} = false;
 
 end
+
+
+
+if options.toolreset
+    if ismac&&isunix
+        toolname='aqualog2nc-macos-arm64';
+    elseif ispc
+        toolname='aqualog2nc-windows-x64.exe';
+    elseif isunix&&not(ismac)
+        toolname='aqualog2nc-linux-x64';
+    end
+    toolpath=char(fullfile(drEEMtoolbox.rootfolder,'external resources',toolname));
+
+    if exist(toolpath,"file")
+        delete(toolpath)
+        disp([toolname,' successfully deleted. This should trigger a re-download shortly'])
+    else
+        warning('Option toolreset was set to "true", but the file could not be located & deleted')
+    end
+end
+
 ds=horibaRawdata.importFromOrigin(folder,'horibaRawdata',options.bucket);
 if matches(options.type,"rawdata")
     varargout{1}=ds;
