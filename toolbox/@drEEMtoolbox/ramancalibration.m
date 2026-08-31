@@ -49,6 +49,7 @@ arguments
     options.method (1,:) {mustBeText,mustBeMember(options.method,["raw","gauss1"])} = 'raw';
     options.figurefile (1,:) {mustBeText} = "";
     options.convertToQSU (1,1) {mustBeA(options.convertToQSU,'logical')} = false;
+    options.printSNR (1,1) {mustBeA(options.printSNR,'logical')} = false;
 end
 % Experimental feature; overwrite workspace variable, needs no outputarg check
 if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
@@ -104,8 +105,10 @@ SignalCalibration.BaseAreaPerc=BaseArea./RA*100;
 % Attempt to extract SNB (signal-to-background ratio)
 signal=max(Rscan(:,blanks.Em>options.iStart&blanks.Em<options.iEnd),[],2,"omitmissing");
 background=median(Rscan(:,blanks.Em > options.iEnd & blanks.Em < options.iEnd + 50),2,"omitmissing");
+noise=std(Rscan(:,blanks.Em > options.iEnd & blanks.Em < options.iEnd + 50),[],2,"omitmissing");
 
 SignalCalibration.SNB=round(signal./background);
+SignalCalibration.SNR=round(signal./noise);
 
 
 
