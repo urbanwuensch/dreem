@@ -28,7 +28,11 @@ DS.nSample=size(Xin.S1Blank,1);
 DS.i=(1:DS.nSample)';
 DS.X=nan(DS.nSample,DS.nEm,DS.nEx);
 DS.absWave=Xin.Abs_wave;
-DS.history=Xin.history;
+try
+    DS.history=Xin.history;
+catch
+    DS.history=drEEMhistory;
+end
 
 flds=fieldnames(Xin);
 flds(contains(flds, ...

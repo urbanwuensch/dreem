@@ -25,11 +25,18 @@ classdef drEEMtoolbox < handle
         function dataout = sampleQimport(workingpath,~)
             dataout=horibaRawdata.importFromOrigin(workingpath,'horibaRawdata');
         end
-        function [DS,DSb] = processHJYdata(Xin,opt)
+        function varargout = processHJYdata(Xin,opt)
+            if strcmp(Xin,'options')
+                opt=horibaRawdata.convertTodrEEMdataset('options');
+                varargout{1}=opt;
+                return
+            end
             if not(exist('opt','var'))
                 opt=horibaRawdata.convertTodrEEMdataset('options');
             end
-            [DS,DSb] = horibaRawdata.convertTodrEEMdataset(Xin,opt);
+            [ds,dsb] = horibaRawdata.convertTodrEEMdataset(Xin,opt);
+            varargout{1}=ds;
+            varargout{2}=dsb;
         end
 
         function ds=aqualogimport(folder,options)
