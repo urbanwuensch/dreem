@@ -21,7 +21,7 @@ function data = importeems(filePattern,status,options)
 %   2. <strong>Cary Eclipse</strong>
 %       samples=tbx.importeems("*.csv","columnIsExcitation",true);
 %   3. <strong>Jasco csv-files with large header</strong>
-%       Not supported due to complex file format. Contact dreem@openfluor.net 
+%       Not supported due to complex file format. Contact urban.wunsch@chalmers.se 
 %
 % <a href = "matlab:drEEMtoolbox.doc('importeems')"><strong>-> full documentation</strong></a>
 
