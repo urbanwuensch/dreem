@@ -191,128 +191,133 @@ if options.details
     end
      cont=true;
      for n=1:data.nSample
-         if cont
-             set(fig2,'Name',['Slopefit.m: Data vs. modeled data. Spectrum ',num2str(n),' of ',num2str(data.nSample)])
-             try
-                 yyaxis(ax(1),'left')
-                 cla(ax(1))
-                 set(ax(1),'YColor','k')
-                 plot(ax(1),data.absWave,data.abs(n,:),'LineWidth',0.5,'Color',[0.5 0.5 0.5]),
-                 hold(ax(1),"on")
-                 plot(ax(1),fitSpecs(1).absWave,fitSpecs(1).abs(n,:),'Color','k','LineStyle','-','LineWidth',1.5)
-                 plot(ax(1),fitSpecs(1).absWave,results(1,n).modelled,'Color',lines(1),'LineStyle','-')
-                 ylabel(ax(1),'Absorbance')
-                 xlabel(ax(1),'Wavelength (nm)')
-                 xlim(ax(1),[options.LongRange(1)-20 options.LongRange(end)+20])
-                 yyaxis(ax(1),'right')
-                 cla(ax(1))
-                 set(ax(1),'YColor', [1       0.663       0.094] )
-                 plot(ax(1),fitSpecs(1).absWave,results(1,n).residuals,'Color', [1       0.663       0.094] ,'Marker','none','LineStyle','-')
-                 ylabel(ax(1),'fit residual')
-                 xlabel(ax(1),'Wavelength (nm)')
-                 hold(ax(1),'off')
-                 title(ax(1),['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'} exp. model vs. fitted & residuals'])
-             catch
-                 yyaxis(ax(1),'right')
-                 cla(ax(1))
-                 yyaxis(ax(1),'left')
-                 cla(ax(1))
-                 line(ax(1),nan,nan)
-                 legend(ax(1),'No fit possible')
-             end
+         if ~cont || ~isgraphics(fig2), break, end
+         set(fig2,'Name',['Slopefit.m: Data vs. modeled data. Spectrum ',num2str(n),' of ',num2str(data.nSample)])
+         try
+         try
+             yyaxis(ax(1),'left')
+             cla(ax(1))
+             set(ax(1),'YColor','k')
+             plot(ax(1),data.absWave,data.abs(n,:),'LineWidth',0.5,'Color',[0.5 0.5 0.5]),
+             hold(ax(1),"on")
+             plot(ax(1),fitSpecs(1).absWave,fitSpecs(1).abs(n,:),'Color','k','LineStyle','-','LineWidth',1.5)
+             plot(ax(1),fitSpecs(1).absWave,results(1,n).modelled,'Color',lines(1),'LineStyle','-')
+             ylabel(ax(1),'Absorbance')
+             xlabel(ax(1),'Wavelength (nm)')
+             xlim(ax(1),[options.LongRange(1)-20 options.LongRange(end)+20])
+             yyaxis(ax(1),'right')
+             cla(ax(1))
+             set(ax(1),'YColor', [1       0.663       0.094] )
+             plot(ax(1),fitSpecs(1).absWave,results(1,n).residuals,'Color', [1       0.663       0.094] ,'Marker','none','LineStyle','-')
+             ylabel(ax(1),'fit residual')
+             xlabel(ax(1),'Wavelength (nm)')
+             hold(ax(1),'off')
+             title(ax(1),['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'} exp. model vs. fitted & residuals'])
+         catch
+             yyaxis(ax(1),'right')
+             cla(ax(1))
+             yyaxis(ax(1),'left')
+             cla(ax(1))
+             line(ax(1),nan,nan)
+             legend(ax(1),'No fit possible')
+         end
 
-             try
-                 yyaxis(ax(2),'left')
-                 cla(ax(2))
-                 set(ax(2),'YColor','k')
-                 plot(ax(2),data.absWave,data.abs(n,:),'LineWidth',0.5,'Color',[0.5 0.5 0.5])
-                 hold(ax(2),"on")
-                 plot(ax(2),fitSpecs(2).absWave,fitSpecs(2).abs(n,:),'Color','k','LineStyle','-','LineWidth',1.5)
-                 plot(ax(2),fitSpecs(2).absWave,results(2,n).modelled,'Color',lines(1),'Marker','none','LineStyle','-')
-                 xlim(ax(2),[250 320])
-                 ylabel(ax(2),'Absorbance')
-                 xlabel(ax(2),'Wavelength (nm)')
+         try
+             yyaxis(ax(2),'left')
+             cla(ax(2))
+             set(ax(2),'YColor','k')
+             plot(ax(2),data.absWave,data.abs(n,:),'LineWidth',0.5,'Color',[0.5 0.5 0.5])
+             hold(ax(2),"on")
+             plot(ax(2),fitSpecs(2).absWave,fitSpecs(2).abs(n,:),'Color','k','LineStyle','-','LineWidth',1.5)
+             plot(ax(2),fitSpecs(2).absWave,results(2,n).modelled,'Color',lines(1),'Marker','none','LineStyle','-')
+             xlim(ax(2),[250 320])
+             ylabel(ax(2),'Absorbance')
+             xlabel(ax(2),'Wavelength (nm)')
 
-                 yyaxis(ax(2),'right')
-                 cla(ax(2))
-                 set(ax(2),'YColor',[1       0.663       0.094])
-                 plot(ax(2),fitSpecs(2).absWave,results(2,n).residuals,'Color',[1       0.663       0.094],'Marker','none','LineStyle','-')
-                 hold(ax(2),"off")
-                 title(ax(2),'S_{275-295} model vs. fitted & residuals')
-                 ylabel(ax(2),'Relative residual')
-                 xlabel(ax(2),'Wavelength (nm)')
-             catch
-                 yyaxis(ax(2),"right")
-                 cla(ax(2))
-                 yyaxis(ax(2),'left')
-                 cla(ax(2))
-                 line(ax(2),nan,nan)
-                 legend(ax(2),'No fit possible')
-             end
+             yyaxis(ax(2),'right')
+             cla(ax(2))
+             set(ax(2),'YColor',[1       0.663       0.094])
+             plot(ax(2),fitSpecs(2).absWave,results(2,n).residuals,'Color',[1       0.663       0.094],'Marker','none','LineStyle','-')
+             hold(ax(2),"off")
+             title(ax(2),'S_{275-295} model vs. fitted & residuals')
+             ylabel(ax(2),'Relative residual')
+             xlabel(ax(2),'Wavelength (nm)')
+         catch
+             yyaxis(ax(2),"right")
+             cla(ax(2))
+             yyaxis(ax(2),'left')
+             cla(ax(2))
+             line(ax(2),nan,nan)
+             legend(ax(2),'No fit possible')
+         end
 
-             try
-                 yyaxis(ax(3),"left")
-                 cla(ax(3))
-                 set(ax(3),'YColor','k')
-                 plot(ax(3),data.absWave,data.abs(n,:), ...
-                     'LineWidth',0.5,'Color',[0.5 0.5 0.5]);
-                 hold(ax(3),"on")
-                 plot(ax(3),fitSpecs(3).absWave,fitSpecs(3).abs(n,:), ...
-                     'Color','k','LineStyle','-','LineWidth',1.5);
-                 plot(ax(3),fitSpecs(3).absWave,results(3,n).modelled, ...
-                     'Color',lines(1),'Marker','none','LineStyle','-');
-                 xlim(ax(3),[310 450])
-                 ylabel(ax(3),'Absorbance')
-                 xlabel(ax(3),'Wavelength (nm)')
-                 yyaxis(ax(3),"right")
-                 cla(ax(3))
-                 set(ax(3),'YColor',[1       0.663       0.094])
-                 plot(ax(3),fitSpecs(3).absWave,results(3,n).residuals, ...
-                     'Color',[1       0.663       0.094],'Marker','none','LineStyle','-');
-                 ylabel(ax(3),'fit residual')
-                 xlabel(ax(3),'Wavelength (nm)')
-                 hold(ax(3),"off")
-                 title(ax(3),'S_{350-400} model vs. fitted & residuals')
-                 [ h ] = leg(4,[0.5 0.5 0.5;0 0 0;lines(1);1 0.663 0.094],ax(3));
-                 legend1=legend(h,{'Raw','selected','fitted','residual'},NumColumns=4);
-                 legend1.Layout.Tile="north";
-             catch
-                 yyaxis(ax(3),"right")
-                 cla(ax(3))
-                 yyaxis(ax(3),"left")
-                 cla(ax(3))
-                 line(ax(3),nan,nan)
-                 legend(ax(3),'No fit possible')
-             end
+         try
+             yyaxis(ax(3),"left")
+             cla(ax(3))
+             set(ax(3),'YColor','k')
+             plot(ax(3),data.absWave,data.abs(n,:), ...
+                 'LineWidth',0.5,'Color',[0.5 0.5 0.5]);
+             hold(ax(3),"on")
+             plot(ax(3),fitSpecs(3).absWave,fitSpecs(3).abs(n,:), ...
+                 'Color','k','LineStyle','-','LineWidth',1.5);
+             plot(ax(3),fitSpecs(3).absWave,results(3,n).modelled, ...
+                 'Color',lines(1),'Marker','none','LineStyle','-');
+             xlim(ax(3),[310 450])
+             ylabel(ax(3),'Absorbance')
+             xlabel(ax(3),'Wavelength (nm)')
+             yyaxis(ax(3),"right")
+             cla(ax(3))
+             set(ax(3),'YColor',[1       0.663       0.094])
+             plot(ax(3),fitSpecs(3).absWave,results(3,n).residuals, ...
+                 'Color',[1       0.663       0.094],'Marker','none','LineStyle','-');
+             ylabel(ax(3),'fit residual')
+             xlabel(ax(3),'Wavelength (nm)')
+             hold(ax(3),"off")
+             title(ax(3),'S_{350-400} model vs. fitted & residuals')
+             [ h ] = leg(4,[0.5 0.5 0.5;0 0 0;lines(1);1 0.663 0.094],ax(3));
+             legend1=legend(h,{'Raw','selected','fitted','residual'},NumColumns=4);
+             legend1.Layout.Tile="north";
+         catch
+             yyaxis(ax(3),"right")
+             cla(ax(3))
+             yyaxis(ax(3),"left")
+             cla(ax(3))
+             line(ax(3),nan,nan)
+             legend(ax(3),'No fit possible')
+         end
+         catch ME
+             if ~isgraphics(fig2), break, end          % closed mid-redraw: stop quietly
+             rethrow(ME)
+         end
 
-             uicontrol(huic)
-             uiwait(fig2)
-             if ~ishandle(fig2)
-                 cont=false;
-                 continue
-             end
+         uicontrol(huic)
+         if ~isgraphics(fig2), break, end              % closed during uicontrol/legend flush
+         uiwait(fig2)
+         if ~ishandle(fig2)
+             cont=false;
+             continue
          end
      end
 end
 %% Plotting of results
 switch options.plot
     case true
-    if data.toolboxOptions.uifig
-        fig1=drEEMtoolbox.dreemuifig;
-    else
-        fig1=drEEMtoolbox.dreemfig;
-    end
-    set(fig1,'units','normalized','Name','slopefit: CDOM spectral slopes','pos',[0.35 0.35 0.30 0.25])
-    ax=nexttile(tiledlayout(fig1));
+        if data.toolboxOptions.uifig
+            fig1=drEEMtoolbox.dreemuifig;
+        else
+            fig1=drEEMtoolbox.dreemfig;
+        end
+        set(fig1,'units','normalized','Name','slopefit: CDOM spectral slopes','pos',[0.35 0.35 0.30 0.25])
+        ax=nexttile(tiledlayout(fig1));
 
-    [~,idx]=sort(data.i);
+        [~,idx]=sort(data.i);
 
-    p(1)=plot(ax,data.i(idx),slopes.exp_slope_microm(idx), ...
-        'Color','k',LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor='k');
-    xlabel(ax,'# Sample')
-    ylabel(ax,['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'} (µm^{-1})'])
-    yyaxis(ax,"right")
-    p(2)=plot(ax,data.i(idx),slopes.S_275_295(idx), ...
+        p(1)=plot(ax,data.i(idx),slopes.exp_slope_microm(idx), ...
+            'Color','k',LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor='k');
+        xlabel(ax,'# Sample')
+        ylabel(ax,['S_{',num2str(options.LongRange(1)),'-',num2str(options.LongRange(end)),'} (µm^{-1})'])
+        yyaxis(ax,"right")
+        p(2)=plot(ax,data.i(idx),slopes.S_275_295(idx), ...
         'Color',lines(1),LineStyle='-',Marker='o',LineWidth=0.5,MarkerFaceColor=lines(1));
     hold(ax,"on")
     p(3)=plot(ax,data.i(idx),slopes.S_350_400(idx), ...
