@@ -139,7 +139,6 @@ if Option(6)==1
 end
 if Option(7)==1
   % NORMAL PROBABILITY PLOT
-  if exist('normplot')
     disp(' ')
     disp(' Normal probability plots are time-consuming')
     disp(' They are made in the statistics toolbox though, so we can''t change that!')
@@ -149,8 +148,22 @@ if Option(7)==1
     bb=ceil(ord/aa);
     r=nway.aux.nshape(reshape(X-model,DimX),i)';
     r=r(:);
-    normplot(r(find(~isnan(r))))
-  end
+
+    r_here = sort(r(~isnan(r)));
+    n_here = numel(r_here);
+    p_here = ((1:n_here)'-0.5)/n_here;                    % plotting positions (same as normplot)
+    z_here = sqrt(2)*erfinv(2*p_here-1);                  % norminv without the toolbox
+    plot(r_here, z_here, '+')
+    hold on
+    q_here  = interp1(p_here, r_here, [0.25 0.75]);       % 1st/3rd quartile of the data
+    zq_here = sqrt(2)*erfinv(2*[0.25 0.75]-1);            % their normal scores
+    xe_here = [r_here(1) r_here(end)];                    % draw the line across the data range
+    ze_here = zq_here(1) + (xe_here-q_here(1)) * diff(zq_here)/diff(q_here);
+    plot(xe_here, ze_here, '-')                           % reference line through the quartiles
+    hold off
+    pt_here = [0.01 0.02 0.05 0.10 0.25 0.50 0.75 0.90 0.95 0.98 0.99];
+    set(gca,'YTick',sqrt(2)*erfinv(2*pt_here-1),'YTickLabel',string(pt_here))
+    xlabel('Data'), ylabel('Probability'), title('Normal Probability Plot'), grid on
 end
 if Option(8)==1
   % LOADING PLOT
