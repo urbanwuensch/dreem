@@ -12,7 +12,7 @@ uuid="186c884d-4f97-4318-9f12-cbf90a332379";
 version='2.26.09';
 OutputFile=string(['/Users/wuensch/git repros/dreem-2/release/drEEM-',version,'.mltbx']);
 if isfile(OutputFile),delete(OutputFile),disp('deleted existing mltbx file'),end
-releaseMax="latest";
+releaseMax="";
 
 % Get old, make new opts
 opts = matlab.addons.toolbox.ToolboxOptions(which("dreem-2.prj"));
