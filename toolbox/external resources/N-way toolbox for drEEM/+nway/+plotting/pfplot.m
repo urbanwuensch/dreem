@@ -139,9 +139,7 @@ if Option(6)==1
 end
 if Option(7)==1
   % NORMAL PROBABILITY PLOT
-    disp(' ')
-    disp(' Normal probability plots are time-consuming')
-    disp(' They are made in the statistics toolbox though, so we can''t change that!')
+ 
     figure,
     eval(['set(gcf,''Name'',''Normal probability of residuals'');']);
     aa=ceil(sqrt(ord));
