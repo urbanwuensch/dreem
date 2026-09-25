@@ -1,4 +1,4 @@
-function dataout = upgradedataset(data,atypicalFieldnames)
+function dataout = upgradedataset(data,atypicalFieldnames,status)
 % <a href = "matlab:drEEMtoolbox.doc('upgradedataset')">dataout=upgradedataset(data,atypicalFieldnames) (click to access documentation)</a>
 %
 % <strong>Upgrade drEEM datasets to the drEEMdataset class</strong>
@@ -30,6 +30,7 @@ function dataout = upgradedataset(data,atypicalFieldnames)
 arguments
     data (1,1) {mustBeA(data,'struct'),checkdataset(data)}
     atypicalFieldnames (:,2) cell = {}
+    status (1,1) {mustBeA(status,'drEEMstatus')} = drEEMstatus;
 end
 if not(isempty(atypicalFieldnames))
     % Check input for existence in data
@@ -166,13 +167,17 @@ dataout.validate(dataout);
 
 %%%%% IMPLEMENT SPLITS!!!!
 % User needs to tell the toolbox what the status of the dataset is.
-handle=dreemgui.setstatus_dreem(dataout,'data');
-waitfor(handle,"finishedHere",true);
-try
-    dataout=handle.data;
-    delete(handle)
-catch
-    error('setstatus closed before save & exit button was pushed.')
+if nargin<3
+    handle=dreemgui.setstatus_dreem(dataout,'data');
+    waitfor(handle,"finishedHere",true);
+    try
+        dataout=handle.data;
+        delete(handle)
+    catch
+        error('setstatus closed before save & exit button was pushed.')
+    end
+elseif nargin==3
+    dataout.status=status;
 end
 
 idx=1;
