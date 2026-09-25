@@ -1,0 +1,118 @@
+name = "dreem-2"
+
+[folders]
+path = [
+    "apps_mlapp",
+    "buildUtilities",
+    "documentation",
+    "documentation/functions",
+    "documentation/tutorials",
+    "images",
+    "release",
+    "tests",
+    "tests/csv",
+    "tests/csv2",
+    "tests/csv_flipped",
+    "tests/csv_flipped_noaxis",
+    "tests/csv_noaxis",
+    "toolbox",
+    "toolbox/classes",
+    "toolbox/doc",
+    "toolbox/doc/app resources",
+    "toolbox/doc/helpsearch-v4_en",
+    "toolbox/doc/helpsearch-v4_en/store",
+    "toolbox/examples",
+    "toolbox/examples/useful scripts",
+    "toolbox/external resources",
+    "toolbox/external resources/N-way toolbox for drEEM",
+    "toolbox/external resources/N-way toolbox for drEEM/Examples",
+    "toolbox/external resources/N-way toolbox for drEEM/Examples/data",
+    "toolbox/external resources/N-way toolbox for drEEM/doc",
+    "toolbox/external resources/crameri",
+    "toolbox/external resources/crameri/html",
+]
+
+[project]
+startup-folder = "toolbox"
+
+[project.labels."Toolbox - Toolbox1 (1)"]
+"App Gallery File" = [
+    "apps_mlapp/importwizard.mlapp",
+]
+"Toolbox Image File" = [
+    "images/dreem-2.png",
+]
+"Getting Started Guide" = [
+]
+
+[project.labels."Standalone Application - StandaloneDesktopApp1"]
+"Executable Splash Image File" = [
+]
+"Additional File" = [
+]
+"Help Text File" = [
+]
+"Windows Apps & Features Icon File" = [
+]
+"Installer Splash Image File" = [
+]
+"Main Function" = [
+]
+"Installer Icon File" = [
+]
+"Installer Logo Image File" = [
+]
+"Executable Icon File" = [
+]
+"Installer Additional Files" = [
+]
+
+[project.labels."Toolbox - Toolbox1"]
+"Getting Started Guide" = [
+]
+"App Gallery File" = [
+]
+"Toolbox Image File" = [
+]
+
+[project.labels."Toolbox - Toolbox1 (3)"]
+"Toolbox Image File" = [
+    "images/dreem-2.png",
+]
+"Getting Started Guide" = [
+    "toolbox/doc/GettingStarted.mlx",
+]
+"App Gallery File" = [
+]
+
+[project.labels."Toolbox - Toolbox1 (2)"]
+"Getting Started Guide" = [
+]
+"App Gallery File" = [
+]
+"Toolbox Image File" = [
+]
+
+[[package]]
+configuration-name = "Toolbox1"
+supported-platforms = [
+    "windows",
+    "linux",
+    "macos",
+]
+preview-image-file = "images/dreem-2.png"
+release-compatibility = ">=24.2.*"
+use-license-bsd = false
+output-folder = "release"
+output-file-name = "drEEM-2.26.01.mltbx"
+provider.organization = "Chalmers University of Technology"
+provider.name = "Urban Wünsch"
+provider.email = "urban.wunsch@chalmers.se"
+name = ""
+description = "The drEEM toolbox aids the analysis of UV-Vis absorbance and fluorescence datasets to describe the dynamics of dissolved organic matter (DOM). Particular focus is put on parallel factor analysis (PARAFAC) of exciation-emission matrices (EEMs)."
+display-name = "drEEM toolbox"
+summary = "Processing and analysis of ultraviolet-visible absorbance and fluorescence spectra."
+package-root = "toolbox"
+version = "2.26.01"
+getting-started-file = "toolbox/doc/GettingStarted.mlx"
+id = "186c884d-4f97-4318-9f12-cbf90a332379"
