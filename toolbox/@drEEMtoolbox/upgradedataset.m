@@ -474,7 +474,7 @@ pass=true;pass1=true;pass2=true;
 message='';
 % Perform the checks
 if size(data.X,1)>1
-    X=squeeze(nanmedian(data.X));
+    X=squeeze(median(data.X,"omitmissing"));
 else
     X=data.X;
 end
