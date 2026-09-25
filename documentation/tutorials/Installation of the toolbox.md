@@ -11,9 +11,8 @@ The installation of the drEEM toolbox is straightforward and there are software 
 
 
 
-## Requirements
-The drEEM toolbox requires the [Statistics and Machine Learning Toolbox](https://www.mathworks.com/products/statistics.html) to calculate exponential CDOM slopes. Such fits are used to to calculate the long wavelength range CDOM slope and to extrapolate CDOM absorbance data in cases where the measured fluorescence emission exceeds the coverage of absorbance data. If you don't require these features, drEEM will run fine without the toolbox.
+## Recommended Add-Ons
+Besides the MATLAB core, no other MathWorks toolboxes are required. The following might add to the user experience if installed.
 
-Considerable speed advantages can be achieved if the [Parallel Processing Toolbox](https://www.mathworks.com/products/parallel-computing.html) is installed. This toolbox is needed to take advantage of modern multi-core CPUs. However, the toolbox is designed to run without the toolbox as well.
-
-drEEM can take advantage of algorithm refinements that have taken place over recent years via the [PLS_toolbox](https://eigenvector.com/software/pls-toolbox/). However, this requires PLS_toolbox to be purchased and installed. This toolbox is by no means required since drEEM ships with the free [N-Way toolbox](https://doi.org/10.1016/S0169-7439(00)00071-X).
+1. [Parallel Processing Toolbox](https://www.mathworks.com/products/parallel-computing.html) (<ins>optional</ins>) to benefit from multi-core CPUs when fitting PARAFAC models. Even without it, drEEM-2 is 5x faster than previous versions.
+2. [PLS\_toolbox](https://eigenvector.com/software/pls-toolbox/) (<ins>optional</ins>) to use the latest PARAFAC algorithms. However, this requires PLS\_toolbox to be purchased and installed. This toolbox is by no means required since drEEM ships with the free [N-Way toolbox](https://doi.org/10.1016/S0169-7439(00)00071-X).
