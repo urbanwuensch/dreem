@@ -1,21 +1,21 @@
 % Close project if open
-cd(fileparts(matlab.desktop.editor.getActiveFilename))
-initSession("vanilla",force=true)
+initSession(force=true)
+cd(drEEMtoolbox.rootfolder)
 cd ..
-p=openProject("dreem-2.prj");
-cd(fileparts(matlab.desktop.editor.getActiveFilename))
+initSession("vanilla",force=true)
+p=openProject("matlab.toml");
 
 disp('<strong> starting to pack...</strong>')
 % Never change this unless you want this to be treated as a seperate toolbox
-uuid="8d87ad7f-ac6a-4500-af57-5e1bc1739a2b";
+uuid=drEEMtoolbox.uuid;
 % Change these for the release!!!
-version='2.26.9';
-OutputFile=string(['/Users/wuensch/git repros/dreem-2/release/drEEM-',version,'.mltbx']);
+drEEMversion=char(drEEMtoolbox.version);
+OutputFile=string([char(p.RootFolder),filesep,'release',filesep,'drEEM-',drEEMversion,'.mltbx']);
 if isfile(OutputFile),delete(OutputFile),disp('deleted existing mltbx file'),end
 releaseMax="";
 
 % Get old, make new opts
-opts = matlab.addons.toolbox.ToolboxOptions(which("dreem-2.prj"));
+opts = matlab.addons.toolbox.ToolboxOptions('matlab.toml');
 optsNew=matlab.addons.toolbox.ToolboxOptions("/Users/wuensch/git repros/dreem-2/toolbox",uuid);
 fnames=fieldnames(opts);
 for j=1:numel(fnames)
@@ -28,7 +28,7 @@ end
 
 % Overwrite some incorrect values that needed change compared to prj-file.
 optsNew.OutputFile=OutputFile;
-optsNew.ToolboxVersion=version;
+optsNew.ToolboxVersion=drEEMversion;
 optsNew.MaximumMatlabRelease=releaseMax;
 
 matlab.addons.toolbox.packageToolbox(optsNew)

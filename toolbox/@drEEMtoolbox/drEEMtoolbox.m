@@ -15,6 +15,7 @@ classdef drEEMtoolbox < handle
     properties (Constant = true, Hidden = false)
         version = "2.26.9"
         url = "https://zenodo.org/records/22953452/files/drEEM-2.26.9.mltbx?download=1"
+        uuid = "8d87ad7f-ac6a-4500-af57-5e1bc1739a2b";
         requiredVersion = 'R2024b'
         rootfolder = drEEMtoolbox.tbxpath;
         options=drEEMtoolbox.defaultOptions;
