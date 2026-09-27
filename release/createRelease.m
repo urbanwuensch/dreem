@@ -1,22 +1,22 @@
 % Close project if open
-initSession(force=true)
+disp('<strong> Initializing the release session...</strong>')
+clearvars
+initSession()
 cd(drEEMtoolbox.rootfolder)
 cd ..
-initSession("vanilla",force=true)
-p=openProject("matlab.toml");
+initSession("vanilla")
+disp('<strong> Opening the drEEM project...</strong>')
 
-disp('<strong> starting to pack...</strong>')
-% Never change this unless you want this to be treated as a seperate toolbox
-uuid=drEEMtoolbox.uuid;
-% Change these for the release!!!
-drEEMversion=char(drEEMtoolbox.version);
-OutputFile=string([char(p.RootFolder),filesep,'release',filesep,'drEEM-',drEEMversion,'.mltbx']);
+p=openProject("matlab.toml");
+pause(1)
+disp('<strong> Defining the toolbox options for packing...</strong>')
+OutputFile=string([char(p.RootFolder),filesep,'release',filesep,'drEEM-',char(drEEMtoolbox.version),'.mltbx']);
 if isfile(OutputFile),delete(OutputFile),disp('deleted existing mltbx file'),end
 releaseMax="";
-
+disp('<strong> Defining options...</strong>')
 % Get old, make new opts
-opts = matlab.addons.toolbox.ToolboxOptions('matlab.toml');
-optsNew=matlab.addons.toolbox.ToolboxOptions("/Users/wuensch/git repros/dreem-2/toolbox",uuid);
+opts = matlab.addons.toolbox.ToolboxOptions([pwd,filesep,'matlab.toml'],'dreem');
+optsNew=matlab.addons.toolbox.ToolboxOptions(drEEMtoolbox.rootfolder,drEEMtoolbox.uuid);
 fnames=fieldnames(opts);
 for j=1:numel(fnames)
     if matches(fnames{j},{'Identifier','ToolboxFolder'})
@@ -28,10 +28,11 @@ end
 
 % Overwrite some incorrect values that needed change compared to prj-file.
 optsNew.OutputFile=OutputFile;
-optsNew.ToolboxVersion=drEEMversion;
+optsNew.ToolboxVersion=char(drEEMtoolbox.version);
 optsNew.MaximumMatlabRelease=releaseMax;
-
+disp('<strong> Packing...</strong>')
 matlab.addons.toolbox.packageToolbox(optsNew)
-disp('<strong> done...</strong>')
+disp('<strong> Done packing...</strong>')
+close(p);
+filebrowser
 initSession(force=true)
-% Close project
