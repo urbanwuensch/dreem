@@ -8,10 +8,13 @@ initSession("vanilla")
 disp('<strong> Opening the drEEM project...</strong>')
 
 p=openProject("matlab.toml");
-pause(1)
+cd(p.RootFolder)
 disp('<strong> Defining the toolbox options for packing...</strong>')
 OutputFile=string([char(p.RootFolder),filesep,'release',filesep,'drEEM-',char(drEEMtoolbox.version),'.mltbx']);
-if isfile(OutputFile),delete(OutputFile),disp('deleted existing mltbx file'),end
+if isfile(OutputFile)
+    delete(OutputFile)
+    disp('deleted existing mltbx file')
+end
 releaseMax="";
 disp('<strong> Defining options...</strong>')
 % Get old, make new opts
@@ -32,7 +35,7 @@ optsNew.ToolboxVersion=char(drEEMtoolbox.version);
 optsNew.MaximumMatlabRelease=releaseMax;
 disp('<strong> Packing...</strong>')
 matlab.addons.toolbox.packageToolbox(optsNew)
-disp('<strong> Done packing...</strong>')
+disp(['<strong> Done packing... (',OutputFile,')</strong>'])
 close(p);
 filebrowser
 initSession(force=true)
