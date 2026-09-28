@@ -63,6 +63,12 @@ end
 % assign output variable
 dataout=samples;
 
+%% Sample-Blank alignment check
+d1=samples.nSample==blanks.nSample;
+if not(d1)
+    error('Number of blanks and samples differs. This function is not designed for this scenario.')
+end
+
 %% Extract scans (either direct or through interpolation)
 % if options.exWave is measured, extract, otherwise interpolate
 Xblank=blanks.X;
