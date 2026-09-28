@@ -91,8 +91,10 @@ switch opmode
                 tens2mat(dataout.X,dataout.nSample,dataout.nEm,dataout.nEx)...
                 ,0,2,'omitnan'),option);
             
-            if any(isnan(scalefac))
-                error('Some scaling factors are NaN!')
+            if any(isnan(scalefac))|any(isinf(scalefac))
+                warning('Some NaN/inf scaling factors were replaced with 1')
+                scalefac(isnan(scalefac))=1;
+                scalefac(isinf(scalefac))=1;
             end
             
             dataout.X=dataout.X.*scalefac;
