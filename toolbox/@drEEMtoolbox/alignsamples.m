@@ -113,6 +113,10 @@ for j=1:numel(varargin)
         end
     end
     
+    if not(isempty(deleted))
+        varargout{j}.models=drEEMmodel;
+    end
+
     varargout{j}.nSample=varargout{j}.nSample-numel(deleted);
 
  
