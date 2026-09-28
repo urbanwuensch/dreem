@@ -50,7 +50,7 @@ classdef handlescatterOptions
                 disp(sprintf('    It is advisable to leave some room between interpolation and forced zeros.')); %#ok<DSPS>
                 disp(' ')
                 pause(1)
-                options.d2zero=options.ray1(1)+5;
+                
             end
 
         end
