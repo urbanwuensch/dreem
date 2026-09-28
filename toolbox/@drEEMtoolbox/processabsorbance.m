@@ -67,6 +67,7 @@ if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
     end
 end
 
+
 % If there are any strange imaginary numbers, fix it here by converting.
 data.abs=real(data.abs);
 
@@ -99,8 +100,15 @@ if options.plot
     ylabel(ax,'Absorbance')
     title(ax,'Absorbance prior to any correction')
 end
+
+% Handle absence of fluorescence
+maxLambda=max([dataout.Ex;dataout.Em]);
+if isempty(maxLambda)
+    maxLambda=800;
+end
+
 %% Scenario 1, no extrapolation needed
-if max([dataout.Ex;dataout.Em])<=max(dataout.absWave)
+if maxLambda<=max(dataout.absWave)
     %% Baseline correction (if possible and wanted)
     % It's only allowed if there's plenty of long-wl information though
     if max(dataout.absWave)>=580
@@ -128,7 +136,7 @@ if max([dataout.Ex;dataout.Em])<=max(dataout.absWave)
     end
 
 %% Scenario 2: Stitch-on (extrapolation)
-elseif max([dataout.Ex;dataout.Em])>=max(dataout.absWave)
+elseif maxLambda>=max(dataout.absWave)
     
     % The extrapolation bit
     if options.extrapolate
@@ -147,8 +155,8 @@ elseif max([dataout.Ex;dataout.Em])>=max(dataout.absWave)
         ewstep=round(mean(diff(dataout.absWave)));
         ex_start=dataout.absWave(end)+ewstep;
         options.extrapolation_start=ex_start;
-        extrawave=(dataout.absWave(end)+ewstep:ewstep:ceil(max([dataout.Ex;dataout.Em])))';
-        new=zeros(data.nSample,numel([abswave;extrawave]));
+        extrawave=(dataout.absWave(end)+ewstep:ewstep:ceil(maxLambda))';
+        new=nan(data.nSample,numel([abswave;extrawave]));
         beta=nan(data.nSample,3);
         % Carry out the non-linear fit to find the CDOM exponential slope
         % parameters
@@ -164,12 +172,12 @@ elseif max([dataout.Ex;dataout.Em])>=max(dataout.absWave)
         warning on
         % if a350 is too small, set it to zero
         new(beta(:,2)<1,:)=0;
-        new=new(:,size(abswave,1)+1:end);
+        new=new(:,size(abswave,1):end);
 
         % find and eliminate offset between measured and modelled data
         off=data.abs(:,end)-new(:,1);
         new=new+off;
-        
+        new=new(:,2:end);
         % show intermediate results
         if options.plot
             ax=nexttile(t);
@@ -439,9 +447,13 @@ end
 end
 
 function baseValidator_extra(in,data)
+maxLambda=max([data.Ex;data.Em]);
+if isempty(maxLambda)
+    maxLambda=800;
+end
 ewstep=round(mean(diff(data.absWave)));
 ex_start=data.absWave(end)+ewstep;
-extrawave=(data.absWave(end)+ewstep:ewstep:ceil(max([data.Ex;data.Em])))';
+extrawave=(data.absWave(end)+ewstep:ewstep:ceil(maxLambda))';
 mima=[min(data.absWave) ceil(max([data.absWave;extrawave]))];
 
 
