@@ -504,11 +504,7 @@ if MethodO==1, %Can use the faster projection technique
                     end;
                     %...using the fast NIPALS
                     if Mth(c)==2,
-                        if MissingExist,
                             [cthFactor]=nway.tools.fnipals(RedData,Fac(c),reshape(Factors(FIdx0(c):FIdx1(c)),DimX(c),Fac(c)));
-                        else
-                            [cthFactor]=nway.tools.fnipals(RedData,Fac(c),reshape(Factors(FIdx0(c):FIdx1(c)),DimX(c),Fac(c)));
-                        end;
                     end;
                     %...using simplified continuous Gram-Schmidt orthogonalization
                     if Mth(c)==3,

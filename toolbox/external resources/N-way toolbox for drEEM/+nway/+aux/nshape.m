@@ -63,7 +63,7 @@ function varargout=nshape(X,f);
 
 ord       = ndims(X);
 DimX      = size(X);
-varargout = [];
+varargout = {};
 if nargin < 2
    f     = 0;
    do_it = ones(1,nargout);
