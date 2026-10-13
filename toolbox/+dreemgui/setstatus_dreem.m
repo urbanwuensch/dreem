@@ -4,7 +4,11 @@ classdef setstatus_dreem < matlab.apps.AppBase
     properties (Access = public)
         changestatusUIFigure           matlab.ui.Figure
         GridLayout                     matlab.ui.container.GridLayout
-        Button                         matlab.ui.control.Button
+        n_suppSpectraInfo              matlab.ui.control.EditField
+        c_suppSpectraInfo              matlab.ui.control.DropDown
+        c_suppSpectraInfoLabel         matlab.ui.control.Label
+        h_suppSpectraInfo              matlab.ui.control.Button
+        h_absorbanceUnit               matlab.ui.control.Button
         n_absorbanceUnit               matlab.ui.control.DropDown
         c_absorbanceUnit               matlab.ui.control.DropDown
         absorbanceunitDropDownLabel    matlab.ui.control.Label
@@ -95,7 +99,8 @@ classdef setstatus_dreem < matlab.apps.AppBase
                 "signalCalibration",...
                 "scatterTreatment",...
                 "signalScaling",...
-                "absorbanceUnit"];
+                "absorbanceUnit",...
+                "suppSpectraInfo"];
 
             defaultval=["applied by instrument software",...
                 "not applied",...
@@ -103,7 +108,41 @@ classdef setstatus_dreem < matlab.apps.AppBase
                 "not applied",...
                 "not applied",...
                 "original scale",...
-                "absorbance per cm"];
+                "absorbance per cm",...
+                "unknown"];
+            % if not(app.data.hasAbsorbance)
+            %     defaultval(7)="not applicable (no data)";
+            %     app.c_absorbanceUnit.Enable=false;
+            %     app.h_absorbanceUnit.Enable=false;
+            %     app.n_absorbanceUnit.Enable=false;
+            % end
+            % if not(app.data.hasFluorescence)
+            %     defaultval(1:6)="not applicable (no data)";
+            %     app.c_spectralCorrection.Enable=false;
+            %     app.h_spectralCorrection.Enable=false;
+            %     app.n_spectralCorrection.Enable=false;
+            %     app.c_IFEcorrection.Enable=false;
+            %     app.h_IFEcorrection.Enable=false;
+            %     app.n_IFEcorrection.Enable=false;
+            %     app.c_blankSubtraction.Enable=false;
+            %     app.h_blankSubtraction.Enable=false;
+            %     app.n_blankSubtraction.Enable=false;
+            %     app.c_signalCalibration.Enable=false;
+            %     app.h_signalCalibration.Enable=false;
+            %     app.n_signalCalibration.Enable=false;
+            %     app.c_scatterTreatment.Enable=false;
+            %     app.h_scatterTreatment.Enable=false;
+            %     app.n_scatterTreatment.Enable=false;
+            %     app.c_signalScaling.Enable=false;
+            %     app.h_signalScaling.Enable=false;
+            %     app.n_signalScaling.Enable=false;
+            % end
+            % if not(app.data.hasSupplementaryAxis)
+            %     defaultval(8)="not applicable (no data)";
+            %     app.c_suppSpectraInfo.Enable=false;
+            %     app.h_suppSpectraInfo.Enable=false;
+            %     app.n_suppSpectraInfo.Enable=false;
+            % end
 
             for j=1:numel(flds)
                 app.(['c_',char(flds(j))]).Items=string(app.data.status.(flds(j)));
@@ -111,7 +150,7 @@ classdef setstatus_dreem < matlab.apps.AppBase
 
             end
             for j=1:numel(flds)
-                if matches(flds(j),"signalScaling")
+                if matches(flds(j),"signalScaling")||matches(flds(j),"suppSpectraInfo")
                     app.(['n_',char(flds(j))]).Value=...
                         app.(['c_',char(flds(j))]).Value;
                     app.(['n_',char(flds(j))]).Value=...
@@ -183,8 +222,8 @@ classdef setstatus_dreem < matlab.apps.AppBase
                 ' This could be division by the maximum signal in an EEM.'],'Information','Icon','info')
         end
 
-        % Button pushed function: Button
-        function ButtonPushed(app, event)
+        % Button pushed function: h_absorbanceUnit
+        function h_absorbanceUnitPushed(app, event)
             uialert(app.changestatusUIFigure,['In which cuvette has the absorbance been measured' ...
                 ' If you''ve processed the data yourself, what is it''s unit?'...
                 ' Don''t worry if the dataset does not contain absorbance (i.e. you''ve just loaded EEM data)'],'Information','Icon','info')
@@ -199,7 +238,7 @@ classdef setstatus_dreem < matlab.apps.AppBase
 
             % Create changestatusUIFigure and hide until all components are created
             app.changestatusUIFigure = uifigure('Visible', 'off');
-            app.changestatusUIFigure.Position = [100 100 532 469];
+            app.changestatusUIFigure.Position = [100 100 532 508];
             app.changestatusUIFigure.Name = 'changestatus';
             app.changestatusUIFigure.Theme = 'light';
             app.changestatusUIFigure.WindowStyle = 'alwaysontop';
@@ -207,7 +246,7 @@ classdef setstatus_dreem < matlab.apps.AppBase
             % Create GridLayout
             app.GridLayout = uigridlayout(app.changestatusUIFigure);
             app.GridLayout.ColumnWidth = {132, 20, '0.8x', '0.8x'};
-            app.GridLayout.RowHeight = {35, 35, 35, 35, 35, 35, 35, 35, 35, 35};
+            app.GridLayout.RowHeight = {35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35};
 
             % Create spectralcorrectionDropDownLabel
             app.spectralcorrectionDropDownLabel = uilabel(app.GridLayout);
@@ -315,7 +354,7 @@ classdef setstatus_dreem < matlab.apps.AppBase
             % Create saveexitButton
             app.saveexitButton = uibutton(app.GridLayout, 'push');
             app.saveexitButton.ButtonPushedFcn = createCallbackFcn(app, @saveexitButtonPushed, true);
-            app.saveexitButton.Layout.Row = 10;
+            app.saveexitButton.Layout.Row = 11;
             app.saveexitButton.Layout.Column = 4;
             app.saveexitButton.Text = 'save & exit';
 
@@ -423,12 +462,35 @@ classdef setstatus_dreem < matlab.apps.AppBase
             app.n_absorbanceUnit.Layout.Row = 9;
             app.n_absorbanceUnit.Layout.Column = 4;
 
-            % Create Button
-            app.Button = uibutton(app.GridLayout, 'push');
-            app.Button.ButtonPushedFcn = createCallbackFcn(app, @ButtonPushed, true);
-            app.Button.Layout.Row = 9;
-            app.Button.Layout.Column = 2;
-            app.Button.Text = '?';
+            % Create h_absorbanceUnit
+            app.h_absorbanceUnit = uibutton(app.GridLayout, 'push');
+            app.h_absorbanceUnit.ButtonPushedFcn = createCallbackFcn(app, @h_absorbanceUnitPushed, true);
+            app.h_absorbanceUnit.Layout.Row = 9;
+            app.h_absorbanceUnit.Layout.Column = 2;
+            app.h_absorbanceUnit.Text = '?';
+
+            % Create h_suppSpectraInfo
+            app.h_suppSpectraInfo = uibutton(app.GridLayout, 'push');
+            app.h_suppSpectraInfo.Layout.Row = 10;
+            app.h_suppSpectraInfo.Layout.Column = 2;
+            app.h_suppSpectraInfo.Text = '?';
+
+            % Create c_suppSpectraInfoLabel
+            app.c_suppSpectraInfoLabel = uilabel(app.GridLayout);
+            app.c_suppSpectraInfoLabel.HorizontalAlignment = 'right';
+            app.c_suppSpectraInfoLabel.Layout.Row = 10;
+            app.c_suppSpectraInfoLabel.Layout.Column = 1;
+            app.c_suppSpectraInfoLabel.Text = 'supplementary axis info';
+
+            % Create c_suppSpectraInfo
+            app.c_suppSpectraInfo = uidropdown(app.GridLayout);
+            app.c_suppSpectraInfo.Layout.Row = 10;
+            app.c_suppSpectraInfo.Layout.Column = 3;
+
+            % Create n_suppSpectraInfo
+            app.n_suppSpectraInfo = uieditfield(app.GridLayout, 'text');
+            app.n_suppSpectraInfo.Layout.Row = 10;
+            app.n_suppSpectraInfo.Layout.Column = 4;
 
             % Show the figure after all components are created
             app.changestatusUIFigure.Visible = 'on';

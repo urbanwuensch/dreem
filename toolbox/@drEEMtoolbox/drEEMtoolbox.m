@@ -208,18 +208,22 @@ classdef drEEMtoolbox < handle
 
     methods (Static = true , Access = public)
 
-        %doc function
-        doc(fname)
 
 
         data = importeems(filePattern,options)
         data = importabsorbance(filePattern,options)
+        data = importscans(filePattern,options)
         varargout = importaqualog(folder,options)
+
+        
+
+
         dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
         dataout = upgradedataset(data,atypicalFieldnames)
         importwizard
 
-        % Merging function
+        % Merging functions
+        data = mergemeasurements(a,b,measurement,mode)
         data = mergedatasets(varargin)
 
         % Status-specific functions
@@ -423,9 +427,11 @@ classdef drEEMtoolbox < handle
                     if debugging,trigger={'major','year','month','day'};disp(['update = true | trigger = ',trigger{j}]),end
                     break
                 elseif online.Parts(j) < existing.Parts(j)
-                    if debugging,disp('update = false, implausible scenario'),end
-                    disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)])
-                    disp('<strong>Online version out of date?</strong> Either you are a developer, or something is wrong. Returning...')
+                    if debugging
+                        disp('update = false, implausible scenario')
+                        disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)])
+                        disp('<strong>Online version out of date?</strong> Either you are a developer, or something is wrong. Returning...')
+                    end
                     return
                 elseif online.Parts(j) == existing.Parts(j)
                     update = false;

@@ -137,7 +137,6 @@ data.metadata.i=data.i;
 
 data.status=status;
 
-
 % Validate the dataset
 data.validate(data);
 
@@ -146,7 +145,8 @@ if not(diagnostic)
     % But only if the status contains unknowns
 
     warning off
-    statusentries=cellfun(@(x) char(x),struct2cell(struct(data.status)),uni=false);
+    statusentries=drEEMstatus.getCurrent(data.status);
+    statusentries=statusentries(7); % Only the absorbance status!
     warning on
     call_gui=any(contains(statusentries,"unknown"));
 

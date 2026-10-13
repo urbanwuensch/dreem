@@ -60,6 +60,19 @@ classdef drEEMdataset
         Name
     end
 
+    properties (Dependent, Hidden)
+        hasFluorescence
+        hasAbsorbance
+        hasSupplementarySpectra
+    end
+
+    methods
+        function tf = get.hasFluorescence(data),      tf = ~isempty(data.X);               end
+        function tf = get.hasAbsorbance(data),        tf = ~isempty(data.abs);             end
+        function tf = get.hasSupplementarySpectra(data), tf = ~isempty(data.suppSpectraAxis); end
+    end
+    
+
 
     methods (Static=true)
         function data = create
@@ -104,7 +117,7 @@ classdef drEEMdataset
                 nargoutchk(1,1)
             end
             cnt=1;
-            if not(isempty(data.X))
+            if data.hasFluorescence
                 sz=size(data.X);
                 if ndims(data.X)~=3
                     message=['EEMs field (',inputname(1),'.X) must have 3 dimensions. Validation function exited prematurely. Fix the issue and rerun the validation'];
@@ -191,6 +204,10 @@ classdef drEEMdataset
                     e{cnt}=['Some of the EEMs contain only missing numbers (sample(s): ',num2str(sidx),')'];
                     cnt=cnt+1;
                 end
+                if not(isreal(data.X))
+                    e{cnt}='Some of the EEMs contain complex numbers';
+                    cnt=cnt+1;
+                end
                 f=find(arrayfun(@(x) not(isempty(x.loads{1})),data.models));
                 if not(isempty(f))
                     
@@ -242,7 +259,7 @@ classdef drEEMdataset
                 end
             end
             
-            if not(isempty(data.abs))
+            if data.hasAbsorbance
                 sz=size(data.abs);
                 if not(ismatrix(data.abs))
                     message=['Absorbance field (',inputname(1),'.abs) must have 2 dimensions. Validation function exited prematurely. Fix the issue and rerun the validation'];
@@ -270,16 +287,35 @@ classdef drEEMdataset
                     cnt=cnt+1;
                 end
             end
-            
-            % if not(isreal(data.abs))
-            %     e{cnt}='Some of the CDOM absorbance spectra contain complex numbers';
-            %     cnt=cnt+1;
-            % end
 
-            if not(isreal(data.X))
-                e{cnt}='Some of the EEMs contain complex numbers';
-                cnt=cnt+1;
-            end
+            if data.hasSupplementarySpectra
+                sz=size(data.suppSpectra);
+                if not(ismatrix(data.suppSpectra))
+                    message=['Supplementary spectrum field (',inputname(1),'.suppSpectra) must have 2 dimensions. Validation function exited prematurely. Fix the issue and rerun the validation'];
+                    throwAsCaller(MException("drEEM:Invalid",message))
+                end
+                if not(sz(1)==data.nSample)
+                    e{cnt}='size of suppSpectra dimension 1 not consistent with data.nSample';
+                    cnt=cnt+1;
+                end
+                if not(sz(1)==numel(data.filelist))
+                    e{cnt}='size of suppSpectra dimension 1 not consistent with height of data.filelist';
+                    cnt=cnt+1;
+                end
+                if not(sz(1)==height(data.metadata))
+                    e{cnt}='size of suppSpectra dimension 1 not consistent with height of metadata table';
+                    cnt=cnt+1;
+                end
+                if not(sz(2)==numel(data.suppSpectraAxis))
+                    e{cnt}='size of suppSpectra dimension 2 not consistent with data.suppSpectraAxis';
+                    cnt=cnt+1;
+                end
+                if any(all(isnan(data.suppSpectra),2))
+                    sidx=find(all(isnan(data.suppSpectra),2))';
+                    e{cnt}=['Some of the supplementary spectra contain only missing numbers (sample(s): ',num2str(sidx),')'];
+                    cnt=cnt+1;
+                end
+            end 
 
             if cnt>1
                 varname = inputname(1);
@@ -433,7 +469,7 @@ classdef drEEMdataset
                 varname=[varname,': '];
             end
 
-            if isempty(data.abs)||all(isnan(data.abs(:)))
+            if isempty(data.abs)||all(isnan(data.abs(:)))||not(data.hasAbsorbance)
                 message=[message,'\n<strong>',varname,'Absorbance data does not exist or consists only of missing numbers.\n</strong>' ...
                     ' \n'];
             end
@@ -463,7 +499,7 @@ classdef drEEMdataset
                     ' If IFEs have already been corrected, another call to a correction is not allowed.\n'];
             end
 
-            if isempty(data.abs)||all(isnan(data.abs(:)))
+            if isempty(data.abs)||all(isnan(data.abs(:)))||not(data.hasAbsorbance)
                 message=[message,'\n<strong>',varname,'Absorbance data does not exist or consists only of missing numbers.\n</strong>' ...
                     ' In drEEM, IFEs are corrected with the absorbance-based approach; absorbance data is thus required.\n'];
             end
@@ -602,7 +638,7 @@ classdef drEEMdataset
         displayhistory(data)
     end
 
-    methods
+    methods (Static = true)
         function savedata = saveobj(data)
             savedata=data;
         end

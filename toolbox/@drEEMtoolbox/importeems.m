@@ -220,7 +220,8 @@ if not(diagnostic)
     % But only if the status contains unknowns
 
     warning off
-    statusentries=cellfun(@(x) char(x),struct2cell(struct(data.status)),uni=false);
+    statusentries=drEEMstatus.getCurrent(data.status);
+    statusentries=statusentries(1:6); % Only the fluorescence ones!
     warning on
     call_gui=any(contains(statusentries,"unknown"));
 

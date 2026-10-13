@@ -41,6 +41,7 @@ arguments
         drEEMdataset.sanityCheckSignalCalibration(blanks),drEEMdataset.mustContainSamples(blanks)}
 
     % Optional (but important)
+    options.source (1,:) {mustBeMember(options.source,["EEM","scan"])} = "EEM";
     options.ExWave (1,1) {mustBeNumeric} = 350
     options.iStart (1,1) {mustBeNumeric} = 378
     options.iEnd   (1,1) {mustBeNumeric} = 424
@@ -69,31 +70,40 @@ if not(d1)
     error('Number of blanks and samples differs. This function is not designed for this scenario.')
 end
 
-%% Extract scans (either direct or through interpolation)
-% if options.exWave is measured, extract, otherwise interpolate
-Xblank=blanks.X;
-if ismember(options.ExWave,blanks.Ex) % Simple extraction
-    disp(['Raman normalization wavelength (',num2str(options.ExWave),') found in EEM data.'])
-    Exraman=blanks.Ex;
-    Rmat=Xblank;
-else % first interpolate, then extract
-    disp(['Raman normalization wavelength (',num2str(options.ExWave),') not found in EEM data. Interpolating...'])
-    for n=1:size(Xblank,1)
-        mat=squeeze(Xblank(n,:,:));
-        Exraman=(blanks.Ex(1):blanks.Ex(end))';
-        Rmat(n,:,:)=interp2(blanks.Ex,blanks.Em',mat,Exraman,blanks.Em');
-    end
-end    
 
-% Find the index for extraction, then extract the 2D scans
-idx=Exraman==options.ExWave;
-Rscan=squeeze(Rmat(:,:,idx));
-
+% Extract scans by EEM or discrete scan
+switch options.source
+    case "EEM"
+        
+        %% Extract scans (either direct or through interpolation)
+        % if options.exWave is measured, extract, otherwise interpolate
+        Xblank=blanks.X;
+        if ismember(options.ExWave,blanks.Ex) % Simple extraction
+            disp(['Raman normalization wavelength (',num2str(options.ExWave),') found in EEM data.'])
+            Exraman=blanks.Ex;
+            Rmat=Xblank;
+        else % first interpolate, then extract
+            disp(['Raman normalization wavelength (',num2str(options.ExWave),') not found in EEM data. Interpolating...'])
+            for n=1:size(Xblank,1)
+                mat=squeeze(Xblank(n,:,:));
+                Exraman=(blanks.Ex(1):blanks.Ex(end))';
+                Rmat(n,:,:)=interp2(blanks.Ex,blanks.Em',mat,Exraman,blanks.Em');
+            end
+        end    
+        
+        % Find the index for extraction, then extract the 2D scans
+        idx=Exraman==options.ExWave;
+        Rscan=squeeze(Rmat(:,:,idx));
+        Rscan_axis=blanks.Em';
+    case "scan"
+        Rscan=blanks.suppSpectra;
+        Rscan_axis=blanks.suppSpectraAxis';
+end
 
 
 %% Execute the calibration
 RamanIntRange= [options.iStart,options.iEnd]; % This is only for 350nm
-[RA,BaseArea]=RamanAreaI([rcvec(blanks.Em,'row');Rscan],RamanIntRange(1),RamanIntRange(2),options.method);
+[RA,BaseArea]=RamanAreaI([rcvec(Rscan_axis,'row');Rscan],RamanIntRange(1),RamanIntRange(2),options.method);
 % Raman area = Raman Peak area - baseline area (can be about 20% for
 % AquaLogs at 1-8s integration time!)
 RA=RA-BaseArea;
@@ -109,9 +119,9 @@ SignalCalibration.BaseArea=BaseArea;
 SignalCalibration.BaseAreaPerc=BaseArea./RA*100;
 
 % Attempt to extract SNB (signal-to-background ratio)
-signal=max(Rscan(:,blanks.Em>options.iStart&blanks.Em<options.iEnd),[],2,"omitmissing");
-background=median(Rscan(:,blanks.Em > options.iEnd & blanks.Em < options.iEnd + 50),2,"omitmissing");
-noise=std(Rscan(:,blanks.Em > options.iEnd & blanks.Em < options.iEnd + 50),[],2,"omitmissing");
+signal=max(Rscan(:,Rscan_axis>options.iStart&Rscan_axis<options.iEnd),[],2,"omitmissing");
+background=median(Rscan(:,Rscan_axis > options.iEnd & Rscan_axis < options.iEnd + 50),2,"omitmissing");
+noise=std(Rscan(:,Rscan_axis> options.iEnd & Rscan_axis < options.iEnd + 50),[],2,"omitmissing");
 
 SignalCalibration.SNB=round(signal./background);
 SignalCalibration.SNR=round(signal./noise);
@@ -171,10 +181,10 @@ if options.plot
     t=tiledlayout(f,"flow");
     
     ax=nexttile(t);
-    p=plot(ax,blanks.Em,Rscan,'k',LineWidth=1.5);
+    p=plot(ax,Rscan_axis,Rscan,'k',LineWidth=1.5);
     
     for k=1:numel(p)
-        row1 = dataTipTextRow('Blank',repelem(blanks.filelist(k),blanks.nEm,1));
+        row1 = dataTipTextRow('Blank',repelem(blanks.filelist(k),numel(Rscan_axis),1));
         p(k).DataTipTemplate.DataTipRows(end+1) = row1;
         p(k).DataTipTemplate.DataTipRows(1).Label = 'Em';
         p(k).DataTipTemplate.DataTipRows(2).Label = 'Int';
@@ -185,7 +195,7 @@ if options.plot
     
     xline(ax,options.iStart,'r',LineWidth=2)
     xline(ax,options.iEnd,'r',LineWidth=2)
-    iData=Rscan(:,blanks.Em>options.iStart&blanks.Em<options.iEnd);
+    iData=Rscan(:,Rscan_axis>options.iStart&Rscan_axis<options.iEnd);
     iData=iData(:);
     ylim(ax,[0 max(iData)*2])
     xlim(ax,[options.iStart-20 options.iEnd+20])
