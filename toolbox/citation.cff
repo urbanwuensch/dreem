@@ -11,7 +11,7 @@ authors:
   - given-names: Urban J.
     family-names: Wünsch
     affiliation: Chalmers University of Technology
-    # orcid: "https://orcid.org/0000-0001-6972-6932"
+    orcid: "https://orcid.org/0000-0001-6972-6932"
 doi: 10.5281/zenodo.17182160
 license:
   - BSD-3-Clause #drEEM
