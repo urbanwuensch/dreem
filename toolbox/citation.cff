@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+message: >-
+  If you use the drEEM toolbox, please cite the software using the
+  metadata below. Please also cite the PARAFAC tutorial (Murphy et al. 2013)
+  listed under references, which describes the underlying methodology.
+type: software
+title: "drEEM toolbox: decomposition routines for Excitation-Emission Matrices"
+abstract: >-
+  drEEM aids the import, processing, and analysis of ultraviolet-visible absorbance and fluorescence spectra. Particular focus is on FAIR data policies. The toolbox is particularly useful for the chemometric analysis of excitation-emission matrices (EEMs) of dissolved organic matter (DOM). Spectral properties of chromophoric DOM can also be determined easily.
+authors:
+  - given-names: Urban J.
+    family-names: Wünsch
+    affiliation: Chalmers University of Technology
+    # orcid: "https://orcid.org/0000-0001-6972-6932"
+doi: 10.5281/zenodo.17182160
+license:
+  - BSD-3-Clause #drEEM
+  - BSD-2-Clause # bundled N-Way toolbox
+  - MIT   # bundled Scientific Colour Maps (Crameri)
+repository-code: "https://github.com/urbanwuensch/dreem"
+url: "https://dreem.openfluor.org/"
+keywords:
+  - dissolved organic matter
+  - fluorescence
+  - absorbance
+  - excitation-emission matrix
+  - PARAFAC
+  - CDOM
+  - FDOM
+  - MATLAB
+references:
+  - type: article
+    title: "Fluorescence spectroscopy and multi-way techniques. PARAFAC"
+    authors:
+      - given-names: Kathleen R.
+        family-names: Murphy
+      - given-names: Colin A.
+        family-names: Stedmon
+      - given-names: Daniel
+        family-names: Graeber
+      - given-names: Rasmus
+        family-names: Bro
+    journal: Analytical Methods
+    volume: 5
+    issue: 23
+    start: 6557
+    end: 6566
+    year: 2013
+    doi: 10.1039/c3ay41160e
