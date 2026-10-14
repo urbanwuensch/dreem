@@ -120,8 +120,8 @@ for j=1:numel(files)
         tc=toc(tc);
         ttl=num2str(numel(files));
         remain=num2str(round(tc.*(numel(files)-j),2));
-        if not(diagnostic)||not(silent)
-            disp([num2str(j),'/',ttl,': ',filelist{j,1},...
+        if not(diagnostic)&&not(silent)
+            disp([num2str(j),'/',ttl,': ',filelist{cnt,1},...
                 ' (',remain,' sec. remaining)'])
         end
     end
@@ -225,9 +225,9 @@ else
 
             if numel(counts)==2&ismember(1,counts)
                 % One sample sticks out
-                culpritsz=str2num(cats{counts==1})
+                culpritsz=str2num(cats{counts==1});
                 culprit=sz(:,j)==culpritsz;
-                culpritname=filenames{culprit}
+                culpritname=filenames{culprit};
 
                 message=[message,'<strong>One sample is the culprit </strong>(open & inspect): ',culpritname,'\n'];
             end

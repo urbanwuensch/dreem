@@ -7,13 +7,15 @@ function data = importscans(filePattern,status,options)
 % filePattern (1,:)     {mustBeText}
 % 
 % <strong>INPUTS - Optional</strong>
+% status (1,1) {mustBeA(drEEMstatus)} = drEEMstatus
+% 
 % axisColumn (1,:)      {mustBeNumeric} = 1
-% spectrumColumn (1,:)       {mustBeNumeric} = 10
+% spectrumColumn (1,:)       {mustBeNumeric} = 2
 % NumHeaderLines (1,1)  {mustBeNumeric}= 0
 %
 % <strong>EXAMPLE(S)</strong>
 %   1. <strong>Horiba AquaLog - Import 2D Raman scans</strong>
-%       absorbance = tbx.importscans("* - Emission Graph.dat");
+%       scans = tbx.importscans("* - Emission Graph.dat");
 %
 % <a href = "matlab:drEEMtoolbox.doc('importscans')"><strong>-> full documentation</strong></a>
 
@@ -118,8 +120,8 @@ for j=1:numel(files)
         tc=toc(tc);
         ttl=num2str(numel(files));
         remain=num2str(round(tc.*(numel(files)-j),2));
-        if not(diagnostic)||not(silent)
-            disp([num2str(j),'/',ttl,': ',filelist{j,1},...
+        if not(diagnostic)&&not(silent)
+            disp([num2str(j),'/',ttl,': ',filelist{cnt,1},...
                 ' (',remain,' sec. remaining)'])
         end
     end
@@ -223,9 +225,9 @@ else
 
             if numel(counts)==2&ismember(1,counts)
                 % One sample sticks out
-                culpritsz=str2num(cats{counts==1})
+                culpritsz=str2num(cats{counts==1});
                 culprit=sz(:,j)==culpritsz;
-                culpritname=filenames{culprit}
+                culpritname=filenames{culprit};
 
                 message=[message,'<strong>One sample is the culprit </strong>(open & inspect): ',culpritname,'\n'];
             end
