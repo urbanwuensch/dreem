@@ -1,8 +1,48 @@
 function dataout = mergemeasurements(a,b,measurement,mode)
+% <a href = "matlab:drEEMtoolbox.doc('mergemeasurements')">dataout = mergemeasurements(a,b,measurement) (click to access documentation)</a>
+%
+% <strong>Transfer one measurement type from dataset b into dataset a</strong> (absorbance, fluorescence or supplementary spectra)
+%
+% Samples are matched by name (.filelist). Samples in "a" without a match in "b"
+% receive missing numbers (NaN); samples in "b" without a match in "a" are ignored.
+% The axis information (e.g. .absWave) and the related status entries are copied from "b".
+%
+% <strong>Note:</strong> The history of "b" is NOT transferred. Only the merge itself is
+% recorded in the history of "a". Any processing applied to "b" beforehand (e.g.
+% processabsorbance) will not appear in the history of the merged dataset. To keep
+% a record, merge before processing, or document it with addcomment / export2zip(b,...).
+%
+% <strong>INPUTS - Required</strong>
+% a (1,1)           {mustBeA("drEEMdataset"),drEEMdataset.validate}   receiving dataset
+% b (1,1)           {mustBeA("drEEMdataset"),drEEMdataset.validate}   source dataset
+% measurement (1,:) {mustBeMember(["absorbance","fluorescence","supplementarySpectra"])}
+%
+% <strong>INPUTS - Optional</strong>
+% mode (1,:)        {mustBeMember(["replace","noreplace"])} = "replace"
+%                   "replace" overwrites existing data of this type in "a" (with a warning)
+%                   "noreplace" stops with an error if "a" already contains such data
+%
+% <strong>EXAMPLE(S)</strong>
+%   1. <strong>Move absorbance into the sample dataset</strong> (after alignsamples)
+%       [samples,absorbance] = tbx.alignsamples(samples,absorbance);
+%       samples = tbx.mergemeasurements(samples,absorbance,"absorbance");
+%   2. <strong>Add Raman scans to the blanks</strong> for ramancalibration(...,source="scan")
+%       blanks = tbx.mergemeasurements(blanks,ramanscans,"supplementarySpectra");
+%   3. <strong>Never overwrite existing data</strong>
+%       samples = tbx.mergemeasurements(samples,absorbance,"absorbance","noreplace");
+%
+% <a href = "matlab:drEEMtoolbox.doc('mergemeasurements')"><strong>-> full documentation</strong></a>
 
+% Copyright (C) 2026 Urban J. Wuensch - wuensch@chalmers.se
+% Chalmers University of Technology
+% Department of Architecture and Civil Engineering
+% Sven Hultins Gata 6
+% 41296 Gothenburg (Sweden)
 arguments (Input)
-    a
-    b
+    a (1,1) {mustBeNonempty,drEEMdataset.validate(a),...
+        drEEMdataset.mustContainSamples(a)}
+    b (1,1) {mustBeNonempty,drEEMdataset.validate(b),...
+        drEEMdataset.mustContainSamples(b)}
     measurement (1,:) {mustBeMember(measurement,["absorbance","fluorescence","supplementarySpectra"])}
     mode (1,:) {mustBeMember(mode,["replace","noreplace"])} = "replace"
 end
@@ -20,8 +60,7 @@ switch measurement
         if a.hasAbsorbance
             if matches(mode,"replace")
                 warning('In mode="replace" (default), data in a.abs will be overwritten')
-            else
-                matches(mode,"noreplace")
+            elseif matches(mode,"noreplace")
                 error('a.abs already contains data, since mode="noreplace", the function must stop now.')
             end
         end
@@ -56,6 +95,10 @@ end
 
 [C,ia,ib] = intersect(a.filelist,b.filelist,"stable");
 
+if isempty(C)
+    error('No common samples between "a" and "b". inspect .filelist in both datasets and compare.')
+end
+
 if not(numel(C)==a.nSample)
     message='';
     ah=drEEMhistory.searchhistory(a.history,'alignsamples','last');
@@ -75,7 +118,14 @@ if matches(measurement,'X')
     a.Ex=b.Ex;
     a.nEm=b.nEm;
     a.nEx=b.nEx;
-    
+    a.models=[];
+    a.split=[];
+    if not(isempty(b.([measurement,'Blank'])))
+        a.([measurement,'Blank'])(ia,:,:)=b.([measurement,'Blank'])(ib,:,:);
+    elseif not(isempty(a.([measurement,'Blank'])))
+        a.([measurement,'Blank'])=[];
+        disp('No blanks exist in "b", so existing blanks in "a" were cleared.')
+    end
     stats={'spectralCorrection',...
         'IFEcorrection',...
         'blankSubtraction',...
@@ -91,6 +141,13 @@ elseif matches(measurement,'abs')
     a.absWave=b.absWave;
 
     stats={'absorbanceUnit'};
+
+    if contains(a.status.IFEcorrection,{'applied by'})
+        message=['<strong>Inner filter effects have already been corrected.\n</strong>' ...
+            ' Replacing the absorbance record now makes the process non-tracable. You should merge measurements prior to the correction!\n'];
+         throwAsCaller(MException("drEEM:Insane",message))
+    end
+
 
 elseif matches(measurement,'suppSpectra')
     a.(measurement)=nan(a.nSample,numel(b.suppSpectraAxis));

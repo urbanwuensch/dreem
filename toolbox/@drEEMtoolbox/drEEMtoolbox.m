@@ -208,7 +208,8 @@ classdef drEEMtoolbox < handle
 
     methods (Static = true , Access = public)
 
-
+        %doc function
+        doc(fname)
 
         data = importeems(filePattern,options)
         data = importabsorbance(filePattern,options)
