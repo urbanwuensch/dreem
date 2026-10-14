@@ -632,14 +632,14 @@ svg[id^="mermaid_"] {
 <p>Samples are matched by their names (<code>.filelist</code>), not by their position in the dataset:</p>
 
 <ul>
-<li>Samples in <code>a</code> without a match in <code>b</code> receive missing numbers (<code>NaN</code>) for the transferred measurement. A warning is displayed.</li>
+<li>Every sample in <code>a</code> must have a match in <code>b</code>; otherwise the function stops with an error (use alignsamples first).</li>
 <li>Samples in <code>b</code> without a match in <code>a</code> are ignored.</li>
 </ul>
 
 <p>Together with the measurement, the function copies its axis information (e.g. <code>.absWave</code>) and the related entries of the dataset status (e.g. <code>absorbanceUnit</code>) from <code>b</code> to <code>a</code>.</p>
 
 <blockquote>
-<p><strong><em>Use <code>alignsamples</code> before merging. It reports and removes samples that are not present in all datasets, so that no missing numbers are introduced.</em></strong></p>
+<p><strong><em>Use <code>alignsamples</code> before merging. It reports and removes samples that are not present in all datasets</em></strong>.</p>
 
 <p><strong><em>The history of <code>b</code> is not transferred. Only the merge itself is recorded in the history of <code>a</code>. Any processing applied to <code>b</code> beforehand (e.g. <code>processabsorbance</code>) will not appear in the history of the merged dataset. To keep a complete record, merge first and process afterwards, or document the processing of <code>b</code> with <code>addcomment</code> or <code>export2zip</code> before merging.</em></strong></p>
 </blockquote>
