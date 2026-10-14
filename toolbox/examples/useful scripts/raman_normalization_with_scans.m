@@ -79,6 +79,7 @@ plot(samples.Em,samples_eem.X(1,:,1),DisplayName='EEM Raman scan normalization')
 legend %[output:08066b49]
 title('RU data comparison') %[output:08066b49]
 disp(['Areas are within ',num2str(100-round(unique(eem_area)./unique(scan_area)*100,2)),' %']) %[output:324349a1]
+%[text] Of course, in the real world case, you could not make this comparison because you would not have suitable Raman scatter in the EEMs. I deliberately chose an example with an integration time large enough to show that both workflows produce very similar data. Phew...
 samples=samples_scan;
 clearvars -except samples tbx
 disp('Example script finished.') %[output:3824ff20]
