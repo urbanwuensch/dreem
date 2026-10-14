@@ -118,9 +118,10 @@ if matches(measurement,'X')
     a.Ex=b.Ex;
     a.nEm=b.nEm;
     a.nEx=b.nEx;
-    a.models=[];
-    a.split=[];
+    a.models=drEEMmodel;
+    a.split=drEEMdataset;
     if not(isempty(b.([measurement,'Blank'])))
+        a.XBlank=nan(a.nSample,b.nEm,b.nEx);
         a.([measurement,'Blank'])(ia,:,:)=b.([measurement,'Blank'])(ib,:,:);
     elseif not(isempty(a.([measurement,'Blank'])))
         a.([measurement,'Blank'])=[];
@@ -135,6 +136,11 @@ if matches(measurement,'X')
 
 
 elseif matches(measurement,'abs')
+    if contains(a.status.IFEcorrection,{'applied by toolbox'})
+        message=['<strong>Inner filter effects have already been corrected.\n</strong>' ...
+            ' Replacing the absorbance record now makes the process non-tracable. You should merge measurements prior to the correction!\n'];
+        throwAsCaller(MException("drEEM:Insane",message))
+    end
     a.(measurement)=nan(a.nSample,numel(b.absWave));
     a.(measurement)(ia,:)=b.(measurement)(ib,:);
 
@@ -142,11 +148,7 @@ elseif matches(measurement,'abs')
 
     stats={'absorbanceUnit'};
 
-    if contains(a.status.IFEcorrection,{'applied by'})
-        message=['<strong>Inner filter effects have already been corrected.\n</strong>' ...
-            ' Replacing the absorbance record now makes the process non-tracable. You should merge measurements prior to the correction!\n'];
-         throwAsCaller(MException("drEEM:Insane",message))
-    end
+    
 
 
 elseif matches(measurement,'suppSpectra')
@@ -164,10 +166,12 @@ end
 dataout=a;
 % Make drEEMhistory entry with message information
 
-message=['Transfered measurements, axis information, and status of "',char(measurement),'" from "',char(inputname(2)),'" to "',char(inputname(1)),'"'];
+message=['Transfered measurements, axis information, and status of "',char(measurement),'" from "',char(inputname(2)),'" to "',char(inputname(1)),'". History entries of "',char(inputname(2)),'" were lost in this process.'];
 
 idx=height(dataout.history)+1;
 dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename,message,[],dataout);
+
+dataout.validate(dataout);
 
 end

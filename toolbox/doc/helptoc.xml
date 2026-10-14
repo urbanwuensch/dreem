@@ -54,7 +54,7 @@
                  image="$toolbox/matlab/icons/webicon.gif">
         drEEM project website
         </tocitem>
-        <tocitem target="https://gitlab.com/dreem"
+        <tocitem target="https://github.com/urbanwuensch/dreem/"
                  image="$toolbox/matlab/icons/webicon.gif">
         GitLab
         </tocitem>

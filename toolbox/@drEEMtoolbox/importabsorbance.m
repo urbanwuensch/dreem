@@ -114,7 +114,7 @@ for j=1:numel(files)
         data.abs(cnt,:)=abso;
         filelist{cnt,1}=strtrim(erase(files(j).name,erase(filePattern,'*')));
         data.i(cnt,1)=j; % this will leave a hint if an import did not work
-        cnt=cnt+1;
+        
 
         % message (optional, could be deleted)
         tc=toc(tc);
@@ -124,6 +124,7 @@ for j=1:numel(files)
             disp([num2str(j),'/',ttl,': ',filelist{cnt,1},...
                 ' (',remain,' sec. remaining)'])
         end
+        cnt=cnt+1;
     end
 end
 
