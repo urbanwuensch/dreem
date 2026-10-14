@@ -54,9 +54,11 @@ For large projects with many imports and automated processing, it is much easier
 
 Example: 
 
-	scan_status=drEEMstatus(suppSpectraInfo="Raman emission scans of blanks, Ex=350 nm");
+```
+scan_status=drEEMstatus(suppSpectraInfo="Raman emission scans of blanks, Ex=350 nm");
 
-	ramanscans=tbx.importscans("* - Emission Graph.dat",scan_status);
+ramanscans=tbx.importscans("* - Emission Graph.dat",scan_status);
+```
 
 </details>
 
@@ -84,16 +86,18 @@ Calling the function without an output argument tests whether the file pattern a
 
 <strong>Horiba AquaLog: Raman scans of blanks, used for signal calibration</strong>
 
-	tbx = drEEMtoolbox;
-	blanks = tbx.importeems("* - Waterfall Plot Blank.dat");
-	ramanscans = tbx.importscans("* - Emission Graph.dat", ...
-	    drEEMstatus(suppSpectraInfo="Raman scans of blanks, Ex=350 nm"));
+```
+tbx = drEEMtoolbox;
+blanks = tbx.importeems("* - Waterfall Plot Blank.dat");
+ramanscans = tbx.importscans("* - Emission Graph.dat", ...
+    drEEMstatus(suppSpectraInfo="Raman scans of blanks, Ex=350 nm"));
 
-	% Move the scans into the blank dataset (sample names must match)
-	blanks = tbx.mergemeasurements(blanks,ramanscans,"supplementarySpectra");
+% Move the scans into the blank dataset (sample names must match)
+blanks = tbx.mergemeasurements(blanks,ramanscans,"supplementarySpectra");
 
-	% Calibrate using the discrete scans rather than the blank EEMs
-	samples = tbx.ramancalibration(samples,blanks,source="scan");
+% Calibrate using the discrete scans rather than the blank EEMs
+samples = tbx.ramancalibration(samples,blanks,source="scan");
+```
       
 <strong>csv files with the axis in column 1 and the signal in column 3, one header line:</strong>
 
@@ -105,8 +109,8 @@ Calling the function without an output argument tests whether the file pattern a
 
 ## Input arguments
 <details open>
-    <summary><b>`filePattern ` Text pattern to identify files for import</b></summary>
-    <i>char | string</i>
+<summary><b>`filePattern ` Text pattern to identify files for import</b></summary>
+<i>char | string</i>
         
 A text specifying the pattern of the files to be imported. This can include wildcard characters (*) to match multiple files. The pattern will be completely removed from the sample name after import to leave only the non-repeating filename information. For example `S001 - Emission Graph.dat` will be known as `S001` in the produced dataset.
 
@@ -121,12 +125,14 @@ Examples:
 
 
 <details open>
-    <summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
-    <i>drEEMstatus</i>
+<summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
+<i>drEEMstatus</i>
         
 Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import. Only `suppSpectraInfo` is checked; describe what the scans are.
 
-	scan_status=drEEMstatus(suppSpectraInfo="Raman emission scans of blanks, Ex=350 nm");
+```
+scan_status=drEEMstatus(suppSpectraInfo="Raman emission scans of blanks, Ex=350 nm");
+```
 
 </details>
 
@@ -136,8 +142,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 
 
 <details open>
-    <summary><b>`axisColumn`- which column of data contains the axis</b></summary>
-    <i>numeric</i>
+<summary><b>`axisColumn`- which column of data contains the axis</b></summary>
+<i>numeric</i>
     
 The axis data (e.g. emission wavelength, m/z) in the measurement files are expected to be found in the specified column.<br>
 
@@ -148,8 +154,8 @@ Default is `1`.
 </details>
 
 <details open>
-    <summary><b>`spectrumColumn `- which column of data contains the spectrum</b></summary>
-    <i>numeric</i>
+<summary><b>`spectrumColumn `- which column of data contains the spectrum</b></summary>
+<i>numeric</i>
 
 Specify which column of data in the measurement files contains the signal. 
 
@@ -160,8 +166,8 @@ Default is `2`.
 </details>
 
 <details open>
-    <summary><b>`NumHeaderLines `- number of header lines to ignore</b></summary>
-    <i>numeric</i>
+<summary><b>`NumHeaderLines `- number of header lines to ignore</b></summary>
+<i>numeric</i>
 
 Specify the number of lines (rows) to skip from the top in each file.<br>
 
@@ -173,8 +179,8 @@ Default is `0`.
 
 ## Output arguments
 <details open>
-    <summary><b>`data` - contains supplementary spectra </b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - contains supplementary spectra </b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 The scans are stored in `.suppSpectra` (samples × axis), the axis in `.suppSpectraAxis`, and sample names in `.filelist`. `.i` holds the position of each file in the import list, so gaps in `.i` indicate skipped files. Read the documentation on the `drEEMdataset` for more information.

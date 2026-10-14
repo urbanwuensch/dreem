@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # Tutorials
 
 If you're here to learn how to load, process, and PARAFAC data, these tutorials are for you! We recommend running through these tutorials in the sequence shown here. They are ordered in sequence.

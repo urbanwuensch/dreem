@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # The dataset history
 
 Since version 2.0.0, drEEM keeps a detailed record of operations it performs on a dataset. All major operations involved in the processing are fully implemented in methods no matter how simple they theoretically are (e.g. blank subtraction). How does it keep this record?

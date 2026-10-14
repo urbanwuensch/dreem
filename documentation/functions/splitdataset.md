@@ -23,7 +23,7 @@ An entry will be added to the `history` field of the `data`, detailing the  opti
 
 
 <details open>
-    <summary><b>`dataout = splitdataset(data,splitType)` - assign samples into 2 splits alternatingly</b></summary>
+<summary><b>`dataout = splitdataset(data,splitType)` - assign samples into 2 splits alternatingly</b></summary>
 <a name="syntax1"></a>
 
 The default syntax represents the most simple form of dataset splitting, i.e. the split-half. Samples are blindly assigned into one of two splits alternatingly without taking into account any information on sample origin.
@@ -31,7 +31,7 @@ The default syntax represents the most simple form of dataset splitting, i.e. th
 </details>
 
 <details open>
-    <summary><b>`dataout = splitdataset( ___ , Name,Value)` - perform custom splits (recommended)</b></summary>
+<summary><b>`dataout = splitdataset( ___ , Name,Value)` - perform custom splits (recommended)</b></summary>
 <a name="syntax2"></a>
 
 specifies additional options using one or more [name-value](#NameValue) pair arguments. For example, you can specify number and type of splits.
@@ -60,8 +60,8 @@ Is the same as:
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset to be split into smaller datasets</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset to be split into smaller datasets</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -69,8 +69,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 
 <details open>
-    <summary><b>`splitType`- switch between "blind" and "byMetadata"</b></summary>
-    <i>text</i>
+<summary><b>`splitType`- switch between "blind" and "byMetadata"</b></summary>
+<i>text</i>
  
  With this argument, you specifically state whether a blind split (no information) should be performed, or whether the splitting operation is informed by metadata.
  
@@ -83,8 +83,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
  
 <details open>
-    <summary><b>`blindType`- options for blind splitting</b></summary>
-    <i>text</i>
+<summary><b>`blindType`- options for blind splitting</b></summary>
+<i>text</i>
  
 When `splitType="blind"`, use this option to specify how the splits should be assined. Options are `alternating`,`random`, or `contiguous`.
 
@@ -93,8 +93,8 @@ When `splitType="blind"`, use this option to specify how the splits should be as
 </details>
  
 <details open>
-    <summary><b>`metadataColumn`- metadata to use for split assignment</b></summary>
-    <i>text</i>
+<summary><b>`metadataColumn`- metadata to use for split assignment</b></summary>
+<i>text</i>
  
 Specifies a column in `data.metadata` to sort `data` before splitting. Must be a valid metadata column name that exists in `data.metadata`.
 
@@ -106,8 +106,8 @@ Default is `string.empty`, since `splitType="blind"` by default.
 </details>
 
 <details open>
-    <summary><b>`numSplit`- specify number of splits</b></summary>
-    <i>numeric</i>
+<summary><b>`numSplit`- specify number of splits</b></summary>
+<i>numeric</i>
  
 The number of subsets to split the data into. Must be a positive integer.
 
@@ -124,8 +124,8 @@ Default is `2`.
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with contents in `.split`</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with contents in `.split`</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

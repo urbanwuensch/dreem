@@ -13,7 +13,7 @@ Merge two datasets to create one bigger dataset
 ## Description
 
 <details open>
-    <summary><b>`dataout = mergedatasets(a,b)` - Merge datasets</b></summary>
+<summary><b>`dataout = mergedatasets(a,b)` - Merge datasets</b></summary>
 <a name="syntax1"></a> 
 
 Merges two datasets of the class drEEMdataset. Each dataset is validated before merging and must have:
@@ -36,16 +36,16 @@ The function does **not** currently interpolate to create comparable datasets wi
 
 ## Input arguments
 <details>
-    <summary><b>`a` - dataset with fluorescence and / or absorbance data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`a` - dataset with fluorescence and / or absorbance data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(a)`. 
 
 </details>
 
 <details>
-    <summary><b>`b` - dataset with fluorescence and / or absorbance data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`b` - dataset with fluorescence and / or absorbance data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(b)`. 
 
@@ -54,8 +54,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - merged dataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - merged dataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

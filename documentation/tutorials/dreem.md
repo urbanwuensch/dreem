@@ -17,6 +17,7 @@ src="https://www.youtube.com/embed/N_M8hMbKJFA?autoplay=1&mute=1&hl=en&cc_lang_p
 </p>-->
 
 ## About the developers
+
 ### Urban Wünsch
 
 <img src="dev_urban.jpeg" width="100" height="auto" align="right"/>Urban is a researcher in the field of aquatic environmental chemistry. He has obtained his PhD at the Technical University of Denmark (DTU) in 2018 and since held postdoctoral positions at Chalmers University of Technology and DTU. Urban does research on Dissolved Organic Matter biogeochemistry with the aim to identify mechanisms of tranformation and degradation. He is also interested in innovative applications of optical sensors for in situ measurements. Urban is a teacher in the reocuring online workshop [Parallel Factor Analysis for DOM fluorescence](https://dreem.gitlab.io/coursepage/). 

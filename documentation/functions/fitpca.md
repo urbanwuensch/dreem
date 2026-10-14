@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # fitpca
 Fit PCA models to fluorescence data.
 
@@ -32,8 +33,8 @@ Note that since PCA models are nested, there is only one model present with `max
 
 An entry will be added to the `history` field of the `data`, detailing the  options used for `fitpca`. 
 <details open>
-    <summary><b>`dataout = fitpca(data)` - Default options</b></summary>
-    <a name="syntax1"></a>
+<summary><b>`dataout = fitpca(data)` - Default options</b></summary>
+<a name="syntax1"></a>
 
 
 Here, the default options are chosen. These are to only consider the first 5 components, interpolate missing values (unless they are always missing), and to not delete samples with low intensities (e.g. process blanks).
@@ -42,8 +43,8 @@ Here, the default options are chosen. These are to only consider the first 5 com
 
 
 <details open>
-    <summary><b>`dataout = fitpca( ___ , Name,Value)` - [Name,Value](#NameValue) arguments</b></summary>
-    <a name="syntax2"></a>
+<summary><b>`dataout = fitpca( ___ , Name,Value)` - [Name,Value](#NameValue) arguments</b></summary>
+<a name="syntax2"></a>
 
 The default options might not be the right options in your case. You can therefore specifiy Name,Value arguments to modify how data are preprocessed or how many components you'd like to get returned.
 
@@ -59,8 +60,8 @@ Fit an 8-component PCA model after deleting samples that have less than 1/5 of t
 
 ## Input arguments
 <details>
-    <summary><b>`data`- contains EEMs to fit models to</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data`- contains EEMs to fit models to</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
@@ -71,8 +72,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`maxcomp`- the number of components</b></summary>
-    <i>numeric</i>
+<summary><b>`maxcomp`- the number of components</b></summary>
+<i>numeric</i>
 
 Numeric scalar specifying the maximum number of components to export. Default is 5.
 
@@ -82,8 +83,8 @@ Note that since PCA models are nested, there is only one model present with `max
 
 
 <details open>
-    <summary><b>`interpolateMissing` - should missing data be interpolated?</b></summary>
-    <i>logical</i>
+<summary><b>`interpolateMissing` - should missing data be interpolated?</b></summary>
+<i>logical</i>
 
 Note that this setting only applies to observations missing in individual samples. Data that is missing in all samples will always be deleted.
 The interpolation happens with a 2D inpainting algorithm.
@@ -91,8 +92,8 @@ The interpolation happens with a 2D inpainting algorithm.
 </details>
 
 <details open>
-    <summary><b>`deleteLow` - should low-intensity samples be deleted?</b></summary>
-    <i> logical </i>
+<summary><b>`deleteLow` - should low-intensity samples be deleted?</b></summary>
+<i> logical </i>
 
 If present, low-intensity samples can distract PCA from fitting meaningful components. This option will delete samples that have less than 1/5th the median overall fluorescence (sum).
 
@@ -104,8 +105,8 @@ If present, low-intensity samples can distract PCA from fitting meaningful compo
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with PCA model</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with PCA model</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 
@@ -113,24 +114,26 @@ Note that since PCA models are nested, there is only one model present with `max
 
 Models are stored in dataout.models. Each model is a `drEEMmodel` object contains the following information (no contents in this case):
 
-	  drEEMmodel with properties:
+```
+  drEEMmodel with properties:
 
-                    loads: {1×0 cell}
-                leverages: {1×0 cell}
-                      sse: {1×0 cell}
-                   status: ""
-         percentExplained: NaN
-                    error: NaN
-                     core: NaN
-       percentUnconverged: NaN
-    componentContribution: NaN
-           initialization: ""
-                   starts: NaN
-              convergence: NaN
-              constraints: ""
-                  toolbox: ""
-                modelName: "PCA"
-           loadingsMatrix: []
+                loads: {1×0 cell}
+            leverages: {1×0 cell}
+                  sse: {1×0 cell}
+               status: ""
+     percentExplained: NaN
+                error: NaN
+                 core: NaN
+   percentUnconverged: NaN
+componentContribution: NaN
+       initialization: ""
+               starts: NaN
+          convergence: NaN
+          constraints: ""
+              toolbox: ""
+            modelName: "PCA"
+       loadingsMatrix: []
+```
 
 
 

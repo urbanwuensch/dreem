@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # What's new
 
 drEEM version 2 introduces a set of new functionality, workflows, object-oriented programming, visualizations, and graphical user interfaces that aim to make the processing of fluorescence EEMs straightforward for users with limited programming experience. We should not need to be Matlab experts to process fluorescence data.
@@ -21,6 +22,7 @@ src="https://www.youtube.com/embed/N_M8hMbKJFA?autoplay=0&mute=1&hl=en&cc_lang_p
 
 </details>
 -->
+
 ## Version 2.26.9 (25 Sep 2026)
 
 ### Added

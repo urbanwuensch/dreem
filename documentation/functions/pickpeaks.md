@@ -122,7 +122,7 @@ Picks predefined peaks and fluorescence indices in the EEM and stores the result
 <summary>
 <b>`dataout = pickpeaks(data)` - extract peaks and indices from dataset</b>
 </summary>
- <a name="syntax1"></a>
+<a name="syntax1"></a>
 The function `pickpeaks` extracts predefined fluorescence peaks, including Peak B, T, A, M, C, D, and N, and computes several fluorescence indices, including Fluorescence index (FluI), Freshness Index (FrI), Biological Index (BIX) and Humification Index (HIX), from `data`. The peaks and indices will be plotted for all the samples in `data`.
 
 </details>
@@ -161,8 +161,8 @@ If no output argument is provided, the function will automatically set `plot=tru
 
 ## Input arguments
 <details>
-    <summary><b>`data` - contains sample fluorescence</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - contains sample fluorescence</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
@@ -175,8 +175,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of peak intensities and indices for all sample in `data`. If no output argument is supplied, plotting is enabled automatically.
 
@@ -186,8 +186,8 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`details `- switch to plot diagnostics</b></summary>
-    <i>logical</i>
+<summary><b>`details `- switch to plot diagnostics</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if detailed diagnostic plots should be shown for each sample. This mainly concerns the indices as some smoothing of the data is done in an attempt to obtain more robust results. Use this option to verify that this smoothing works well.
 
@@ -196,8 +196,8 @@ Default is `false`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -212,8 +212,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 ## Output arguments
 
 <details open>
-    <summary><b>`dataout` - contains results</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - contains results</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`. The output contains the results in the table `.opticalMetadata`
 </details>

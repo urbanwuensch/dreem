@@ -14,7 +14,7 @@ Correct systematic, wavelength-dependent sensitivity biases of the excitation an
 ## Description
 
 <details open>
-    <summary><b>`dataout = spectralcorrection(data,Name,Value)` - apply spectral correction</b></summary>
+<summary><b>`dataout = spectralcorrection(data,Name,Value)` - apply spectral correction</b></summary>
 <a name="syntax1"></a>
 
 Applies a spectral (instrument-response) correction to the fluorescence EEMs in `data`, using excitation and emission correction factors supplied via the [name-value](#NameValue) pair notation. This compensates for wavelength-dependent sensitivity biases of the excitation and emission monochromators that were not already corrected by the instrument's own software.
@@ -30,7 +30,7 @@ An entry will be added to the `history` field of `data`, detailing the processin
 </details>
 
 <details open>
-    <summary><b>`spectralcorrection(data,Name,Value)` - diagnostic mode</b></summary>
+<summary><b>`spectralcorrection(data,Name,Value)` - diagnostic mode</b></summary>
 <a name="syntax2"></a>
 
 By not supplying an output argument, the function will run in diagnostic mode. The excitation and emission correction curves and the resulting correction matrix will be calculated and shown, but the correction will not be applied to the dataset.
@@ -50,8 +50,8 @@ By not supplying an output argument, the function will run in diagnostic mode. T
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset with fluorescence data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with fluorescence data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -64,8 +64,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`XCor` - excitation correction factors</b></summary>
-    <i>numeric, n-by-2</i>
+<summary><b>`XCor` - excitation correction factors</b></summary>
+<i>numeric, n-by-2</i>
 
 A two-column numeric matrix with excitation wavelengths in the first column and the corresponding correction factor in the second column. Wavelengths do not need to match `data.Ex`; the factors are interpolated onto `data.Ex`. Typically supplied by the instrument manufacturer.
 
@@ -74,8 +74,8 @@ This argument is required; the function returns an error if it is not supplied.
 </details>
 
 <details open>
-    <summary><b>`MCor` - emission correction factors</b></summary>
-    <i>numeric, n-by-2</i>
+<summary><b>`MCor` - emission correction factors</b></summary>
+<i>numeric, n-by-2</i>
 
 A two-column numeric matrix with emission wavelengths in the first column and the corresponding correction factor in the second column. Wavelengths do not need to match `data.Em`; the factors are interpolated onto `data.Em`. Typically supplied by the instrument manufacturer.
 
@@ -84,8 +84,8 @@ This argument is required; the function returns an error if it is not supplied.
 </details>
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated. The plot shows the excitation and emission correction curves, as well as the combined correction matrix. If no output argument is supplied, plotting is enabled automatically.
 
@@ -95,8 +95,8 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`figurefile` - option to save graphical `plot` output</b></summary>
-    <i>character</i>
+<summary><b>`figurefile` - option to save graphical `plot` output</b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. `"output.png"`), the function will save the output produced when `plot` is set to `true`. If `plot=false`, no output will be saved even if a character vector is supplied.
 
@@ -110,8 +110,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - spectrally corrected dataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - spectrally corrected dataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

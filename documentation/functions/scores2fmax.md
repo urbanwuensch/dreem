@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # scores2fmax
 
 Convert model scores to instrument (observed / calibrated) units.
@@ -21,8 +22,8 @@ Convert model scores to fluorescence maxima in the original intensity units. Whi
 ## Input arguments
 
 <details>
-    <summary><b>`data` - dataset with PARAFAC models</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with PARAFAC models</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -30,8 +31,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 
 <details open>
-    <summary><b>`f` - model with f components</b></summary>
-    <i>numeric</i>
+<summary><b>`f` - model with f components</b></summary>
+<i>numeric</i>
         
 The f-component model for which scores should be converted to fluorescence maxima (fmax).
 
@@ -43,8 +44,8 @@ The f-component model must exist!
 ## Output arguments
 
 <details open>
-    <summary><b>`fmax` - matrix with fluorescence maxima</b></summary>
-    <i>numeric</i>
+<summary><b>`fmax` - matrix with fluorescence maxima</b></summary>
+<i>numeric</i>
         
 `[data.nSample x f]` matrix containing the fluorescence maxima of components.
 

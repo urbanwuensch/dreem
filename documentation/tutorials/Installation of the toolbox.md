@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # Installation of the toolbox
 
 The installation of the drEEM toolbox is straightforward and there are software routines to help ensure proper functionality and updating on demand.

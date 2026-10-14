@@ -14,7 +14,7 @@ Correct the inner filter effects using the absorbance-based approach.
 ## Description
 
 <details open>
-    <summary><b>`dataout = ifecorrection(data,Name,Value)` - apply IFE correction</b></summary>
+<summary><b>`dataout = ifecorrection(data,Name,Value)` - apply IFE correction</b></summary>
 <a name="syntax1"></a> 
 
 Applies an inner filter effect correction on fluorescence EEMs in a dataset. `ifecorrection` implements Absorbance (ABA) Method for correcting fluorescence inner filter effects. The method assumes that EEMs and Absorbance were measured in a square cuvette of a pathlength of 10mm (1cm) with standard right-angle geometry.
@@ -39,7 +39,7 @@ An entry will be added to the `history` field of the `data`, detailing the proce
 </details>
 
 <details open>
-    <summary><b>`ifecorrection(data,Name,Value)` - diagnostic mode</b></summary>
+<summary><b>`ifecorrection(data,Name,Value)` - diagnostic mode</b></summary>
 <a name="syntax2"></a>
 
 By not supplying an output argument, the function will run in diagnostic mode. IFEs will be calculated and the average IFE will be shown, but the IFE correction will not be applied to the dataset.
@@ -49,8 +49,8 @@ By not supplying an output argument, the function will run in diagnostic mode. I
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset with fluorescence and absorbance data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with fluorescence and absorbance data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -63,8 +63,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of slopes for all sample in `data`. If no output argument is supplied, plotting is enabled automatically.
 
@@ -74,8 +74,8 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -89,8 +89,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - IFE corrected dataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - IFE corrected dataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

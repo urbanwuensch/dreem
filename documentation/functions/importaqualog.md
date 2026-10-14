@@ -58,8 +58,8 @@ In case things went wrong and you'd like to have control over which settings-bat
 ## Input arguments
 
 <details open>
-    <summary><b>`folder ` Folder containing the measurements in OPJ or OGW files</b></summary>
-    <i>char | string</i>
+<summary><b>`folder ` Folder containing the measurements in OPJ or OGW files</b></summary>
+<i>char | string</i>
         
 A text specifying the folder from which to import your measurements.
 
@@ -74,16 +74,16 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`bucket`- specify which group ("bucket") to import from</b></summary>
-    <i>numeric</i>
+<summary><b>`bucket`- specify which group ("bucket") to import from</b></summary>
+<i>numeric</i>
 
 In case the opj/ogw files contain absorbance+fluorescence measurements with incompatible settings (e.g. different excitation wavelengths), the C++ converter will create groups within the NetCDF file. Here, you specify the numeric group. The larger the number, the fewer samples there will be (descending ordering).
 
 </details>
 
 <details open>
-    <summary><b>`toolreset`- trigger a reset / redownload of aqualog2nc</b></summary>
-    <i>numeric</i>
+<summary><b>`toolreset`- trigger a reset / redownload of aqualog2nc</b></summary>
+<i>numeric</i>
 
 If ou are having trouble during the extraction of OPJ/OGW data (error messages), a re-download of the extraction engine `aqualog2nc` might help (e.g. if an update was posted). Setting `toolreset` to true will locate and delete `aqualog2nc`. The function will then need to fetch a fresh download with the latest version being automatically downloaded.
 
@@ -93,8 +93,8 @@ Note that once downloaded, your local copy of `aqualog2nc` might become outdated
 
 ## Output arguments
 <details open>
-    <summary><b>`samples` - contains EEMs </b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`samples` - contains EEMs </b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(samples)`. 
 
@@ -103,8 +103,8 @@ The fluorescence data is stored using the properties `.X`, `.Ex`, `.Em`, `.nEx`,
 </details>
 
 <details open>
-    <summary><b>`blanks` - contains EEMs of pure water </b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`blanks` - contains EEMs of pure water </b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(blanks)`. 
 

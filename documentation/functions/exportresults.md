@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # exportresults
 Export the results from a PARAFAC or PCA model to a spreadsheet file. This includes a comprehensive description of the dataset.
 
@@ -20,8 +21,8 @@ Export the 5-component model from `data` to Excel spreadsheet `mymodel.xlsx`.
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset to extract model from</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset to extract model from</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
@@ -36,8 +37,8 @@ Specify the number of components in the model that you want to export. A scalar 
 </details>
 
 <details open>
-    <summary><b>`filename` - name of export spreadsheet</b></summary>
-    <i>char | string</i>
+<summary><b>`filename` - name of export spreadsheet</b></summary>
+<i>char | string</i>
         
 The name of the output file. It should be a text and will be saved with a `.xlsx` extension.
 Note: Any extension at the end of the `filename` will be changed to `.xlsx`. If none is provided, it will be added.
@@ -45,5 +46,6 @@ Note: Any extension at the end of the `filename` will be changed to `.xlsx`. If 
 </details>
 
 <!---
+
 ## Name-Value arguments
 -->

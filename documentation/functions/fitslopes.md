@@ -54,7 +54,7 @@ Example:
 <details>
 <summary><b>`fitslopes( ___ )`- Diagnostic mode</b>
 </summary>
- <a name="syntax2"></a>
+<a name="syntax2"></a>
 
 Runs the function in diagnostic mode. In this mode, options are automatically set to `details=true` and `plot=true` to inspect fits and adjust the default value of `rsq` or the wavelength range for the exponential slope before obtaining the slopes.
 
@@ -66,8 +66,8 @@ Fit slopes using a custom wavelength range for the exponential slope and use an 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - contains CDOM spectra to fit slopes to</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - contains CDOM spectra to fit slopes to</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. If no absorbance is present, the function will return an error.
 </details>
@@ -79,16 +79,16 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`LongRange `- Range of the exponential slope</b></summary>
-    <i>numeric [1x2]</i>
+<summary><b>`LongRange `- Range of the exponential slope</b></summary>
+<i>numeric [1x2]</i>
     
 Numeric array specifying Wavelength range for long-range exponential slope fitting. Default is `[300 600]`.
 
 </details>
 
 <details open>
-    <summary><b>`rsq `- R-squared threshold for fits</b></summary>
-    <i>numeric</i>
+<summary><b>`rsq `- R-squared threshold for fits</b></summary>
+<i>numeric</i>
     
 A scalar numeric specifying R-squared threshold for linear fits. `rsq` must be numeric and less than or equal to `1`.
 Default is `0.95`.
@@ -96,8 +96,8 @@ Default is `0.95`.
 </details>
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of slopes for all sample in `data`. If no output argument is supplied, plotting is enabled automatically.
 
@@ -108,8 +108,8 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`details `- switch to plot diagnostics</b></summary>
-    <i>logical</i>
+<summary><b>`details `- switch to plot diagnostics</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if detailed diagnostic plots should be shown for each sample. Each plot will show the raw, modeled, and residual data if a fit was possible.If no output argument is supplied, the option is enabled automatically.
 
@@ -118,8 +118,8 @@ Default is `false`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -133,8 +133,8 @@ Default: `""` (i.e. an empty string disabling the figure saving).
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with slope data in .opticalMetadata</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with slope data in .opticalMetadata</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

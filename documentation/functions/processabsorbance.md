@@ -68,8 +68,8 @@ If no output is specified, the function will simply give a visual overview over 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - contains CDOM spectra to correct</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - contains CDOM spectra to correct</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. If no absorbance is present, the function will return an error.
 </details>
@@ -82,8 +82,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 
 
 <details open>
-    <summary><b>`correctBase `- switch for baseline correction</b></summary>
-    <i>logical</i>
+<summary><b>`correctBase `- switch for baseline correction</b></summary>
+<i>logical</i>
 
 Indicates if the baseline correction should be performed. Default value is `true`.
 The baseline correction is applied using the mean absorbance beyond the specified or default `baseWave`
@@ -95,8 +95,8 @@ If no absorbance is measured past 580nm, the option is automatically disabled. H
 </details>
 
 <details open>
-    <summary><b>`baseWave `- wavelength range for baseline correction</b></summary>
-    <i>numeric scalar or vector with two elements</i>
+<summary><b>`baseWave `- wavelength range for baseline correction</b></summary>
+<i>numeric scalar or vector with two elements</i>
 
 Specify the wavelength from which the absorbance data is used for baseline correction. The wavelength must be greater than 580 nm.
 
@@ -109,8 +109,8 @@ Default value is `595`.
 </details>
 
 <details open>
-    <summary><b>`zero `- switch for zeroing of negative absorbance</b></summary>
-    <i>logical</i>
+<summary><b>`zero `- switch for zeroing of negative absorbance</b></summary>
+<i>logical</i>
 
 If `true` the negative values will be set to zeroes.
 Default is `false`.
@@ -119,8 +119,8 @@ Default is `false`.
 
 
 <details open>
-    <summary><b>`extrapolate `- switch for spectral extrapolation</b></summary>
-    <i>logical</i>
+<summary><b>`extrapolate `- switch for spectral extrapolation</b></summary>
+<i>logical</i>
 
 If `true`, the function performs a non-linear fit of the absorbance data (`b1*exp(b2/1000*(350-lambda))+b3`) to model the exponential absorbance spectra, based on [Stedmon et al. (2000)](https://doi.org/10.1006/ecss.2000.0645), and extrapolate it to cover the wavelength range needed for EEM IFE corrections.
 
@@ -130,8 +130,8 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of slopes for all sample in `data`. If no output argument is supplied, plotting is enabled automatically.
 
@@ -140,8 +140,8 @@ Default is `true`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -156,8 +156,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 ## Output arguments
 
 <details open>
-    <summary><b>`dataout` - dataset with processed absorbance</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with processed absorbance</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 </details>

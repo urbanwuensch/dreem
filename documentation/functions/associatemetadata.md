@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # associatemetadata
 Associate a metadata file with a `drEEMdataset`
 
@@ -32,8 +33,8 @@ Always inspect the outcome.
 Many functions support content in the metadata table and will offer to enrich plots by referring to the contents.
 
 <details open>
-    <summary><b>`dataout = associatemetadata(data, filename, metadatakey)`- default options</b></summary>
-    <a name="syntax1"></a>
+<summary><b>`dataout = associatemetadata(data, filename, metadatakey)`- default options</b></summary>
+<a name="syntax1"></a>
 
 The `associatemetadata` function reads metadata information from a  file or table specified by `filename` and associates it with `data` based on specified key in metadata table pointed at with `metadatakey`. The function by default uses `filelist` field in `data` as identifier key for `drEEMdataset`.
 
@@ -76,8 +77,8 @@ Read metadata from the path specified in `filename` and  use sampleID column in 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset to include metadata in</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset to include metadata in</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
@@ -85,7 +86,7 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 <details open>
 
 <summary><b>`filename` - name of variable or table</b></summary>
-    <i>char | string | table</i>
+<i>char | string | table</i>
 
 If a `table`, it should be a metadata table already loaded into MATLAB workspace. The `table` should contain a column header as specified by `metadatakey`.
 If a `string` or `character array`, it should be a path to a file containing the metadata. For local files, `filename` can be a full path that contains a filename and file extension. FILENAME can also be a relative path to the current folder, or to a folder on the MATLAB path.
@@ -94,8 +95,8 @@ The following extensions are supported: `.txt`, `.dat`, `.csv`, `.log`,`.text`, 
 </details>
 
 <details open>
-    <summary><b>`metadatakey` - identifier key in metadata</b></summary>
-    <i>char | string</i>
+<summary><b>`metadatakey` - identifier key in metadata</b></summary>
+<i>char | string</i>
         
 The name of the column in the metadata table that contains the identifiers to match with `data`.
 
@@ -104,8 +105,8 @@ The name of the column in the metadata table that contains the identifiers to ma
 ## Optional input arguments
 
 <details open>
-    <summary><b>`datakey` - identifier key in data</b></summary>
-    <i>char | string</i>
+<summary><b>`datakey` - identifier key in data</b></summary>
+<i>char | string</i>
         
 The name of the field in the `data` object that contains the identifiers to match with the metadata.
 Default: `filelist`
@@ -115,8 +116,8 @@ Default: `filelist`
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with new columns in metadata table</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with new columns in metadata table</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`. 
 </details>

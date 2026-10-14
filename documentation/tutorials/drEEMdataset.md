@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # The drEEMdataset object
 
 Processing of multidimensional data can be a mess. Decisions on how to organize the data need to be made, variable names set, and conventions made. Often, functions don't work as intended because the input they were provided with isn't formatted as expected.
@@ -17,34 +18,36 @@ First, let's look at all the properties of the `drEEMdataset`. You can see these
 
 > **Note**: `drEEMdataset` is a unified container that can hold absorbance data, fluorescence data, or both. When importing absorbance-only files, the container will contain absorbance (`abs`) data while the fluorescence field (`X`) remains empty; importing fluorescence-only files yields the opposite. After import, seperate containers get "syncronized with `alignsamples` via the `filelist` so that the absorbance and fluorescence containers contain the same samples in the same order. You should then merge absorbance data into the fluorescence container. The separate absorbance container can then be cleared. When using the toolbox for blank subtraction, blank spectra from the separate container are copied into the sample container and stored in the `XBlank` field.
 
-	>> drEEMdataset
+```
+>> drEEMdataset
 
-	ans = 
+ans = 
 
-  	drEEMdataset with properties:
+  drEEMdataset with properties:
 
-            history: [0×1 drEEMhistory]
-                  X: []
-                abs: []
-        suppSpectra: []
-           filelist: {0×1 cell}
-                  i: [0×1 double]
-                 Ex: [0×1 double]
-                 Em: [0×1 double]
-                nEx: 0
-                nEm: 0
-            absWave: [0×1 double]
-    suppSpectraAxis: [0×1 double]
-            nSample: 0
-             models: [0×1 drEEMmodel]
-           metadata: [0×0 table]
-    opticalMetadata: [0×0 table]
-              split: [0×0 drEEMdataset]
-             status: [1×1 drEEMstatus]
-           userdata: []
-     instrumentInfo: [0×0 struct]
-    measurementInfo: [0×0 struct]
-        toolboxdata: []	
+        history: [0×1 drEEMhistory]
+              X: []
+            abs: []
+    suppSpectra: []
+       filelist: {0×1 cell}
+              i: [0×1 double]
+             Ex: [0×1 double]
+             Em: [0×1 double]
+            nEx: 0
+            nEm: 0
+        absWave: [0×1 double]
+suppSpectraAxis: [0×1 double]
+        nSample: 0
+         models: [0×1 drEEMmodel]
+       metadata: [0×0 table]
+opticalMetadata: [0×0 table]
+          split: [0×0 drEEMdataset]
+         status: [1×1 drEEMstatus]
+       userdata: []
+ instrumentInfo: [0×0 struct]
+measurementInfo: [0×0 struct]
+    toolboxdata: []    
+```
 
 ## Properties
 You can see above that there are tons of properties (i.e. variables) in the object. Many of these could be familiar from previous use of drEEM or DOMFluor, but many are also new. We will run through them.
@@ -67,21 +70,25 @@ You can see above that there are tons of properties (i.e. variables) in the obje
 * **opticalMetadata**: A table dedicated to Cople peaks ([pickpeaks](pickpeaks.html)) and CDOM absorbance slopes ([fitslopes](fitslopes)). If you want to analyze them, just extract this table from the dataset.
 * **split**: Here's where the split datasets will reside when you create them. They are each their own drEEMdataset objects and work in the same way as the parent dataset.
 * **status**. This is a read-only variable. It stores the information about the status of the dataset:
-		>> drEEMstatus
 
-		ans = 
-		
-		  drEEMstatus with properties:
-		
-		    spectralCorrection: "unknown"
-		         IFEcorrection: "unknown"
-		      blankSubtraction: "unknown"
-		     signalCalibration: "unknown"
-		      scatterTreatment: "unknown"
-		         signalScaling: "unknown"
-		        absorbanceUnit: "unknown"
-	As you could guess from the names, each of these entries informs the toolbox about the dataset's status in regard to certain aspects. The functions will actually check and stop you from performing something if it makes no sense. The only way to change the status is through calling `drEEMtoolbox.changestatus()`. The GUI will give you valid options and you will have to chose what's appropriate. Any drEEM function that changes the status of the dataset will also change the status object!
-	This information will be exported along with the data or PARAFAC results.
+  ```
+  >> drEEMstatus
+
+  ans = 
+
+    drEEMstatus with properties:
+
+      spectralCorrection: "unknown"
+           IFEcorrection: "unknown"
+        blankSubtraction: "unknown"
+       signalCalibration: "unknown"
+        scatterTreatment: "unknown"
+           signalScaling: "unknown"
+          absorbanceUnit: "unknown"
+  ```
+
+  As you could guess from the names, each of these entries informs the toolbox about the dataset's status in regard to certain aspects. The functions will actually check and stop you from performing something if it makes no sense. The only way to change the status is through calling `drEEMtoolbox.changestatus()`. The GUI will give you valid options and you will have to chose what's appropriate. Any drEEM function that changes the status of the dataset will also change the status object!
+  This information will be exported along with the data or PARAFAC results.
 
 * **userdata**. Not maintained by the toolbox and simply a placeholder. You could use this variable as a container for any data you'd want to imagine. It's there for you. If we didn't provide it but you'd want to make it yourself, Matlab would throw an error. Better have it and not need it...
 * **instrumentInfo**: An unused placeholder. Room for future developments!

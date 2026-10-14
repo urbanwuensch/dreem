@@ -54,15 +54,17 @@ For large projects with many imports and automated processing, it is much easier
 
 Example: 
 
-	blanks_status=drEEMstatus("blankSubtraction","not applied",...
-    	"IFEcorrection","not applied",...
-    	"signalCalibration","not applied",...
-    	"scatterTreatment","not applied",...
-    	"signalScaling",'original scale',...
-    	'spectralCorrection','applied by instrument software',...
-    	absorbanceUnit='absorbance per cm');
+```
+blanks_status=drEEMstatus("blankSubtraction","not applied",...
+    "IFEcorrection","not applied",...
+    "signalCalibration","not applied",...
+    "scatterTreatment","not applied",...
+    "signalScaling",'original scale',...
+    'spectralCorrection','applied by instrument software',...
+    absorbanceUnit='absorbance per cm');
 
-	blanks=tbx.importabsorbance("* - Abs Spectra Graphs.dat",blanks_status);
+blanks=tbx.importabsorbance("* - Abs Spectra Graphs.dat",blanks_status);
+```
 
 </details>
 
@@ -88,8 +90,8 @@ Custom options are specifed with optional pairs of arguments using one or more n
 
 ## Input arguments
 <details open>
-    <summary><b>`filePattern ` Text pattern to identify files for import</b></summary>
-    <i>char | string</i>
+<summary><b>`filePattern ` Text pattern to identify files for import</b></summary>
+<i>char | string</i>
         
 A text specifying the pattern of the files to be imported. This can include wildcard characters (*) to match multiple files. The pattern will be completely removed from the sample name after import to leave only the non-repeating filename information. For example `S001ABS.dat` will be known as `S001` in the produced dataset.
 
@@ -102,18 +104,20 @@ Examples:
 
 
 <details open>
-    <summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
-    <i>drEEMstatus</i>
+<summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
+<i>drEEMstatus</i>
         
 Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.
 
-	blanks_status=drEEMstatus("blankSubtraction","not applied",...
-	    	"IFEcorrection","not applied",...
-	    	"signalCalibration","not applied",...
-	    	"scatterTreatment","not applied",...
-	    	"signalScaling",'original scale',...
-	    	'spectralCorrection','applied by instrument software',...
-	    	absorbanceUnit='absorbance per cm');
+```
+blanks_status=drEEMstatus("blankSubtraction","not applied",...
+        "IFEcorrection","not applied",...
+        "signalCalibration","not applied",...
+        "scatterTreatment","not applied",...
+        "signalScaling",'original scale',...
+        'spectralCorrection','applied by instrument software',...
+        absorbanceUnit='absorbance per cm');
+```
 
 </details>
 
@@ -123,8 +127,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 
 
 <details open>
-    <summary><b>`waveColumn`- which column of data contains wavelength data</b></summary>
-    <i>numeric</i>
+<summary><b>`waveColumn`- which column of data contains wavelength data</b></summary>
+<i>numeric</i>
     
 The wavelength data in the measurement files are expected to be found in the specified column. Default is column `1`.<br>
 
@@ -136,8 +140,8 @@ Default is `1`.
 </details>
 
 <details open>
-    <summary><b>`absColumn `- which column of data contains absorbance data</b></summary>
-    <i>numeric</i>
+<summary><b>`absColumn `- which column of data contains absorbance data</b></summary>
+<i>numeric</i>
 
 Specify which column of data in the measurement files contains the absorbance data. 
 
@@ -148,8 +152,8 @@ Example: `'absColumn', 10` if the tenth column contains the absorbance data.
 </details>
 
 <details open>
-    <summary><b>`NumHeaderLines `- number of header lines to ignore</b></summary>
-    <i>numeric</i>
+<summary><b>`NumHeaderLines `- number of header lines to ignore</b></summary>
+<i>numeric</i>
 
 Specify the number of  lines (rows) to skip from the top in each file. Default is `0`.<br>
 
@@ -161,8 +165,8 @@ Default is `0`.
 
 ## Output arguments
 <details open>
-    <summary><b>`data` - contains CDOM spectra </b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - contains CDOM spectra </b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 The absorbance data is stored using the properties `.abs`, `.absWave`, and sample names are stored in `.filelist`. Read the documentation on the `drEEMdataset` for more information.

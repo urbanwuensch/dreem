@@ -28,10 +28,10 @@ The function validates the input datasets to ensure that the calibration is only
 <summary>
 <b>`dataout = ramancalibration(samples, blanks)` default options</b>
 </summary>
- <a name="syntax1"></a>
+<a name="syntax1"></a>
 
 Run the function with the default options. This will pick the emission scan at excitation 350nm and integrate from 378 to 424nm. The baseline between start and end of the Raman peak will be subtracted.
- <a name="syntax1"></a>
+<a name="syntax1"></a>
 </details>
 
 
@@ -39,7 +39,7 @@ Run the function with the default options. This will pick the emission scan at e
 <summary>
 <b>`dataout = ramancalibration( ___ , Name,Value)` custom options</b>
 </summary>
- <a name="syntax2"></a>
+<a name="syntax2"></a>
  specifies additional options using one or more name-value pair arguments. For example, you can specify the excitation wavelength for extracting Raman scan using `ExWave` or specify the emission range for the integration of the area under the peak using `iStart`, `iEnd`. <br>
 
 
@@ -49,7 +49,7 @@ Run the function with the default options. This will pick the emission scan at e
 <summary>
 <b>`dataout = ramancalibration( ___ , Name,Value)` diagnostic mode</b>
 </summary>
- <a name="syntax3"></a>
+<a name="syntax3"></a>
 
 If no output arguments are assigned, you are left with diagnostic plots to see how the function would modify your data if it would assign output arguments. Use to verify options before running the function with effect.
 
@@ -70,8 +70,8 @@ If no output arguments are assigned, you are left with diagnostic plots to see h
 
 ## Input arguments
 <details>
-    <summary><b>`samples` - contains EEMs of samples</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`samples` - contains EEMs of samples</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(samples)`.
 
@@ -80,8 +80,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 </details>
 
 <details>
-    <summary><b>`blanks` - contains EEMs of blanks</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`blanks` - contains EEMs of blanks</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(blanks)`. 
 
@@ -95,8 +95,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 
 
 <details open>
-    <summary><b>`ExWave`- excitation wavelength for extracting Raman scan</b></summary>
-    <i>numeric </i>
+<summary><b>`ExWave`- excitation wavelength for extracting Raman scan</b></summary>
+<i>numeric </i>
     
 Indicates the excitation wavelength that the function uses to extract Raman scans. The function checks if the specified `ExWave` is present in the `blanks`. If present, the function extracts the corresponding scans directly. Otherwise, it interpolates the data in `blanks` to approximate the scans at the specified excitation wavelength.
 
@@ -107,8 +107,8 @@ Default excitation wavelength is `350`.
 
 
 <details open>
-    <summary><b>`iStart `- emission wavelength to start Raman peak area integration</b></summary>
-    <i>numeric </i>
+<summary><b>`iStart `- emission wavelength to start Raman peak area integration</b></summary>
+<i>numeric </i>
     
 The function calculates the Raman area and baseline area over the specified integration range starting from `iStart`. Default starting wavelength is `378`.
 
@@ -117,8 +117,8 @@ The function calculates the Raman area and baseline area over the specified inte
 </details>
 
 <details open>
-    <summary><b>`iEnd `- emission wavelength to end Raman peak area integration</b></summary>
-    <i>numeric </i>
+<summary><b>`iEnd `- emission wavelength to end Raman peak area integration</b></summary>
+<i>numeric </i>
     
 The function calculates the Raman area and baseline area over the specified integration range ending at `iEnd`. Default ending wavelength is `424`.
 
@@ -126,8 +126,8 @@ The function calculates the Raman area and baseline area over the specified inte
 </details>
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 If `true`, the function generates various plots to visualize the Raman emission scans, Raman area, baseline area relative to Raman area, and `SNB` (signal to background) across the dataset. For SNB, the signal is the maximum intensity of the Raman scan, and the background is the median fluorescence from the end of the peak +50nm.
 
@@ -136,8 +136,8 @@ Default is `true`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -151,8 +151,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - contains EEMs of samples with intensities in Raman Units</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - contains EEMs of samples with intensities in Raman Units</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

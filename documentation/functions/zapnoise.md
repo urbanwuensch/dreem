@@ -36,8 +36,8 @@ Removes bad fluorescence data (set to `NaN`) in the emission range of `emRange` 
 
 ## Input arguments ##
 <details>
-    <summary><b>`data` - dataset containing fluorescence EEMs</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset containing fluorescence EEMs</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
@@ -45,8 +45,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 
 <details open>
-    <summary><b>`sampleIdent ` - sample(s) to affect</b></summary>
-    <i>logical [`1x data.nSample`]</i>
+<summary><b>`sampleIdent ` - sample(s) to affect</b></summary>
+<i>logical [`1x data.nSample`]</i>
         
 Specifies which samples are to be affected. Must be logical, 
 some Matlab-internal functions to use here include: `matches`, `contains`, `==`, `~` 
@@ -54,8 +54,8 @@ some Matlab-internal functions to use here include: `matches`, `contains`, `==`,
 </details>
 
 <details open>
-    <summary><b>`emRange ` - emission wavelengths in nanometers to NaN</b></summary>
-    <i>numeric</i>
+<summary><b>`emRange ` - emission wavelengths in nanometers to NaN</b></summary>
+<i>numeric</i>
         
 Specify the range of emission wavelengths to be zapped from `sampleIdent`. The provided range must be within the emission range of `data`. If only one wavelength is provided (not a range) the function will automatically set the range to two closest neighboring wavelengths around the specified wavelength.<br>
 
@@ -67,8 +67,8 @@ Example: `(__, __, [min(data.Em):350], __)` to remove emission data between  the
 
 
 <details open>
-    <summary><b>`exRange ` - excitation wavelengths in nanometers to NaN</b></summary>
-    <i>numeric</i>
+<summary><b>`exRange ` - excitation wavelengths in nanometers to NaN</b></summary>
+<i>numeric</i>
         
 Specify the range of excitation wavelengths to be zapped from `sampleIdent`. The provided range must be within the excitation range of `data`. If only one wavelength is provided (not a range) the function will automatically set the range to two closest neighboring wavelengths around the specified wavelength.
 
@@ -82,8 +82,8 @@ Example: `(__, __, __, [min(data.Ex):max(data.Ex)])` to remove data between  the
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - treated dataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - treated dataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

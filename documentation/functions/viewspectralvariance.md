@@ -25,8 +25,8 @@ The function identifies samples with very low signals and will generate a warnin
 ## Input arguments
 
 <details>
-    <summary><b>`data` - dataset with fluorescence and absorbance data.</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with fluorescence and absorbance data.</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -38,8 +38,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical function output</b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save grapical function output</b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced by the function
 

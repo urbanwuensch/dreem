@@ -21,24 +21,26 @@ The function `handlescatter` handles primary and secondary Rayleigh and Raman sc
 
 The function uses a defined class `handlescatterOptions` for all settings. A copy of the default options can be made as follows:
 
-	>> handlescatterOptions
+```
+>> handlescatterOptions
 
-	ans = handlescatterOptions with properties:
+ans = handlescatterOptions with properties:
 
-            cutout: [1 1 1 1]
-       interpolate: [0 0 0 0]
-    negativetozero: 1
-              ray1: [10 10]
-              ram1: [15 15]
-              ray2: [5 5]
-              ram2: [5 5]
-            d2zero: 60
-           imethod: "inpaint"
-              iopt: "normal"
-              plot: 1
-          plottype: "mesh"
-           samples: 'all'
-       description: 'Options for handlescatter.m'
+        cutout: [1 1 1 1]
+   interpolate: [0 0 0 0]
+negativetozero: 1
+          ray1: [10 10]
+          ram1: [15 15]
+          ray2: [5 5]
+          ram2: [5 5]
+        d2zero: 60
+       imethod: "inpaint"
+          iopt: "normal"
+          plot: 1
+      plottype: "mesh"
+       samples: 'all'
+   description: 'Options for handlescatter.m'
+```
 
 > ***NOTE: The default options contain settings and choices that would likely cause issues when PARAFACing. This is to ensure that users make concious choices for scatter removal as leftover scatter violates the trilinearity assumptions of PARAFAC.***
 
@@ -87,8 +89,8 @@ The function uses a defined class `handlescatterOptions` for all settings. A cop
 </details>
 
 <details open>
-    <summary><b>`dataout = handlescatter(data)` - default options (for quick visualization)</b></summary>
-    <a name="syntax1"></a>
+<summary><b>`dataout = handlescatter(data)` - default options (for quick visualization)</b></summary>
+<a name="syntax1"></a>
 
 This syntax will automatically apply some default settings for scatter removal. This can be useful to take a quick look at EEMs without scatter having a dominant visual effect in the graphs. However, the settings *will not work well for PARAFAC*.
 
@@ -96,8 +98,8 @@ This syntax will automatically apply some default settings for scatter removal. 
 
 
 <details open>
-    <summary><b>`dataout = handlescatter(data, 'gui')` - GUI decision support</b></summary>
-    <a name="syntax2"></a>
+<summary><b>`dataout = handlescatter(data, 'gui')` - GUI decision support</b></summary>
+<a name="syntax2"></a>
 
 Running `handlescatter` with `gui` options opens up the `viewscatter` user interface app. The interface allows users to apply settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.
 Interface Components include:
@@ -137,16 +139,16 @@ Interface Components include:
 </details>
 
 <details open>
-    <summary><b>`dataout= handlescatter(data, options)` - apply scatter treatment with options structure from workspace</b></summary>
-    <a name="syntax3"></a>
+<summary><b>`dataout= handlescatter(data, options)` - apply scatter treatment with options structure from workspace</b></summary>
+<a name="syntax3"></a>
 
 `handlescatter` can obtain and process the scatter handling using user customized `options` supplied as a single structure. Default values are obtained by calling `scatteroptions = handlescatter('options')`. the fields in `options` can be modified and passed out to the function. See Input arguments section for the fields of `options`.
 
 </details>
 
 <details open>
-    <summary><b>`scatteroptions = handlescatter('options')` - Retrieve option structure for modification</b></summary>
-    <a name="syntax4"></a>
+<summary><b>`scatteroptions = handlescatter('options')` - Retrieve option structure for modification</b></summary>
+<a name="syntax4"></a>
 
 Obtains the default `options` of the function and save them in `scatteroptions `. These can be modified and later passed down to function by calling `data = handlescatter(data, scatteroptions)`.
 
@@ -157,11 +159,13 @@ Obtains the default `options` of the function and save them in `scatteroptions `
 Retrieve and modify options to apply them:
 
 
-	scatteroptions = handlescatter('options');
-	scatteroptions.ray1 = [25 15];
-	scatteroptions.ram1 = [10 12];
-	scatteroptions.interpolate = [0 0 0 1];
-	dataout = handlescatter(data, scatteroptions);
+```
+scatteroptions = handlescatter('options');
+scatteroptions.ray1 = [25 15];
+scatteroptions.ram1 = [10 12];
+scatteroptions.interpolate = [0 0 0 1];
+dataout = handlescatter(data, scatteroptions);
+```
 	
  In this example, we obtain the default options to change the lower and upper distance from the center for 1st order Rayleigh scatter,  to change the lower and upper distance from the center for 1st order Raman scatter cut, and
  to turn off interpolation for all scatters except the 2nd order Raman scatter.  Finally, we apply the settings.
@@ -169,8 +173,8 @@ Retrieve and modify options to apply them:
 ## Input arguments
 
 <details>
-    <summary><b>`data` - dataset with scatter for removal</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with scatter for removal</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -180,7 +184,7 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 <details open>
 <summary><b>`options` - function mode switch (apply or retrieve options or start GUI)</b></summary>
-    <i>char | handlescatterOptions</i>
+<i>char | handlescatterOptions</i>
 
 This variable serves multiple purposes and is thus best described as a mode switch.
 
@@ -196,8 +200,8 @@ If a **structure of the type handlescatterOptions** is supplied, the app applies
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - contains EEMs of samples, hopefully without scatter</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - contains EEMs of samples, hopefully without scatter</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

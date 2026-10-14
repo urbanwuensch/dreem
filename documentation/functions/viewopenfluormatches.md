@@ -1,11 +1,14 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # viewopenfluormatches
 Plot match results from OpenFluor.
 
 ## Syntax
 
 
-	[summary,M]=viewopenfluormatches(filename,Name,Value)
+```
+[summary,M]=viewopenfluormatches(filename,Name,Value)
+```
 
 
 ## Description
@@ -27,8 +30,8 @@ When calling the downloaded file ("OpenFluorSearch_ModelName_YYYYMMDD.csv") with
 ## Input arguments
 
 <details>
-    <summary><b>`filename ` - filename of the OpenFluor results</b></summary>
-    <i>text</i>
+<summary><b>`filename ` - filename of the OpenFluor results</b></summary>
+<i>text</i>
         
 Input must point at a file, e.g. `'OpenFluorSearch_ModelName_YYYMMDD.csv'`
 
@@ -39,8 +42,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save grapical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -56,8 +59,8 @@ Default: `""` (i.e. an empty string disabling the figure saving.
 
 ## Output arguments
 <details>
-    <summary><b>`summary ` - overview table</b></summary>
-    <i>table</i>
+<summary><b>`summary ` - overview table</b></summary>
+<i>table</i>
         
 A table containing a list of all match statistics. Model database name and ID, component number, and TCC statistics.
 
@@ -66,8 +69,8 @@ A table containing a list of all match statistics. Model database name and ID, c
 
 
 <details>
-    <summary><b>`M ` - results as structure</b></summary>
-    <i>struct</i>
+<summary><b>`M ` - results as structure</b></summary>
+<i>struct</i>
 
 A dataset structure containing all loadings of the matched models that were plotted.
 

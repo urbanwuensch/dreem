@@ -23,7 +23,7 @@ This function converts datasets from the older, non-standard format that `drEEM`
 <summary><b>
 `dataout = upgradedataset (data)` - conversion of data as described in tutorials</b></summary>
 
- <a name="syntax1"></a>
+<a name="syntax1"></a>
 
 The functions assumes that `data` is a typical drEEM data structure built by previous versions of the toolbox. Hence, it expects the fields  `'X', 'Ex', 'Em','nEm',` `'nEx', 'filelist', 'i', 'nSample', 'Abs_wave', 'Abs'` to be present in the `data`. 
 
@@ -82,8 +82,8 @@ For example, use `{'EEM','X'}` if the information that the function expects to f
 
 ## Input arguments
 <details>
-    <summary><b>`data` - structure made with a previous version of drEEM</b></summary>
-    <i>structure</i>
+<summary><b>`data` - structure made with a previous version of drEEM</b></summary>
+<i>structure</i>
 
 Ideally, the supplied structure should pass the validation function `checkdataset` of the previous version of drEEM. Expected, mandatory fields for the conversion are:
 
@@ -105,8 +105,8 @@ If one of these fields does not exist, a warning will be displayed. If the resul
 ## Optional input arguments
 
 <details open>
-    <summary><b>`atypicalFieldnames`- names of non-typical fields and their corresponding new field names</b></summary>
-    <i>cell array containing character arrays</i>
+<summary><b>`atypicalFieldnames`- names of non-typical fields and their corresponding new field names</b></summary>
+<i>cell array containing character arrays</i>
 
 A cell array of size N x 2. Each row should contain a pair of field names where the first column is the old field name (should exist in `data`), and the second column is the new field name (should exist in drEEMdataset class object, see `drEEMdataset` for more information).
 
@@ -121,8 +121,8 @@ Default is `{}`, meaning the option remains unused.
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - upgraded dataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - upgraded dataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # fitparafac
 Fit PARAFAC models to fluorescence data.
 
@@ -20,8 +21,8 @@ The function supports parallelization performance-optimization, but the parallel
 An entry will be added to the `history` field of the `data`, detailing the  options used for `fitparafac`. 
 
 <details open>
-    <summary><b>`dataout = fitparafac(data,mode)` - default options</b></summary>
-    <a name="syntax1"></a>
+<summary><b>`dataout = fitparafac(data,mode)` - default options</b></summary>
+<a name="syntax1"></a>
         
 
 
@@ -41,8 +42,8 @@ You might like some of these settings, and want to change others. Do so by using
 </details>
 
 <details open>
-    <summary><b>`dataout = fitparafac( ___ , Name,Value)` - [Name,Value](#NameValue) arguments</b></summary>
-    <a name="syntax2"></a>
+<summary><b>`dataout = fitparafac( ___ , Name,Value)` - [Name,Value](#NameValue) arguments</b></summary>
+<a name="syntax2"></a>
 
 Most often, the default options will not suffice or do the trick. Custom options can be speficied using one or more [Name,Value](#NameValue) pair arguments. For example, you can specify the number of components for models, constraints, initialization and parallelization options. For example, `f=2:6` specifies that only 2-6 component models should be fit, `starts=2` that only two initializations should be initiated per model. See [Name,Value](#NameValue) for all options.
 
@@ -76,15 +77,15 @@ Equivalent to the **former splitanalysis**
 
 ## Input arguments
 <details>
-    <summary><b>`data`- contains EEMs to fit models to</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data`- contains EEMs to fit models to</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
 
 <details open>
-    <summary><b>`mode`- mode switch for data source</b></summary>
-    <i>char | string</i>
+<summary><b>`mode`- mode switch for data source</b></summary>
+<i>char | string</i>
  
  Mode should be one of:
  
@@ -101,8 +102,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`f`- the number of components</b></summary>
-    <i>numeric</i>
+<summary><b>`f`- the number of components</b></summary>
+<i>numeric</i>
 
 Numeric array specifying the number of components to use in the PARAFAC  models. Default is `[2, 3, 4, 5, 6, 7]`. Can be specified as array, e.g. `2:6` for simplicity.
 
@@ -110,8 +111,8 @@ Numeric array specifying the number of components to use in the PARAFAC  models.
 
 
 <details open>
-    <summary><b>`constraints` - force PARAFAC to adhere to rules</b></summary>
-    <i>string | char</i>
+<summary><b>`constraints` - force PARAFAC to adhere to rules</b></summary>
+<i>string | char</i>
 
 Specify the constraints to apply to the models. You can choose from: <br>
 
@@ -127,24 +128,24 @@ Default constraint is `"nonnegativity"`.
 </details>
 
 <details open>
-    <summary><b>`starts` - number of initializations per model</b></summary>
-    <i>numeric</i>
+<summary><b>`starts` - number of initializations per model</b></summary>
+<i>numeric</i>
 
 Number of random starts for the algorithm refers to initializing the factor matrices with random values and running the algorithm multiple times. Default is `40`.
 
 </details>
 
 <details open>
-    <summary><b>`convergence` - stop criterion</b></summary>
-    <i>numeric</i>
+<summary><b>`convergence` - stop criterion</b></summary>
+<i>numeric</i>
 
 If the relative change in model fit between iterations falls below a `convergence` threshold, the algorithm is considered to have converged and will stop running. Default is `1e-8`. Preliminary models can be run with `1e-6` or `1e-4`.
 
 </details>
 
 <details open>
-    <summary><b>`maxIteration` - stop criterion</b></summary>
-    <i>numeric</i>
+<summary><b>`maxIteration` - stop criterion</b></summary>
+<i>numeric</i>
 
 Specify the maximum number of iterations for the algorithm. If the convergence criteria, `convergence`, is not met before the specified maximum number of iteration the algorithm will stop running.
 Default is `3000` iterations. The lower `convergence`, the higher `maxIteration` should be set.
@@ -153,8 +154,8 @@ Default is `3000` iterations. The lower `convergence`, the higher `maxIteration`
 
 
 <details open>
-    <summary><b>`initialization` - first guess method</b></summary>
-    <i>string | char</i>
+<summary><b>`initialization` - first guess method</b></summary>
+<i>string | char</i>
 
 Specify the method used to set the starting values for the factor matrices. You can choose from:
 
@@ -169,8 +170,8 @@ Default initialization method is `"random"`.
 
 
 <details open>
-    <summary><b>`parallelization` - explicitly control parallelization</b></summary>
-    <i>logical</i>
+<summary><b>`parallelization` - explicitly control parallelization</b></summary>
+<i>logical</i>
 
 Enable or disable parallelization. If enabled can dramatically decrease the time required for the analysis. Default is `true`.
 
@@ -180,8 +181,8 @@ Use the option for explicit control of parallelization. Some installations have 
 </details>
 
 <details open>
-    <summary><b>`consoleoutput` - level of console output</b></summary>
-    <i> string  | char</i>
+<summary><b>`consoleoutput` - level of console output</b></summary>
+<i> string  | char</i>
 
 Specify the level of console output during execution. You can choose from:
 
@@ -195,8 +196,8 @@ Default is `"minimum"`.
 </details>
 
 <details open>
-    <summary><b>`toolbox` - PARAFAC algorithm</b></summary>
-    <i> string  | char</i>
+<summary><b>`toolbox` - PARAFAC algorithm</b></summary>
+<i> string  | char</i>
 
 Specify the toolbox to use for the PARAFAC algorithm. You can choose from:
 
@@ -213,31 +214,33 @@ Default is `"parafac3w"`.
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with PARAFAC models</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with PARAFAC models</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 
 Models are stored in dataout.models. Each model is a `drEEMmodel` object contains the following information (no contents in this case):
 
-	  drEEMmodel with properties:
+```
+  drEEMmodel with properties:
 
-                    loads: {1×0 cell}
-                leverages: {1×0 cell}
-                      sse: {1×0 cell}
-                   status: ""
-         percentExplained: NaN
-                    error: NaN
-                     core: NaN
-       percentUnconverged: NaN
-    componentContribution: NaN
-           initialization: ""
-                   starts: NaN
-              convergence: NaN
-              constraints: ""
-                  toolbox: ""
-                modelName: "PARAFAC"
-           loadingsMatrix: []
+                loads: {1×0 cell}
+            leverages: {1×0 cell}
+                  sse: {1×0 cell}
+               status: ""
+     percentExplained: NaN
+                error: NaN
+                 core: NaN
+   percentUnconverged: NaN
+componentContribution: NaN
+       initialization: ""
+               starts: NaN
+          convergence: NaN
+          constraints: ""
+              toolbox: ""
+            modelName: "PARAFAC"
+       loadingsMatrix: []
+```
 
 
 

@@ -67,8 +67,8 @@ You can specify any combination of `outSample`,`outEm`, or `outEx`. If one of th
 ## Input arguments
 
 <details>
-    <summary><b>`data` - dataset to truncate</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset to truncate</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -76,8 +76,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 ## Name-Value arguments
 <details open>
-    <summary><b>`outSample ` - samples to delete</b></summary>
-    <i>logical [`1x data.nSample`]</i>
+<summary><b>`outSample ` - samples to delete</b></summary>
+<i>logical [`1x data.nSample`]</i>
         
 Specifies which samples are to be deleted from the dataset. Matlab-internal functions you can use here include: `matches`, `contains`, `==`, `~` 
 
@@ -86,16 +86,16 @@ Example: `outSample=matches(data.filelist,'sample01)'`
 </details>
 
 <details open>
-    <summary><b>`outEm ` - emission wavelengths to delete</b></summary>
-    <i>logical [`1x data.nEm`]</i>
+<summary><b>`outEm ` - emission wavelengths to delete</b></summary>
+<i>logical [`1x data.nEm`]</i>
         
 Specifies which emission wavelengths are to be deleted from the dataset. Functions to use include: `==`, `~`, `<`, `>`, `drEEMtoolbox.isNearest(data.Em,___)`
 
 </details>
 
 <details open>
-    <summary><b>`outEx ` - excitation to delete</b></summary>
-    <i>logical [`1x data.nEx`]</i>
+<summary><b>`outEx ` - excitation to delete</b></summary>
+<i>logical [`1x data.nEx`]</i>
         
 Specifies which excitation wavelengths are to be deleted from the dataset. Functions to use include: `==`, `~`, `<`, `>`, `drEEMtoolbox.isNearest(data.Ex,___)`
 
@@ -105,8 +105,8 @@ Specifies which excitation wavelengths are to be deleted from the dataset. Funct
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - truncated dataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - truncated dataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

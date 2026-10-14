@@ -7,7 +7,9 @@ Visualize and analyze Excitation Emission Matrices (EEMs) and modeled data.
 
 ## Syntax
 
-	vieweems(data,Name,Value)
+```
+vieweems(data,Name,Value)
+```
 
 
 
@@ -59,8 +61,8 @@ Note: Vertical lines represent the positions of Raman and Rayleigh scatter peaks
 
 ## Input arguments ##
 <details>
-    <summary><b>`data` - dataset containing fluorescence and absorbance data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset containing fluorescence and absorbance data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
@@ -71,8 +73,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save the grapical user interface </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save the grapical user interface </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the current view of the graphical user interface.
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`vieweems`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-vieweems.png". Likewise, providing "projectX.jpg" will result in "projectX-vieweems.jpg".

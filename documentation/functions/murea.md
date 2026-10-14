@@ -28,7 +28,7 @@ If the PCA model explains a large share of the residual variance, and does so sy
 Note: The app does not accept any output arguments!
 
 <details open>
-    <summary><b>Settings panel</b></summary>
+<summary><b>Settings panel</b></summary>
 
 - `# PARAFAC components`: choose which of the dataset's PARAFAC models (by number of components) to analyze the residuals of. Every other panel in the app updates to reflect this choice.
 - `Plot focus`: on the `Scores & loadings` tab, choose whether to display `Scores & loadings` together, or `Scores only`.
@@ -38,7 +38,7 @@ Note: The app does not accept any output arguments!
 </details>
 
 <details open>
-    <summary><b>Overview graph</b></summary>
+<summary><b>Overview graph</b></summary>
 
 Shown when the app opens. Two linked plots, side by side:
 
@@ -50,7 +50,7 @@ Lower is generally better here, but it's not unusual for PCA to explain a non-tr
 </details>
 
 <details open>
-    <summary><b>Scores & loadings</b></summary>
+<summary><b>Scores & loadings</b></summary>
 
 - `Scores`: one line plot per retained PCA component, showing that component's score for every sample. Ideally these look like noise scattered around zero, indicating no systematic sample trend. Deviations from zero mark samples worth a closer look.
 - `Loadings`: the loadings of each PCA component, reshaped back into an EEM-like contour plot and labeled with the percentage of residual variance that component explains. Unlike PARAFAC loadings, these can be negative as well as positive, since PCA is decomposing variance from an average rather than a non-negative signal; a systematic spectral shape here (rather than a random-looking pattern) indicates a real bias that PARAFAC left behind.
@@ -58,7 +58,7 @@ Lower is generally better here, but it's not unusual for PCA to explain a non-tr
 </details>
 
 <details open>
-    <summary><b>Score plots</b></summary>
+<summary><b>Score plots</b></summary>
 
 - `Score overview`: a scatter plot of PCA scores, with `x-axis` and `y-axis` drop-downs to choose which two PCA components to plot against each other, and `color-by` to color points by a column from `data.metadata`. `randomize order` randomizes the plotting order, which helps when many overlapping categories are stacked on top of each other, and `alpha` controls marker transparency. `class boundary` draws a boundary between the colored categories.
 - `Selected EEM`: clicking a point in the score overview plot shows that sample's EEM here. A `Data`/`Residuals` switch toggles between the sample's original EEM and its residual for the currently selected PARAFAC model, making it possible to directly connect a suspicious score to what it looks like in the data.
@@ -68,8 +68,8 @@ Lower is generally better here, but it's not unusual for PCA to explain a non-tr
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset containing one or more PARAFAC models</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset containing one or more PARAFAC models</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`, and that contains at least one PARAFAC model fitted with `fitparafac`.
 

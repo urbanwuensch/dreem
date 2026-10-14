@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # addcomment
 Document an analysis process through comments.
 
@@ -29,7 +30,7 @@ As you can see above, the comment is added as a "Comments by user" in history en
 <summary><b>
 `dataout = addcomment(data,'new comment here','newline')` - add user comment as independent entry</b>
 </summary>
- <a name="s2"></a> 
+<a name="s2"></a> 
 
 If you wish to make a comment independent of the last function call, use the `newline` attribute. 
 
@@ -44,15 +45,15 @@ This will result in the comment being its own, independent entry in the dataset 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset to add comment to</b></summary>
-    <i>drEEMdataset class</i>
+<summary><b>`data` - dataset to add comment to</b></summary>
+<i>drEEMdataset class</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
 
 <details open>
-    <summary><b>`comment` - descriptive text</b></summary>
-    <i>text of the class string or char</i>
+<summary><b>`comment` - descriptive text</b></summary>
+<i>text of the class string or char</i>
         
 A text that describes some observation, a concern, a result, a course of action or anything else worthy of documenting.
 
@@ -60,8 +61,8 @@ A text that describes some observation, a concern, a result, a course of action 
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with new comment</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with new comment</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

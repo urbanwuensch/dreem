@@ -35,16 +35,18 @@ In large datasets, the quality inspection of every EEM can take a long time. `rm
 > The function works best for wide peaks in the visible range. In testing, the function has shown to have a tendency toward removing parts of narrow peak data in the UV if highly dynamic peaks are present. If this is observed, raise the `thresholdFactor` option or consider refraining from using the function.
 
 Another warning:
+
 > If the dataset contains EEM parts that contain only missing data or zeros, the estimation of the noise floor will fail and the function will return an error. Please use subdataset to trim your dataset to a sensible spectral range in this case!
 
 The function provides warnings if a significant portion of the data is identified as noisy.
 
 Copyright notice:
+
 >**'inpaint'** John D'Errico (2025). `inpaint_nans` (https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans), MATLAB Central File Exchange. Retrieved March 5, 2025. 
 
 
 <details open>
-    <summary><b>`dataout = rmspikes(data)` - default options</b></summary>
+<summary><b>`dataout = rmspikes(data)` - default options</b></summary>
 <a name="syntax1"></a>
 
 Applies the default settings with a threshold factor of 10 and disabled interpolation.
@@ -52,7 +54,7 @@ Applies the default settings with a threshold factor of 10 and disabled interpol
 </details>
 
 <details open>
-    <summary><b>`dataout = rmspikes( ___ , Name,Value)` - custom options</b></summary>
+<summary><b>`dataout = rmspikes( ___ , Name,Value)` - custom options</b></summary>
 <a name="syntax2"></a>
 
 specifies additional options using one or more [name-value](#NameValue) pair arguments. For example, you can specify if `interpolation` should be performed or adjust the `thresholdFactor`.
@@ -62,7 +64,7 @@ specifies additional options using one or more [name-value](#NameValue) pair arg
 </details>
 
 <details open>
-    <summary><b>`rmspikes(data,Name,Value)` - diagnostics mode</b></summary>
+<summary><b>`rmspikes(data,Name,Value)` - diagnostics mode</b></summary>
 <a name="syntax3"></a>
 
 When no output argument is supplied, the function automatically switches to diagnostics mode. This automatically sets `plot=true` and `details=true` and facilitates finetuning of `thresholdFactor`.
@@ -89,8 +91,8 @@ This example figures show the diagnostic plot (`details=true`) that can help to 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset with fluorescence data.</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with fluorescence data.</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -101,8 +103,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`thresholdFactor `- sensitivity to excessive noise (sample by sample)</b></summary>
-    <i>numeric</i>
+<summary><b>`thresholdFactor `- sensitivity to excessive noise (sample by sample)</b></summary>
+<i>numeric</i>
 
 Adjust the sensitivity of the spike detection. A lower value results in more sensitivity. 
 
@@ -113,8 +115,8 @@ Default is `10`.
 </details>
  
 <details open>
-    <summary><b>`interpolate `- switch to enable interpolation</b></summary>
-    <i>logical</i>
+<summary><b>`interpolate `- switch to enable interpolation</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if interpolation over removed data points should be performed. 
 
@@ -126,8 +128,8 @@ Default is `false`.
 
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated. The plot shows noise threshold profile along excitation mode and the percentage removal of data in excitation and emission modes.
 
@@ -137,8 +139,8 @@ Default is `true`.
 
 
 <details open>
-    <summary><b>`details `- switch to enable diagnostics plots (sample by sample)</b></summary>
-    <i>logical</i>
+<summary><b>`details `- switch to enable diagnostics plots (sample by sample)</b></summary>
+<i>logical</i>
 
 detailed diagnostic plots each sample. This plot depicts original and final EEMs, original EEM with marked removal points and, finally, the difference between original data and smoothed data.
 
@@ -149,8 +151,8 @@ Default is `false`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -164,8 +166,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 
 ## Output arguments
 <details>
-    <summary><b>`dataout` - despiked fluorescence data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - despiked fluorescence data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`.
 

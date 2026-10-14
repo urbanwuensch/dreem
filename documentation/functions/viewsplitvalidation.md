@@ -7,7 +7,9 @@ Visualize a split validation on a specific model present in data.
 
 ## Syntax
 
-	viewsplitvalidation(data, fac,Name,Value)
+```
+viewsplitvalidation(data, fac,Name,Value)
+```
 
 ## Description
 
@@ -28,8 +30,8 @@ The function includes detailed error messages to help diagnose why a validation 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset with PARAFAC models</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset with PARAFAC models</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -41,8 +43,8 @@ PARAFAC models should be present in the overall dataset and all splits for full 
 
 
 <details open>
-    <summary><b>`fac` - number of PARAFAC components in the validated model</b></summary>
-    <i>numeric</i>
+<summary><b>`fac` - number of PARAFAC components in the validated model</b></summary>
+<i>numeric</i>
         
 Specifies the number of components in the model you wish to validate.
 
@@ -55,8 +57,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save grapical function output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save grapical function output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the graphical output produced by the function.
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`viewsplitvalidation`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewsplitvalidation.png". Likewise, providing "projectX.jpg" will result in "projectX-viewsplitvalidation.jpg".

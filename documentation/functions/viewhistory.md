@@ -6,7 +6,9 @@ View and export a summary of the functions carried out on data and their details
 
 ## Syntax
 
-	viewhistory(data,Name,Value)
+```
+viewhistory(data,Name,Value)
+```
 
 ## Description
 
@@ -23,8 +25,8 @@ By clicking on any of the functions (in drEEM function column) that accept some 
 
 ## Input arguments ##
 <details>
-    <summary><b>`data`</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data`</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
@@ -35,8 +37,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save the grapical user interface  </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save the grapical user interface  </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the current GUI.
 A file extension can be supplied if desired (any extension supported by MATLAB's `exportgraphics` is fine). Note however that the function will insert a "-" followed by the calling function's name (`viewhistory`) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewhistory.png". Likewise, providing "projectX.jpg" will result in "projectX-viewhistory.jpg".

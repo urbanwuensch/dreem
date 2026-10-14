@@ -6,7 +6,9 @@ Investigate the correlations between scores of different components in PARAFAC m
 
 ## Syntax
 
-	viewcompcorr(data,Name,Value)
+```
+viewcompcorr(data,Name,Value)
+```
 
 ## Description
 
@@ -17,8 +19,8 @@ This app can also be opened from the `view correlations vs. metadata` button in 
 
 ## Input arguments ##
 <details>
-    <summary><b>`data`- dataset with PARAFAC model</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data`- dataset with PARAFAC model</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
@@ -28,8 +30,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save the grapical user interface </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save the grapical user interface </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the current view of  the GUI.
 

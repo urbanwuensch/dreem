@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # changestatus
 Manually change the status of a `drEEMdataset` to reflect its current state
 
@@ -36,8 +37,8 @@ The function offers guidance on each aspect of the status. This can be accessed 
 
 ## Input arguments
 <details>
-    <summary><b>`data` - dataset in need of status update</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset in need of status update</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 </details>
@@ -45,12 +46,14 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 
 <!---
+
 ## Name-Value arguments
 -->
+
 ## Output arguments
 <details>
-    <summary><b>`dataout` - dataset with new status</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset with new status</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`. 
 </details>

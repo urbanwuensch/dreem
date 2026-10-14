@@ -30,7 +30,7 @@ Alternatively, a normalization by the maximum intensity is also possible.
 <summary>
 <b>`dataout = scalesamples(data, option)` - apply scaling</b>
 </summary>
- <a name="syntax1"></a>
+<a name="syntax1"></a>
  
  This syntax is used to apply the scaling. The number provided in `option` represents the `n` of the `nth root` of the standard deviation. n is limited to be between 1 (most severe scaling) and 50 (least severe scaling). If 1, all samples essentially have the same numeric weight, whereas differences between signal magnitutes are maintained at higher numbers (though lessened).
  
@@ -47,7 +47,7 @@ The function adds an entry to the dataset's history where the unscaled data is s
 <summary>
 <b>`dataout = scalesamples(data, 'max')` - apply max-normalization</b>
 </summary>
- <a name="syntax4"></a>
+<a name="syntax4"></a>
  
  This syntax is used to apply the max-normalization. Each EEM is divided by the maximum intensity observed in the sample.
  
@@ -63,7 +63,7 @@ The function adds an entry to the dataset's history where the unscaled data is s
 <summary>
 <b>`scalesamples(data, 'help')` - decision support</b>
 </summary>
- <a name="syntax2"></a>
+<a name="syntax2"></a>
  
  In this syntax, the function provides decision support. Peaks C, D, M, and T are extracted for scaled versions of the dataset with `n` between 1 and 5 (n in the nth root).
  
@@ -84,7 +84,7 @@ The function adds an entry to the dataset's history where the unscaled data is s
 <summary>
 <b>`dataout = scalesamples(data, 'reverse')` - reverse the scaling operation</b>
 </summary>
- <a name="syntax3"></a>
+<a name="syntax3"></a>
  
  This syntax reverses the scaling operation and restores the original fluorescence EEMs.
  
@@ -110,8 +110,8 @@ The function adds an entry to the dataset's history where the unscaled data is s
 ## Input arguments
 
 <details>
-    <summary><b>`data` - dataset containing EEMs to be scaled.</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset containing EEMs to be scaled.</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`. 
 
@@ -121,8 +121,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 
 
 <details open>
-    <summary><b>`option` - specify function operation.</b></summary>
-    <i>numeric | character</i>
+<summary><b>`option` - specify function operation.</b></summary>
+<i>numeric | character</i>
 
 
 
@@ -137,8 +137,8 @@ Default is `2`.
 ## Output arguments (optional)
 
 <details>
-    <summary><b>`dataout` - dataset containing scaled or original (restored) EEMs.</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - dataset containing scaled or original (restored) EEMs.</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`. 
 

@@ -7,7 +7,9 @@ Visualize and analyze CDOM absorbance data.
 
 ## Syntax
 
-	viewabsorbance(data,Name,Value)
+```
+viewabsorbance(data,Name,Value)
+```
 
 
 
@@ -31,8 +33,8 @@ The "OTHER" tab (above) displays the CDOM source diagram according to [Stedmon e
 
 ## Input arguments ##
 <details>
-    <summary><b>`data` - dataset containing  absorbance data</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset containing  absorbance data</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
@@ -43,8 +45,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`figurefile `- option to save the grapical user interface </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save the grapical user interface </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the current graphical user interface. 
 

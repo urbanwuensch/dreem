@@ -32,8 +32,8 @@ If no errors were found and the function was called from the `drEEMtoolbox`, a s
 
 ## Input arguments
 <details>
-    <summary><b>`data` - a drEEMdataset</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - a drEEMdataset</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that will be evaluated with the validation function.
 

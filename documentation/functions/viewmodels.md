@@ -19,10 +19,10 @@ The function `viewmodels` opens up a graphical user interface (GUI) that is desi
 Note: The app does not accept any output arguments!
 
 <details>
-	<summary><b>Elements in case of PARAFAC model</b></summary>
+<summary><b>Elements in case of PARAFAC model</b></summary>
 
 <details open>
-    <summary><b>Overview</b></summary>
+<summary><b>Overview</b></summary>
     
 This tab provides a summary of the PARAFAC models including:
 
@@ -46,7 +46,7 @@ The bottom section of this tab includes:
 </details>
 
 <details open>
-    <summary><b>Scores & loadings</b></summary>
+<summary><b>Scores & loadings</b></summary>
 
  This tab provides scores and loadings visualizations for each model:
 
@@ -56,7 +56,7 @@ The bottom section of this tab includes:
 </details>
 
 <details open>
-    <summary><b>Spectral loadings</b></summary>
+<summary><b>Spectral loadings</b></summary>
 
 This tab provides spectral loadings plots for each component in each model separately:
 Note: each row of plots correspond to one model.
@@ -65,28 +65,28 @@ Note: each row of plots correspond to one model.
 
 
 <details open>
-    <summary><b>Loadings & leverages</b></summary>
+<summary><b>Loadings & leverages</b></summary>
 
 This tab provides plots of scores for samples, excitation and emission loadings for each wavelength and leverages in each mode (samples, excitation, emission) to visualize the influence of each data point on the model. You can go through different models by using the drop-down menu button on top of the plots.
  
  </details>
 
 <details open>
-    <summary><b>Errors & leverages</b></summary>
+<summary><b>Errors & leverages</b></summary>
 
 To visualize the sum of squared error against leverages in each mode (samples, excitation, emission). You can go through different models by using the drop-down menu button on top of the plots.
  
 </details>
 
 <details open>
-    <summary><b>Fingerprint plots</b></summary>
+<summary><b>Fingerprint plots</b></summary>
 
 Use this tab to plot Excitation Emission Matrix (EEM) of each component in each model. Go through different models by using the drop-down menu button on top of the plots.
 
 </details>
 
 <details open>
-    <summary><b>SSE</b></summary>
+<summary><b>SSE</b></summary>
 
 To visualize the sum of squared error for each mode (samples, excitation, emission). This can be helpful to identify which samples or wavelength impose the biggest errors on the model.
 You can go through different models by using the drop-down menu button on top of the plots.
@@ -95,7 +95,7 @@ You can go through different models by using the drop-down menu button on top of
 
 
 <details open>
-    <summary><b>Score correlation</b></summary>
+<summary><b>Score correlation</b></summary>
 
 This tab plots a heatmap of correlations between different components in each model. This provides insights into the relationships between different components.
 Left-clicking on the `view correlations vs. metadata` button opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information in metadata columns.
@@ -105,7 +105,7 @@ Left-clicking on the `view correlations vs. metadata` button opens a new app, in
 </details>
 
 <details>
-	<summary><b>Elements in case of PCA model</b></summary>
+<summary><b>Elements in case of PCA model</b></summary>
 
 The app visualizing PCA models consists mainly of three tabs:
 
@@ -121,8 +121,8 @@ The Score-Score tab allows users to plot scores of PC's against one another and 
 
 ## Input arguments ##
 <details>
-    <summary><b>`data` - dataset containing PARAFAC models</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`data` - dataset containing PARAFAC models</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(data)`.
 
@@ -135,8 +135,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 
 
 <details open>
-    <summary><b>`figurefile `- option to save the graphical user interface </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save the graphical user interface </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the current GUI.
 
@@ -150,8 +150,8 @@ Default: `""` (i.e. an empty string disabling the figure saving.
 
 
 <details open>
-    <summary><b>`startTab `- specify opening tab (only PARAFAC). </b></summary>
-    <i>character</i>
+<summary><b>`startTab `- specify opening tab (only PARAFAC). </b></summary>
+<i>character</i>
 
 
 If desired, the default "Overview" can be replaced by one of the following:
@@ -171,8 +171,8 @@ This results in a switch of tab focus after the GUI starts up. Can be particular
 
 
 <details open>
-    <summary><b>`f `- which model to show at startup (only PARAFAC) </b></summary>
-    <i>numeric</i>
+<summary><b>`f `- which model to show at startup (only PARAFAC) </b></summary>
+<i>numeric</i>
 
 To start showing a particular model with f-components, the option can be supplied. Can be particularly useful in conjunction with saving figure outputs automatically.
 

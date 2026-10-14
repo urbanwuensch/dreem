@@ -48,15 +48,17 @@ For large projects with many imports and automated processing, it is much easier
 
 Example: 
 
-	blanks_status=drEEMstatus("blankSubtraction","not applied",...
-    	"IFEcorrection","not applied",...
-    	"signalCalibration","not applied",...
-    	"scatterTreatment","not applied",...
-    	"signalScaling",'original scale',...
-    	'spectralCorrection','applied by instrument software',...
-    	absorbanceUnit='absorbance per cm');
+```
+blanks_status=drEEMstatus("blankSubtraction","not applied",...
+    "IFEcorrection","not applied",...
+    "signalCalibration","not applied",...
+    "scatterTreatment","not applied",...
+    "signalScaling",'original scale',...
+    'spectralCorrection','applied by instrument software',...
+    absorbanceUnit='absorbance per cm');
 
-	blanks=tbx.importeems("* - Waterfall Plot Blank.dat",blanks_status);
+blanks=tbx.importeems("* - Waterfall Plot Blank.dat",blanks_status);
+```
 
 </details>
 
@@ -81,8 +83,8 @@ Custom options are specified with optional pairs of arguments using one or more 
 ## Input arguments
 
 <details open>
-    <summary><b>`filePattern ` Text pattern to identify files for import</b></summary>
-    <i>char | string</i>
+<summary><b>`filePattern ` Text pattern to identify files for import</b></summary>
+<i>char | string</i>
         
 A text specifying the pattern of the files to be imported. This can include wildcard characters (*) to match multiple files. The pattern will be completely removed from the sample name after import to leave only the non-repeating filename information. For example `S001PEM.dat` will be known as `S001` in the produced dataset.
 
@@ -94,18 +96,20 @@ Example: `'* - Waterfall Plot Samples.dat'`
 </details>
 
 <details open>
-    <summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
-    <i>drEEMstatus</i>
+<summary><b>`status ` drEEMstatus object with correct parameters preset</b></summary>
+<i>drEEMstatus</i>
         
 Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.
 
-	blanks_status=drEEMstatus("blankSubtraction","not applied",...
-	    	"IFEcorrection","not applied",...
-	    	"signalCalibration","not applied",...
-	    	"scatterTreatment","not applied",...
-	    	"signalScaling",'original scale',...
-	    	'spectralCorrection','applied by instrument software',...
-	    	absorbanceUnit='absorbance per cm');
+```
+blanks_status=drEEMstatus("blankSubtraction","not applied",...
+        "IFEcorrection","not applied",...
+        "signalCalibration","not applied",...
+        "scatterTreatment","not applied",...
+        "signalScaling",'original scale',...
+        'spectralCorrection','applied by instrument software',...
+        absorbanceUnit='absorbance per cm');
+```
 
 </details>
 
@@ -116,8 +120,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`columnWave`- specify if first column contains wavelength data (or specify them)</b></summary>
-    <i>numeric | logical</i>
+<summary><b>`columnWave`- specify if first column contains wavelength data (or specify them)</b></summary>
+<i>numeric | logical</i>
 
 If `true`, the data in the measurement files are expected to have wavelength information in columns. Default is `true`.
 
@@ -127,8 +131,8 @@ If numeric, the function assumes that you provide the wavelength vector to assoc
 </details>
 
 <details open>
-    <summary><b>`rowWave`- specify if first row contains wavelength data (or specify them)</b></summary>
-    <i>numeric | logical</i>
+<summary><b>`rowWave`- specify if first row contains wavelength data (or specify them)</b></summary>
+<i>numeric | logical</i>
 
 If `true`, the data in the measurement files are expected to have wavelength information in rows. Default is `true`.
 
@@ -139,8 +143,8 @@ If numeric, the function assumes that you provide the wavelength vector to assoc
 
 
 <details open>
-    <summary><b>`columnIsExcitation `- specify the orientation of the EEM</b></summary>
-    <i>numeric | logical</i>
+<summary><b>`columnIsExcitation `- specify the orientation of the EEM</b></summary>
+<i>numeric | logical</i>
 
 If `true`, the columns represent excitation wavelengths. If `false`, the data matrix will be rotated so that it matches the standard settings in the toolbox. Default is `true`.
 
@@ -149,8 +153,8 @@ If `true`, the columns represent excitation wavelengths. If `false`, the data ma
 
 
 <details open>
-    <summary><b>`NumHeaderLines `- number of header lines to ignore</b></summary>
-    <i>numeric</i>
+<summary><b>`NumHeaderLines `- number of header lines to ignore</b></summary>
+<i>numeric</i>
 
 Specify the number of  lines (rows) to skip from the top in each file. Default is `0`.<br>
 
@@ -162,8 +166,8 @@ Default is `0`.
 
 ## Output arguments
 <details open>
-    <summary><b>`dataout` - contains EEMs </b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`dataout` - contains EEMs </b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(dataout)`. 
 

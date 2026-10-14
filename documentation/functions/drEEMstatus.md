@@ -1,4 +1,5 @@
 <img src="top right corner logo.png" width="100" height="auto" align="right"/>
+
 # drEEMstatus
 
 Since version 2.0.0, drEEM keeps a detailed record of operations it performs on a dataset. To be able to do this meaningful, the toolbox first needs to know some details about your dataset. After that, it can assist as much as possible with doing things properly. And the best thing is that since it knows about your dataset, it can document the dataset details and fully prepare your dataset for an Open Science repository such as Pangaea.

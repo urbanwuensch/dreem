@@ -37,7 +37,7 @@ If the last plot (bottom left) contains negative signals, more scatter was obser
 An entry will be added to the `history` field of the `samplesout`.
 
 <details open>
-    <summary><b>`samplesout = subtractblanks(samples,blanks)` - default options</b></summary>
+<summary><b>`samplesout = subtractblanks(samples,blanks)` - default options</b></summary>
 <a name="syntax1"></a>
 
 Simply subtracts blanks and shows plots
@@ -45,7 +45,7 @@ Simply subtracts blanks and shows plots
 </details>
 
 <details open>
-    <summary><b>`samplesout = subtractblanks( ___ , Name,Value)` - custom options</b></summary>
+<summary><b>`samplesout = subtractblanks( ___ , Name,Value)` - custom options</b></summary>
 <a name="syntax2"></a>
 
 specifies additional options using one or more [name-value](#NameValue) pair arguments.
@@ -53,7 +53,7 @@ specifies additional options using one or more [name-value](#NameValue) pair arg
 </details>
 
 <details open>
-    <summary><b>`subtractblanks( ___ , Name,Value)` - Diagnosis mode</b></summary>
+<summary><b>`subtractblanks( ___ , Name,Value)` - Diagnosis mode</b></summary>
 <a name="syntax3"></a>
 
 When no output argument is supplied, the function automatically switches to diagnostics mode. Outputs are shown to allow you to see how the operation would affect your dataset.
@@ -62,8 +62,8 @@ When no output argument is supplied, the function automatically switches to diag
 
 ## Input arguments
 <details>
-    <summary><b>`samples` - dataset with sample fluorescence</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`samples` - dataset with sample fluorescence</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(samples)`. 
 
@@ -72,8 +72,8 @@ A dataset of the class `drEEMdataset` that passes the validation function `tbx.v
 </details>
 
 <details>
-    <summary><b>`blanks` - dataset blank fluorescence</b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`blanks` - dataset blank fluorescence</b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(blanks)`. 
 
@@ -86,8 +86,8 @@ Specify pairs of arguments as `Name1=Value1,...,NameN=ValueN`, where `Name` is t
 <a name="NameValue"></a>
 
 <details open>
-    <summary><b>`plot`- switch to plot the results</b></summary>
-    <i>logical</i>
+<summary><b>`plot`- switch to plot the results</b></summary>
+<i>logical</i>
 
 Logical or numeric value to specify if a plot showing the results should be generated.
 Default is `true`.
@@ -95,8 +95,8 @@ Default is `true`.
 </details>
 
 <details open>
-    <summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
-    <i>character</i>
+<summary><b>`figurefile `- option to save graphical `plot` output </b></summary>
+<i>character</i>
 
 If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.
 
@@ -112,8 +112,8 @@ Default: `""` (i.e. an empty string disabling the figure saving)
 
 ## Output arguments
 <details>
-    <summary><b>`samplesout` - processed dataset </b></summary>
-    <i>drEEMdataset</i>
+<summary><b>`samplesout` - processed dataset </b></summary>
+<i>drEEMdataset</i>
         
 A dataset of the class `drEEMdataset` that passes the validation function `tbx.validatedataset(samplesout)`. 
 
