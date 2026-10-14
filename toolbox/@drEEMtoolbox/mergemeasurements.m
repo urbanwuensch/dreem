@@ -51,6 +51,8 @@ arguments (Output)
     dataout
 end
 
+measurement=char(measurement);
+
 % Digest inputs and validate feasibility
 switch measurement
     case "absorbance"
@@ -94,7 +96,12 @@ switch measurement
 end
 
 [C,ia,ib] = intersect(a.filelist,b.filelist,"stable");
-
+if numel(C) < a.nSample
+    missing = setdiff(a.filelist,b.filelist,"stable");
+    error('drEEM:missingSamples', ['%d sample(s) in "a" have no match in "b" (e.g. %s). ' ...
+        'Use alignsamples first, or check the sample names in .filelist.'], ...
+        numel(missing), strjoin(missing(1:min(3,end)),', '))
+end
 if isempty(C)
     error('No common samples between "a" and "b". inspect .filelist in both datasets and compare.')
 end
@@ -119,7 +126,7 @@ if matches(measurement,'X')
     a.nEm=b.nEm;
     a.nEx=b.nEx;
     a.models=drEEMmodel;
-    a.split=drEEMdataset;
+    a.split=drEEMdataset.empty;
     if not(isempty(b.([measurement,'Blank'])))
         a.XBlank=nan(a.nSample,b.nEm,b.nEx);
         a.([measurement,'Blank'])(ia,:,:)=b.([measurement,'Blank'])(ib,:,:);
