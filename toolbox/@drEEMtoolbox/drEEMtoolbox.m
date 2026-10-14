@@ -350,7 +350,7 @@ classdef drEEMtoolbox < handle
 
         function updatedreem(directory,debugging,existingversion,onlineversion)
             arguments
-                directory (1,:) {mustBeText} = 'https://gitlab.com/dreem/dreem-2/-/raw/main/toolbox/@drEEMtoolbox/versions.txt';
+                directory (1,:) {mustBeText} = 'https://zenodo.org/api/records/17182160/versions/latest';
                 debugging (1,:) {mustBeA(debugging,'logical')} = false
                 existingversion (1,:) {mustBeNumeric} = [];
                 onlineversion (1,:) {mustBeNumeric} = [];
@@ -372,7 +372,8 @@ classdef drEEMtoolbox < handle
 
             try
                 options = weboptions;
-                options.Timeout=1;
+                options.Timeout=5;
+                options.ContentType="json";
                 vhist=webread(directory,options);
             catch
                 setenv('drEEM update checked',char(datetime("today")))
@@ -380,12 +381,16 @@ classdef drEEMtoolbox < handle
                 if debugging,disp('setenv=true'),end
                 return
             end
-            cellvhist=textscan(vhist,'%s%s','Delimiter',';');
 
             online=table;
-            online.Version=cellvhist{1}{1};
-            online.url=cellvhist{2}{1};
-            clearvars cellvhist
+            online.Version=char(vhist.metadata.version);
+
+            files = vhist.files;
+            if iscell(files)
+                files = [files{:}];
+            end
+            f    = files(endsWith(string({files.key}), ".mltbx"));
+            online.url=string(f(1).links.self);
 
             existing=ver;
             existing=existing(arrayfun(@(x) matches(x.Name,'drEEM Toolbox'),existing));
