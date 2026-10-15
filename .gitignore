@@ -35,3 +35,13 @@ codegen/
 
 # macOS stuff
 .DS_Store
+
+# buildtool cache
+.buildtool/
+
+# Files written by running the tutorials (they run in toolbox/examples)
+toolbox/examples/drEEM-2-importTutorial1Data/
+toolbox/examples/drEEM-2-importTutorial1Data.zip
+toolbox/examples/tutorial_data.zip
+toolbox/examples/tutorialModelExport.xlsx
+toolbox/examples/tutorial2openFluor.txt
