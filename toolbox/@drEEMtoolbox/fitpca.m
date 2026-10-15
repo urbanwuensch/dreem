@@ -30,7 +30,7 @@ arguments
     options.deleteLow (1,1) {mustBeA(options.deleteLow,'logical')} = false;
 end
 
-
+dataout=data;
 % Handle missing data by inpainting
 if options.interpolateMissing
     for j=1:data.nSample
@@ -132,7 +132,6 @@ for j=1:options.maxcomp
     model.loadingsMatrix(j,:,:)=reshape(dat,data.nEm,data.nEx);
 end
 
-dataout=data;
 f=drEEMdataset.modelsWithContent(data);
 if not(isempty(f))
     idx=height(dataout.history)+1;
