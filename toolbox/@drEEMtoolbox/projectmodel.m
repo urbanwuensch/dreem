@@ -105,9 +105,9 @@ end
 % Project the old model
 [forced,it,err]=nway.models.parafac(dataout.X,model.nComp,[1e-8 2 0 0 -1 5000],opt,...
                 initLoads,[0 1 1]);
-% Double check. If it==1 or err is nan, something has gone totally wrong
-if it==1||isnan(err)
-    error('Something went wrong with the forced fitting.')
+% Double check: a failed fit leaves NaN in the error or in the scores
+if isnan(err) || any(isnan(forced{1}),'all')
+    error('drEEM:projectionFailed','Something went wrong with the forced fitting.')
 end
 
 % Allocate the results to a new model structure
