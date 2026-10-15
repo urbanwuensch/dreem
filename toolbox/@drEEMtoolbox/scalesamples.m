@@ -109,12 +109,18 @@ switch opmode
             dataout=data;
             X=tens2mat(dataout.X,dataout.nSample,dataout.nEm,dataout.nEx);
             maxval=max(X,[],2,"omitmissing");
-
+            if any(isnan(maxval)|maxval==0)
+                warning('Some samples have no positive maximum; their scaling factor was set to 1')
+                maxval(isnan(maxval)|maxval==0)=1;
+            end
             dataout.X=dataout.X./maxval;
+            dataout.status=drEEMstatus.change(dataout.status,...
+                "signalScaling",'Scaled to maximum intensity in each sample');
             message='EEMs scaled by maximum intensity in each sample';
             idx=height(dataout.history)+1;
             dataout.history(idx,1)=...
                 drEEMhistory.addEntry(mfilename,message,[],dataout,data);
+            
         end
 
     case 'reverse'
