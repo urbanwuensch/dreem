@@ -155,7 +155,7 @@ elseif maxLambda>=max(dataout.absWave)
         ewstep=round(mean(diff(dataout.absWave)));
         ex_start=dataout.absWave(end)+ewstep;
         options.extrapolation_start=ex_start;
-        extrawave=(dataout.absWave(end)+ewstep:ewstep:ceil(maxLambda))';
+        extrawave=(dataout.absWave(end)+ewstep:ewstep:maxLambda+ewstep)';
         new=nan(data.nSample,numel([abswave;extrawave]));
         beta=nan(data.nSample,3);
         % Carry out the non-linear fit to find the CDOM exponential slope
