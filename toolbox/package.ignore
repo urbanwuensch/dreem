@@ -34,6 +34,8 @@ resources
 **/*.gitattributes
 examples/drEEM-2-importTutorial1Data/**/*
 examples/drEEM-2-importTutorial1Data.zip
+examples/drEEM-2-importTutorial2Data/**/*
+examples/drEEM-2-importTutorial2Data.zip
 examples/tutorial_data.zip
 examples/tutorialModelExport.xlsx
 examples/tutorial2openFluor.txt
