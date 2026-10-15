@@ -9,7 +9,6 @@ path = [
     "documentation/tutorials",
     "images",
     "release",
-    "tests",
     "toolbox",
     "toolbox/classes",
     "toolbox/doc",
