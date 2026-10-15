@@ -36,6 +36,8 @@ for k = 1:numel(sources)
     cmd = sprintf(['"%s" "%s" -f markdown-smart-implicit_figures -t html5 --standalone ' ...
         '--template="buildUtilities/doc_template.html" --include-in-header="%s" ' ...
         '--metadata pagetitle="%s" --wrap=none -o "%s"'], pandoc, in, header, name, out);
+
+    fprintf("  %s\n", sources(k).name);
     [status,msg] = system(cmd);
     if status ~= 0
         error("drEEM:docsFailed","pandoc failed for %s:\n%s", sources(k).name, msg)
