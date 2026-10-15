@@ -14,7 +14,7 @@ classdef drEEMtoolbox < handle
     % 41296 Gothenburg (Sweden)
     properties (Constant = true, Hidden = false)
         version = "2.26.10"
-        url = "https://zenodo.org/records/xxx/files/dreem-2.26.10.mltbx?download=1"
+        url = "https://doi.org/10.5281/zenodo.17182160"
         uuid = "8d87ad7f-ac6a-4500-af57-5e1bc1739a2b";
         requiredVersion = 'R2024b'
         rootfolder = drEEMtoolbox.tbxpath;
@@ -209,29 +209,29 @@ classdef drEEMtoolbox < handle
     methods (Static = true , Access = public)
 
         %doc function
-        doc(fname)
+        doc(functionname)
 
-        data = importeems(filePattern,options)
-        data = importabsorbance(filePattern,options)
-        data = importscans(filePattern,options)
+        data = importeems(filePattern,status,options)
+        data = importabsorbance(filePattern,status,options)
+        data = importscans(filePattern,status,options)
         varargout = importaqualog(folder,options)
 
         
 
 
         dataout = associatemetadata(data,pathtofile,metadatakey,datakey)
-        dataout = upgradedataset(data,atypicalFieldnames)
+        dataout = upgradedataset(data,atypicalFieldnames,status)
         importwizard
 
         % Merging functions
-        data = mergemeasurements(a,b,measurement,mode)
-        data = mergedatasets(varargin)
+        dataout = mergemeasurements(a,b,measurement,mode)
+        dataout = mergedatasets(a,b)
 
         % Status-specific functions
         dataout=changestatus(data)
 
         % History-specific functions
-        data = addcomment(data,comment)
+        dataout = addcomment(data,comment,newopt)
         function validatedataset(data)
             drEEMdataset.validate(data)
         end
@@ -241,20 +241,20 @@ classdef drEEMtoolbox < handle
         end
 
         % Benchmark the system performance
-        [singlescore,multiscore]=benchmark
+        varargout=benchmark
 
         % Data processing
         varargout = alignsamples(varargin)
         dataout = processabsorbance(data,options)
-        [dataout,emout,exout] = ifecorrection(data)
-        dataout = subtractblanks(samples,blanks)
+        dataout = ifecorrection(data,options)
+        dataout = subtractblanks(samples,blanks,options)
         dataout = spectralcorrection(data,options)
         dataout = ramancalibration(samples,blanks,options)
-        dataout = handlescatter(data,varargin)
+        dataout = handlescatter(data,option,ramanShift)
         dataout = subdataset(data,options)
         dataout = zapnoise(data,sampleIdent,emRange,exRange)
         dataout = scalesamples(data,option)
-        dataout = rmspikes(data,name_value)
+        dataout = rmspikes(data,options)
 
         % Slopes, peaks, indicies
         dataout = fitslopes(data,options)
@@ -264,9 +264,9 @@ classdef drEEMtoolbox < handle
         dataout = fitpca(data,options)
 
         % PARAFAC
-        dataout = fitparafac(data,options)
-        dataout = splitdataset(data,options)
-        viewsplitvalidation(data,fac)
+        dataout = fitparafac(data,mode,options)
+        dataout = splitdataset(data,splitType,options)
+        viewsplitvalidation(data,fac,options)
         fmax = scores2fmax(data,f)
         dataout = projectmodel(data,file)
         murea(data)
@@ -275,20 +275,20 @@ classdef drEEMtoolbox < handle
         export2openfluor(data, f, filename)
         export2zip(data,filename)
         %export2netcdf(data,filename)
-        exportresults(data,filename,f,name_value)
+        exportresults(data,f,filename)
         %fhandle = reportresidualanalysis(data,ftarget,mdfield)
         
 
         % Visualization (incl. app workarounds)
-        viewspectralvariance(data)
-        vieweems(data) % mlapp with m-file
-        viewmodels(data,startTab,f) % mlapp with m-file
-        viewdmr(data,f) % mlapp with m-file
-        viewcompcorr(data) % mlapp with m-file
-        viewhistory(data) % mlapp with m-file
-        viewscatter(data)
-        viewabsorbance(data)
-        [summary,M]  =  viewopenfluormatches(filename)
+        viewspectralvariance(data,options)
+        vieweems(data,options) % mlapp with m-file
+        viewmodels(data,options) % mlapp with m-file
+        viewdmr(data,f,options) % mlapp with m-file
+        viewcompcorr(data,options) % mlapp with m-file
+        viewhistory(data,options) % mlapp with m-file
+        viewscatter(data,options)
+        viewabsorbance(data,options)
+        [summary,M]  =  viewopenfluormatches(filename,options)
 
     end
 
