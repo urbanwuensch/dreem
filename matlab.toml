@@ -51,7 +51,7 @@ preview-image-file = "images/dreem-2.png"
 release-compatibility = ">=24.2.*"
 use-license-bsd = true
 output-folder = "release"
-output-file-name = "drEEM-2.26.10.mltbx"
+output-file-name = "dreem.mltbx"
 provider.organization = "Chalmers University of Technology"
 provider.name = "Urban Wünsch"
 provider.email = "urban.wunsch@chalmers.se"
