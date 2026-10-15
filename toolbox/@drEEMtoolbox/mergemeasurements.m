@@ -3,8 +3,8 @@ function dataout = mergemeasurements(a,b,measurement,mode)
 %
 % <strong>Transfer one measurement type from dataset b into dataset a</strong> (absorbance, fluorescence or supplementary spectra)
 %
-% Samples are matched by name (.filelist). Samples in "a" without a match in "b"
-% receive missing numbers (NaN); samples in "b" without a match in "a" are ignored.
+% Samples are matched by name (.filelist). Samples in "b" without a match
+% in "a" are ignored, but all samples in "a" have to be matched to "b".
 % The axis information (e.g. .absWave) and the related status entries are copied from "b".
 %
 % <strong>Note:</strong> The history of "b" is NOT transferred. Only the merge itself is
