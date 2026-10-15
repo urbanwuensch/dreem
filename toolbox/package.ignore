@@ -32,3 +32,6 @@ resources
 **/*.asv
 **/*.DS_Store
 **/*.gitattributes
+**/tutorial_data.zip
+examples/drEEM-2-importTutorial1Data/*
+**/aqualog2nc*
