@@ -24,6 +24,7 @@ arguments
     filename (1,:) {mustBeText}
 end
 rootdir=pwd;
+c=onCleanup(@() cd(rootdir));
 % Take care of pre-export data stuff
 % Reverse scaling (if needed)
 if contains(lower(data.status.signalScaling),'scaled to')
