@@ -32,6 +32,9 @@ resources
 **/*.asv
 **/*.DS_Store
 **/*.gitattributes
-**/tutorial_data.zip
-examples/drEEM-2-importTutorial1Data/*
+examples/drEEM-2-importTutorial1Data/**/*
+examples/drEEM-2-importTutorial1Data.zip
+examples/tutorial_data.zip
+examples/tutorialModelExport.xlsx
+examples/tutorial2openFluor.txt
 **/aqualog2nc*
