@@ -102,21 +102,6 @@ if numel(C) < a.nSample
         'Use alignsamples first, or check the sample names in .filelist.'], ...
         numel(missing), strjoin(missing(1:min(3,end)),', '))
 end
-if isempty(C)
-    error('No common samples between "a" and "b". inspect .filelist in both datasets and compare.')
-end
-
-if not(numel(C)==a.nSample)
-    message='';
-    ah=drEEMhistory.searchhistory(a.history,'alignsamples','last');
-    bh=drEEMhistory.searchhistory(b.history,'alignsamples','last');
-    if isempty(ah)|isempty(bh)
-        message=[message,'You have not used "alignsamples" to align the sequence of measurements in your datasets.',newline];
-    end
-    message=[message,'The number of overlapping samples is less than the number of samples in "a". Some entries in ',char(measurement),' will contain missing numbers'];
-
-    warning(message)
-end
 
 if matches(measurement,'X')
     a.(measurement)=nan(a.nSample,b.nEm,b.nEx);
