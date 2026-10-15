@@ -40,6 +40,38 @@ classdef ToolboxStructureTest < DreemTestCase
                 end
             end
         end
+
+        function versionIsConsistent(tc)
+            v = string(drEEMtoolbox.version);
+
+            toml = fileread(fullfile(tc.RepoRoot,"matlab.toml"));
+            tv = regexp(toml,'(?m)^version = "([^"]+)"','tokens','once');
+            tc.verifyEqual(string(tv{1}), v, "matlab.toml version differs from drEEMtoolbox.version")
+
+            contents = fileread(fullfile(tc.RepoRoot,"toolbox","Contents.m"));
+            cv = regexp(contents,'(?m)^% Version (\S+)','tokens','once');
+            tc.verifyEqual(string(cv{1}), v, "toolbox/Contents.m version differs from drEEMtoolbox.version")
+
+            id = regexp(toml,'(?m)^id = "([^"]+)"','tokens','once');
+            tc.verifyEqual(string(id{1}), string(drEEMtoolbox.uuid), "matlab.toml id differs from drEEMtoolbox.uuid")
+        end
+
+        function declarationsMatchFiles(tc)
+            src = fileread(fullfile(tc.RepoRoot,"toolbox","@drEEMtoolbox","drEEMtoolbox.m"));
+            blk = extractBetween(src,"methods (Static = true , Access = public)",newline+"    end"+newline);
+            tc.assertNotEmpty(blk,"public methods block not found in drEEMtoolbox.m")
+            for line = splitlines(string(blk{1}))'
+                decl = strtrim(extractBefore(line + "%","%"));
+                if decl == "" || startsWith(decl,["function","end"]), continue, end
+                name = regexp(decl,'^(?:[^=(]*=\s*)?(\w+)','tokens','once');
+                if isempty(name), continue, end
+                f = fullfile(tc.RepoRoot,"toolbox","@drEEMtoolbox",name{1}+".m");
+                if ~isfile(f), continue, end    % inline methods such as validatedataset
+                first = regexp(fileread(f),'(?m)^\s*function\s+(.*)$','tokens','once');
+                tc.verifyEqual(erase(decl," "), erase(strtrim(first{1})," "), ...
+                    name{1} + ": declaration in drEEMtoolbox.m differs from " + name{1} + ".m")
+            end
+        end
     end
 end
 
