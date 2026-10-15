@@ -17,10 +17,7 @@ elseif ispc
 elseif isunix&&not(ismac)
     platform='linux';
 end
-% Get the URL of the latest version of the tool from Github.
-urlbase=webread("https://raw.githubusercontent.com/urbanwuensch/aqualog2nc/refs/heads/master/versionlink.txt");
-urlbase=strsplit(urlbase,{';'});
-urlbase=urlbase{1};
+
 switch platform
     case 'mac'
         toolname='aqualog2nc-macos-arm64';
@@ -29,9 +26,8 @@ switch platform
     case 'linux'
         toolname='aqualog2nc-linux-x64';
 end
-url=[urlbase,toolname,'?download=1'];
 
-toolpath=char(fullfile(drEEMtoolbox.rootfolder,'external resources',toolname));
+toolpath = char(fullfile(userpath,toolname));
 ncfile=char(fullfile(folder,'NetCDF_rawdata.nc'));
 
 if isfile(ncfile)
@@ -40,6 +36,13 @@ end
 
 if not(isfile(toolpath))
     disp('Downloading OS-specific version of aqualog2nc...')
+    zenodo=webread('https://zenodo.org/api/records/21928517/versions/latest',ContentType='json');
+    for j=1:numel(zenodo.files)
+        assetname{j}=zenodo.files(j).links.self; %#ok<AGROW>
+    end
+    toolindex=contains(assetname,toolname);
+    url=zenodo.files(toolindex).links.self;
+
     websave(toolpath,url);
     disp('Success')
 else

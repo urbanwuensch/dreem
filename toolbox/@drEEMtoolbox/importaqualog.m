@@ -48,7 +48,7 @@ if options.toolreset
     elseif isunix&&not(ismac)
         toolname='aqualog2nc-linux-x64';
     end
-    toolpath=char(fullfile(drEEMtoolbox.rootfolder,'external resources',toolname));
+    toolpath = char(fullfile(userpath,toolname));
 
     if exist(toolpath,"file")
         delete(toolpath)
