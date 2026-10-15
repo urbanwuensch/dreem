@@ -15,34 +15,75 @@ data, centred on PARAFAC. Maintainer: Urban Wünsch (urban.wunsch@chalmers.se).
 | `toolbox/@drEEMtoolbox/drEEMtoolbox.m` | Class definition: method declarations, version, options, update check |
 | `toolbox/classes/` | Data classes: `@drEEMdataset`, `@drEEMmodel`, `drEEMstatus`, `drEEMhistory`, `drEEMbackup`, `handlescatterOptions`, `@horibaRawdata` |
 | `toolbox/+dreemgui/` | App classes (`*_gui.m`) used by the `view*` methods, plus GUI helpers |
-| `toolbox/doc/` | Shipped HTML help, `helptoc.xml`, `GettingStarted.mlx`, images |
+| `toolbox/doc/` | Shipped HTML help (**generated, see Documentation**), `helptoc.xml`, `GettingStarted.mlx`, images |
 | `toolbox/examples/` | Tutorial live scripts (`.mlx`) and their data (`.mat`) |
 | `toolbox/external resources/` | Third-party code (N-way toolbox, inpaint_nans, crameri). **Do not modify.** |
+| `toolbox/package.ignore` | Files excluded from the `.mltbx` (paths relative to `toolbox/`) |
 | `toolbox/AGENTS.md` | Guide for agents *using* the toolbox (ships to users) |
+| `documentation/functions/`, `documentation/tutorials/` | **Markdown sources** of the HTML help pages |
+| `documentation/drEEM-new.css` | Stylesheet embedded in every generated help page |
 | `apps_mlapp/` | App Designer sources (`.mlapp`) for the GUIs in `+dreemgui` |
-| `documentation/` | Markdown sources of the function and tutorial pages, diagrams, compiled PDF |
+| `tests/` | `matlab.unittest` test suite (see Testing) |
+| `buildfile.m` | Build plan: `check`, `test`, `docs`, `tutorials`, `package` |
+| `buildUtilities/doc_template.html` | pandoc page template for the `docs` task |
 | `matlab.toml` | MATLAB project + packaging config (version, folders, output file name) |
-| `buildfile.m` | Build tool plan: `check` (code issues), `test`, `package` |
+| `release/createRelease.m` | Older manual packaging script, superseded by `buildtool package` |
 
-## Building, checking, testing
+## Building
 
-From the repo root in MATLAB:
+Open the project first (`openProject("matlab.toml")`), then from the repo root:
 
 ```matlab
-buildtool check      % static code analysis (CodeIssuesTask) — must be clean of errors
-buildtool test       % runs tests in tests/
-buildtool            % default: package (depends on check + test)
+buildtool check      % static code analysis (CodeIssuesTask)
+buildtool test       % test suite in tests/
+buildtool docs       % Markdown -> toolbox/doc/*.html (needs pandoc)
+buildtool tutorials  % tutorial .mlx -> toolbox/doc/*.html
+buildtool            % default: package, after check, test, docs and tutorials
 ```
 
-Note: `buildfile.m` and `matlab.toml` reference a `tests/` folder that is not in the
-repository right now, so `buildtool test` / `buildtool package` will fail until it exists.
-Until there is a test suite, verify changes by running the affected tutorial
-(`toolbox/examples/*.mlx`, using the shipped `tutorial_*.mat` data) end to end.
-New tests go in `tests/` as `matlab.unittest` classes and should use the tutorial
-data rather than new large files.
+`docs` and `tutorials` declare inputs and outputs, so `buildtool` skips them when
+nothing has changed. The package is written to `release/dreem.mltbx`.
 
 Agents usually can't drive MATLAB GUIs. When verifying, call methods with `plot=false`
 and avoid anything that opens a blocking window (see `toolbox/AGENTS.md`).
+
+## Testing
+
+Run `buildtool test` before every commit. All tests must pass.
+
+- Tests are class-based and inherit from `tests/DreemTestCase.m`, which checks that
+  `drEEMtoolbox` resolves to this repository (i.e. the project is open), closes figures
+  after each test and writes small synthetic csv files.
+- Call methods as `drEEMtoolbox.<method>(...)`, never via `tbx = drEEMtoolbox`: the
+  constructor runs the online update check and may open dialogs.
+- Pass `plot=false` and a complete `drEEMstatus` (`DreemTestCase.knownStatus`) so no
+  window or status GUI opens.
+- Generate test data in a `WorkingFolderFixture` (`useTempFolder`) or use the shipped
+  `toolbox/examples/*.mat`; don't add large data files.
+- `ToolboxStructureTest` enforces that every file in `@drEEMtoolbox` is declared Static
+  with the same signature as its file, that public methods are documented, and that
+  the version numbers and package identifier agree.
+- `TutorialDataTest/processingTutorialReproducesReference` compares the processing chain
+  with `toolbox/examples/tutorial_01_processed.mat`. If an intended change to a
+  processing method makes it fail, regenerate the tutorial data in order: re-run
+  `import_tutorial_01`, `processing_tutorial_01`, `prepare4Parafac_tutorial`,
+  `parafac_tutorial_01`, `tutorial_export_01` in the Live Editor and save each.
+
+## Documentation
+
+**Edit the Markdown in `documentation/`, never the HTML in `toolbox/doc/`.**
+`buildtool docs` regenerates the HTML with pandoc (3.8.3, keep the version fixed so
+output doesn't change between machines) and overwrites manual edits.
+
+Markdown rules (pandoc reads ambiguous Markdown differently from Markdown previewers):
+- blank line before every heading and before every `>` quote
+- code in fenced blocks (` ``` `), not indented with tabs or spaces
+- `<summary>`, `<i>` and `<a name>` lines inside `<details>` start at column 0
+- copy the structure of an existing page, e.g. `documentation/functions/importabsorbance.md`
+
+Tutorial pages are exported from the live scripts, which are binary: edit them in
+MATLAB, **Run All, save**, then `buildtool tutorials`. The export uses the outputs
+saved in the `.mlx`; it doesn't run the tutorials.
 
 ## How a public method is written
 
@@ -78,8 +119,10 @@ Follow the existing pattern exactly; users rely on its consistency. Use
    `SignalCalibration`, `SpectralCorrection`) and range validators (`mustBeInRangeEm/Ex`,
    `mustBeModel`, `mustBeMetadataColumn`). Options are name-value (`options.x`).
    Plotting methods take `plot` (default `data.toolboxOptions.plotByDefault`) and `figurefile`.
+   Text options may arrive as `string` or `char`; convert with `char(...)` before building
+   field names or concatenating.
 3. **Output handling.** Methods never modify the input; they return `dataout`.
-   - Processing methods: no output argument means **diagnostic mode** — print
+   - Processing methods: no output argument means **diagnostic mode**: print
      `'<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).'`,
      force `plot=true`, and `clearvars dataout` at the end.
    - Some methods also support the experimental `drEEMtoolbox.outputscenario(nargout)`
@@ -96,7 +139,8 @@ Follow the existing pattern exactly; users rely on its consistency. Use
    ```
    Pass `options` as details so `viewhistory` can show the settings that were used.
 6. **Models.** Methods that change `X`, `Ex`, `Em` or the samples must delete existing
-   models (as `subdataset`/`zapnoise` do) and say so in the console.
+   models and splits and say so in the console: `dataout.models = drEEMmodel;` and
+   `dataout.split = drEEMdataset.empty;` (not `drEEMdataset`, which is one empty split).
 7. **Figures.** Use `drEEMtoolbox.dreemfig` / `dreemuifig` and save via
    `dreemgui.saveAfterFunctionCall(fig, figurefile)`.
 
@@ -105,16 +149,15 @@ Follow the existing pattern exactly; users rely on its consistency. Use
 A new file in `@drEEMtoolbox/` is not enough. Also:
 
 - [ ] declare it in the `methods (Static = true, Access = public)` block of
-      `drEEMtoolbox.m`, **with the same signature as the file** (several current
-      declarations have drifted, e.g. `importeems`, `exportresults`, `mergedatasets`,
-      `ifecorrection`; fix them when you touch them)
+      `drEEMtoolbox.m`, with the same signature as the file's `function` line
 - [ ] add its name to the `mustBeMember` list in `@drEEMtoolbox/doc.m`
-      (note: that list currently contains the typo `"importscsans"`)
-- [ ] write `documentation/functions/<name>.md`, the shipped `toolbox/doc/<name>.html`,
-      and a `<tocitem>` in `toolbox/doc/helptoc.xml`
-- [ ] list it under its category in `toolbox/doc/function_overview.html`
-- [ ] mention it in `toolbox/doc/Whats new.html`
+- [ ] write `documentation/functions/<name>.md` and run `buildtool docs`
+      (function pages are not listed in `helptoc.xml`; no TOC entry needed)
+- [ ] mention it in `documentation/tutorials/Whats new.md`
 - [ ] if users will call it routinely, update the workflow in `toolbox/AGENTS.md`
+
+`buildtool test` fails if any of the first three steps is missing, and whenever a
+declaration differs from its file.
 
 ## Data classes and backward compatibility
 
@@ -123,8 +166,9 @@ A new file in `@drEEMtoolbox/` is not enough. Also:
   `loadobj`) handles it. Don't change properties without a migration path.
 - `drEEMstatus` property values are `mustBeMember` lists; adding a value is safe,
   renaming or removing one breaks saved datasets.
-- `drEEMdataset.validate` defines what a consistent dataset is. If you add a field with
-  a per-sample dimension, add its size check there.
+- `drEEMdataset.validate` defines what a consistent dataset is (e.g. no sample may have
+  only missing numbers in a measurement). If you add a field with a per-sample
+  dimension, add its size check there.
 
 ## GUIs
 
@@ -134,24 +178,35 @@ A new file in `@drEEMtoolbox/` is not enough. Also:
   `<name>_gui`). After changing an `.mlapp`, re-export and rename into `+dreemgui`.
   Small fixes can be made in the `.m` file directly, but must be ported back to the
   `.mlapp` or they are lost on the next export. Say so explicitly in the PR.
-- `.mlx` live scripts are also binary. Edit tutorials in MATLAB, then re-export the
-  matching HTML in `toolbox/doc/`.
+
+## External binaries
+
+`aqualog2nc` (used by `importaqualog`) is not shipped and not committed. It is
+downloaded for the user's OS on first use into `toolbox/external resources/` and
+excluded in `.gitignore` and `toolbox/package.ignore`.
 
 ## Versioning and releases
 
-Version format is `2.YY.MM` (e.g. `2.26.10`). On release, update **all** of:
+Version format is `2.YY.MM` (e.g. `2.26.10`). The version is stored in three places;
+`ToolboxStructureTest` fails if they differ:
 
-- `drEEMtoolbox.m`: `version` and `url` (Zenodo record of the new `.mltbx`)
-- `matlab.toml`: `version` and `output-file-name`
-- `toolbox/Contents.m`: version line
-- `toolbox/@drEEMtoolbox/versions.txt`: prepend `version;download-url;`. The update
-  check in installed copies reads this file from GitLab `main`, so only push it once
-  the download URL works.
-- `CITATION.cff` and `toolbox/citation.cff`
-- `toolbox/doc/Whats new.html`
+- `toolbox/@drEEMtoolbox/drEEMtoolbox.m`: `version`
+- `matlab.toml`: `version` (written into the `.mltbx`)
+- `toolbox/Contents.m`: line 2, version and month. Installed copies read their own
+  version from here via `ver`, so a stale value causes endless update prompts.
 
-Then run `release/createRelease.m` (or `buildtool package`), upload to Zenodo/File Exchange,
-and tag. Tagging triggers the GitLab mirror to MATLAB Online.
+Release steps:
+1. Bump the version in the three places above; update `documentation/tutorials/Whats new.md`.
+2. If tutorial output changed: Run All and save each tutorial in the Live Editor.
+3. `buildtool` (check, test, docs, tutorials, package) → `release/dreem.mltbx`.
+4. Install `release/dreem.mltbx` and check in the Add-On Manager that it shows the new
+   version and *replaces* the installed drEEM (same identifier as `drEEMtoolbox.uuid`).
+5. Publish a new version of the Zenodo record (concept DOI 10.5281/zenodo.17182160).
+   **Installed copies check `zenodo.org/api/records/17182160/versions/latest`, so users
+   are notified as soon as the Zenodo version is published.**
+6. Create the GitHub release with the version as tag and `dreem.mltbx` attached under
+   exactly that name (`releases/latest/download/dreem.mltbx` relies on it).
+7. Update File Exchange.
 
 ## Conventions
 
@@ -159,7 +214,7 @@ and tag. Tagging triggers the GitLab mirror to MATLAB Online.
 - Naming: lower-case verb+object (`subtractblanks`, `fitparafac`); viewers start with `view`,
   exporters with `export`, importers with `import`.
 - Error IDs: `drEEM:<Reason>` via `MException` / `throwAsCaller`, so errors point at the
-  user's line, not toolbox internals.
+  user's line, not toolbox internals. Give warnings IDs too, so tests can check for them.
 - Code must pass `buildtool check` without new warnings and support Windows, macOS and Linux
   (use `fullfile`, no shell calls except where already guarded).
 - The Parallel Computing Toolbox is optional: every `parfor` path needs a serial fallback.
@@ -173,6 +228,7 @@ and tag. Tagging triggers the GitLab mirror to MATLAB Online.
   change silently alters their results.
 - Deleting or renaming public methods. Hide them (`Hidden = true`) and keep a compatible
   wrapper, as for `sampleQimport` / `aqualogimport` in `drEEMtoolbox.m`.
-- Adding user-visible behaviour without documentation. Every public method has a help
-  header, an HTML page and a TOC entry.
-- Committing build output (`*.mltbx`, `helpsearch*/`) or large new data files.
+- Leaving method files in `@drEEMtoolbox/` that aren't declared in `drEEMtoolbox.m`.
+- Editing generated HTML in `toolbox/doc/` instead of its Markdown or `.mlx` source.
+- Committing build output (`*.mltbx`, `helpsearch*/`, `.buildtool/`), files the tutorials
+  write when run, or large new data files.
