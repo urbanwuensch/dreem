@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>subtractblanks</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,144 +370,99 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">subtractblanks</h1>
-
+<h1 id="subtractblanks">subtractblanks</h1>
 <p>subtract blanks from the samples</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>samplesout = subtractblanks(samples, blanks)</code></a></p>
-
 <p><a href="#syntax2"><code>samplesout = subtractblanks( ___ , Name,Value)</code></a></p>
-
 <p><a href="#syntax3"><code>subtractblanks( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p>Subtracts EEMs of blank stored in <code>blanks</code> from EEMs stored in <code>samples</code>.
-The function <code>subtractblanks</code> makes sure the <code>blanks</code> and <code>samples</code>  have the same wavelength axes. Mismatches can occur especially
-after the <code>ifecorrection</code> function has been applied on <code>samples</code>; parts of the EEM may have ben deleted due to lacking absorbance coverage. <code>subtractblanks</code> makes sure that the <code>blanks</code> will also be cut to be compatible.</p>
-
+<h2 id="description">Description</h2>
+<p>Subtracts EEMs of blank stored in <code>blanks</code> from EEMs stored in <code>samples</code>. The function <code>subtractblanks</code> makes sure the <code>blanks</code> and <code>samples</code> have the same wavelength axes. Mismatches can occur especially after the <code>ifecorrection</code> function has been applied on <code>samples</code>; parts of the EEM may have ben deleted due to lacking absorbance coverage. <code>subtractblanks</code> makes sure that the <code>blanks</code> will also be cut to be compatible.</p>
 <p>Next, if the subtraction was successful, the function will plot the EEMs stored in <code>samples</code>, <code>blanks</code>, and <code>samplesout</code> at an excitation of 275, where protein-like and humic-like fluorescence signal is likely to be observed, for the user to check the performance of the subtraction.</p>
-
 <p><img src="blankdiag.png" width="auto" height="auto" align="left"/></p>
-
 <p>All plots above show the predicted position of the different types of scatter. Take care that predictions and observations match, otherwise an issue with the wavelength accuracy might exist.</p>
-
 <p>Observe that the area between 1st and 2nd order scatter in the top right corner is flat, otherwise your blanks contain significant levels of fluorescence.</p>
-
 <p>If the last plot (bottom left) contains negative signals, more scatter was observed in the blank relative to the sample. This could be due to small air bubbles in one of the two samples, but is not necessarily a concerning observation.</p>
-
 <blockquote>
 <p><strong><em>Always inspect the results of the blank subtraction and pay close attention to potential issues.</em></strong></p>
 </blockquote>
-
 <p>An entry will be added to the <code>history</code> field of the <code>samplesout</code>.</p>
-
-<p><details open>
-    <summary><b><code>samplesout = subtractblanks(samples,blanks)</code> - default options</b></summary>
-<a name="syntax1"></a></p>
-
+<details open>
+<summary>
+<b><code>samplesout = subtractblanks(samples,blanks)</code> - default options</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>Simply subtracts blanks and shows plots</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>samplesout = subtractblanks( ___ , Name,Value)</code> - custom options</b></summary>
-<a name="syntax2"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>samplesout = subtractblanks( ___ , Name,Value)</code> - custom options</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>subtractblanks( ___ , Name,Value)</code> - Diagnosis mode</b></summary>
-<a name="syntax3"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>subtractblanks( ___ , Name,Value)</code> - Diagnosis mode</b>
+</summary>
+<p><a name="syntax3"></a></p>
 <p>When no output argument is supplied, the function automatically switches to diagnostics mode. Outputs are shown to allow you to see how the operation would affect your dataset.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>samples</code> - dataset with sample fluorescence</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>. </p>
-
+</details>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>samples</code> - dataset with sample fluorescence</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>.</p>
 <blockquote>
-<p>The property <code>samples.status.blankSubtraction</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
+<p>The property <code>samples.status.blankSubtraction</code> must be <code>"not applied"</code>. Otherwise, the function returns a validation error.</p>
 </blockquote>
-
-<p></details></p>
-
-<p><details>
-    <summary><b><code>blanks</code> - dataset blank fluorescence</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>. </p>
-
+</details>
+<details>
+<summary>
+<b><code>blanks</code> - dataset blank fluorescence</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>.</p>
 <blockquote>
-<p>The property <code>blanks.status.blankSubtraction</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
+<p>The property <code>blanks.status.blankSubtraction</code> must be <code>"not applied"</code>. Otherwise, the function returns a validation error.</p>
 </blockquote>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
-<p>Logical or numeric value to specify if a plot showing the results should be generated.
-Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>subtractblanks</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-subtractblanks.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-subtractblanks.jpg&quot;.</p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
+<p>Logical or numeric value to specify if a plot showing the results should be generated. Default is <code>true</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save graphical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>subtractblanks</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-subtractblanks.png". Likewise, providing "projectX.jpg" will result in "projectX-subtractblanks.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>samplesout</code> - processed dataset </b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samplesout)</code>. </p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>samplesout</code> - processed dataset </b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samplesout)</code>.</p>
 <blockquote>
-<p>The property <code>samples.status.blankSubtraction</code> will have changed from <code>&quot;not applied&quot;</code> to <code>&quot;applied by toolbox&quot;</code>.</p>
+<p>The property <code>samples.status.blankSubtraction</code> will have changed from <code>"not applied"</code> to <code>"applied by toolbox"</code>.</p>
 </blockquote>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

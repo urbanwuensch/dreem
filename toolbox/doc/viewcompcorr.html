@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewcompcorr</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,59 +370,36 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewcompcorr</h1>
-
+<h1 id="viewcompcorr">viewcompcorr</h1>
 <p>Investigate the correlations between scores of different components in PARAFAC models.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">viewcompcorr(data,Name,Value)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
-<p>The function <code>viewcompcorr</code> opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information stored in metadata columns.
-This app can also be opened from the <code>view correlations vs. metadata</code> button in the <code>Score Correlation</code> tab of the <code>viewmodels</code> app.</p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code>- dataset with PARAFAC model</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save the grapical user interface </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the current view of  the GUI.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewcompcorr</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewcompcorr.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewcompcorr.jpg&quot;.</p>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>viewcompcorr(data,Name,Value)</code></pre>
+<h2 id="description">Description</h2>
+<p>The function <code>viewcompcorr</code> opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information stored in metadata columns. This app can also be opened from the <code>view correlations vs. metadata</code> button in the <code>Score Correlation</code> tab of the <code>viewmodels</code> app.</p>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code>- dataset with PARAFAC model</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save the grapical user interface </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the current view of the GUI.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewcompcorr</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewcompcorr.png". Likewise, providing "projectX.jpg" will result in "projectX-viewcompcorr.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
-
-<p></details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving.</p>
+</details>
 </body>
-
 </html>

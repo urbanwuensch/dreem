@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>processabsorbance</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,34 +370,21 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">processabsorbance</h1>
-
+<h1 id="processabsorbance">processabsorbance</h1>
 <p>Perform basic corrections on absorbance data</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = processabsorbance(data)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = processabsorbance( ___ , Name,Value)</code></a></p>
-
-<p><a href="#syntax3"><code>processabsorbance( ___ , Name,Value)</code></a> </p>
-
-<h2 id="toc_2">Description</h2>
-
+<p><a href="#syntax3"><code>processabsorbance( ___ , Name,Value)</code></a></p>
+<h2 id="description">Description</h2>
 <p>The <code>processabsorbance</code> function reads <code>absorbance</code> values from <code>data</code> and performs multiple corrections of the data. These are:</p>
-
 <ul>
 <li>baseline correction.
-
 <ul>
 <li>If a single wavelength is given, the average absorbance <em>above</em> the value <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
 <li>If two wavelength values are given, the average absorbance <em>between</em> both values <a href="#NameValue"><code>baseWave</code></a> are subtracted.</li>
@@ -409,143 +392,101 @@ details:open > summary {
 <li>extrapolating the longer wavelength (needed for inner filter effects correction). This is done via the exponential slope that is fitted to the existing data and then extracted to the longest wavelength in the EEM (excitation or emission). Note that this extrapolation will only work well for CDOM spectra. If non-CDOM-type absorbance above 300 nm is found, the method will produce invalid results.</li>
 <li>Replacing negative values with zeroes. This option is not intended to improve the quality of CDOM spectra but only to avoid IFE correction artefacts.</li>
 </ul>
-
-<p>These processes are performed in the order specified above. If extrapolation is requested, baseline correction will be carried out both prior and after the extrapolation to ensure data quality. </p>
-
-<p><details open>
-<summary><b><code>dataout = processabsorbance(data)</code> - perform default correction</b>
+<p>These processes are performed in the order specified above. If extrapolation is requested, baseline correction will be carried out both prior and after the extrapolation to ensure data quality.</p>
+<details open>
+<summary>
+<b><code>dataout = processabsorbance(data)</code> - perform default correction</b>
 </summary>
-<a name="syntax1"></a>
-If no option is specified, the function will perform a baseline correction and an extrapolation of CDOM data to wavelengths covered in the EEM if these exceed the absorbance. </p>
-
+<p><a name="syntax1"></a> If no option is specified, the function will perform a baseline correction and an extrapolation of CDOM data to wavelengths covered in the EEM if these exceed the absorbance.</p>
 <p>When the processing is finished, the function will plot the original absorbance data, the extrapolated data, and the final processed data in one figure.</p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b><code>dataout = processabsorbance(___ , Name,Value)</code> - perform corrections as specified with custom options</b>
+</details>
+<details open>
+<summary>
+<b><code>dataout = processabsorbance(___ , Name,Value)</code> - perform corrections as specified with custom options</b>
 </summary>
-<a name="syntax2"></a>
-specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if a baseline correction must be performed, and whether the absorbance data must be extrapolated or not. <br>
-Example: <code>data = processabsorbance(data,&#39;correctBase&#39;,false)</code> to skip the baseline correction step. </p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b><code>processabsorbance(___ , Name,Value)</code> - run the function in diagnostic mode</b>
+<p><a name="syntax2"></a> specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if a baseline correction must be performed, and whether the absorbance data must be extrapolated or not. <br> Example: <code>data = processabsorbance(data,'correctBase',false)</code> to skip the baseline correction step.</p>
+</details>
+<details open>
+<summary>
+<b><code>processabsorbance(___ , Name,Value)</code> - run the function in diagnostic mode</b>
 </summary>
-<a name="syntax3"></a>
-If no output is specified, the function will simply give a visual overview over the results that would be assigned an output. Use this to decide which corrections you want or need to apply.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li><p>correct CDOM baseline, extrapolate if EEM wavelength coverage is different from CDOM, and plot outcomes
-<code>samples = tbx.processabsorbance(samples);</code></p></li>
-<li><p>Just carry out a baseline correction
-<code>samples = tbx.processabsorbance(samples,correctBase=true,extrapolate=false,zero=false);</code></p></li>
-<li><p>Do something, but please don&#39;t show that final plot
-<code>samples = tbx.processabsorbance(samples,...,plot=false);</code></p></li>
+<p><a name="syntax3"></a> If no output is specified, the function will simply give a visual overview over the results that would be assigned an output. Use this to decide which corrections you want or need to apply.</p>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li><p>correct CDOM baseline, extrapolate if EEM wavelength coverage is different from CDOM, and plot outcomes <code>samples = tbx.processabsorbance(samples);</code></p></li>
+<li><p>Just carry out a baseline correction <code>samples = tbx.processabsorbance(samples,correctBase=true,extrapolate=false,zero=false);</code></p></li>
+<li><p>Do something, but please don't show that final plot <code>samples = tbx.processabsorbance(samples,...,plot=false);</code></p></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - contains CDOM spectra to correct</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. If no absorbance is present, the function will return an error.
-</details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>correctBase</code>- switch for baseline correction</b></summary>
-    <i>logical</i></p>
-
-<p>Indicates if the baseline correction should be performed. Default value is <code>true</code>.
-The baseline correction is applied using the mean absorbance beyond the specified or default <code>baseWave</code></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - contains CDOM spectra to correct</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. If no absorbance is present, the function will return an error.
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>correctBase</code>- switch for baseline correction</b>
+</summary>
+<p><i>logical</i></p>
+<p>Indicates if the baseline correction should be performed. Default value is <code>true</code>. The baseline correction is applied using the mean absorbance beyond the specified or default <code>baseWave</code></p>
 <p>Default is <code>true</code>.</p>
-
 <p>If no absorbance is measured past 580nm, the option is automatically disabled. However, if extrapolation is turned on, the baseline correction will be carried out regardless.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>baseWave</code>- wavelength range for baseline correction</b></summary>
-    <i>numeric scalar or vector with two elements</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>baseWave</code>- wavelength range for baseline correction</b>
+</summary>
+<p><i>numeric scalar or vector with two elements</i></p>
 <p>Specify the wavelength from which the absorbance data is used for baseline correction. The wavelength must be greater than 580 nm.</p>
-
 <p>If one value is provided, wavelengths above the specified value will be used to extract the average baseline absorbance to subtract.</p>
-
 <p>If two values are provided the average between both is subtracted for every sample.</p>
-
 <p>Default value is <code>595</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>zero</code>- switch for zeroing of negative absorbance</b></summary>
-    <i>logical</i></p>
-
-<p>If <code>true</code> the negative values will be set to zeroes.
-Default is <code>false</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>extrapolate</code>- switch for spectral extrapolation</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>zero</code>- switch for zeroing of negative absorbance</b>
+</summary>
+<p><i>logical</i></p>
+<p>If <code>true</code> the negative values will be set to zeroes. Default is <code>false</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>extrapolate</code>- switch for spectral extrapolation</b>
+</summary>
+<p><i>logical</i></p>
 <p>If <code>true</code>, the function performs a non-linear fit of the absorbance data (<code>b1*exp(b2/1000*(350-lambda))+b3</code>) to model the exponential absorbance spectra, based on <a href="https://doi.org/10.1006/ecss.2000.0645">Stedmon et al. (2000)</a>, and extrapolate it to cover the wavelength range needed for EEM IFE corrections.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of slopes for all sample in <code>data</code>. If no output argument is supplied, plotting is enabled automatically.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>processabsorbance</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-processabsorbance.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-processabsorbance.jpg&quot;.</p>
-
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save graphical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>processabsorbance</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-processabsorbance.png". Likewise, providing "projectX.jpg" will result in "projectX-processabsorbance.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details open>
-    <summary><b><code>dataout</code> - dataset with processed absorbance</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.
-</details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details open>
+<summary>
+<b><code>dataout</code> - dataset with processed absorbance</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.
+</details>
 </body>
-
 </html>

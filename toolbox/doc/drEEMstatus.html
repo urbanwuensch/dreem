@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>drEEMstatus</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,57 +370,38 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">drEEMstatus</h1>
-
+<h1 id="dreemstatus">drEEMstatus</h1>
 <p>Since version 2.0.0, drEEM keeps a detailed record of operations it performs on a dataset. To be able to do this meaningful, the toolbox first needs to know some details about your dataset. After that, it can assist as much as possible with doing things properly. And the best thing is that since it knows about your dataset, it can document the dataset details and fully prepare your dataset for an Open Science repository such as Pangaea.</p>
-
 <p>How do we do this? <strong><em>With the <code>drEEMstatus</code> property.</em></strong></p>
-
-<p>It is one of the properties (i.e. a field in a Matlab structure) of the <a href="dreemdataset.html"><code>drEEMdataset</code></a> object, so you&#39;ll find a status field in each dataset you&#39;ll work with.</p>
-
+<p>It is one of the properties (i.e. a field in a Matlab structure) of the <a href="dreemdataset.html"><code>drEEMdataset</code></a> object, so you'll find a status field in each dataset you'll work with.</p>
 <blockquote>
 <p><strong>Note:</strong> The status property of each dataset is protected. It can only be changed with the <a href="changestatus.html"><code>changestatus</code></a> GUI during import or by the appropriate drEEM functions that modify the data and thus need to modify the dataset status. This is to support traceability.</p>
 </blockquote>
-
-<p>The changestatus GUI looks as follows: 
-<img src="changestatus_example.png" width="auto" height="auto" align="justify"/></p>
-
+<p>The changestatus GUI looks as follows: <img src="changestatus_example.png" width="auto" height="auto" align="justify"/></p>
 <p>The status will give you all the important information on a dataset regarding important processing steps, namely:</p>
-
-<p><details open>
+<details open>
 <summary>
 <strong>Spectral Correction:</strong> Have spectral biases of the instrument been compensated?
-</summary></p>
-
+</summary>
 <p>Possible values are:</p>
-
 <ul>
 <li>unknown</li>
 <li>not applied</li>
 <li>applied by instrument software</li>
 <li>applied by toolbox</li>
 </ul>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>applied by instrument software</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
 <strong>Inner-filter effect correction:</strong> Have Inner-filter effects been corrected?
-</summary></p>
-
+</summary>
 <p>Possible values are:</p>
-
 <ul>
 <li>unknown</li>
 <li>not applied</li>
@@ -432,36 +409,26 @@ details:open > summary {
 <li>applied by toolbox</li>
 <li>deemed unnecessary</li>
 </ul>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
 <strong>Blank Subtraction:</strong> Have blanks been subtracted?
-</summary></p>
-
+</summary>
 <p>Possible values are:</p>
-
 <ul>
 <li>unknown</li>
 <li>not applied</li>
 <li>applied by instrument software</li>
 <li>applied by toolbox</li>
 </ul>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
 <strong>Signal Calibration:</strong> Have arbitrary signals been converted, e.g. to Raman Units?
-</summary></p>
-
+</summary>
 <p>Possible values are:</p>
-
 <ul>
 <li>unknown</li>
 <li>not applied</li>
@@ -470,46 +437,33 @@ details:open > summary {
 <li>applied by toolbox (RU)</li>
 <li>applied by toolbox (QSU)</li>
 </ul>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
 <strong>Scatter Treatment:</strong> Has scatter been treated in any way?
-</summary></p>
-
+</summary>
 <p>Possible values are:</p>
-
 <ul>
 <li>unknown</li>
 <li>not applied</li>
 <li>applied by instrument software</li>
 <li>applied by toolbox</li>
 </ul>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>not applied</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
 <strong>Signal Scaling:</strong> Have signals been scaled, e.g. by division with the maximum or sum of fluorescence?
-</summary></p>
-
+</summary>
 <p>This property is not restricted to a set of possibilities since signal scaling comes in many forms.</p>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importeems.html"><code>importeems</code></a>, the default value is changed to <code>original scale</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
 <strong>Absorbance Unit:</strong> In which unit is the absorbance data stored?
 </summary>
-Possible values are:</p>
-
+<p>Possible values are:</p>
 <ul>
 <li>unknown</li>
 <li>absorbance per cm</li>
@@ -518,14 +472,7 @@ Possible values are:</p>
 <li>napierian absorption coefficient</li>
 <li>linear decadic absorption coefficient</li>
 </ul>
-
 <p><strong>Default is <code>unknown</code></strong>, but during <a href="importabsorbance.html"><code>importabsorbance</code></a>, the default value is changed to <code>absorbance per cm</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

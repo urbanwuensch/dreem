@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>validatedataset</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,60 +370,37 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">validatedataset</h1>
-
+<h1 id="validatedataset">validatedataset</h1>
 <p>Check for the correct dimensions and consistency of various fields within a <code>drEEMdataset</code> object, ensuring that the data meets the expected structure required for subsequent analysis.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>validatedataset(data)</code></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The validatedataset function performs several validation checks on the dataset object. These checks include:</p>
-
 <ul>
 <li>Class verification: The dataset must be of the class <code>drEEMdataset</code>. This means that its contents is prescribed and cannot be changed.</li>
-<li>Dimension Checks: Verifies that the <code>X</code> field has three dimensions and checks its consistency with other related fields (<code>nSample</code>, <code>filelist</code>, <code>metadata</code>, <code>i</code>, <code>Em</code>, <code>nEm</code>, <code>Ex</code>, <code>nEx</code>, <code>models</code>). </li>
+<li>Dimension Checks: Verifies that the <code>X</code> field has three dimensions and checks its consistency with other related fields (<code>nSample</code>, <code>filelist</code>, <code>metadata</code>, <code>i</code>, <code>Em</code>, <code>nEm</code>, <code>Ex</code>, <code>nEx</code>, <code>models</code>).</li>
 <li><code>abs</code> property is a 2-dimensional matrix and checks its consistency with relevant fields.</li>
 <li>NaN and Complex Number Checks: Identifies fields containing only <code>NaN</code> values or complex numbers.</li>
 </ul>
-
 <p><strong>Error Reporting</strong></p>
-
 <p>The function generally collects and then reports errors if any inconsistencies are found in the dataset. However, if issues are found that prevent the validation itself from executing correctly, the function will throw an error prematurely.</p>
-
 <p>If no errors were found and the function was called from the <code>drEEMtoolbox</code>, a success message is displayed.</p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li>Check if a dataset is a valid drEEM dataset.
-<code>tbx.validatedataset(samples)</code></li>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li>Check if a dataset is a valid drEEM dataset. <code>tbx.validatedataset(samples)</code></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - a drEEMdataset</b></summary>
-    <i>drEEMdataset</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - a drEEMdataset</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that will be evaluated with the validation function.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

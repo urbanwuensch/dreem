@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>fitpca</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,125 +370,90 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">fitpca</h1>
-
+<h1 id="fitpca">fitpca</h1>
 <p>Fit PCA models to fluorescence data.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = fitpca(data)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = fitpca(___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p>The <code>fitpca</code> function uses a principal component analysis to the fluorescence EEMs provided in <code>data</code>. The models are saved in <code>data.models</code>. </p>
-
-<p>Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions). The EEM is thus transformed to a matrix with the dimensions <code>[data.nSample,data.nEm*data.nEx]</code>. </p>
-
+<h2 id="description">Description</h2>
+<p>The <code>fitpca</code> function uses a principal component analysis to the fluorescence EEMs provided in <code>data</code>. The models are saved in <code>data.models</code>.</p>
+<p>Principal Component Analysis (PCA) is a two-way model and thus requires unfolding of the EEMs (from 3 to 2 dimensions). The EEM is thus transformed to a matrix with the dimensions <code>[data.nSample,data.nEm*data.nEx]</code>.</p>
 <p>PCA is an efficient and fast tool to highlight differences from an average composition. To suit this purpose, EEMs are mean-centered prior to the analysis. This is done internally, so the original data is not affected. Note however that calculating model residuals would require pre-processing the data by mean-centering.</p>
-
 <p>Results can be inspected with the <code>viewmodels</code> GUI.</p>
-
 <blockquote>
 <p>Read more here: Persson, T.; Wedborg, M. Multivariate <a href="https://doi.org/10.1016/S0003-2670(01)00812-1">Evaluation of the Fluorescence of Aquatic Organic Matter</a>. Analytica Chimica Acta 2001, 434 (2), 179–192. <a href="https://doi.org/10.1016/S0003-2670(01)00812-1">https://doi.org/10.1016/S0003-2670(01)00812-1</a>.</p>
 </blockquote>
-
 <p>PCA in the way fitted here cannot handle missing data. We therefore:</p>
-
-<ol>
+<ol type="1">
 <li>delete all data that is missing in all samples (scatter diagonals)</li>
 <li>delete any samples that have missing data remaining, i.e. those that have been zapped with e.g. <code>zapnoise</code> or handled with <code>rmspikes</code>. However, the function offers an interpolation option (enabled by default) which would prevent sample deletion in this case. This might however introduce interpolation artefacts.</li>
 </ol>
-
 <p>Note that since PCA models are nested, there is only one model present with <code>maxcomp</code> components (default = 5).</p>
-
-<p>An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the  options used for <code>fitpca</code>. 
+An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the options used for <code>fitpca</code>.
 <details open>
-    <summary><b><code>dataout = fitpca(data)</code> - Default options</b></summary>
-    <a name="syntax1"></a></p>
-
+<summary>
+<b><code>dataout = fitpca(data)</code> - Default options</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>Here, the default options are chosen. These are to only consider the first 5 components, interpolate missing values (unless they are always missing), and to not delete samples with low intensities (e.g. process blanks).</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout = fitpca( ___ , Name,Value)</code> - <a href="#NameValue">Name,Value</a> arguments</b></summary>
-    <a name="syntax2"></a></p>
-
-<p>The default options might not be the right options in your case. You can therefore specifiy Name,Value arguments to modify how data are preprocessed or how many components you&#39;d like to get returned.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = fitpca( ___ , Name,Value)</code> - <a href="#NameValue">Name,Value</a> arguments</b>
+</summary>
+<p><a name="syntax2"></a></p>
+<p>The default options might not be the right options in your case. You can therefore specifiy Name,Value arguments to modify how data are preprocessed or how many components you'd like to get returned.</p>
+</details>
+<h2 id="examples">Examples</h2>
 <p><code>samples=tbx.fitpca(samples,maxcomp=8,deleteLow=true);</code></p>
-
 <p>Fit an 8-component PCA model after deleting samples that have less than 1/5 of the median sum of fluorescence in their EEM.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code>- contains EEMs to fit models to</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>maxcomp</code>- the number of components</b></summary>
-    <i>numeric</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code>- contains EEMs to fit models to</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>maxcomp</code>- the number of components</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Numeric scalar specifying the maximum number of components to export. Default is 5.</p>
-
 <p>Note that since PCA models are nested, there is only one model present with <code>maxcomp</code> components (default = 5).</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>interpolateMissing</code> - should missing data be interpolated?</b></summary>
-    <i>logical</i></p>
-
-<p>Note that this setting only applies to observations missing in individual samples. Data that is missing in all samples will always be deleted.
-The interpolation happens with a 2D inpainting algorithm.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>deleteLow</code> - should low-intensity samples be deleted?</b></summary>
-    <i> logical </i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>interpolateMissing</code> - should missing data be interpolated?</b>
+</summary>
+<p><i>logical</i></p>
+<p>Note that this setting only applies to observations missing in individual samples. Data that is missing in all samples will always be deleted. The interpolation happens with a 2D inpainting algorithm.</p>
+</details>
+<details open>
+<summary>
+<b><code>deleteLow</code> - should low-intensity samples be deleted?</b>
+</summary>
+<p><i> logical </i></p>
 <p>If present, low-intensity samples can distract PCA from fitting meaningful components. This option will delete samples that have less than 1/5th the median overall fluorescence (sum).</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with PCA model</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with PCA model</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
 <p>Note that since PCA models are nested, there is only one model present with <code>maxcomp</code> components (default = 5).</p>
-
 <p>Models are stored in dataout.models. Each model is a <code>drEEMmodel</code> object contains the following information (no contents in this case):</p>
-
-<div><pre><code class="language-none">  drEEMmodel with properties:
+<pre><code>  drEEMmodel with properties:
 
                 loads: {1×0 cell}
             leverages: {1×0 cell}
@@ -509,13 +470,7 @@ componentContribution: NaN
           constraints: &quot;&quot;
               toolbox: &quot;&quot;
             modelName: &quot;PCA&quot;
-       loadingsMatrix: []</code></pre></div>
-
-<p></details></p>
-
-
-
-
+       loadingsMatrix: []</code></pre>
+</details>
 </body>
-
 </html>

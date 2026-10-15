@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>spectralcorrection</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,142 +370,97 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">spectralcorrection</h1>
-
+<h1 id="spectralcorrection">spectralcorrection</h1>
 <p>Correct systematic, wavelength-dependent sensitivity biases of the excitation and emission monochromators using user-supplied instrument correction factors.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = spectralcorrection(data,Name,Value)</code></a></p>
-
 <p><a href="#syntax2"><code>spectralcorrection(data,Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p><details open>
-    <summary><b><code>dataout = spectralcorrection(data,Name,Value)</code> - apply spectral correction</b></summary>
-<a name="syntax1"></a></p>
-
-<p>Applies a spectral (instrument-response) correction to the fluorescence EEMs in <code>data</code>, using excitation and emission correction factors supplied via the <a href="#NameValue">name-value</a> pair notation. This compensates for wavelength-dependent sensitivity biases of the excitation and emission monochromators that were not already corrected by the instrument&#39;s own software.</p>
-
+<h2 id="description">Description</h2>
+<details open>
+<summary>
+<b><code>dataout = spectralcorrection(data,Name,Value)</code> - apply spectral correction</b>
+</summary>
+<p><a name="syntax1"></a></p>
+<p>Applies a spectral (instrument-response) correction to the fluorescence EEMs in <code>data</code>, using excitation and emission correction factors supplied via the <a href="#NameValue">name-value</a> pair notation. This compensates for wavelength-dependent sensitivity biases of the excitation and emission monochromators that were not already corrected by the instrument's own software.</p>
 <p>The correction factors in <code>XCor</code> and <code>MCor</code> are interpolated onto the excitation (<code>Ex</code>) and emission (<code>Em</code>) wavelengths of <code>data</code>, combined into a single correction matrix, and applied to every sample in <code>data</code> by element-wise multiplication.</p>
-
 <p>If the wavelength range covered by <code>XCor</code> or <code>MCor</code> is narrower than the <code>Ex</code>/<code>Em</code> range of <code>data</code>, <code>data</code> is trimmed to the overlapping range and a warning is displayed informing the user of this.</p>
-
 <p>An entry will be added to the <code>history</code> field of <code>data</code>, detailing the processing options used.</p>
-
 <blockquote>
-<p><strong><em>The status-property &quot;spectralCorrection&quot; must be &quot;not applied&quot;. Otherwise, the function returns a validation error. This property changes upon completion of the function to &quot;applied by toolbox&quot;.</em></strong></p>
+<p><strong><em>The status-property "spectralCorrection" must be "not applied". Otherwise, the function returns a validation error. This property changes upon completion of the function to "applied by toolbox".</em></strong></p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>spectralcorrection(data,Name,Value)</code> - diagnostic mode</b></summary>
-<a name="syntax2"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>spectralcorrection(data,Name,Value)</code> - diagnostic mode</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p>By not supplying an output argument, the function will run in diagnostic mode. The excitation and emission correction curves and the resulting correction matrix will be calculated and shown, but the correction will not be applied to the dataset.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li><p>correct a dataset with excitation and emission correction factors loaded from instrument-supplied calibration files
-<code>xcorr = readmatrix(&#39;excitation_correction.csv&#39;);</code>
-<code>mcorr = readmatrix(&#39;emission_correction.csv&#39;);</code>
-<code>samples = tbx.spectralcorrection(samples,XCor=xcorr,MCor=mcorr);</code></p></li>
-<li><p>inspect the correction curves and matrix without applying them (diagnostic mode)
-<code>tbx.spectralcorrection(samples,XCor=xcorr,MCor=mcorr);</code></p></li>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li><p>correct a dataset with excitation and emission correction factors loaded from instrument-supplied calibration files <code>xcorr = readmatrix('excitation_correction.csv');</code> <code>mcorr = readmatrix('emission_correction.csv');</code> <code>samples = tbx.spectralcorrection(samples,XCor=xcorr,MCor=mcorr);</code></p></li>
+<li><p>inspect the correction curves and matrix without applying them (diagnostic mode) <code>tbx.spectralcorrection(samples,XCor=xcorr,MCor=mcorr);</code></p></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset with fluorescence data</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset with fluorescence data</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
 <blockquote>
-<p>The property <code>data.status.spectralCorrection</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
+<p>The property <code>data.status.spectralCorrection</code> must be <code>"not applied"</code>. Otherwise, the function returns a validation error.</p>
 </blockquote>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter.
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>XCor</code> - excitation correction factors</b></summary>
-    <i>numeric, n-by-2</i></p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>XCor</code> - excitation correction factors</b>
+</summary>
+<p><i>numeric, n-by-2</i></p>
 <p>A two-column numeric matrix with excitation wavelengths in the first column and the corresponding correction factor in the second column. Wavelengths do not need to match <code>data.Ex</code>; the factors are interpolated onto <code>data.Ex</code>. Typically supplied by the instrument manufacturer.</p>
-
 <p>This argument is required; the function returns an error if it is not supplied.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>MCor</code> - emission correction factors</b></summary>
-    <i>numeric, n-by-2</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>MCor</code> - emission correction factors</b>
+</summary>
+<p><i>numeric, n-by-2</i></p>
 <p>A two-column numeric matrix with emission wavelengths in the first column and the corresponding correction factor in the second column. Wavelengths do not need to match <code>data.Em</code>; the factors are interpolated onto <code>data.Em</code>. Typically supplied by the instrument manufacturer.</p>
-
 <p>This argument is required; the function returns an error if it is not supplied.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if a plot showing the results should be generated. The plot shows the excitation and emission correction curves, as well as the combined correction matrix. If no output argument is supplied, plotting is enabled automatically.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code> - option to save graphical <code>plot</code> output</b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. <code>&quot;output.png&quot;</code>), the function will save the output produced when <code>plot</code> is set to <code>true</code>. If <code>plot=false</code>, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>spectralcorrection</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-spectralcorrection.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-spectralcorrection.jpg&quot;.</p>
-
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code> - option to save graphical <code>plot</code> output</b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. <code>"output.png"</code>), the function will save the output produced when <code>plot</code> is set to <code>true</code>. If <code>plot=false</code>, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>spectralcorrection</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-spectralcorrection.png". Likewise, providing "projectX.jpg" will result in "projectX-spectralcorrection.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - spectrally corrected dataset</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - spectrally corrected dataset</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
 <p>The status of the dataset is changed to reflect the fact that a spectral correction has been applied by the drEEM toolbox.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

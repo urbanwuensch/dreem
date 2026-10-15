@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>importaqualog</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,127 +370,83 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">importaqualog</h1>
-
+<h1 id="importaqualog">importaqualog</h1>
 <p>Import absorbance-fluorescence measurements from Aqualog-generated OPJ or OGW files and create drEEMdataset</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>[samples,blanks] = importaqualog(folder)</code></a></p>
-
 <p><a href="#syntax2"><code>[samples,blanks] = importaqualog( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>This function scans the current working directory (<code>pwd</code>) for .opj and / or .ogw files and uses aqualog2nc (C++ software) to grab all rawdata to reprocess into absorbance spectra and fluorescence EEMs.</p>
-
-<p>If the C++ tool detects incompatible settings, <code>importaqualog</code> will import the group with the most samples by default. If you wish to change this, use the &quot;bucket&quot; option.</p>
-
+<p>If the C++ tool detects incompatible settings, <code>importaqualog</code> will import the group with the most samples by default. If you wish to change this, use the "bucket" option.</p>
 <p>During the import, an ACDD/CF-compliant NetCDF file gets generated. This is an excellent archive for your data as it is about 10x smaller than your OPJ/OGW files.</p>
-
-<p><details open>
-<summary><b>
-<code>[samples,blanks] = importaqualog(folder)</code> - standard options</b>
+<details open>
+<summary>
+<b> <code>[samples,blanks] = importaqualog(folder)</code> - standard options</b>
 </summary>
-<a name="syntax1"></a><br>
-returns two drEEMdataset objects (samples, blanks) that contains fluorescence EEMs and their associated information. Samples.metadata contains date/time of measurement, integration time, and other useful extracted information.</p>
-
+<p><a name="syntax1"></a><br> returns two drEEMdataset objects (samples, blanks) that contains fluorescence EEMs and their associated information. Samples.metadata contains date/time of measurement, integration time, and other useful extracted information.</p>
 <p>The drEEMstatus is auto-populated since the import is aware of the processing status and instrument properties.</p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b>
-<code>[samples,blanks] = importaqualog([ ___ ], Name,Value)</code> - custom options</b>
+</details>
+<details open>
+<summary>
+<b> <code>[samples,blanks] = importaqualog([ ___ ], Name,Value)</code> - custom options</b>
 </summary>
-<a name="syntax2"></a></p>
-
-<p>In case things went wrong and you&#39;d like to have control over which settings-batch to import, you can do so in this syntax.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li><strong>Grab any stored measurements in current folder, identical settings</strong>
-   <code>[samples,blanks] = tbx.importaqualog(pwd);</code></li>
-<li><strong>Same as 1. but different settings, you want the largest group</strong>
-   <code>[samples,blanks] = tbx.importaqualog(pwd,bucket=1);</code></li>
-<li><strong>Same as 2. but now you want to process the samples that got measured with different settings</strong>
-   <code>[samples,blanks] = tbx.importaqualog(pwd,bucket=N); % Choose your N, depends on case.</code></li>
-<li><strong>If you&#39;d wish to update (or reset) the aqualog2nc software</strong>
-  <code>[samples,blanks] = tbx.importaqualog(pwd,toolreset=true);</code></li>
+<p><a name="syntax2"></a></p>
+<p>In case things went wrong and you'd like to have control over which settings-batch to import, you can do so in this syntax.</p>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li><strong>Grab any stored measurements in current folder, identical settings</strong> <code>[samples,blanks] = tbx.importaqualog(pwd);</code></li>
+<li><strong>Same as 1. but different settings, you want the largest group</strong> <code>[samples,blanks] = tbx.importaqualog(pwd,bucket=1);</code></li>
+<li><strong>Same as 2. but now you want to process the samples that got measured with different settings</strong> <code>[samples,blanks] = tbx.importaqualog(pwd,bucket=N); % Choose your N, depends on case.</code></li>
+<li><strong>If you'd wish to update (or reset) the aqualog2nc software</strong> <code>[samples,blanks] = tbx.importaqualog(pwd,toolreset=true);</code></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details open>
-    <summary><b><code>folder</code> Folder containing the measurements in OPJ or OGW files</b></summary>
-    <i>char | string</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details open>
+<summary>
+<b><code>folder</code> Folder containing the measurements in OPJ or OGW files</b>
+</summary>
+<p><i>char | string</i></p>
 <p>A text specifying the folder from which to import your measurements.</p>
-
 <p>Example: <code>pwd</code></p>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>folder</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>bucket</code>- specify which group (&quot;bucket&quot;) to import from</b></summary>
-    <i>numeric</i></p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>folder</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>bucket</code>- specify which group ("bucket") to import from</b>
+</summary>
+<p><i>numeric</i></p>
 <p>In case the opj/ogw files contain absorbance+fluorescence measurements with incompatible settings (e.g. different excitation wavelengths), the C++ converter will create groups within the NetCDF file. Here, you specify the numeric group. The larger the number, the fewer samples there will be (descending ordering).</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>toolreset</code>- trigger a reset / redownload of aqualog2nc</b></summary>
-    <i>numeric</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>toolreset</code>- trigger a reset / redownload of aqualog2nc</b>
+</summary>
+<p><i>numeric</i></p>
 <p>If ou are having trouble during the extraction of OPJ/OGW data (error messages), a re-download of the extraction engine <code>aqualog2nc</code> might help (e.g. if an update was posted). Setting <code>toolreset</code> to true will locate and delete <code>aqualog2nc</code>. The function will then need to fetch a fresh download with the latest version being automatically downloaded.</p>
-
 <p>Note that once downloaded, your local copy of <code>aqualog2nc</code> might become outdated. <code>importaqualog</code> does not do any version check.</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details open>
-    <summary><b><code>samples</code> - contains EEMs </b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>. </p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details open>
+<summary>
+<b><code>samples</code> - contains EEMs </b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>.</p>
 <p>The fluorescence data is stored using the properties <code>.X</code>, <code>.Ex</code>, <code>.Em</code>, <code>.nEx</code>, <code>.nEm</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>blanks</code> - contains EEMs of pure water </b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>. </p>
-
+</details>
+<details open>
+<summary>
+<b><code>blanks</code> - contains EEMs of pure water </b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>.</p>
 <p>The fluorescence data is stored using the properties <code>.X</code>, <code>.Ex</code>, <code>.Em</code>, <code>.nEx</code>, <code>.nEm</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

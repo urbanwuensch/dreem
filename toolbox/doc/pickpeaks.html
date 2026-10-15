@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>pickpeaks</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,166 +370,232 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">pickpeaks</h1>
-
+<h1 id="pickpeaks">pickpeaks</h1>
 <p>Extract common fluorescence peaks and indices from a drEEMdataset object and store them in the <code>opticalMetadata</code> dataset property.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = pickpeaks(data)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = pickpeaks( ___ , Name,Value)</code></a></p>
-
 <p><a href="#syntax3"><code>pickpeaks( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The function returns fluorescence intensities and ratios at predefined points in the EEM for every sample. Please refer to the primary references provided below to indicate the use of peaks or indices.</p>
-
 <p>Data coverage differs between datasets. If a peak or index is out of the range covered by the measurements, NaNs will be returned. If the distance between the peak definition and the measurements is equal to or greater than 5nm, a message will be displayed to disclose this. The function does not and cannot perform interpolations to solve the issue.</p>
-
 <blockquote>
-<p><strong><em>Info:</em></strong> For fluorescence indices, the emission scans in question are smoothed using <code>smoothdata(___,&#39;sgolay&#39;,2)</code>. Verify with <code>pickpeaks(data,details=true)</code> if this represents <em>your</em> data well in <em>your</em> case.</p>
+<p><strong><em>Info:</em></strong> For fluorescence indices, the emission scans in question are smoothed using <code>smoothdata(___,'sgolay',2)</code>. Verify with <code>pickpeaks(data,details=true)</code> if this represents <em>your</em> data well in <em>your</em> case.</p>
 </blockquote>
-
 <p>The following table provides a reference for how the peaks or indices are extracted:</p>
-
 <table border="1">
-    <tr>
-        <th>Peak Name/ Fluorescence Indices</th>
-        <th>Emission Wavelengths (nm)</th>
-        <th>Excitation Wavelengths (nm)</th>
-        <th>Type</th>
-
-    </tr>
-    <tr>
-        <td>B</td>
-        <td>305</td>
-        <td>275</td>
-        <td>Single Point</td>
-    </tr>
-    <tr>
-        <td>T</td>
-        <td>340</td>
-        <td>275</td>
-        <td>Single Point</td>
-    </tr>
-    <tr>
-        <td>A</td>
-        <td>400-460</td>
-        <td>260</td>
-        <td>Max over Range</td>
-    </tr>
-    <tr>
-        <td>M</td>
-        <td>370-410</td>
-        <td>290-310</td>
-        <td>Max over Range</td>
-
-    </tr>
-    <tr>
-        <td>C</td>
-        <td>420-460</td>
-        <td>320-360</td>
-        <td>Max over Range</td>
-
-    </tr>
-    <tr>
-        <td>D</td>
-        <td>509</td>
-        <td>390</td>
-        <td>Single Point</td>
-
-    </tr>
-    <tr>
-        <td>N</td>
-        <td>370</td>
-        <td>280</td>
-        <td>Single Point</td>
-
-    </tr>
-    <tr>
-        <td>Fluorescence Index (FluI)</td>
-        <td>470, 520</td>
-        <td>370</td>
-        <td>Ratio</td>
-
-    </tr>
-    <tr>
-        <td>Freshness Index (FrI)</td>
-        <td>380, 420-435</td>
-        <td>310</td>
-        <td>Ratio</td>
-
-    </tr>
-    <tr>
-        <td>Biological Index (BIX)</td>
-        <td>380, 430</td>
-        <td>310</td>
-        <td>Ratio</td>
-
-    </tr>
-    <tr>
-        <td>Humification Index (HIX)</td>
-        <td>300-345, 435-480</td>
-        <td>254</td>
-        <td>Ratio</td>
-
-    </tr>
-    <tr>
-        <td>Aromaticity index (ARIX)</td>
-        <td>390, 520</td>
-        <td>320</td>
-        <td>Ratio</td>
-
-    </tr>
+<tr>
+<th>
+Peak Name/ Fluorescence Indices
+</th>
+<th>
+Emission Wavelengths (nm)
+</th>
+<th>
+Excitation Wavelengths (nm)
+</th>
+<th>
+Type
+</th>
+</tr>
+<tr>
+<td>
+B
+</td>
+<td>
+305
+</td>
+<td>
+275
+</td>
+<td>
+Single Point
+</td>
+</tr>
+<tr>
+<td>
+T
+</td>
+<td>
+340
+</td>
+<td>
+275
+</td>
+<td>
+Single Point
+</td>
+</tr>
+<tr>
+<td>
+A
+</td>
+<td>
+400-460
+</td>
+<td>
+260
+</td>
+<td>
+Max over Range
+</td>
+</tr>
+<tr>
+<td>
+M
+</td>
+<td>
+370-410
+</td>
+<td>
+290-310
+</td>
+<td>
+Max over Range
+</td>
+</tr>
+<tr>
+<td>
+C
+</td>
+<td>
+420-460
+</td>
+<td>
+320-360
+</td>
+<td>
+Max over Range
+</td>
+</tr>
+<tr>
+<td>
+D
+</td>
+<td>
+509
+</td>
+<td>
+390
+</td>
+<td>
+Single Point
+</td>
+</tr>
+<tr>
+<td>
+N
+</td>
+<td>
+370
+</td>
+<td>
+280
+</td>
+<td>
+Single Point
+</td>
+</tr>
+<tr>
+<td>
+Fluorescence Index (FluI)
+</td>
+<td>
+470, 520
+</td>
+<td>
+370
+</td>
+<td>
+Ratio
+</td>
+</tr>
+<tr>
+<td>
+Freshness Index (FrI)
+</td>
+<td>
+380, 420-435
+</td>
+<td>
+310
+</td>
+<td>
+Ratio
+</td>
+</tr>
+<tr>
+<td>
+Biological Index (BIX)
+</td>
+<td>
+380, 430
+</td>
+<td>
+310
+</td>
+<td>
+Ratio
+</td>
+</tr>
+<tr>
+<td>
+Humification Index (HIX)
+</td>
+<td>
+300-345, 435-480
+</td>
+<td>
+254
+</td>
+<td>
+Ratio
+</td>
+</tr>
+<tr>
+<td>
+Aromaticity index (ARIX)
+</td>
+<td>
+390, 520
+</td>
+<td>
+320
+</td>
+<td>
+Ratio
+</td>
+</tr>
 </table>
-
 <p>Picks predefined peaks and fluorescence indices in the EEM and stores the results in <code>dataout.opticalMetadata</code>.</p>
-
-<p><details open>
+<details open>
 <summary>
 <b><code>dataout = pickpeaks(data)</code> - extract peaks and indices from dataset</b>
 </summary>
- <a name="syntax1"></a>
-The function <code>pickpeaks</code> extracts predefined fluorescence peaks, including Peak B, T, A, M, C, D, and N, and computes several fluorescence indices, including Fluorescence index (FluI), Freshness Index (FrI), Biological Index (BIX) and Humification Index (HIX), from <code>data</code>. The peaks and indices will be plotted for all the samples in <code>data</code>.</p>
-
-<p></details></p>
-
-<p><details open>
+<p><a name="syntax1"></a> The function <code>pickpeaks</code> extracts predefined fluorescence peaks, including Peak B, T, A, M, C, D, and N, and computes several fluorescence indices, including Fluorescence index (FluI), Freshness Index (FrI), Biological Index (BIX) and Humification Index (HIX), from <code>data</code>. The peaks and indices will be plotted for all the samples in <code>data</code>.</p>
+</details>
+<details open>
 <summary>
 <b><code>dataout = pickpeaks( ___ , Name,Value)</code> - control visual output with arguments </b>
 </summary>
-<a name="syntax2"></a></p>
-
-<p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if the overview plot should be generated by using <code>&#39;plot&#39;,&#39;true&#39;</code> and specify if indices diagnostic plots should be displayed for each sample by using <code>&#39;details&#39;,&#39;true&#39;</code>. </p>
-
-<p></details></p>
-
-<p><details open>
+<p><a name="syntax2"></a></p>
+<p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if the overview plot should be generated by using <code>'plot','true'</code> and specify if indices diagnostic plots should be displayed for each sample by using <code>'details','true'</code>.</p>
+</details>
+<details open>
 <summary>
 <b><code>pickpeaks(data)</code> - run the function in diagnostic mode</b>
 </summary>
-<a name="syntax3"></a></p>
-
+<p><a name="syntax3"></a></p>
 <p>If no output argument is provided, the function will automatically set <code>plot=true</code> and <code>details=true</code> to provide diagnostic plots that describe the peak picking process in more detail.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">References</h2>
-
-<ol>
-<li>Peaks A, B, C, T, M, N: Coble, P.G., 2007. Marine optical biogeochemistry: The chemistry of ocean color.
-%    Chem. Rev. 107, 402–418. https://doi.org/10.1021/cr050350+</li>
+</details>
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Peaks A, B, C, T, M, N: Coble, P.G., 2007. Marine optical biogeochemistry: The chemistry of ocean color. % Chem. Rev. 107, 402–418. https://doi.org/10.1021/cr050350+</li>
 <li>Peak D: Lochmüller CH, Saavedra SS. Conformational Changes in a Soil Fulvic Acid Measured by Time-Dependent Fluorescence Depolarization. Analytical Chemistry. 1986;58(9):1978-1981. doi:10.1021/ac00122a014</li>
 <li>Fluorescence index: Maie, N., Parish, K.J., Watanabe, A., Knicker, H., Benner, R., Abe, T., Kaiser, K., Jaffé, R., 2006. Chemical characteristics of dissolved organic nitrogen in an oligotrophic subtropical coastal ecosystem. Geochim. Cosmochim. Acta 70, 4491–4506. https://doi.org/10.1016/j.gca.2006.06.1554</li>
 <li>Freshness index: Parlanti, E., Wörz, K., Geoffroy, L., Lamotte, M., 2000. Dissolved organic matter fluorescence spectroscopy as a tool to estimate biological activity in a coastal zone submitted to anthropogenic inputs. Org. Geochem. 31, 1765–1781. https://doi.org/10.1016/S0146-6380(00)00124-8</li>
@@ -541,68 +603,49 @@ The function <code>pickpeaks</code> extracts predefined fluorescence peaks, incl
 <li>Humification index: Ohno, T. Fluorescence Inner-Filtering Correction for Determining the Humification Index of Dissolved Organic Matter. Environ. Sci. Technol. 2002, 36 (4), 742−746. https://doi.org/10.1021/es0155276</li>
 <li>Aromaticity index: Murphy KR. Prediction of Dissolved Organic Carbon Concentrations in Inland Waters Using Optical Proxies of Aromaticity. Environ Sci Technol. 2025;59(31):16430-16442. doi:10.1021/acs.est.5c05408</li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - contains sample fluorescence</b></summary>
-    <i>drEEMdataset</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - contains sample fluorescence</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of peak intensities and indices for all sample in <code>data</code>. If no output argument is supplied, plotting is enabled automatically.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>details</code>- switch to plot diagnostics</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>details</code>- switch to plot diagnostics</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if detailed diagnostic plots should be shown for each sample. This mainly concerns the indices as some smoothing of the data is done in an attempt to obtain more robust results. Use this option to verify that this smoothing works well.</p>
-
 <p>Default is <code>false</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>pickpeaks</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-pickpeaks.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-pickpeaks.jpg&quot;.</p>
-
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save grapical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>pickpeaks</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-pickpeaks.png". Likewise, providing "projectX.jpg" will result in "projectX-pickpeaks.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details open>
-    <summary><b><code>dataout</code> - contains results</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. The output contains the results in the table <code>.opticalMetadata</code>
-</details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details open>
+<summary>
+<b><code>dataout</code> - contains results</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. The output contains the results in the table <code>.opticalMetadata</code>
+</details>
 </body>
-
 </html>

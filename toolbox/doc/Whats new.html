@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Whats new</title>
-
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -375,252 +370,14 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-<style type="text/css">
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
-
-code[class*="language-"],
-pre[class*="language-"] {
-	color: black;
-	background: none;
-	text-shadow: 0 1px white;
-	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-	text-align: left;
-	white-space: pre;
-	word-spacing: normal;
-	word-break: normal;
-	word-wrap: normal;
-	line-height: 1.5;
-
-	-moz-tab-size: 4;
-	-o-tab-size: 4;
-	tab-size: 4;
-
-	-webkit-hyphens: none;
-	-moz-hyphens: none;
-	-ms-hyphens: none;
-	hyphens: none;
-}
-
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
-
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
-	text-shadow: none;
-	background: #b3d4fc;
-}
-
-@media print {
-	code[class*="language-"],
-	pre[class*="language-"] {
-		text-shadow: none;
-	}
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-	padding: 1em;
-	margin: .5em 0;
-	overflow: auto;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-	background: #f5f2f0;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-	padding: .1em;
-	border-radius: .3em;
-	white-space: normal;
-}
-
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-	color: slategray;
-}
-
-.token.punctuation {
-	color: #999;
-}
-
-.namespace {
-	opacity: .7;
-}
-
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-	color: #905;
-}
-
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-	color: #690;
-}
-
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-	color: #a67f59;
-	background: hsla(0, 0%, 100%, .5);
-}
-
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-	color: #07a;
-}
-
-.token.function {
-	color: #DD4A68;
-}
-
-.token.regex,
-.token.important,
-.token.variable {
-	color: #e90;
-}
-
-.token.important,
-.token.bold {
-	font-weight: bold;
-}
-.token.italic {
-	font-style: italic;
-}
-
-.token.entity {
-	cursor: help;
-}
-</style>
-
-<style type="text/css">
-/* HTML Export & Screen Preview - Paragraph Text Wrapping
- *
- * This stylesheet provides universal text wrapping styles for HTML exports
- * and screen preview. It ensures long words and URLs wrap properly within
- * their containers instead of causing horizontal overflow.
- *
- * Issue: #30
- * Based on: PR #1320 from MacDownApp/macdown by @radicm
- *
- * Note: This file loads LAST in the stylesheet cascade to ensure it can
- * override theme defaults when necessary.
- */
-
-/* Main paragraph wrapping - handles regular prose with long words/URLs */
-p {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-/* List items - ensure long text in lists wraps properly */
-li {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-/* Table cells - wrap truly unbreakable strings (e.g. URLs); natural column width otherwise */
-td, th {
-    overflow-wrap: break-word;
-}
-
-/* Wide tables - give every theme a horizontal scroll container so columns keep
- * their natural width instead of compressing to the pane width (Issue #432).
- *
- * Scoped to screen media on purpose: this stylesheet is also present when the
- * preview is printed to PDF, where WebKit switches to print media. A scroll
- * container would clip wide tables on paper instead of scrolling them, so PDF
- * table layout is left entirely to print.css.
- *
- * The non-default themes declare bare `table { ... }` rules with no overflow
- * handling. Those have the SAME specificity as this rule, so it wins purely
- * because export.css is appended LAST in the cascade (see MPRenderer.m) -- keep
- * export.css last or this tie-break breaks. The default GitHub-2020.css theme
- * is intentionally left alone: its `body table` rule has higher specificity and
- * retains the behavior from PR #440. `max-width: 100%` keeps the scrollbar on
- * the table itself rather than relying on document-level horizontal scrolling. */
-@media screen {
-    table {
-        display: block;
-        width: max-content;
-        max-width: 100%;
-        overflow-x: auto;
-    }
-}
-
-/* Blockquotes - ensure quoted content wraps */
-blockquote {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-/* Description list definitions */
-dd {
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-/* Body fallback - catch any edge cases via inheritance */
-body {
-    word-wrap: break-word;  /* Legacy property for older browsers */
-    overflow-wrap: break-word;
-}
-
-/* NOTE: Code elements are NOT targeted here.
- * Code blocks use different wrapping rules (white-space: pre-wrap)
- * which are handled by print.css for PDF exports.
- * For screen preview and HTML export, code blocks maintain their
- * natural overflow behavior with horizontal scrolling.
- */
-
-/* Mermaid diagram full-width rendering (Issue #331)
- * Rendered Mermaid SVGs replace the original <pre><code> container.
- * The SVG id uses the 'mermaid_' prefix from mermaid.init.js.
- */
-svg[id^="mermaid_"] {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-}
-</style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="whats-new">What&#39;s new</h1>
-
+<h1 id="whats-new">What's new</h1>
 <p>drEEM version 2 introduces a set of new functionality, workflows, object-oriented programming, visualizations, and graphical user interfaces that aim to make the processing of fluorescence EEMs straightforward for users with limited programming experience. We should not need to be Matlab experts to process fluorescence data.</p>
-
-<p>Please head over to the section <a href="dreem_workflow.html">Toolbox setup</a> to learn how to work with version 2. If you&#39;re used to <a href="https://doi.org/10.4319/lom.2008.6.572b">DOMFluor</a> or <a href="https://doi.org/10.1039/C3AY41160E">drEEM 0.1-0.6.x</a>, things have changed considerably and there are lots of &quot;breaking changes&quot;. But luckly we have tutorials that should help.</p>
-
+<p>Please head over to the section <a href="dreem_workflow.html">Toolbox setup</a> to learn how to work with version 2. If you're used to <a href="https://doi.org/10.4319/lom.2008.6.572b">DOMFluor</a> or <a href="https://doi.org/10.1039/C3AY41160E">drEEM 0.1-0.6.x</a>, things have changed considerably and there are lots of "breaking changes". But luckly we have tutorials that should help.</p>
 <!--<details>
 <summary><b>Take a tour of the new toolbox (video on page)</b>
 </summary>
@@ -636,44 +393,32 @@ src="https://www.youtube.com/embed/N_M8hMbKJFA?autoplay=0&mute=1&hl=en&cc_lang_p
 
 </details>
 -->
-
-<h2 id="version-2269-25-sep-2026">Version 2.26.9 (25 Sep 2026)</h2>
-
+<h2 id="version-2.26.9-25-sep-2026">Version 2.26.9 (25 Sep 2026)</h2>
 <h3 id="added">Added</h3>
-
 <ul>
 <li>Added support for the <code>status</code> input argument in <code>upgradedataset</code>.</li>
 </ul>
-
 <h3 id="fixed">Fixed</h3>
-
 <ul>
 <li>Fixed an error that sometimes showed up in <code>fitslopes</code> related to slow figure updates in the diagnosis plots.</li>
 <li>Semantic version correction (removed leading zero from the month).</li>
 <li>Fixed the toolbox MATLAB requirements: newer MATLAB releases are now always supported instead of being capped at the release used for packaging.</li>
 <li>Fixed the UUID used for building the toolbox.</li>
 </ul>
-
-<h2 id="version-22608-31-aug-2026">Version 2.26.08 (31 Aug 2026)</h2>
-
-<h3 id="added">Added</h3>
-
+<h2 id="version-2.26.08-31-aug-2026">Version 2.26.08 (31 Aug 2026)</h2>
+<h3 id="added-1">Added</h3>
 <ul>
 <li>Support for the direct importing of Aqualog-derived opj and ogw files. Import is better &amp; easier than before! Read more here: https://doi.org/10.5281/zenodo.21928517</li>
 </ul>
-
 <h3 id="changed">Changed</h3>
-
 <ul>
-<li>Completely removed the dependence on the Statistics &amp; Machine Learning Toolbox for drEEM. Now, core MATLAB is all that&#39;s needed.</li>
+<li>Completely removed the dependence on the Statistics &amp; Machine Learning Toolbox for drEEM. Now, core MATLAB is all that's needed.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-1">Fixed</h3>
 <ul>
 <li>Fixed a crash in <code>pickpeaks</code> that occurred when scans had only missing numbers.</li>
 <li>Bug in <code>pickpeaks</code> legend order (thanks to Ali Esmaeeli, Chalmers).</li>
-<li>Bugfix in <code>ifecorrection</code>: Absorbance &lt;2 now results in NaN&#39;ed fluorescence (as documented).</li>
+<li>Bugfix in <code>ifecorrection</code>: Absorbance &lt;2 now results in NaN'ed fluorescence (as documented).</li>
 <li>Fixed error message content in <code>subtractblanks</code> when filelists mismatched.</li>
 <li>Improved input validation in <code>scalesamples</code>, <code>fitparafac</code>, <code>processabsorbance</code>, and <code>splitdataset</code>.</li>
 <li>Fixed several minor bugs in <code>fitparafac</code>.</li>
@@ -682,97 +427,70 @@ src="https://www.youtube.com/embed/N_M8hMbKJFA?autoplay=0&mute=1&hl=en&cc_lang_p
 <li>Many small fixes of bugs that cover rare use cases.</li>
 <li>Fixed &gt;250 inconsistencies in the html-based documentation and function header help sections.</li>
 </ul>
-
-<h2 id="version-22607-16-jul-2026">Version 2.26.07 (16 Jul 2026)</h2>
-
-<h3 id="added">Added</h3>
-
+<h2 id="version-2.26.07-16-jul-2026">Version 2.26.07 (16 Jul 2026)</h2>
+<h3 id="added-2">Added</h3>
 <ul>
 <li><code>fitpca</code>: Compute PCA models of fluorescence EEMs.</li>
 <li>New folder <code>useful scripts</code> in <code>examples</code> to demonstrate drEEM-specific MATLAB usage to achieve tasks.</li>
 <li>Various plots in many functions now feature more information in the datacursor, e.g. to identify samples by name or <code>.i</code>. Thank you Jann Müller for the suggestion!</li>
-<li>Lots of undocumented functionality in the <code>horibaRawdata</code> class has been added while working up decades of time series data. If you&#39;re interested in exporting data from opj files directly, reach out and we&#39;ll help you get started. This functionality is not intended for broad use.</li>
+<li>Lots of undocumented functionality in the <code>horibaRawdata</code> class has been added while working up decades of time series data. If you're interested in exporting data from opj files directly, reach out and we'll help you get started. This functionality is not intended for broad use.</li>
 </ul>
-
-<h3 id="changed">Changed</h3>
-
+<h3 id="changed-1">Changed</h3>
 <ul>
 <li><code>importabsorbance</code> and <code>importeems</code> now accept optional inputs to specify dataset status (preventing the GUI from popping up). Thank you Jann Müller for the suggestion!</li>
 <li><code>viewmodels</code>: Now calls <code>dreemgui.viewparafac_gui</code> or <code>dreemgui.viewpca_gui</code> depending on model type.</li>
 <li><code>viewspectralvariance</code> is now implemented as an appdesigner app with more consistent figure resizing options.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-2">Fixed</h3>
 <ul>
 <li><code>ramancalibration</code>: Bugfixes on history entry, SNB calculation and a spelling mistake in the toolboxOptions entry. Credit goes to Shengbin NI (University of Yamanashi). Thank you!</li>
 <li><code>viewmodels</code>: Fixed bug where <code>figurefile</code> did not get passed along.</li>
 </ul>
-
-<h2 id="version-22603-25-mar-2026">Version 2.26.03 (25 Mar 2026)</h2>
-
-<h3 id="changed">Changed</h3>
-
+<h2 id="version-2.26.03-25-mar-2026">Version 2.26.03 (25 Mar 2026)</h2>
+<h3 id="changed-2">Changed</h3>
 <ul>
 <li><code>murea</code>: Improved labels on plots and axes.</li>
 <li>Added more context to the <code>drEEMdataset</code> documentation about the intended usage of the class.</li>
 <li>Auto-scaling of blank scans in <code>subtractblanks</code> was improved.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-3">Fixed</h3>
 <ul>
-<li>PARAFAC tutorial: Fixed metadata table class for &quot;type&quot; to ensure better compatibility with functions.</li>
+<li>PARAFAC tutorial: Fixed metadata table class for "type" to ensure better compatibility with functions.</li>
 <li><code>ifecorrection</code>: Fixed upper vs. lower case spelling of units in the absorbanceConverter subfunction (thanks to Jessica Kennedy, University of Auckland - Institute of Marine Science).</li>
 </ul>
-
-<h2 id="version-22602-20-feb-2026">Version 2.26.02 (20 Feb 2026)</h2>
-
-<h3 id="added">Added</h3>
-
+<h2 id="version-2.26.02-20-feb-2026">Version 2.26.02 (20 Feb 2026)</h2>
+<h3 id="added-3">Added</h3>
 <ul>
 <li><code>mergedatasets</code>: Combine datasets with equal wavelength axes, status, and metadata columns.</li>
 <li>Support for figure exporting in <code>viewdmr</code> and <code>vieweems</code>.</li>
 <li><code>murea</code>: Multivariate Residual Analysis.</li>
 <li><code>figurefile</code> option in all functions that produce a figure or GUI. This allows scripted figure saving to document results in automated workflows.</li>
 </ul>
-
-<h3 id="changed">Changed</h3>
-
+<h3 id="changed-3">Changed</h3>
 <ul>
 <li>Added more diagnosis plots for <code>subtractblanks</code> and <code>ifecorrection</code>.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-4">Fixed</h3>
 <ul>
-<li><code>handlescatter(...,&#39;gui&#39;)</code> crash was fixed.</li>
+<li><code>handlescatter(...,'gui')</code> crash was fixed.</li>
 <li><code>export2zip</code> crash when no fluorescence or absorbance data was present is now handled.</li>
 <li>Removed empty rows during table import in <code>associatemetadata</code>.</li>
-<li><code>doc</code>: Added &quot;drEEMstatus&quot; to the doc library.</li>
+<li><code>doc</code>: Added "drEEMstatus" to the doc library.</li>
 </ul>
-
-<h2 id="version-22512-18-dec-2025">Version 2.25.12 (18 Dec 2025)</h2>
-
-<h3 id="added">Added</h3>
-
+<h2 id="version-2.25.12-18-dec-2025">Version 2.25.12 (18 Dec 2025)</h2>
+<h3 id="added-4">Added</h3>
 <ul>
 <li><code>projectmodel</code>: Project the loadings of an existing PARAFAC model onto new samples with the help of an OpenFluor txt file.</li>
 <li><code>ramancalibration</code>: Added the ability to model the Raman peak with a <code>gauss1</code> fit instead of raw data. Improved robustness against random noise.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-5">Fixed</h3>
 <ul>
 <li><code>exportresults</code>: Fixed an error that occurred when no CDOM data was present (thanks to Rose Cory &amp; Morimaru Kida).</li>
 <li><code>upgradedataset</code>: Included handling of the <code>logical</code> datatype for metadata.</li>
 <li><code>vieweems</code>: Fixed missing contours on app startup by replacing the numeric edit field with a spinner.</li>
 </ul>
-
-<h2 id="version-22511-4-nov-2025">Version 2.25.11 (4 Nov 2025)</h2>
-
-<h3 id="added">Added</h3>
-
+<h2 id="version-2.25.11-4-nov-2025">Version 2.25.11 (4 Nov 2025)</h2>
+<h3 id="added-5">Added</h3>
 <ul>
 <li>Support for more versioning levels: Major, year, month, day (x.xx.xx.xx).</li>
 <li>Support for automated updating via Zenodo download and autoinstall.</li>
@@ -780,63 +498,47 @@ src="https://www.youtube.com/embed/N_M8hMbKJFA?autoplay=0&mute=1&hl=en&cc_lang_p
 <li><code>vieweems</code> supports colour-vision-deficient friendlier colormaps. Also removed unfriendly colormaps (jet + hsv).</li>
 <li>drEEMtoolbox will display citation information after calls to export functions.</li>
 </ul>
-
-<h3 id="changed">Changed</h3>
-
+<h3 id="changed-4">Changed</h3>
 <ul>
 <li>Version validation no longer tolerates multiple versions and throws an error when the toolbox is initiated.</li>
 <li>Documentation of <code>pickpeaks</code> now contains references to primary research articles.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-6">Fixed</h3>
 <ul>
 <li>Fixed an error that occurred in <code>handlescatter</code> when the Parallel Computing Toolbox is not installed.</li>
 <li><code>viewsplitvalidation</code>: Fixed an issue where dissimilar components were not shown and others were shown multiple times (uncritical cosmetic error).</li>
 <li>Fixed an error in the <code>benchmark</code> function.</li>
 </ul>
-
-<h2 id="version-22510-5-oct-2025">Version 2.25.10 (5 Oct 2025)</h2>
-
-<h3 id="added">Added</h3>
-
+<h2 id="version-2.25.10-5-oct-2025">Version 2.25.10 (5 Oct 2025)</h2>
+<h3 id="added-6">Added</h3>
 <ul>
 <li>drEEM figures and apps now widely support a context menu (right-click) for publication-quality figures.</li>
-<li><code>scalesamples</code> supports normalization to maximum fluorescence via <code>samples=scalesamples(samples,&#39;max&#39;)</code>.</li>
+<li><code>scalesamples</code> supports normalization to maximum fluorescence via <code>samples=scalesamples(samples,'max')</code>.</li>
 <li>Added dataset validator step: uniqueness of the <code>filelist</code> strings.</li>
 <li>Default fields in the <code>about</code> property of the <code>drEEMdataset</code> object (preparation for future functionality).</li>
 <li>Custom properties in the <code>metadata</code> table object within the drEEM dataset object (preparation for future functionality).</li>
 <li><code>drEEMtoolbox</code> validation check: if older versions of the toolbox exist, an error is thrown to avoid unpredictable behavior.</li>
 </ul>
-
-<h3 id="changed">Changed</h3>
-
+<h3 id="changed-5">Changed</h3>
 <ul>
 <li>The <code>changestatus</code> GUI is now always on top to catch more attention.</li>
 <li>Several other GUIs were lowered in priority: Their window focus can be changed by the user by switching windows or apps.</li>
 <li>Richer function message for <code>processabsorbance</code> and <code>ramancalibration</code> in their history entries.</li>
 <li><code>viewmodels</code>: Made scatter diagonals an optional feature with a checkbox.</li>
 </ul>
-
-<h3 id="fixed">Fixed</h3>
-
+<h3 id="fixed-7">Fixed</h3>
 <ul>
 <li><code>viewabsorbance</code>: Fixed missing callback when changing sample.</li>
 <li><code>importabsorbance</code> &amp; <code>importeems</code>: Fixed quick help error (string pattern).</li>
 <li>Fixed minor errors in help sections, tutorials, and apps.</li>
 <li>Replaced the legacy random number generator in N-way with the recommended option (avoids unpredictable error messages).</li>
 </ul>
-
 <h3 id="comments">Comments</h3>
-
 <ul>
-<li>drEEM uses uifigure windows instead of figure windows by default. In many cases, a <code>close all</code> command needs to be specified with the &#39;force&#39; option, i.e. <code>close all force</code>, to close these uifigure windows.</li>
+<li>drEEM uses uifigure windows instead of figure windows by default. In many cases, a <code>close all</code> command needs to be specified with the 'force' option, i.e. <code>close all force</code>, to close these uifigure windows.</li>
 </ul>
-
-<h2 id="version-22509-2-sep-2025">Version 2.25.09 (2 Sep 2025)</h2>
-
-<h3 id="changed">Changed</h3>
-
+<h2 id="version-2.25.09-2-sep-2025">Version 2.25.09 (2 Sep 2025)</h2>
+<h3 id="changed-6">Changed</h3>
 <ul>
 <li>Moved the <code>doc</code> helper function to the toolbox due to toolbox packaging and path position (<code>doc</code> -&gt; <code>drEEMtoolbox.doc</code>).</li>
 <li>Moved mlapp files to the <code>dreemgui</code> namespace and replaced mlapp files with .m-export files.</li>
@@ -844,68 +546,45 @@ src="https://www.youtube.com/embed/N_M8hMbKJFA?autoplay=0&mute=1&hl=en&cc_lang_p
 <li>Implemented a UUID for the toolbox to aid the installation and update process. The UUID now (and in future) matches 2.25.08.</li>
 <li>Fixed update procedure bugs (wrong URL and unnecessary repeated update reminders).</li>
 </ul>
-
-<h3 id="added">Added</h3>
-
+<h3 id="added-7">Added</h3>
 <ul>
 <li>GUI app <code>timezoneselector</code> (preparation for upcoming functionality).</li>
 </ul>
-
-<h3 id="comments">Comments</h3>
-
+<h3 id="comments-1">Comments</h3>
 <ul>
 <li>The getting-started guide reflects the changes made to the doc-helper function. This is an unfortunate move we had to make for complicated reasons that are out of our control.</li>
 </ul>
-
-<h2 id="version-22508-11-aug-2025">Version 2.25.08 (11 Aug 2025)</h2>
-
+<h2 id="version-2.25.08-11-aug-2025">Version 2.25.08 (11 Aug 2025)</h2>
 <h3 id="improvements">Improvements</h3>
-
 <ul>
 <li><code>importwizard</code> supports settings templates for several instrument types.</li>
 <li>Automated update check now links to MATLAB File Exchange (the old installer was removed).</li>
 <li>Added CDOM-only support for <code>subdataset</code> (i.e. it works for datasets without fluorescence).</li>
 <li>Minor improvements to readme.txt on the GitLab repository.</li>
 </ul>
-
 <h3 id="bugfixes">Bugfixes</h3>
-
 <ul>
 <li>Fixed a background color issue in <code>vieweems</code>.</li>
 <li>Fixed a variable name issue in <code>importwizard</code> that caused an error when only importing some types of data.</li>
 </ul>
-
-<h2 id="version-22507-31-jul-2025">Version 2.25.07 (31 Jul 2025)</h2>
-
+<h2 id="version-2.25.07-31-jul-2025">Version 2.25.07 (31 Jul 2025)</h2>
 <h3 id="new-features">New features</h3>
-
 <ul>
 <li>Object-oriented programming. <code>tbx=drEEMtoolbox;</code> assigns the toolbox to an object, and then you call <code>tbx.___</code> to use any function (use the TAB key to get suggestions!)</li>
 <li>A standardized CDOM dataset object called <a href="dreemdataset.html"><code>drEEMdataset</code></a>: A class object that stores fluorescence and absorbance data. Read more in the <a href="dreemdataset.html">documentation</a></li>
-<li>Detailed information regarding the status of processing for <code>drEEMdataset</code> objects with the  <a href="dreemdataset.html">status property</a>. Loading a dataset from 5 years ago and wondering if IFE corrections had been done? The dataset would tell you from now on.</li>
+<li>Detailed information regarding the status of processing for <code>drEEMdataset</code> objects with the <a href="dreemdataset.html">status property</a>. Loading a dataset from 5 years ago and wondering if IFE corrections had been done? The dataset would tell you from now on.</li>
 <li><a href="drEEMhistory.html"><code>drEEMhistory</code></a>: A class object that keeps a record of modifications by toolbox functions including their settings, date-time information, and comments if provided. Users can also add comments to the history independent from the toolbox to document the workflow.</li>
 <li>A new PARAFAC engine, courtesy of <a href="https://scholar.google.com/citations?user=gW_FGdQAAAAJ">Prof. Rasmus Bro</a>, that speeds up nonnegative PARAFAC by a factor of 4-5!</li>
 <li>Interactive tool to define scatter treatment options. Read more about <a href="handlescatter.html"><code>handlescatter</code></a>.</li>
 <li>New data export functionalities. Open Science is amazing and we are fully committed to supporting you in this regard!</li>
 </ul>
-
 <h3 id="general-improvements">General improvements</h3>
-
 <ul>
 <li>Rewrites of all drEEM functions with <code>arguments</code> input validation. For the user, this means smart input argument suggestions and quick and helpful input validation. Hitting the tab-key during scripting is extremely helpful from now.</li>
 <li>Entirely new documentation with collapsing sections and nice formatting. The documentation is enriched with videos that walk you through the process.</li>
 <li>Data processing steps are implemented as <strong>standalone</strong> functions. No more custom code for vital standard operations (e.g. raman normalization or IFE correction). This also generally reduces the skills required for Matlab.</li>
-<li>Reduction in Addon Product dependencies. We&#39;ve done our best to cut down the costly additional Matlab products requirements.</li>
+<li>Reduction in Addon Product dependencies. We've done our best to cut down the costly additional Matlab products requirements.</li>
 <li>Renamed functions to help occasional users remember / find functionality. For example, any function that primarily visualizes data starts with <code>view...</code> (e.g. <code>vieweems</code>)</li>
 </ul>
-
-
-
-<script type="text/javascript">
-var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(){var e=/\blang(?:uage)?-(\w+)\b/i,t=0,n=_self.Prism={util:{encode:function(e){return e instanceof a?new a(e.type,n.util.encode(e.content),e.alias):"Array"===n.util.type(e)?e.map(n.util.encode):e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function(e){var t=n.util.type(e);switch(t){case"Object":var a={};for(var r in e)e.hasOwnProperty(r)&&(a[r]=n.util.clone(e[r]));return a;case"Array":return e.map&&e.map(function(e){return n.util.clone(e)})}return e}},languages:{extend:function(e,t){var a=n.util.clone(n.languages[e]);for(var r in t)a[r]=t[r];return a},insertBefore:function(e,t,a,r){r=r||n.languages;var l=r[e];if(2==arguments.length){a=arguments[1];for(var i in a)a.hasOwnProperty(i)&&(l[i]=a[i]);return l}var o={};for(var s in l)if(l.hasOwnProperty(s)){if(s==t)for(var i in a)a.hasOwnProperty(i)&&(o[i]=a[i]);o[s]=l[s]}return n.languages.DFS(n.languages,function(t,n){n===r[e]&&t!=e&&(this[t]=o)}),r[e]=o},DFS:function(e,t,a,r){r=r||{};for(var l in e)e.hasOwnProperty(l)&&(t.call(e,l,e[l],a||l),"Object"!==n.util.type(e[l])||r[n.util.objId(e[l])]?"Array"!==n.util.type(e[l])||r[n.util.objId(e[l])]||(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,l,r)):(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,null,r)))}},plugins:{},highlightAll:function(e,t){var a={callback:t,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};n.hooks.run("before-highlightall",a);for(var r,l=a.elements||document.querySelectorAll(a.selector),i=0;r=l[i++];)n.highlightElement(r,e===!0,a.callback)},highlightElement:function(t,a,r){for(var l,i,o=t;o&&!e.test(o.className);)o=o.parentNode;o&&(l=(o.className.match(e)||[,""])[1],i=n.languages[l]),t.className=t.className.replace(e,"").replace(/\s+/g," ")+" language-"+l,o=t.parentNode,/pre/i.test(o.nodeName)&&(o.className=o.className.replace(e,"").replace(/\s+/g," ")+" language-"+l);var s=t.textContent,u={element:t,language:l,grammar:i,code:s};if(!s||!i)return n.hooks.run("complete",u),void 0;if(n.hooks.run("before-highlight",u),a&&_self.Worker){var c=new Worker(n.filename);c.onmessage=function(e){u.highlightedCode=e.data,n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(u.element),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},c.postMessage(JSON.stringify({language:u.language,code:u.code,immediateClose:!0}))}else u.highlightedCode=n.highlight(u.code,u.grammar,u.language),n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(t),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},highlight:function(e,t,r){var l=n.tokenize(e,t);return a.stringify(n.util.encode(l),r)},tokenize:function(e,t){var a=n.Token,r=[e],l=t.rest;if(l){for(var i in l)t[i]=l[i];delete t.rest}e:for(var i in t)if(t.hasOwnProperty(i)&&t[i]){var o=t[i];o="Array"===n.util.type(o)?o:[o];for(var s=0;s<o.length;++s){var u=o[s],c=u.inside,g=!!u.lookbehind,h=!!u.greedy,f=0,d=u.alias;u=u.pattern||u;for(var p=0;p<r.length;p++){var m=r[p];if(r.length>e.length)break e;if(!(m instanceof a)){u.lastIndex=0;var y=u.exec(m),v=1;if(!y&&h&&p!=r.length-1){var b=r[p+1].matchedStr||r[p+1],k=m+b;if(p<r.length-2&&(k+=r[p+2].matchedStr||r[p+2]),u.lastIndex=0,y=u.exec(k),!y)continue;var w=y.index+(g?y[1].length:0);if(w>=m.length)continue;var _=y.index+y[0].length,P=m.length+b.length;if(v=3,P>=_){if(r[p+1].greedy)continue;v=2,k=k.slice(0,P)}m=k}if(y){g&&(f=y[1].length);var w=y.index+f,y=y[0].slice(f),_=w+y.length,S=m.slice(0,w),O=m.slice(_),j=[p,v];S&&j.push(S);var A=new a(i,c?n.tokenize(y,c):y,d,y,h);j.push(A),O&&j.push(O),Array.prototype.splice.apply(r,j)}}}}}return r},hooks:{all:{},add:function(e,t){var a=n.hooks.all;a[e]=a[e]||[],a[e].push(t)},run:function(e,t){var a=n.hooks.all[e];if(a&&a.length)for(var r,l=0;r=a[l++];)r(t)}}},a=n.Token=function(e,t,n,a,r){this.type=e,this.content=t,this.alias=n,this.matchedStr=a||null,this.greedy=!!r};if(a.stringify=function(e,t,r){if("string"==typeof e)return e;if("Array"===n.util.type(e))return e.map(function(n){return a.stringify(n,t,e)}).join("");var l={type:e.type,content:a.stringify(e.content,t,r),tag:"span",classes:["token",e.type],attributes:{},language:t,parent:r};if("comment"==l.type&&(l.attributes.spellcheck="true"),e.alias){var i="Array"===n.util.type(e.alias)?e.alias:[e.alias];Array.prototype.push.apply(l.classes,i)}n.hooks.run("wrap",l);var o="";for(var s in l.attributes)o+=(o?" ":"")+s+'="'+(l.attributes[s]||"")+'"';return"<"+l.tag+' class="'+l.classes.join(" ")+'" '+o+">"+l.content+"</"+l.tag+">"},!_self.document)return _self.addEventListener?(_self.addEventListener("message",function(e){var t=JSON.parse(e.data),a=t.language,r=t.code,l=t.immediateClose;_self.postMessage(n.highlight(r,n.languages[a],a)),l&&_self.close()},!1),_self.Prism):_self.Prism;var r=document.currentScript||[].slice.call(document.getElementsByTagName("script")).pop();return r&&(n.filename=r.src,document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",n.highlightAll)),_self.Prism}();"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
-</script>
-
-
 </body>
-
 </html>

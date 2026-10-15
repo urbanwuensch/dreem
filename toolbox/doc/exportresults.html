@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>exportresults</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,71 +370,48 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">exportresults</h1>
-
+<h1 id="exportresults">exportresults</h1>
 <p>Export the results from a PARAFAC or PCA model to a spreadsheet file. This includes a comprehensive description of the dataset.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>exportresults(data, f, filename)</code></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The <code>exportresults</code> function takes a drEEMdataset object, <code>data</code>, a <code>filename</code>, and a PARAFAC model index, <code>f</code>, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indices, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the <code>data</code> and organizes the data into several sheets within the spreadsheet.</p>
-
 <blockquote>
 <p><strong><em>Note:</em></strong> The function deletes any existing file with the same name before writing the new data.</p>
 </blockquote>
-
-<h2 id="toc_3">Examples</h2>
-
-<p><code>exportresults(data, 5, &#39;mymodel.xlsx&#39;)</code></p>
-
+<h2 id="examples">Examples</h2>
+<p><code>exportresults(data, 5, 'mymodel.xlsx')</code></p>
 <p>Export the 5-component model from <code>data</code> to Excel spreadsheet <code>mymodel.xlsx</code>.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to extract model from</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<p><details open></p>
-
-<p><summary><b><code>f</code> - PARAFAC or PCA model with f components</b></summary>
-<i>numeric</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to extract model from</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<details open>
+<summary>
+<b><code>f</code> - PARAFAC or PCA model with f components</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Specify the number of components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>filename</code> - name of export spreadsheet</b></summary>
-    <i>char | string</i></p>
-
-<p>The name of the output file. It should be a text and will be saved with a <code>.xlsx</code> extension.
-Note: Any extension at the end of the <code>filename</code> will be changed to <code>.xlsx</code>. If none is provided, it will be added.</p>
-
-<p></details></p>
-
+</details>
+<details open>
+<summary>
+<b><code>filename</code> - name of export spreadsheet</b>
+</summary>
+<p><i>char | string</i></p>
+<p>The name of the output file. It should be a text and will be saved with a <code>.xlsx</code> extension. Note: Any extension at the end of the <code>filename</code> will be changed to <code>.xlsx</code>. If none is provided, it will be added.</p>
+</details>
 <!---
+
 ## Name-Value arguments
 -->
-
-
-
-
 </body>
-
 </html>

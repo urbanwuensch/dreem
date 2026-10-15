@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>importabsorbance</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,70 +370,46 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">importabsorbance</h1>
-
+<h1 id="importabsorbance">importabsorbance</h1>
 <p>Import absorbance measurement files and create drEEMdataset object</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>data = importabsorbance(filePattern)</code></a></p>
-
 <p><a href="#syntax3"><code>data = importabsorbance(filePattern,status)</code></a></p>
-
 <p><a href="#syntax2"><code>data = importabsorbance( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>This function scans the current working directory (<code>pwd</code>) for absorbance files using a given filename pattern, reads each file, and returns a <code>drEEMdataset</code> containing the absorbance data.</p>
-
 <p>The function does two passes of imports. The first is used to read the dimensions of each file and to subsequently check that all data contains the same wavelength information.</p>
-
 <blockquote>
 <p><strong><em>All files must contain the same wavelength information. If this is not the case, the function will attempt to resolve the issue but most likely return an error!</em></strong></p>
 </blockquote>
-
-<p><details open>
-<summary><b>
-<code>data = importabsorbance(filePattern)</code> - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
+<details open>
+<summary>
+<b> <code>data = importabsorbance(filePattern)</code> - standard options (fits HYJ Export for AquaLog data), interactively provide status</b>
 </summary>
-<a name="syntax1"></a><br></p>
-
+<p><a name="syntax1"></a><br></p>
 <p>returns a drEEMdataset class object that contains absorbance spectra and their associated information.</p>
-
 <p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about fluorescence properties. Please ignore these and focus on the property <code>absorbance unit</code>.</p>
-
 <blockquote>
 <p><strong><em>Take care to specify the correct pathlength in the GUI. If an incorrect pathlength or absorbance unit is specified, the IFE correction will not be accurate.</em></strong></p>
 </blockquote>
-
 <p><img src="newabsdata.png" width="auto" height="auto" align="center"/></p>
-
 <blockquote>
-<p><strong><em>The GUI must be exited by clicking on &quot;save &amp; exit&quot;. Otherwise, the import will be cancelled and no dataset will be created.</em></strong></p>
+<p><strong><em>The GUI must be exited by clicking on "save &amp; exit". Otherwise, the import will be cancelled and no dataset will be created.</em></strong></p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
-<summary><b>
-<code>data = importabsorbance(filePattern,status)</code> - explicitly supply processing status</b>
+</details>
+<details open>
+<summary>
+<b> <code>data = importabsorbance(filePattern,status)</code> - explicitly supply processing status</b>
 </summary>
-<a name="syntax3"></a></p>
-
-<p>For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to &quot;unknown&quot;, the GUI will still ask for clarification.</p>
-
-<p>Example: </p>
-
-<div><pre><code class="language-none">blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
+<p><a name="syntax3"></a></p>
+<p>For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to "unknown", the GUI will still ask for clarification.</p>
+<p>Example:</p>
+<pre><code>blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
     &quot;IFEcorrection&quot;,&quot;not applied&quot;,...
     &quot;signalCalibration&quot;,&quot;not applied&quot;,...
     &quot;scatterTreatment&quot;,&quot;not applied&quot;,...
@@ -445,118 +417,83 @@ details:open > summary {
     &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
     absorbanceUnit=&#39;absorbance per cm&#39;);
 
-blanks=tbx.importabsorbance(&quot;* - Abs Spectra Graphs.dat&quot;,blanks_status);</code></pre></div>
-
-<p></details></p>
-
-<p><details open>
-<summary><b>
-<code>data = importabsorbance([ ___ ], Name,Value)</code> - custom options</b>
+blanks=tbx.importabsorbance(&quot;* - Abs Spectra Graphs.dat&quot;,blanks_status);</code></pre>
+</details>
+<details open>
+<summary>
+<b> <code>data = importabsorbance([ ___ ], Name,Value)</code> - custom options</b>
 </summary>
-<a name="syntax2"></a></p>
-
+<p><a name="syntax2"></a></p>
 <p>Custom options are specifed with optional pairs of arguments using one or more name-value arguments. For example, you can specify the column number that holds the wavelength data or the column that holds the absorbance data.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
+</details>
+<h2 id="examples">Examples</h2>
 <p><strong>Horiba AquaLog exported .dat-files:</strong></p>
-
-<p><code>absorbance = tbx.importabsorbance(&quot;* - Abs Spectra Graphs.dat&quot;);</code></p>
-
+<p><code>absorbance = tbx.importabsorbance("* - Abs Spectra Graphs.dat");</code></p>
 <p><strong>csv-export of data from spectrophotometer software:</strong></p>
-
-<p><code>absorbance = tbx.importabsorbance(&quot;*.csv&quot;,waveColumn=1,absColumn=2);</code></p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details open>
-    <summary><b><code>filePattern</code> Text pattern to identify files for import</b></summary>
-    <i>char | string</i></p>
-
+<p><code>absorbance = tbx.importabsorbance("*.csv",waveColumn=1,absColumn=2);</code></p>
+<h2 id="input-arguments">Input arguments</h2>
+<details open>
+<summary>
+<b><code>filePattern</code> Text pattern to identify files for import</b>
+</summary>
+<p><i>char | string</i></p>
 <p>A text specifying the pattern of the files to be imported. This can include wildcard characters (*) to match multiple files. The pattern will be completely removed from the sample name after import to leave only the non-repeating filename information. For example <code>S001ABS.dat</code> will be known as <code>S001</code> in the produced dataset.</p>
-
 <p>Examples:</p>
-
 <ul>
-<li><code>&#39;*.csv&#39;</code></li>
-<li><code>&#39;* - Abs Spectra Graphs.dat&#39;</code></li>
+<li><code>'*.csv'</code></li>
+<li><code>'* - Abs Spectra Graphs.dat'</code></li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>status</code> drEEMstatus object with correct parameters preset</b></summary>
-    <i>drEEMstatus</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>status</code> drEEMstatus object with correct parameters preset</b>
+</summary>
+<p><i>drEEMstatus</i></p>
 <p>Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.</p>
-
-<div><pre><code class="language-none">blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
+<pre><code>blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
         &quot;IFEcorrection&quot;,&quot;not applied&quot;,...
         &quot;signalCalibration&quot;,&quot;not applied&quot;,...
         &quot;scatterTreatment&quot;,&quot;not applied&quot;,...
         &quot;signalScaling&quot;,&#39;original scale&#39;,...
         &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
-        absorbanceUnit=&#39;absorbance per cm&#39;);</code></pre></div>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filePattern</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>waveColumn</code>- which column of data contains wavelength data</b></summary>
-    <i>numeric</i></p>
-
+        absorbanceUnit=&#39;absorbance per cm&#39;);</code></pre>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filePattern</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>waveColumn</code>- which column of data contains wavelength data</b>
+</summary>
+<p><i>numeric</i></p>
 <p>The wavelength data in the measurement files are expected to be found in the specified column. Default is column <code>1</code>.<br></p>
-
-<p>Example: <code>&#39;columnWave&#39;, 1</code> if the first column contains the wavelength information.</p>
-
+<p>Example: <code>'columnWave', 1</code> if the first column contains the wavelength information.</p>
 <p>Default is <code>1</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>absColumn</code>- which column of data contains absorbance data</b></summary>
-    <i>numeric</i></p>
-
-<p>Specify which column of data in the measurement files contains the absorbance data. </p>
-
+</details>
+<details open>
+<summary>
+<b><code>absColumn</code>- which column of data contains absorbance data</b>
+</summary>
+<p><i>numeric</i></p>
+<p>Specify which column of data in the measurement files contains the absorbance data.</p>
 <p>Default is column <code>10</code>.</p>
-
-<p>Example: <code>&#39;absColumn&#39;, 10</code> if the tenth column contains the absorbance data.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>NumHeaderLines</code>- number of header lines to ignore</b></summary>
-    <i>numeric</i></p>
-
-<p>Specify the number of  lines (rows) to skip from the top in each file. Default is <code>0</code>.<br></p>
-
-<p>Example: <code>&#39;NumHeaderLines&#39;, 2</code> to remove the first 2 rows of each file<br></p>
-
+<p>Example: <code>'absColumn', 10</code> if the tenth column contains the absorbance data.</p>
+</details>
+<details open>
+<summary>
+<b><code>NumHeaderLines</code>- number of header lines to ignore</b>
+</summary>
+<p><i>numeric</i></p>
+<p>Specify the number of lines (rows) to skip from the top in each file. Default is <code>0</code>.<br></p>
+<p>Example: <code>'NumHeaderLines', 2</code> to remove the first 2 rows of each file<br></p>
 <p>Default is <code>0</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details open>
-    <summary><b><code>data</code> - contains CDOM spectra </b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
-The absorbance data is stored using the properties <code>.abs</code>, <code>.absWave</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
-
-<p></details></p>
-
-
-
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details open>
+<summary>
+<b><code>data</code> - contains CDOM spectra </b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. The absorbance data is stored using the properties <code>.abs</code>, <code>.absWave</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
+</details>
 </body>
-
 </html>

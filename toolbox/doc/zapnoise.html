@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>zapnoise</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,111 +370,74 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">zapnoise</h1>
-
+<h1 id="zapnoise">zapnoise</h1>
 <p>Set part of emission or excitation spectra from one or more samples to NaN.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>dataout = zapnoise(data, sampleIdent, emRange, exRange)</code></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>Removes bad fluorescence data (set to <code>NaN</code>) in the emission range of <code>emRange</code> and excitation range of <code>exRange</code> from specified <code>sampleIdent</code>, in <code>data</code>.</p>
-
 <blockquote>
 <p>If the function <code>scalesamples</code> has been used prior to using the <code>zapnoise</code> function, the <code>zapnoise</code> will automatically perform the zapping on the unscaled dataset. This will ensure the toolbox works smoothly if the scaling is reverted. For more information see <code>scalesamples</code> function.</p>
 </blockquote>
-
-<h2 id="toc_3">Examples</h2>
-
+<h2 id="examples">Examples</h2>
 <ul>
 <li>Zap noise at Ex 255 Em 450 in data.i==5</li>
 </ul>
-
 <p><code>samples = tbx.zapnoise(samples,data.i==5,450,255);</code></p>
-
 <ul>
 <li>Zap entire emission scan at Ex 255 in sample data.i==5</li>
 </ul>
-
 <p><code>samples = tbx.zapnoise(samples,data.i==5,[],255);</code></p>
-
 <ul>
 <li>Zap entire emission scans at Ex 255 and 300 in sample data.i==7</li>
 </ul>
-
 <p><code>samples = tbx.zapnoise(samples,data.i==7,[],255);</code></p>
-
 <p><code>samples = tbx.zapnoise(samples,data.i==7,[],300);</code></p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset containing fluorescence EEMs</b></summary>
-    <i>drEEMdataset</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset containing fluorescence EEMs</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>sampleIdent</code> - sample(s) to affect</b></summary>
-    <i>logical [<code>1x data.nSample</code>]</i></p>
-
-<p>Specifies which samples are to be affected. Must be logical, 
-some Matlab-internal functions to use here include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code> </p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>emRange</code> - emission wavelengths in nanometers to NaN</b></summary>
-    <i>numeric</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>sampleIdent</code> - sample(s) to affect</b>
+</summary>
+<p><i>logical [<code>1x data.nSample</code>]</i></p>
+<p>Specifies which samples are to be affected. Must be logical, some Matlab-internal functions to use here include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code></p>
+</details>
+<details open>
+<summary>
+<b><code>emRange</code> - emission wavelengths in nanometers to NaN</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Specify the range of emission wavelengths to be zapped from <code>sampleIdent</code>. The provided range must be within the emission range of <code>data</code>. If only one wavelength is provided (not a range) the function will automatically set the range to two closest neighboring wavelengths around the specified wavelength.<br></p>
-
-<p>Example: <code>(__, __, [300 350], __)</code> to remove emission data between <code>300</code> and <code>350</code> nm.<br>
-Example: <code>(__, __, 300, __)</code> to remove emission data between the first emission wavelengths below and above <code>300</code> nm.<br>
-Example: <code>(__, __, [min(data.Em):350], __)</code> to remove emission data between  the first emission wavelength and <code>350</code> nm.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>exRange</code> - excitation wavelengths in nanometers to NaN</b></summary>
-    <i>numeric</i></p>
-
+<p>Example: <code>(__, __, [300 350], __)</code> to remove emission data between <code>300</code> and <code>350</code> nm.<br> Example: <code>(__, __, 300, __)</code> to remove emission data between the first emission wavelengths below and above <code>300</code> nm.<br> Example: <code>(__, __, [min(data.Em):350], __)</code> to remove emission data between the first emission wavelength and <code>350</code> nm.</p>
+</details>
+<details open>
+<summary>
+<b><code>exRange</code> - excitation wavelengths in nanometers to NaN</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Specify the range of excitation wavelengths to be zapped from <code>sampleIdent</code>. The provided range must be within the excitation range of <code>data</code>. If only one wavelength is provided (not a range) the function will automatically set the range to two closest neighboring wavelengths around the specified wavelength.</p>
-
 <p>Example: <code>(__, __, __, [400 410])</code> to remove data between excitation <code>400</code> and <code>410</code> nm.</p>
-
 <p>Example: <code>(__, __, __, 400)</code> to remove data between the first excitation wavelengths below and above <code>400</code> nm.</p>
-
-<p>Example: <code>(__, __, __, [min(data.Ex):max(data.Ex)])</code> to remove data between  the first and last excitation wavelengths.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - treated dataset</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>Example: <code>(__, __, __, [min(data.Ex):max(data.Ex)])</code> to remove data between the first and last excitation wavelengths.</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - treated dataset</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

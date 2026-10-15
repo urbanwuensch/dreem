@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>murea</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,103 +370,76 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">murea</h1>
-
-<p>Diagnose PARAFAC model performance sample-by-sample, by running a chemometric (PCA) analysis of the model&#39;s residuals</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">murea(data)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
+<h1 id="murea">murea</h1>
+<p>Diagnose PARAFAC model performance sample-by-sample, by running a chemometric (PCA) analysis of the model's residuals</p>
+<h2 id="syntax">Syntax</h2>
+<pre><code>murea(data)</code></pre>
+<h2 id="description">Description</h2>
 <p>Global model metrics - percent variance explained, core consistency, split-half validation - can look excellent while individual samples are still poorly represented by the model. This is especially easy to miss when a component barely fluoresces: trends in its <code>Fmax</code> values can then be driven more by modelling error than by real chemical differences between samples. With hundreds of samples, flipping through every individual residual EEM to catch this is not practical.</p>
-
-<p><code>murea</code> opens the <strong>MuReA</strong> (&quot;Multivariate Analysis of Model Residuals&quot;) app, which addresses this by treating the residuals of a chosen PARAFAC model the same way PARAFAC itself treats raw EEMs: with a chemometric decomposition, in this case Principal Component Analysis (PCA). For the selected PARAFAC model, the app:</p>
-
-<ol>
+<p><code>murea</code> opens the <strong>MuReA</strong> ("Multivariate Analysis of Model Residuals") app, which addresses this by treating the residuals of a chosen PARAFAC model the same way PARAFAC itself treats raw EEMs: with a chemometric decomposition, in this case Principal Component Analysis (PCA). For the selected PARAFAC model, the app:</p>
+<ol type="1">
 <li>calculates the model residuals (<code>E = X - X̂</code>) for every sample,</li>
 <li>unfolds the residual EEMs into a <code>nSample</code>-by-<code>nEm*nEx</code> matrix,</li>
 <li>removes wavelength pairs that are always missing and interpolates any other gaps (e.g. scatter that was cut), and</li>
 <li>fits a PCA model to the unfolded residuals.</li>
 </ol>
-
-<p>If the PCA model explains a large share of the residual variance, and does so systematically rather than randomly, that points to structure PARAFAC left behind: a bias between sample groups, a component that needed refining, or scatter/instrument issues that weren&#39;t fully treated. If the PCA mostly picks up noise, that&#39;s reassuring evidence that the PARAFAC residuals are close to random, as they should be.</p>
-
+<p>If the PCA model explains a large share of the residual variance, and does so systematically rather than randomly, that points to structure PARAFAC left behind: a bias between sample groups, a component that needed refining, or scatter/instrument issues that weren't fully treated. If the PCA mostly picks up noise, that's reassuring evidence that the PARAFAC residuals are close to random, as they should be.</p>
 <blockquote>
 <p><strong><em>The dataset must already contain at least one PARAFAC model (fitted with <code>fitparafac</code>). Otherwise the function returns an error.</em></strong></p>
 </blockquote>
-
 <p>Note: The app does not accept any output arguments!</p>
-
-<p><details open>
-    <summary><b>Settings panel</b></summary></p>
-
+<details open>
+<summary>
+<b>Settings panel</b>
+</summary>
 <ul>
-<li><code># PARAFAC components</code>: choose which of the dataset&#39;s PARAFAC models (by number of components) to analyze the residuals of. Every other panel in the app updates to reflect this choice.</li>
+<li><code># PARAFAC components</code>: choose which of the dataset's PARAFAC models (by number of components) to analyze the residuals of. Every other panel in the app updates to reflect this choice.</li>
 <li><code>Plot focus</code>: on the <code>Scores &amp; loadings</code> tab, choose whether to display <code>Scores &amp; loadings</code> together, or <code>Scores only</code>.</li>
 <li><code>Exclude low FDOM</code>: exclude samples with very low fluorescence signal from the PCA, analogous to the <code>deleteLow</code> option in <code>fitpca</code>.</li>
 <li><code>Colormap EEM</code>: colormap used for the loading and residual EEM plots (e.g. <code>turbo</code>).</li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Overview graph</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Overview graph</b>
+</summary>
 <p>Shown when the app opens. Two linked plots, side by side:</p>
-
 <ul>
-<li><code>Explained data (PARAFAC)</code>: cumulative variance explained by each of the dataset&#39;s PARAFAC models, plotted against their number of components.</li>
+<li><code>Explained data (PARAFAC)</code>: cumulative variance explained by each of the dataset's PARAFAC models, plotted against their number of components.</li>
 <li><code>Explained by PCA (residuals)</code>: for the PARAFAC model currently selected in the Settings panel, the variance explained by each individual PCA component (left axis) and the cumulative variance explained (right axis), plotted against the number of PCA components.</li>
 </ul>
-
-<p>Lower is generally better here, but it&#39;s not unusual for PCA to explain a non-trivial share of the residuals; based on experience applying this tool to several datasets, less than 50% cumulative explained variance for the first two PCA components is a reasonable, if informal, benchmark.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Scores &amp; loadings</b></summary></p>
-
+<p>Lower is generally better here, but it's not unusual for PCA to explain a non-trivial share of the residuals; based on experience applying this tool to several datasets, less than 50% cumulative explained variance for the first two PCA components is a reasonable, if informal, benchmark.</p>
+</details>
+<details open>
+<summary>
+<b>Scores &amp; loadings</b>
+</summary>
 <ul>
-<li><code>Scores</code>: one line plot per retained PCA component, showing that component&#39;s score for every sample. Ideally these look like noise scattered around zero, indicating no systematic sample trend. Deviations from zero mark samples worth a closer look.</li>
+<li><code>Scores</code>: one line plot per retained PCA component, showing that component's score for every sample. Ideally these look like noise scattered around zero, indicating no systematic sample trend. Deviations from zero mark samples worth a closer look.</li>
 <li><code>Loadings</code>: the loadings of each PCA component, reshaped back into an EEM-like contour plot and labeled with the percentage of residual variance that component explains. Unlike PARAFAC loadings, these can be negative as well as positive, since PCA is decomposing variance from an average rather than a non-negative signal; a systematic spectral shape here (rather than a random-looking pattern) indicates a real bias that PARAFAC left behind.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Score plots</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Score plots</b>
+</summary>
 <ul>
 <li><code>Score overview</code>: a scatter plot of PCA scores, with <code>x-axis</code> and <code>y-axis</code> drop-downs to choose which two PCA components to plot against each other, and <code>color-by</code> to color points by a column from <code>data.metadata</code>. <code>randomize order</code> randomizes the plotting order, which helps when many overlapping categories are stacked on top of each other, and <code>alpha</code> controls marker transparency. <code>class boundary</code> draws a boundary between the colored categories.</li>
-<li><code>Selected EEM</code>: clicking a point in the score overview plot shows that sample&#39;s EEM here. A <code>Data</code>/<code>Residuals</code> switch toggles between the sample&#39;s original EEM and its residual for the currently selected PARAFAC model, making it possible to directly connect a suspicious score to what it looks like in the data.</li>
+<li><code>Selected EEM</code>: clicking a point in the score overview plot shows that sample's EEM here. A <code>Data</code>/<code>Residuals</code> switch toggles between the sample's original EEM and its residual for the currently selected PARAFAC model, making it possible to directly connect a suspicious score to what it looks like in the data.</li>
 </ul>
-
-<p></details></p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset containing one or more PARAFAC models</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset containing one or more PARAFAC models</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>, and that contains at least one PARAFAC model fitted with <code>fitparafac</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

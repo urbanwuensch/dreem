@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>subdataset</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,125 +370,85 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">subdataset</h1>
-
+<h1 id="subdataset">subdataset</h1>
 <p>Remove samples, emission spectra or excitation spectra from the dataset.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = subdataset(data, Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The function removes, i.e. truncates parts of a dataset. Use this to remove problematic samples, noisy excitation scans, or unneeded emission scans.</p>
-
 <p>A particularly useful case is the removal of EEM regions that contain only NaN or zeros. These can disturb various processing functions and prove problematic for PARAFAC.</p>
-
-<p>The <code>history</code> field of the <code>dataout</code> contains a summary of the results of the carried-out subsetting, including which sample, emission and excitation wavelengths were successfully removed. </p>
-
+<p>The <code>history</code> field of the <code>dataout</code> contains a summary of the results of the carried-out subsetting, including which sample, emission and excitation wavelengths were successfully removed.</p>
 <blockquote>
 <p><strong>Note:</strong> When <code>subdataset</code> is called:</p>
-
 <ul>
 <li>If the function <code>scalesamples</code> has been used prior to using the <code>subdataset</code>, the original unscaled data will also be cut.</li>
 <li>any existing PARAFAC models are deleted since they no longer reflect the data.</li>
 <li>the removal will automatically be carried out in any splits as well!</li>
 </ul>
 </blockquote>
-
-<p><details open>
-<summary><b><code>dataout = subdataset(data, Name,Value)</code> - remove parts of a dataset entirely</b>
-</summary></p>
-
+<details open>
+<summary>
+<b><code>dataout = subdataset(data, Name,Value)</code> - remove parts of a dataset entirely</b>
+</summary>
 <p>Contrary to previous version of <code>subdataset</code>, only two inputs are required and the name-value pair notation is used to specify which parts of the dataset should be deleted.</p>
-
 <p>You can specify any combination of <code>outSample</code>,<code>outEm</code>, or <code>outEx</code>. If one of these is not explicitly specified as input, it is automatically set to <code>false</code>, resulting in no action along that dimension of the dataset.</p>
-
 <blockquote>
 <p><strong><em>Note:</em></strong> <code>subdataset</code> works <em>only</em> with logical inputs. Do not provide indicies of wavelength or wavelengths directly. This will be caught during the input validation and results in an error message.</p>
 </blockquote>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li><p>Delete sample based on name
-<code>samples = tbx.subdataset(samples,outSample=matches(samples.filelist,&#39;LCEP23 (01)&#39;));</code></p></li>
-<li><p>Delete sample based identifier
-<code>samples = tbx.subdataset(samples,outSample=samples.i==2);</code></p></li>
-<li><p>Delete emission ranges
-<code>samples = tbx.subdataset(samples,outEm=samples.Em&lt;300|samples.Em&gt;700);</code></p></li>
-<li><p>Delete excitation ranges
-<code>samples = tbx.subdataset(samples,outEx=samples.Ex&lt;240|samples.Ex&gt;450);</code></p></li>
-<li><p>Delete specific excitation
-<code>samples = tbx.subdataset(samples,outEx=samples.Ex==275);</code></p></li>
-<li><p>drEEM ships with a <strong>nearest neighbor function</strong>: <code>isNearest</code>, use it if wavelengths have many decimals
-<code>samples = tbx.subdataset(samples,outEm=tbx.isNearest(samples.Em,349));</code></p></li>
-<li><p>Delete every other emission wavelength
-<code>samples = tbx.subdataset(samples,outEm=ismember(samples.Em,samples.Em(1:2:end)))</code></p></li>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li><p>Delete sample based on name <code>samples = tbx.subdataset(samples,outSample=matches(samples.filelist,'LCEP23 (01)'));</code></p></li>
+<li><p>Delete sample based identifier <code>samples = tbx.subdataset(samples,outSample=samples.i==2);</code></p></li>
+<li><p>Delete emission ranges <code>samples = tbx.subdataset(samples,outEm=samples.Em&lt;300|samples.Em&gt;700);</code></p></li>
+<li><p>Delete excitation ranges <code>samples = tbx.subdataset(samples,outEx=samples.Ex&lt;240|samples.Ex&gt;450);</code></p></li>
+<li><p>Delete specific excitation <code>samples = tbx.subdataset(samples,outEx=samples.Ex==275);</code></p></li>
+<li><p>drEEM ships with a <strong>nearest neighbor function</strong>: <code>isNearest</code>, use it if wavelengths have many decimals <code>samples = tbx.subdataset(samples,outEm=tbx.isNearest(samples.Em,349));</code></p></li>
+<li><p>Delete every other emission wavelength <code>samples = tbx.subdataset(samples,outEm=ismember(samples.Em,samples.Em(1:2:end)))</code></p></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to truncate</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p><details open>
-    <summary><b><code>outSample</code> - samples to delete</b></summary>
-    <i>logical [<code>1x data.nSample</code>]</i></p>
-
-<p>Specifies which samples are to be deleted from the dataset. Matlab-internal functions you can use here include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code> </p>
-
-<p>Example: <code>outSample=matches(data.filelist,&#39;sample01)&#39;</code></p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>outEm</code> - emission wavelengths to delete</b></summary>
-    <i>logical [<code>1x data.nEm</code>]</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to truncate</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<details open>
+<summary>
+<b><code>outSample</code> - samples to delete</b>
+</summary>
+<p><i>logical [<code>1x data.nSample</code>]</i></p>
+<p>Specifies which samples are to be deleted from the dataset. Matlab-internal functions you can use here include: <code>matches</code>, <code>contains</code>, <code>==</code>, <code>~</code></p>
+<p>Example: <code>outSample=matches(data.filelist,'sample01)'</code></p>
+</details>
+<details open>
+<summary>
+<b><code>outEm</code> - emission wavelengths to delete</b>
+</summary>
+<p><i>logical [<code>1x data.nEm</code>]</i></p>
 <p>Specifies which emission wavelengths are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Em,___)</code></p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>outEx</code> - excitation to delete</b></summary>
-    <i>logical [<code>1x data.nEx</code>]</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>outEx</code> - excitation to delete</b>
+</summary>
+<p><i>logical [<code>1x data.nEx</code>]</i></p>
 <p>Specifies which excitation wavelengths are to be deleted from the dataset. Functions to use include: <code>==</code>, <code>~</code>, <code>&lt;</code>, <code>&gt;</code>, <code>drEEMtoolbox.isNearest(data.Ex,___)</code></p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - truncated dataset</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - truncated dataset</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

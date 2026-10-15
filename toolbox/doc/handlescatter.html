@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>handlescatter</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,40 +370,25 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">handlescatter</h1>
-
+<h1 id="handlescatter">handlescatter</h1>
 <p>Excise and treat Excitation-Emission Matrix (EEM) scatter and optionally interpolate between missing values.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = handlescatter(data)</code></a></p>
-
-<p><a href="#syntax2"><code>dataout = handlescatter(data, &#39;gui&#39;)</code></a></p>
-
+<p><a href="#syntax2"><code>dataout = handlescatter(data, 'gui')</code></a></p>
 <p><a href="#syntax3"><code>dataout = handlescatter(data, options)</code></a></p>
-
-<p><a href="#syntax4"><code>scatteroptions = handlescatter(&#39;options&#39;)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<p><a href="#syntax4"><code>scatteroptions = handlescatter('options')</code></a></p>
+<h2 id="description">Description</h2>
 <p>The function <code>handlescatter</code> handles primary and secondary Rayleigh and Raman scatter, by either replacing the values around the scatter with NaNs or interpolation. Additionally, it can set values to <code>zero</code> at a specified distance below the 1st order Rayleigh scatter line (where Emission wavelength equals Excitation wavelength). The function also offers optional plotting to compare the raw, cut and final EEMs for quality check. When no <code>options</code> is provided as input, the function will use the default <code>options</code> for its processing. That includes cutting out all the four scatters from all samples and no interpolation. See Input arguments section for <code>options</code> default values.</p>
-
 <blockquote>
-<p><strong>Important:</strong> The status-property &quot;scatterTreatment&quot; must be &quot;not applied&quot;. Otherwise, the function returns a validation error. Upon completion, the status of the dataset is changed to &quot;applied by toolbox&quot;.</p>
+<p><strong>Important:</strong> The status-property "scatterTreatment" must be "not applied". Otherwise, the function returns a validation error. Upon completion, the status of the dataset is changed to "applied by toolbox".</p>
 </blockquote>
-
 <p>The function uses a defined class <code>handlescatterOptions</code> for all settings. A copy of the default options can be made as follows:</p>
-
-<div><pre><code class="language-none">&gt;&gt; handlescatterOptions
+<pre><code>&gt;&gt; handlescatterOptions
 
 ans = handlescatterOptions with properties:
 
@@ -424,75 +405,44 @@ negativetozero: 1
           plot: 1
       plottype: &quot;mesh&quot;
        samples: &#39;all&#39;
-   description: &#39;Options for handlescatter.m&#39;</code></pre></div>
-
+   description: &#39;Options for handlescatter.m&#39;</code></pre>
 <blockquote>
 <p><strong><em>NOTE: The default options contain settings and choices that would likely cause issues when PARAFACing. This is to ensure that users make concious choices for scatter removal as leftover scatter violates the trilinearity assumptions of PARAFAC.</em></strong></p>
 </blockquote>
-
-<p><details open>
-<summary><b><code>handlescatterOptions</code> explained in detail</b>
-</summary></p>
-
+<details open>
+<summary>
+<b><code>handlescatterOptions</code> explained in detail</b>
+</summary>
 <ul>
-<li><strong>cutout:</strong> Specify which scatter to cut from the data in the following order: [Ray1 Ram1 Ray2 Ram2]. To cut choose <code>1</code> and to leave out choose <code>0</code>. Default values are <code>[1 1 1 1]</code> 
-<br>
-<br></li>
-<li><strong>interpolate:</strong> Specifies whether to interpolate over the cut scatter regions. <code>1</code> indicates interpolation, <code>0</code> indicates no interpolation over the specified scatter in the following order for scatters:[Ray1 Ram1 Ray2 Ram2]. Default values are <code>[0 0 0 0]</code>
-<br>
-<br></li>
-<li><strong>ray1:</strong> Specifies the range around the 1st Rayleigh scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[10 10]</code>.
-<br>
-<br></li>
-<li><strong>ram1:</strong> Specifies the range around the 1st Raman scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[15 15]</code>.
-<br>
-<br></li>
-<li><strong>ray2:</strong> Specifies the range around the 2nd Rayleigh scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[5 5]</code>.
-<br>
-<br></li>
-<li><strong>ram2:</strong> Specifies the range around the 2nd Raman scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[5 5]</code>.
-<br>
-<br></li>
-<li><strong>d2zero:</strong> Specifies the distance in nm below Ray1 below which the emission values are forced to <code>zero</code>. Default value is <code>60</code> nm.
-<br>
-<br></li>
-<li><strong>iopt:<br></strong> Specifies the method for handling overlapping <code>NaN</code> regions during interpolation. <code>&#39;normal&#39;</code> means standard interpolation, <code>&#39;conservative&#39;</code> means leaving <code>NaN</code>s uninterpolated. Default is <code>&#39;normal&#39;</code>.
-<br>
-<br></li>
-<li><strong>imethod:</strong> Specifies the interpolation method to use for filling cut scatters.<code>&#39;inpaint&#39;</code> uses an inpainting algorithm, <code>&#39;fillmissing&#39;</code> uses MATLAB&#39;s fillmissing function. &#39;<code>inpaint&#39;</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. &#39;<code>inpaint&#39;</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>fillmissing</code> options fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>inpaint</code>.
-<br>
-<br></li>
-<li><strong>negativetozero:</strong> Specifies whether to convert all negative values in the data to <code>zero</code>. It is useful for ensuring non-negative data values. Default is <code>true</code>.
-<br>
-<br></li>
-<li><strong>plot:</strong> Specifies whether to plot the raw, cut, and final Excitation-Emission Matrices (EEMs). <code>true</code> enables plotting, <code>false</code> disables it. NOTE: If <code>true</code> is set, plots will always loop through all samples if desired, but prematurely closing the window will terminate plotting and return the smoothed data.
-<br>
-<br></li>
-<li><strong>samples:</strong> Specifies which samples to process. <code>&#39;all&#39;</code> means process all samples. A numeric vector specifies which samples to process, for example <code>[2 3 4 5]</code>, will only apply the function on samples <code>2</code> to <code>5</code>. Default is <code>&#39;all&#39;</code>.
-<br>
-<br></li>
-<li><strong>plottype:</strong> Specifies the type of plot to display when plotting is enabled. Options are <code>&#39;mesh&#39;</code>, <code>&#39;surface&#39;</code>, or <code>&#39;contourf&#39;</code>. Default is <code>mesh</code>.</li>
+<li><strong>cutout:</strong> Specify which scatter to cut from the data in the following order: [Ray1 Ram1 Ray2 Ram2]. To cut choose <code>1</code> and to leave out choose <code>0</code>. Default values are <code>[1 1 1 1]</code> <br> <br></li>
+<li><strong>interpolate:</strong> Specifies whether to interpolate over the cut scatter regions. <code>1</code> indicates interpolation, <code>0</code> indicates no interpolation over the specified scatter in the following order for scatters:[Ray1 Ram1 Ray2 Ram2]. Default values are <code>[0 0 0 0]</code> <br> <br></li>
+<li><strong>ray1:</strong> Specifies the range around the 1st Rayleigh scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[10 10]</code>. <br> <br></li>
+<li><strong>ram1:</strong> Specifies the range around the 1st Raman scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[15 15]</code>. <br> <br></li>
+<li><strong>ray2:</strong> Specifies the range around the 2nd Rayleigh scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[5 5]</code>. <br> <br></li>
+<li><strong>ram2:</strong> Specifies the range around the 2nd Raman scatter peak to cut (and interpolate, if chosen). Format: [below, above] in nanometers (nm) from the center of the scatter peak. Default is <code>[5 5]</code>. <br> <br></li>
+<li><strong>d2zero:</strong> Specifies the distance in nm below Ray1 below which the emission values are forced to <code>zero</code>. Default value is <code>60</code> nm. <br> <br></li>
+<li><strong>iopt:<br></strong> Specifies the method for handling overlapping <code>NaN</code> regions during interpolation. <code>'normal'</code> means standard interpolation, <code>'conservative'</code> means leaving <code>NaN</code>s uninterpolated. Default is <code>'normal'</code>. <br> <br></li>
+<li><strong>imethod:</strong> Specifies the interpolation method to use for filling cut scatters.<code>'inpaint'</code> uses an inpainting algorithm, <code>'fillmissing'</code> uses MATLAB's fillmissing function. '<code>inpaint'</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. '<code>inpaint'</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>fillmissing</code> options fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>inpaint</code>. <br> <br></li>
+<li><strong>negativetozero:</strong> Specifies whether to convert all negative values in the data to <code>zero</code>. It is useful for ensuring non-negative data values. Default is <code>true</code>. <br> <br></li>
+<li><strong>plot:</strong> Specifies whether to plot the raw, cut, and final Excitation-Emission Matrices (EEMs). <code>true</code> enables plotting, <code>false</code> disables it. NOTE: If <code>true</code> is set, plots will always loop through all samples if desired, but prematurely closing the window will terminate plotting and return the smoothed data. <br> <br></li>
+<li><strong>samples:</strong> Specifies which samples to process. <code>'all'</code> means process all samples. A numeric vector specifies which samples to process, for example <code>[2 3 4 5]</code>, will only apply the function on samples <code>2</code> to <code>5</code>. Default is <code>'all'</code>. <br> <br></li>
+<li><strong>plottype:</strong> Specifies the type of plot to display when plotting is enabled. Options are <code>'mesh'</code>, <code>'surface'</code>, or <code>'contourf'</code>. Default is <code>mesh</code>.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout = handlescatter(data)</code> - default options (for quick visualization)</b></summary>
-    <a name="syntax1"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = handlescatter(data)</code> - default options (for quick visualization)</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>This syntax will automatically apply some default settings for scatter removal. This can be useful to take a quick look at EEMs without scatter having a dominant visual effect in the graphs. However, the settings <em>will not work well for PARAFAC</em>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout = handlescatter(data, &#39;gui&#39;)</code> - GUI decision support</b></summary>
-    <a name="syntax2"></a></p>
-
-<p>Running <code>handlescatter</code> with <code>gui</code> options opens up the <code>viewscatter</code> user interface app. The interface allows users to apply settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.
-Interface Components include:</p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = handlescatter(data, 'gui')</code> - GUI decision support</b>
+</summary>
+<p><a name="syntax2"></a></p>
+<p>Running <code>handlescatter</code> with <code>gui</code> options opens up the <code>viewscatter</code> user interface app. The interface allows users to apply settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time. Interface Components include:</p>
 <p><strong>Control Panel:<br></strong></p>
-
 <ul>
 <li><code>Test On</code>: Select the sample to view the plots for. Use the arrow buttons to navigate through different samples in <code>data</code>.</li>
 <li><code>Apply</code>: Apply the current scatter treatment settings to the whole <code>data</code>.</li>
@@ -500,105 +450,76 @@ Interface Components include:</p>
 <li><code>Apply &amp; Close</code>: Apply the current settings and close the interface.</li>
 <li><code>Plot</code>: Toggle between <code>raw</code> and <code>treated</code> data visualization.</li>
 </ul>
-
 <p><strong>Scatter Treatment Settings:<br></strong></p>
-
 <ul>
 <li><code>Cut</code>: Enable or disable the cut option for the chosen scatter.</li>
 <li><code>Int.</code>: Enable or disable the interpolation option for the chosen scatter.</li>
-<li><code>Below</code>: Set the nm distance below the center of the chosen scatter for  scatter cut. Adjusting this value will automatically be reflected on the plots with red bars around the center of the scatter.</li>
+<li><code>Below</code>: Set the nm distance below the center of the chosen scatter for scatter cut. Adjusting this value will automatically be reflected on the plots with red bars around the center of the scatter.</li>
 <li><code>Above</code>: Set the nm distance above the center of the chosen scatter for scatter cut. Adjusting this value will automatically be reflected on the plots with red bars around the center of the scatter.</li>
 </ul>
-
 <p><strong>Miscellaneous Settings:<br></strong></p>
-
 <ul>
 <li><code>Set Negative Fluorescence Values to Zero</code>: Enable this option to set all negative fluorescence values to zero.</li>
 <li><code>nm Distance to Zero</code>: Specify the nm distance from the center of the 1st order Rayleigh scatter below which all values will be set to zero.</li>
 <li><code>Interpolation method</code>: Toggle between <code>vector</code> and <code>inpaint</code> interpolation for the scatter treatment.</li>
 </ul>
-
 <p><strong>Visualization:<br></strong></p>
-
 <ul>
 <li><code>Scatter-Centered Spectra</code>: this tab displays the scatter-centered spectra for 1st and 2nd order Rayleigh and Raman scatter. Red bars indicate the chosen settings using <code>below</code> and <code>above</code> in the <code>scatter treatment settings</code> panel.</li>
 <li><code>Excitation-Emission Matrix</code>: This tab visualizes the <code>raw</code> or <code>treated</code> excitation-emission matrix after applying the scatter removal settings.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout= handlescatter(data, options)</code> - apply scatter treatment with options structure from workspace</b></summary>
-    <a name="syntax3"></a></p>
-
-<p><code>handlescatter</code> can obtain and process the scatter handling using user customized <code>options</code> supplied as a single structure. Default values are obtained by calling <code>scatteroptions = handlescatter(&#39;options&#39;)</code>. the fields in <code>options</code> can be modified and passed out to the function. See Input arguments section for the fields of <code>options</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>scatteroptions = handlescatter(&#39;options&#39;)</code> - Retrieve option structure for modification</b></summary>
-    <a name="syntax4"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout= handlescatter(data, options)</code> - apply scatter treatment with options structure from workspace</b>
+</summary>
+<p><a name="syntax3"></a></p>
+<p><code>handlescatter</code> can obtain and process the scatter handling using user customized <code>options</code> supplied as a single structure. Default values are obtained by calling <code>scatteroptions = handlescatter('options')</code>. the fields in <code>options</code> can be modified and passed out to the function. See Input arguments section for the fields of <code>options</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>scatteroptions = handlescatter('options')</code> - Retrieve option structure for modification</b>
+</summary>
+<p><a name="syntax4"></a></p>
 <p>Obtains the default <code>options</code> of the function and save them in <code>scatteroptions</code>. These can be modified and later passed down to function by calling <code>data = handlescatter(data, scatteroptions)</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
+</details>
+<h2 id="examples">Examples</h2>
 <p>Retrieve and modify options to apply them:</p>
-
-<div><pre><code class="language-none">scatteroptions = handlescatter(&#39;options&#39;);
+<pre><code>scatteroptions = handlescatter(&#39;options&#39;);
 scatteroptions.ray1 = [25 15];
 scatteroptions.ram1 = [10 12];
 scatteroptions.interpolate = [0 0 0 1];
-dataout = handlescatter(data, scatteroptions);</code></pre></div>
-
-<p>In this example, we obtain the default options to change the lower and upper distance from the center for 1st order Rayleigh scatter,  to change the lower and upper distance from the center for 1st order Raman scatter cut, and
- to turn off interpolation for all scatters except the 2nd order Raman scatter.  Finally, we apply the settings.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset with scatter for removal</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
+dataout = handlescatter(data, scatteroptions);</code></pre>
+<p>In this example, we obtain the default options to change the lower and upper distance from the center for 1st order Rayleigh scatter, to change the lower and upper distance from the center for 1st order Raman scatter cut, and to turn off interpolation for all scatters except the 2nd order Raman scatter. Finally, we apply the settings.</p>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset with scatter for removal</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
 <blockquote>
-<p>The property <code>data.status.scatterTreatment</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
+<p>The property <code>data.status.scatterTreatment</code> must be <code>"not applied"</code>. Otherwise, the function returns a validation error.</p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
-<summary><b><code>options</code> - function mode switch (apply or retrieve options or start GUI)</b></summary>
-    <i>char | handlescatterOptions</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>options</code> - function mode switch (apply or retrieve options or start GUI)</b>
+</summary>
+<p><i>char | handlescatterOptions</i></p>
 <p>This variable serves multiple purposes and is thus best described as a mode switch.</p>
-
-<p>If <strong>text (&quot;gui&quot;)</strong> is supplied, the app starts a GUI to allow you to define scatter treatment settings interactively.</p>
-
-<p>If <strong>text (&quot;options&quot;)</strong> is supplied, the app returns the default options to the workspace</p>
-
+<p>If <strong>text ("gui")</strong> is supplied, the app starts a GUI to allow you to define scatter treatment settings interactively.</p>
+<p>If <strong>text ("options")</strong> is supplied, the app returns the default options to the workspace</p>
 <p>If a <strong>structure of the type handlescatterOptions</strong> is supplied, the app applies these settings and returns a treated dataset.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - contains EEMs of samples, hopefully without scatter</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - contains EEMs of samples, hopefully without scatter</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
 <p>The status of the dataset is changed to reflect the fact that the scatter excision has been performed by the drEEM toolbox</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

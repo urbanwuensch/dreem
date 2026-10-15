@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewscatter</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,112 +370,88 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewscatter</h1>
-
+<h1 id="viewscatter">viewscatter</h1>
 <p>Excise and treat Excitation-Emission Matrix (EEM) scatter and optionally interpolate between missing values.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>viewscatter(data,Name,Value)</code></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p>Opens up the <code>viewscatter</code>&#39;s user interface app. The interface allows users to investigate settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.</p>
-
+<h2 id="description">Description</h2>
+<p>Opens up the <code>viewscatter</code>'s user interface app. The interface allows users to investigate settings for treating 1st and 2nd order Rayleigh and Raman scatter and visualize the results in real-time.</p>
 <blockquote>
-<p>The app can also be opened using <code>handlescatter</code> function with <code>gui</code> option. For more information see <code>handlescatter</code>. In contrast to <code>dataout=handlescatter(data,&#39;gui&#39;)</code>,  <code>viewscatter(data)</code> is not designed to apply settings to the original <code>data</code>, but instead is used to explore different options and hence does not accept any output argument. To apply the settings directly, use the <code>handlescatter</code> function instead. Otherwise, <code>viewscatter</code> can save the settings themselves to the workspace as the variable <code>scatteroptions</code> which can then be saved to the disk and loaded in a script.</p>
+<p>The app can also be opened using <code>handlescatter</code> function with <code>gui</code> option. For more information see <code>handlescatter</code>. In contrast to <code>dataout=handlescatter(data,'gui')</code>, <code>viewscatter(data)</code> is not designed to apply settings to the original <code>data</code>, but instead is used to explore different options and hence does not accept any output argument. To apply the settings directly, use the <code>handlescatter</code> function instead. Otherwise, <code>viewscatter</code> can save the settings themselves to the workspace as the variable <code>scatteroptions</code> which can then be saved to the disk and loaded in a script.</p>
 </blockquote>
-
 <p><strong>Interface Components include:</strong><br></p>
-
-<p><details open><summary><b>Control Panel</b></summary></p>
-
+<details open>
+<summary>
+<b>Control Panel</b>
+</summary>
 <ul>
 <li><code>Test On</code>: Select the sample to view the plots for. Use the arrow buttons to navigate through different samples in <code>data</code>.</li>
 <li><code>Apply</code>: Apply the current scatter treatment settings to the whole <code>data</code>.<br> Note: this will not change the original data stored in <code>data</code>.</li>
 <li><code>Save Settings</code>: Save the settings used for <code>handlescatter</code> in a variable called <code>scatteroptions</code> in the workspace.</li>
 <li><code>Apply &amp; Close</code>: This button will not work when the app has been opened up using <code>viewscatter</code>, as data is not intended to be saved. To enable the functionality of this function open the app from the <code>handlescatter</code> function.</li>
-<li><code>Plot</code>: Toggle between <code>raw</code> and <code>treated</code> data visualization.
-</details></li>
+<li><code>Plot</code>: Toggle between <code>raw</code> and <code>treated</code> data visualization.</li>
 </ul>
-
-<p><details open><summary><b>Scatter Treatment Settings</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Scatter Treatment Settings</b>
+</summary>
 <ul>
 <li><code>Cut</code>: Enable or disable the cut option for the chosen scatter.</li>
 <li><code>Int.</code>: Enable or disable the interpolation option for the chosen scatter.</li>
-<li><code>Below</code>: Set the nm distance below the center of the chosen scatter for  scatter cut. Adjusting this value will automatically be reflected on the plots with red bars around the center of the scatter.</li>
+<li><code>Below</code>: Set the nm distance below the center of the chosen scatter for scatter cut. Adjusting this value will automatically be reflected on the plots with red bars around the center of the scatter.</li>
 <li><code>Above</code>: Set the nm distance above the center of the chosen scatter for scatter cut. Adjusting this value will automatically be reflected on the plots with red bars around the center of the scatter.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open><summary><b>Miscellaneous Settings</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Miscellaneous Settings</b>
+</summary>
 <ul>
 <li><code>Set Negative Fluorescence Values to Zero</code>: Enable this option to set all negative fluorescence values to zero.</li>
 <li><code>nm Distance to Zero</code>: Specify the nm distance from the center of the 1st order Rayleigh scatter below which all values will be set to zero.</li>
 <li><code>Interpolation method</code>: Toggle between <code>vector</code> and <code>inpaint</code> interpolation for the scatter treatment.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open><summary><b>Visualization</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Visualization</b>
+</summary>
 <ul>
 <li><code>Scatter-Centered Spectra</code>: this tab displays the scatter-centered spectra for 1st and 2nd order Rayleigh and Raman scatter. Red bars indicate the chosen settings using <code>below</code> and <code>above</code> in the <code>scatter treatment settings</code> panel.</li>
 <li><code>Excitation-Emission Matrix</code>: This tab visualizes the <code>raw</code> or <code>treated</code> excitation-emission matrix after applying the scatter removal settings.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open><summary><b>Interpolation methods</b></summary></p>
-
-<p>Specifies the interpolation method to use for filling cut scatters.<code>&#39;inpaint&#39;</code> uses an inpainting algorithm, <code>&#39;fillmissing&#39;</code> uses MATLAB&#39;s &quot;fillmissing&quot; function. <code>&#39;inpaint&#39;</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. <code>&#39;inpaint&#39;</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>&#39;fillmissing&#39;</code> option fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>&#39;inpaint&#39;</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset containing fluorescence data</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<details open>
+<summary>
+<b>Interpolation methods</b>
+</summary>
+<p>Specifies the interpolation method to use for filling cut scatters.<code>'inpaint'</code> uses an inpainting algorithm, <code>'fillmissing'</code> uses MATLAB's "fillmissing" function. <code>'inpaint'</code> applies del^2 over the entire array, then drops those parts of the array which do not have any contact with NaNs. <code>'inpaint'</code> uses a least squares approach, but it does not modify known values. In the case of small arrays, this method is quite fast as it does very little extra work. Extrapolation behavior is linear. See inpaint: Copyright (c) 2017, Damien Garcia. <code>'fillmissing'</code> option fills missing values using Shape-preserving piecewise cubic spline interpolation. For any missing values at the ends of the array, it uses the nearest non-missing value. This ensures that data is completed with a smooth and shape-preserving interpolation method, while boundary gaps are filled with adjacent values. Default method used in <code>handlescatter</code> is <code>'inpaint'</code>.</p>
+</details>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset containing fluorescence data</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save the current graphical user interface </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the current view of the GUI.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewscatter</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewscatter.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewscatter.jpg&quot;.</p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save the current graphical user interface </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the current view of the GUI.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewscatter</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewscatter.png". Likewise, providing "projectX.jpg" will result in "projectX-viewscatter.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
-
-<p></details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving.</p>
+</details>
 </body>
-
 </html>

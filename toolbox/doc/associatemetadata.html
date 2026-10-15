@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>associatemetadata</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,141 +370,98 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">associatemetadata</h1>
-
+<h1 id="associatemetadata">associatemetadata</h1>
 <p>Associate a metadata file with a <code>drEEMdataset</code></p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = associatemetadata(data, filename, metadatakey)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = associatemetadata(data, filename, metadatakey, datakey)</code></a></p>
-
 <p><a href="#syntax3"><code>dataout = associatemetadata(data, metadataTable, metadatakey, datakey)</code></a></p>
-
 <p><a href="#syntax4"><code>associatemetadata(data, ___)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>Metadata that describes samples is helpful in describing dynamics between samples. The drEEM toolbox supports metadata via the drEEMdataset property <code>metadata</code>, which is a table that can store information such as location, date / time, analyst, salinity, temperature, ... .</p>
-
-<p>The function ensures that the identifiers in both the <code>data</code> and the metadata exist, are of the same class and are unique, then performs necessary type conversions to limit the associated data to be of type <code>char</code>, <code>double</code>, or <code>categorical</code>. The <code>metadata</code> field entries for the unmatched samples  are filled with <code>missing</code> or <code>NaN</code> values.
-If no output argument is specified, the function overwrites the original object in the workspace.</p>
-
-<p>Metadata are stored in <code>data.metadata</code>. To access and extract,  <code>md=data.metadata</code> would extract the metadata from the dataset and create a table in the workspace.</p>
-
+<p>The function ensures that the identifiers in both the <code>data</code> and the metadata exist, are of the same class and are unique, then performs necessary type conversions to limit the associated data to be of type <code>char</code>, <code>double</code>, or <code>categorical</code>. The <code>metadata</code> field entries for the unmatched samples are filled with <code>missing</code> or <code>NaN</code> values. If no output argument is specified, the function overwrites the original object in the workspace.</p>
+<p>Metadata are stored in <code>data.metadata</code>. To access and extract, <code>md=data.metadata</code> would extract the metadata from the dataset and create a table in the workspace.</p>
 <blockquote>
 <p><strong>Note:</strong> <code>associatemetadata</code> will always provide basic output on the associations made between tables and the dataset. This is done with console output:</p>
-
 <p><img src="associatemetadata_output.png" width="auto" height="auto" align="justified"/></p>
 </blockquote>
-
 <p>Always inspect the outcome.</p>
-
 <p>Many functions support content in the metadata table and will offer to enrich plots by referring to the contents.</p>
-
-<p><details open>
-    <summary><b><code>dataout = associatemetadata(data, filename, metadatakey)</code>- default options</b></summary>
-    <a name="syntax1"></a></p>
-
-<p>The <code>associatemetadata</code> function reads metadata information from a  file or table specified by <code>filename</code> and associates it with <code>data</code> based on specified key in metadata table pointed at with <code>metadatakey</code>. The function by default uses <code>filelist</code> field in <code>data</code> as identifier key for <code>drEEMdataset</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b><code>dataout = associatemetadata(data, filename, metadatakey, datakey)</code>- different dataset key</b></summary>
-<a name="syntax2"></a></p>
-
+<details open>
+<summary>
+<b><code>dataout = associatemetadata(data, filename, metadatakey)</code>- default options</b>
+</summary>
+<p><a name="syntax1"></a></p>
+<p>The <code>associatemetadata</code> function reads metadata information from a file or table specified by <code>filename</code> and associates it with <code>data</code> based on specified key in metadata table pointed at with <code>metadatakey</code>. The function by default uses <code>filelist</code> field in <code>data</code> as identifier key for <code>drEEMdataset</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>dataout = associatemetadata(data, filename, metadatakey, datakey)</code>- different dataset key</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p><code>datakey</code> points to a variable in the metadata table that will be used for the association of the external table with the <code>drEEMdataset</code> (instead of the property <code>filelist</code>).</p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b><code>dataout = associatemetadata(data, metadataTable, metadatakey,datakey)</code>- provide table variable</b></summary>
-<a name="syntax3"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = associatemetadata(data, metadataTable, metadatakey,datakey)</code>- provide table variable</b>
+</summary>
+<p><a name="syntax3"></a></p>
 <p><code>metadataTable</code> is a variable of the class table that exists in the workspace. This can be useful if a table needed modification prior to associating it with the metadata table. The default syntax with <code>filename</code> will make <code>associatemetadata</code> load the table itself, whereas providing <code>metadataTable</code> will assume that a table is handed to the function.</p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b><code>associatemetadata(data,___)</code>- diagnostic mode</b></summary>
-<a name="syntax4"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>associatemetadata(data,___)</code>- diagnostic mode</b>
+</summary>
+<p><a name="syntax4"></a></p>
 <p>With this syntax (<strong>by providing no output arguments</strong>), the function runs in diagnostic mode. It will simply return statistics on how many of the table rows and drEEMdataset variables have been associated successfully. If the number is lower than expected, you should investigate, fix the issues, and re-run the function.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<p><code>samples = associatemetadata(samples,tbl,&#39;sampleID&#39;)</code></p>
-
+</details>
+<h2 id="examples">Examples</h2>
+<p><code>samples = associatemetadata(samples,tbl,'sampleID')</code></p>
 <p>Read metadata from the loaded <code>tbl</code> and use sampleID column in the <code>tbl</code>as the <code>metadatakey</code>. <br></p>
-
-<p><code>samples = associatemetadata(samples,&quot;c:\data\metadata.xlsx&quot;,&#39;sampleID&#39;)</code> </p>
-
-<p>Read metadata from the path specified in <code>filename</code> and  use sampleID column in the metadata file as the <code>metadatakey</code>.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to include metadata in</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<p><details open></p>
-
-<p><summary><b><code>filename</code> - name of variable or table</b></summary>
-    <i>char | string | table</i></p>
-
-<p>If a <code>table</code>, it should be a metadata table already loaded into MATLAB workspace. The <code>table</code> should contain a column header as specified by <code>metadatakey</code>.
-If a <code>string</code> or <code>character array</code>, it should be a path to a file containing the metadata. For local files, <code>filename</code> can be a full path that contains a filename and file extension. FILENAME can also be a relative path to the current folder, or to a folder on the MATLAB path.
-The following extensions are supported: <code>.txt</code>, <code>.dat</code>, <code>.csv</code>, <code>.log</code>,<code>.text</code>, <code>.dlm</code>, <code>.xls</code>, <code>.xlsx</code>, <code>.xlsb</code>, <code>.xlsm</code>, <code>.xltm</code>, <code>.xltx</code>, <code>.ods</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>metadatakey</code> - identifier key in metadata</b></summary>
-    <i>char | string</i></p>
-
+<p><code>samples = associatemetadata(samples,"c:\data\metadata.xlsx",'sampleID')</code></p>
+<p>Read metadata from the path specified in <code>filename</code> and use sampleID column in the metadata file as the <code>metadatakey</code>.</p>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to include metadata in</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<details open>
+<summary>
+<b><code>filename</code> - name of variable or table</b>
+</summary>
+<p><i>char | string | table</i></p>
+<p>If a <code>table</code>, it should be a metadata table already loaded into MATLAB workspace. The <code>table</code> should contain a column header as specified by <code>metadatakey</code>. If a <code>string</code> or <code>character array</code>, it should be a path to a file containing the metadata. For local files, <code>filename</code> can be a full path that contains a filename and file extension. FILENAME can also be a relative path to the current folder, or to a folder on the MATLAB path. The following extensions are supported: <code>.txt</code>, <code>.dat</code>, <code>.csv</code>, <code>.log</code>,<code>.text</code>, <code>.dlm</code>, <code>.xls</code>, <code>.xlsx</code>, <code>.xlsb</code>, <code>.xlsm</code>, <code>.xltm</code>, <code>.xltx</code>, <code>.ods</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>metadatakey</code> - identifier key in metadata</b>
+</summary>
+<p><i>char | string</i></p>
 <p>The name of the column in the metadata table that contains the identifiers to match with <code>data</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Optional input arguments</h2>
-
-<p><details open>
-    <summary><b><code>datakey</code> - identifier key in data</b></summary>
-    <i>char | string</i></p>
-
-<p>The name of the field in the <code>data</code> object that contains the identifiers to match with the metadata.
-Default: <code>filelist</code></p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with new columns in metadata table</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. 
-</details></p>
-
-
-
-
+</details>
+<h2 id="optional-input-arguments">Optional input arguments</h2>
+<details open>
+<summary>
+<b><code>datakey</code> - identifier key in data</b>
+</summary>
+<p><i>char | string</i></p>
+<p>The name of the field in the <code>data</code> object that contains the identifiers to match with the metadata. Default: <code>filelist</code></p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with new columns in metadata table</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.
+</details>
 </body>
-
 </html>

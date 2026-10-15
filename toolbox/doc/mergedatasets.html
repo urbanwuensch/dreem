@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>mergedatasets</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,31 +370,22 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">mergedatasets</h1>
-
+<h1 id="mergedatasets">mergedatasets</h1>
 <p>Merge two datasets to create one bigger dataset</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = mergedatasets(a,b)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p><details open>
-    <summary><b><code>dataout = mergedatasets(a,b)</code> - Merge datasets</b></summary>
-<a name="syntax1"></a> </p>
-
+<h2 id="description">Description</h2>
+<details open>
+<summary>
+<b><code>dataout = mergedatasets(a,b)</code> - Merge datasets</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>Merges two datasets of the class drEEMdataset. Each dataset is validated before merging and must have:</p>
-
 <ul>
 <li>identical status properties</li>
 <li>equal absorbance wavelength axes</li>
@@ -406,46 +393,33 @@ details:open > summary {
 <li>identical excitation axes</li>
 <li>the same columns in the metadata tables</li>
 </ul>
-
 <p>The function does <strong>not</strong> currently interpolate to create comparable datasets with identical axes.</p>
-
 <blockquote>
 <p>Note: The traceability of the resulting dataset <code>dataout</code> is limited since the histories of <code>a</code> and <code>b</code> cannot be preserved in <code>dataout</code></p>
 </blockquote>
-
-<p></details></p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>a</code> - dataset with fluorescence and / or absorbance data</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(a)</code>. </p>
-
-<p></details></p>
-
-<p><details>
-    <summary><b><code>b</code> - dataset with fluorescence and / or absorbance data</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(b)</code>. </p>
-
-<p></details></p>
-
-<h2 id="toc_4">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - merged dataset</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>a</code> - dataset with fluorescence and / or absorbance data</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(a)</code>.</p>
+</details>
+<details>
+<summary>
+<b><code>b</code> - dataset with fluorescence and / or absorbance data</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(b)</code>.</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - merged dataset</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

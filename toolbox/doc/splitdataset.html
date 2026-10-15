@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>splitdataset</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,138 +370,93 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">splitdataset</h1>
-
+<h1 id="splitdataset">splitdataset</h1>
 <p>Split a dataset into multiple subsets for tasks such as cross-validation.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = splitdataset(data,splitType)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = splitdataset( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The <code>splitdataset</code> function creates subsets of <code>data</code> and store them in the <code>split</code> field of the output argument. If <code>data.split</code> contains subsets from previously subsetted data, those splits will be overwritten with the new splits.</p>
-
-<p>Splits are either assigned &quot;blind&quot; or &quot;by metadata&quot;, i.e. without or with considering any metadata such as sample campaign or location.</p>
-
-<p>The function uses default values of input arguments (see Input arguments section) when options are not specified. </p>
-
-<p>An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the  options used for <code>splitdataset</code>. If no output argument is specified, the function will overwrite the original <code>data</code> in the workspace.</p>
-
-<p><details open>
-    <summary><b><code>dataout = splitdataset(data,splitType)</code> - assign samples into 2 splits alternatingly</b></summary>
-<a name="syntax1"></a></p>
-
+<p>Splits are either assigned "blind" or "by metadata", i.e. without or with considering any metadata such as sample campaign or location.</p>
+<p>The function uses default values of input arguments (see Input arguments section) when options are not specified.</p>
+<p>An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the options used for <code>splitdataset</code>. If no output argument is specified, the function will overwrite the original <code>data</code> in the workspace.</p>
+<details open>
+<summary>
+<b><code>dataout = splitdataset(data,splitType)</code> - assign samples into 2 splits alternatingly</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>The default syntax represents the most simple form of dataset splitting, i.e. the split-half. Samples are blindly assigned into one of two splits alternatingly without taking into account any information on sample origin.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout = splitdataset( ___ , Name,Value)</code> - perform custom splits (recommended)</b></summary>
-<a name="syntax2"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = splitdataset( ___ , Name,Value)</code> - perform custom splits (recommended)</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify number and type of splits.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
+</details>
+<h2 id="examples">Examples</h2>
 <p>Please refer to the <a href="#NameValue">Name,Value</a> section to see the defaults for optional arguments. In the examples, some defaults are used. To make this clear, the full function call with redundant arguments is shown below (redundant since default).</p>
-
-<ol>
-<li><p>Randomly split into <code>4</code> subsets:
-<code>data=splitdataset(data,&quot;blind&quot;,&quot;numSplit&quot;,4,&quot;blindType&quot;=&quot;random&quot;)</code></p></li>
-<li><p>Split the dataset into 3 subsets using alternating splitting:
-<code>data=splitdataset(data,&quot;blind&quot;, &quot;numSplit&quot;, 3);</code>
-Is the same as:
-<code>data=splitdataset(data,&quot;blind&quot;,&quot;numSplit&quot;,3,&quot;blindType&quot;=&quot;alternating&quot;)</code></p></li>
-<li><p>Split the dataset exactly according to <code>SampleType</code> in metadata:
-<code>data=splitdataset(data,&quot;byMetadata&quot;,metadataColumn=&quot;SampleType&quot;)</code> </p></li>
+<ol type="1">
+<li><p>Randomly split into <code>4</code> subsets: <code>data=splitdataset(data,"blind","numSplit",4,"blindType"="random")</code></p></li>
+<li><p>Split the dataset into 3 subsets using alternating splitting: <code>data=splitdataset(data,"blind", "numSplit", 3);</code> Is the same as: <code>data=splitdataset(data,"blind","numSplit",3,"blindType"="alternating")</code></p></li>
+<li><p>Split the dataset exactly according to <code>SampleType</code> in metadata: <code>data=splitdataset(data,"byMetadata",metadataColumn="SampleType")</code></p></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to be split into smaller datasets</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>splitType</code>- switch between &quot;blind&quot; and &quot;byMetadata&quot;</b></summary>
-    <i>text</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to be split into smaller datasets</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>splitType</code>- switch between "blind" and "byMetadata"</b>
+</summary>
+<p><i>text</i></p>
 <p>With this argument, you specifically state whether a blind split (no information) should be performed, or whether the splitting operation is informed by metadata.</p>
-
-<p>If <code>&quot;byMetadata&quot;</code> is specified, the option &quot;metadataColumn&quot; <em>must</em> also be specified. Otherwise, an error will be displayed.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>blindType</code>- options for blind splitting</b></summary>
-    <i>text</i></p>
-
-<p>When <code>splitType=&quot;blind&quot;</code>, use this option to specify how the splits should be assined. Options are <code>alternating</code>,<code>random</code>, or <code>contiguous</code>.</p>
-
-<p>Default is <code>&quot;alternating&quot;</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>metadataColumn</code>- metadata to use for split assignment</b></summary>
-    <i>text</i></p>
-
+<p>If <code>"byMetadata"</code> is specified, the option "metadataColumn" <em>must</em> also be specified. Otherwise, an error will be displayed.</p>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>blindType</code>- options for blind splitting</b>
+</summary>
+<p><i>text</i></p>
+<p>When <code>splitType="blind"</code>, use this option to specify how the splits should be assined. Options are <code>alternating</code>,<code>random</code>, or <code>contiguous</code>.</p>
+<p>Default is <code>"alternating"</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>metadataColumn</code>- metadata to use for split assignment</b>
+</summary>
+<p><i>text</i></p>
 <p>Specifies a column in <code>data.metadata</code> to sort <code>data</code> before splitting. Must be a valid metadata column name that exists in <code>data.metadata</code>.</p>
-
-<p>If <code>metadataColumn</code> is provided as optional input, it takes precedence over <code>splitType</code>, i.e. you can but don&#39;t have to set <code>splitType=&quot;byMetadata&quot;</code> (a message will be displayed to inform you that the toolbox has interpreted your intention).</p>
-
-<p>Default is <code>string.empty</code>, since <code>splitType=&quot;blind&quot;</code> by default.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>numSplit</code>- specify number of splits</b></summary>
-    <i>numeric</i></p>
-
+<p>If <code>metadataColumn</code> is provided as optional input, it takes precedence over <code>splitType</code>, i.e. you can but don't have to set <code>splitType="byMetadata"</code> (a message will be displayed to inform you that the toolbox has interpreted your intention).</p>
+<p>Default is <code>string.empty</code>, since <code>splitType="blind"</code> by default.</p>
+</details>
+<details open>
+<summary>
+<b><code>numSplit</code>- specify number of splits</b>
+</summary>
+<p><i>numeric</i></p>
 <p>The number of subsets to split the data into. Must be a positive integer.</p>
-
-<p>Any input to this argument is ignored if <code>splitType=&quot;byMetadata&quot;</code> and / or a Value is supplied to the argument <code>metadataColumn</code>.</p>
-
+<p>Any input to this argument is ignored if <code>splitType="byMetadata"</code> and / or a Value is supplied to the argument <code>metadataColumn</code>.</p>
 <p>Default is <code>2</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with contents in <code>.split</code></b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with contents in <code>.split</code></b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

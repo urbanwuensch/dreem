@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>export2openfluor</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,67 +370,45 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">export2openfluor</h1>
-
+<h1 id="export2openfluor">export2openfluor</h1>
 <p>Export a PARAFAC model to text file formatted for OpenFluor.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>export2openfluor(data, f, filename)</code></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The <code>export2openfluor</code> function exports the excitation and emission loadings of a PARAFAC model, specified by the number of components, <code>f</code>, from <code>data.models</code> to a text file formatted for OpenFluor. If wavelengths are not whole numbers (integers) the function ensures the data is interpolated using a spline method to fit the new wavelength ranges. The function also ensures the data is a valid drEEMdataset before writing it to the specified <code>filename</code>.</p>
-
-<h2 id="toc_3">Examples</h2>
-
-<p><code>export2openfluor(data, 5, &#39;mymodel.txt&#39;)</code></p>
-
+<h2 id="examples">Examples</h2>
+<p><code>export2openfluor(data, 5, 'mymodel.txt')</code></p>
 <p>Export the 5-component model of <code>data</code> to text file <code>mymodel.txt</code>.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to extract model from</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<p><details open></p>
-
-<p><summary><b><code>f</code> - PARAFAC model with f components</b></summary>
-    <i>numeric</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to extract model from</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<details open>
+<summary>
+<b><code>f</code> - PARAFAC model with f components</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Specify the number of PARAFAC components in the model that you want to export. A scalar (single number) is expected, exporting multiple models at once is not supported.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>filename</code> - name of export txt-file</b></summary>
-    <i>char | string</i></p>
-
-<p>The name of the output file. It should be a text and will be saved with a <code>.txt</code> extension.
-Note: Any extension at the end of the <code>filename</code> will be changed to <code>.txt</code>. If none is provided, it will be added.</p>
-
-<p></details></p>
-
+</details>
+<details open>
+<summary>
+<b><code>filename</code> - name of export txt-file</b>
+</summary>
+<p><i>char | string</i></p>
+<p>The name of the output file. It should be a text and will be saved with a <code>.txt</code> extension. Note: Any extension at the end of the <code>filename</code> will be changed to <code>.txt</code>. If none is provided, it will be added.</p>
+</details>
 <!---
+
 ## Name-Value arguments
 -->
-
-
-
-
 </body>
-
 </html>

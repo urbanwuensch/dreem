@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>importwizard</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,63 +370,48 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">importwizard</h1>
-
+<h1 id="importwizard">importwizard</h1>
 <p>Import absorbance spectra along with sample and blank EEMs and associated metadata tables.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>importwizard</code></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p>Opens up the <code>importwizard</code>&#39;s user interface app. This GUI is designed to offer an interactive option for file imports and troubleshooting. </p>
-
+<h2 id="description">Description</h2>
+<p>Opens up the <code>importwizard</code>'s user interface app. This GUI is designed to offer an interactive option for file imports and troubleshooting.</p>
 <p><code>importwizard</code> offers the same functionality as <code>importeems</code>, <code>importabsorbance</code>, and <code>associatemetadata</code>.</p>
-
 <p><strong>Interface Components include:</strong><br></p>
-
-<p><details open><summary><b>Toolbar</b></summary></p>
-
+<details open>
+<summary>
+<b>Toolbar</b>
+</summary>
 <ul>
 <li><code>Help</code>: Opens this documentation</li>
 <li><code>Import folder</code>: Specify the folder in which files will be searched for.</li>
 <li><code>Metadata file</code>: Specify the file from which sample metadata will be gathered and matched to the samples.</li>
 <li><code>A,B,S</code>: Toggle buttons that specify whether absorbance, blank EEMs, and sample EEMs should be imported. Options are always visible even if the import is disabled by the user.</li>
-<li><code>Validate</code>: Runs a diagnostic import in the specified folder with the specified options. </li>
+<li><code>Validate</code>: Runs a diagnostic import in the specified folder with the specified options.</li>
 <li><code>Import</code>: Runs the import, associates metadata, and organizes the data in the most appropriate manner.</li>
-<li><code>Save</code>: Transfers the datasets to the workspace using the variable names <code>samples</code>, <code>blanks</code>, and <code>absorbance</code>.
-</details></li>
+<li><code>Save</code>: Transfers the datasets to the workspace using the variable names <code>samples</code>, <code>blanks</code>, and <code>absorbance</code>.</li>
 </ul>
-
-<p><details open><summary><b>Settings Tab Group</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Settings Tab Group</b>
+</summary>
 <ul>
 <li><code>EEMs</code>: In this tab, the settings from <code>importeems</code> can be specified interactively. Please refer to the documentation to learn more.</li>
 <li><code>Absorbance spectra</code>: In this tab, the settings from <code>importabsorbance</code> can be specified interactively. Please refer to the documentation to learn more.</li>
 <li><code>Metadata spreadsheet</code>: Once a metadata spreadsheet has been selected, the column names will be listed here. If corresponding datasets have also been imported, the Wizard will automatically find the column that best matches filenames to the metadata column and shows the %-success rate with which metadata was associated to the sample datasets.</li>
 </ul>
-
-<p></details></p>
-
-<p><details open><summary><b>App log</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>App log</b>
+</summary>
 <p>In this section of the GUI, any information on app operations is shown. This includes error messages.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

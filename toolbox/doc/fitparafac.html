@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>fitparafac</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,41 +370,26 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">fitparafac</h1>
-
+<h1 id="fitparafac">fitparafac</h1>
 <p>Fit PARAFAC models to fluorescence data.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = fitparafac(data,mode)</code></a></p>
-
-<p><a href="#syntax1"><code>dataout = fitparafac(data,&quot;fitoverall&quot;)</code></a></p>
-
-<p><a href="#syntax1"><code>dataout = fitparafac(data,&quot;fitsplits&quot;)</code></a></p>
-
+<p><a href="#syntax1"><code>dataout = fitparafac(data,"fitoverall")</code></a></p>
+<p><a href="#syntax1"><code>dataout = fitparafac(data,"fitsplits")</code></a></p>
 <p><a href="#syntax2"><code>dataout = fitparafac(___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p>The <code>fitparafac</code> function performs Parallel Factor Analysis (PARAFAC) on the provided <code>data</code>. The models are saved in <code>data.models</code>. The function supports various configurations, including different constraints, convergence criteria, initialization methods, and more (see below).
-The function supports parallelization performance-optimization, but the parallel computing toolbox is required. The function uses default values of input arguments (see Input arguments section) when options are not specified.
-An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the  options used for <code>fitparafac</code>. </p>
-
-<p><details open>
-    <summary><b><code>dataout = fitparafac(data,mode)</code> - default options</b></summary>
-    <a name="syntax1"></a></p>
-
+<h2 id="description">Description</h2>
+<p>The <code>fitparafac</code> function performs Parallel Factor Analysis (PARAFAC) on the provided <code>data</code>. The models are saved in <code>data.models</code>. The function supports various configurations, including different constraints, convergence criteria, initialization methods, and more (see below). The function supports parallelization performance-optimization, but the parallel computing toolbox is required. The function uses default values of input arguments (see Input arguments section) when options are not specified. An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the options used for <code>fitparafac</code>.</p>
+<details open>
+<summary>
+<b><code>dataout = fitparafac(data,mode)</code> - default options</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>The function supports fitting models with default options, where mode specifies if the function is to fit a model to the overall (global) dataset or to the splitdatasets stored within. Note that the defaults are conservative in nature with low convergence and many consecutive starts with random numbers. The defaults are:</p>
-
 <ul>
 <li>fitting 2-7 component models</li>
 <li>nonnegativity constraints in all modes</li>
@@ -416,192 +397,148 @@ An entry will be added to the <code>history</code> field of the <code>data</code
 <li>convergence when relative change between iterations is smaller or equal to 1e-8</li>
 <li>Model initialization with random numbers</li>
 <li>Parallelization is active and console output is kept to a minimum</li>
-<li>The default PARAFAC engine is &quot;parafac3w&quot;, an optimization of PARAFAC that is approx. 5x faster than N-way toolbox PARAFAC, but only supports nonnegative models.</li>
+<li>The default PARAFAC engine is "parafac3w", an optimization of PARAFAC that is approx. 5x faster than N-way toolbox PARAFAC, but only supports nonnegative models.</li>
 </ul>
-
 <p>You might like some of these settings, and want to change others. Do so by using the Name,Value notation for options (see below).</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout = fitparafac( ___ , Name,Value)</code> - <a href="#NameValue">Name,Value</a> arguments</b></summary>
-    <a name="syntax2"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = fitparafac( ___ , Name,Value)</code> - <a href="#NameValue">Name,Value</a> arguments</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p>Most often, the default options will not suffice or do the trick. Custom options can be speficied using one or more <a href="#NameValue">Name,Value</a> pair arguments. For example, you can specify the number of components for models, constraints, initialization and parallelization options. For example, <code>f=2:6</code> specifies that only 2-6 component models should be fit, <code>starts=2</code> that only two initializations should be initiated per model. See <a href="#NameValue">Name,Value</a> for all options.</p>
-
-<p></details></p>
-
+</details>
 <blockquote>
-<p><strong>Info:</strong> Even with parallelization and optimized algorithms, the function might take a long time to finish. If you wish to abort, please use the &quot;cancel&quot; button next to the waitbar for each model. The function will attempt to finish, but might return an error if no usable models have been found. Note that this option is only available when <code>parallelization=true</code>. For conventional execution, <code>Ctrl+c</code> will abort the execution.
-<img src="blockbar.png" width="auto" height="auto" align="center"/></p>
+<p><strong>Info:</strong> Even with parallelization and optimized algorithms, the function might take a long time to finish. If you wish to abort, please use the "cancel" button next to the waitbar for each model. The function will attempt to finish, but might return an error if no usable models have been found. Note that this option is only available when <code>parallelization=true</code>. For conventional execution, <code>Ctrl+c</code> will abort the execution. <img src="blockbar.png" width="auto" height="auto" align="center"/></p>
 </blockquote>
-
-<h2 id="toc_3">Examples</h2>
-
-<p><code>samples=tbx.fitparafac(samples,&quot;fitoverall&quot;,f=2:7,convergence=1e-4,starts=2);</code></p>
-
+<h2 id="examples">Examples</h2>
+<p><code>samples=tbx.fitparafac(samples,"fitoverall",f=2:7,convergence=1e-4,starts=2);</code></p>
 <p>Fit models similar to the previous <strong>outliertest</strong>. Note that mode is not specified, so it is assumed a fit to the overall global dataset is requested. State this explicitly to avoid code ambiguity.</p>
-
-<p><code>samples=tbx.fitparafac(samples,&quot;fitoverall&quot;,f=4:6,convergence=1e-8,starts=50,maxIteration=5000);</code></p>
-
-<p>Find the <strong>global minimum</strong> for a dataset. </p>
-
-<p><code>samples=tbx.fitparafac(samples,&quot;fitoverall&quot;,f=2:7,constraints=&quot;unconstrained&quot;,convergence=1e-6,starts=10,maxIteration=5000);</code></p>
-
+<p><code>samples=tbx.fitparafac(samples,"fitoverall",f=4:6,convergence=1e-8,starts=50,maxIteration=5000);</code></p>
+<p>Find the <strong>global minimum</strong> for a dataset.</p>
+<p><code>samples=tbx.fitparafac(samples,"fitoverall",f=2:7,constraints="unconstrained",convergence=1e-6,starts=10,maxIteration=5000);</code></p>
 <p>Explore what happens with <strong>no constraints</strong></p>
-
-<p><code>samples=tbx.fitparafac(samples,&quot;fitsplits&quot;,f=2:7,convergence=1e-8,starts=50,maxIteration=5000);</code></p>
-
+<p><code>samples=tbx.fitparafac(samples,"fitsplits",f=2:7,convergence=1e-8,starts=50,maxIteration=5000);</code></p>
 <p>Equivalent to the <strong>former splitanalysis</strong></p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code>- contains EEMs to fit models to</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<p><details open>
-    <summary><b><code>mode</code>- mode switch for data source</b></summary>
-    <i>char | string</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code>- contains EEMs to fit models to</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<details open>
+<summary>
+<b><code>mode</code>- mode switch for data source</b>
+</summary>
+<p><i>char | string</i></p>
 <p>Mode should be one of:</p>
-
 <ul>
-<li><code>&quot;fitoverall&quot;</code> (default)</li>
-<li><p><code>&quot;fitsplits&quot;</code>       </p>
-
-<p>Since a default value is set, this argument does not need to be set explicitly. However, we recommend to set it with every call to make the intention explicit.</p></li>
+<li><code>"fitoverall"</code> (default)</li>
+<li><code>"fitsplits"</code></li>
 </ul>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>f</code>- the number of components</b></summary>
-    <i>numeric</i></p>
-
-<p>Numeric array specifying the number of components to use in the PARAFAC  models. Default is <code>[2, 3, 4, 5, 6, 7]</code>. Can be specified as array, e.g. <code>2:6</code> for simplicity.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>constraints</code> - force PARAFAC to adhere to rules</b></summary>
-    <i>string | char</i></p>
-
+<p>Since a default value is set, this argument does not need to be set explicitly. However, we recommend to set it with every call to make the intention explicit.</p>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>f</code>- the number of components</b>
+</summary>
+<p><i>numeric</i></p>
+<p>Numeric array specifying the number of components to use in the PARAFAC models. Default is <code>[2, 3, 4, 5, 6, 7]</code>. Can be specified as array, e.g. <code>2:6</code> for simplicity.</p>
+</details>
+<details open>
+<summary>
+<b><code>constraints</code> - force PARAFAC to adhere to rules</b>
+</summary>
+<p><i>string | char</i></p>
 <p>Specify the constraints to apply to the models. You can choose from: <br></p>
-
 <ul>
-<li><p><code>&quot;unconstrained&quot;</code>: there are no restrictions on the values that the elements of the factor matrices can take. They can be positive, negative, or zero. While this option provides greater flexibility in fitting the data, the resulting factors might be harder to interpret, especially where negative values do not make sense (e.g., physical quantities like concentrations or intensities). </p></li>
-<li><p><code>&quot;nonnegativity&quot;</code>: Nonnegativity constraints ensure that all the elements in the factor matrices are greater than or equal to zero.
-This option can sometimes make it harder to achieve the best possible fit to the data because the model is less flexible but is particularly useful where the factors represent quantities that cannot be negative.</p></li>
-<li><p><code>&quot;unimodnonneg&quot;</code>: This constraint ensures that the factor matrices are both nonnegative and unimodal. A factor is unimodal if it has a single peak or mode, meaning it increases to a maximum value and then decreases. This constraint can help in obtaining more realistic and interpretable factors, while, meantime, making it more challenging to achieve the best fit to the data. </p></li>
+<li><p><code>"unconstrained"</code>: there are no restrictions on the values that the elements of the factor matrices can take. They can be positive, negative, or zero. While this option provides greater flexibility in fitting the data, the resulting factors might be harder to interpret, especially where negative values do not make sense (e.g., physical quantities like concentrations or intensities).</p></li>
+<li><p><code>"nonnegativity"</code>: Nonnegativity constraints ensure that all the elements in the factor matrices are greater than or equal to zero. This option can sometimes make it harder to achieve the best possible fit to the data because the model is less flexible but is particularly useful where the factors represent quantities that cannot be negative.</p></li>
+<li><p><code>"unimodnonneg"</code>: This constraint ensures that the factor matrices are both nonnegative and unimodal. A factor is unimodal if it has a single peak or mode, meaning it increases to a maximum value and then decreases. This constraint can help in obtaining more realistic and interpretable factors, while, meantime, making it more challenging to achieve the best fit to the data.</p></li>
 </ul>
-
-<p>Default constraint is <code>&quot;nonnegativity&quot;</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>starts</code> - number of initializations per model</b></summary>
-    <i>numeric</i></p>
-
+<p>Default constraint is <code>"nonnegativity"</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>starts</code> - number of initializations per model</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Number of random starts for the algorithm refers to initializing the factor matrices with random values and running the algorithm multiple times. Default is <code>40</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>convergence</code> - stop criterion</b></summary>
-    <i>numeric</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>convergence</code> - stop criterion</b>
+</summary>
+<p><i>numeric</i></p>
 <p>If the relative change in model fit between iterations falls below a <code>convergence</code> threshold, the algorithm is considered to have converged and will stop running. Default is <code>1e-8</code>. Preliminary models can be run with <code>1e-6</code> or <code>1e-4</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>maxIteration</code> - stop criterion</b></summary>
-    <i>numeric</i></p>
-
-<p>Specify the maximum number of iterations for the algorithm. If the convergence criteria, <code>convergence</code>, is not met before the specified maximum number of iteration the algorithm will stop running.
-Default is <code>3000</code> iterations. The lower <code>convergence</code>, the higher <code>maxIteration</code> should be set.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>initialization</code> - first guess method</b></summary>
-    <i>string | char</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>maxIteration</code> - stop criterion</b>
+</summary>
+<p><i>numeric</i></p>
+<p>Specify the maximum number of iterations for the algorithm. If the convergence criteria, <code>convergence</code>, is not met before the specified maximum number of iteration the algorithm will stop running. Default is <code>3000</code> iterations. The lower <code>convergence</code>, the higher <code>maxIteration</code> should be set.</p>
+</details>
+<details open>
+<summary>
+<b><code>initialization</code> - first guess method</b>
+</summary>
+<p><i>string | char</i></p>
 <p>Specify the method used to set the starting values for the factor matrices. You can choose from:</p>
-
 <ul>
-<li><code>&quot;random&quot;</code>: Factor matrices are initialized with random values.</li>
-<li><code>&quot;svd&quot;</code>: Factor matrices are initialized using Singular Value Decomposition (SVD) often leading to faster convergence compared to random initialization. SVD computation can be expensive for very large datasets.</li>
-<li><code>&quot;multiplesmall&quot;</code>: multiple small-scale models are fitted first, and their results are combined to initialize the full-scale factor matrices.</li>
+<li><code>"random"</code>: Factor matrices are initialized with random values.</li>
+<li><code>"svd"</code>: Factor matrices are initialized using Singular Value Decomposition (SVD) often leading to faster convergence compared to random initialization. SVD computation can be expensive for very large datasets.</li>
+<li><code>"multiplesmall"</code>: multiple small-scale models are fitted first, and their results are combined to initialize the full-scale factor matrices.</li>
 </ul>
-
-<p>Default initialization method is <code>&quot;random&quot;</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>parallelization</code> - explicitly control parallelization</b></summary>
-    <i>logical</i></p>
-
+<p>Default initialization method is <code>"random"</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>parallelization</code> - explicitly control parallelization</b>
+</summary>
+<p><i>logical</i></p>
 <p>Enable or disable parallelization. If enabled can dramatically decrease the time required for the analysis. Default is <code>true</code>.</p>
-
 <p>Use the option for explicit control of parallelization. Some installations have persistent issues with pool initialization and it might be easier to turn off the feature even if it is theoretically available.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>consoleoutput</code> - level of console output</b></summary>
-    <i> string  | char</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>consoleoutput</code> - level of console output</b>
+</summary>
+<p><i> string | char</i></p>
 <p>Specify the level of console output during execution. You can choose from:</p>
-
 <ul>
-<li><code>&quot;all&quot;</code>: displays all the information during the process. </li>
-<li><code>&quot;minimum&quot;</code>: minimizes the level of displayed information to only highly important ones.</li>
-<li><code>&quot;none&quot;</code>: does not display anything on the console.</li>
+<li><code>"all"</code>: displays all the information during the process.</li>
+<li><code>"minimum"</code>: minimizes the level of displayed information to only highly important ones.</li>
+<li><code>"none"</code>: does not display anything on the console.</li>
 </ul>
-
-<p>Default is <code>&quot;minimum&quot;</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>toolbox</code> - PARAFAC algorithm</b></summary>
-    <i> string  | char</i></p>
-
+<p>Default is <code>"minimum"</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>toolbox</code> - PARAFAC algorithm</b>
+</summary>
+<p><i> string | char</i></p>
 <p>Specify the toolbox to use for the PARAFAC algorithm. You can choose from:</p>
-
 <ul>
-<li><code>&quot;parafac3w&quot;</code></li>
-<li><code>&quot;nway&quot;</code></li>
-<li><code>&quot;pls&quot;</code>: Note:  PLS_toolbox must be installed. Warning, recent versions of this software have not been tested for functionality with drEEM.</li>
+<li><code>"parafac3w"</code></li>
+<li><code>"nway"</code></li>
+<li><code>"pls"</code>: Note: PLS_toolbox must be installed. Warning, recent versions of this software have not been tested for functionality with drEEM.</li>
 </ul>
-
-<p>Default is <code>&quot;parafac3w&quot;</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with PARAFAC models</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>Default is <code>"parafac3w"</code>.</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with PARAFAC models</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
 <p>Models are stored in dataout.models. Each model is a <code>drEEMmodel</code> object contains the following information (no contents in this case):</p>
-
-<div><pre><code class="language-none">  drEEMmodel with properties:
+<pre><code>  drEEMmodel with properties:
 
                 loads: {1×0 cell}
             leverages: {1×0 cell}
@@ -618,13 +555,7 @@ componentContribution: NaN
           constraints: &quot;&quot;
               toolbox: &quot;&quot;
             modelName: &quot;PARAFAC&quot;
-       loadingsMatrix: []</code></pre></div>
-
-<p></details></p>
-
-
-
-
+       loadingsMatrix: []</code></pre>
+</details>
 </body>
-
 </html>

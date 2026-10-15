@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewmodels</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,36 +370,26 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewmodels</h1>
-
+<h1 id="viewmodels">viewmodels</h1>
 <p>Visualize, evaluate the performance, and compare different aspects of the PARAFAC or PCA models.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">viewmodels(data,Name,Value)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
-<p>The function <code>viewmodels</code> opens up a graphical user interface (GUI) that is designed for diagnosing and analyzing PARAFAC or PCA models built in using <code>fitparafac</code> or <code>fitpca</code> function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of models.<br>
-Note: The app does not accept any output arguments!</p>
-
-<p><details>
-    <summary><b>Elements in case of PARAFAC model</b></summary></p>
-
-<p><details open>
-    <summary><b>Overview</b></summary></p>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>viewmodels(data,Name,Value)</code></pre>
+<h2 id="description">Description</h2>
+<p>The function <code>viewmodels</code> opens up a graphical user interface (GUI) that is designed for diagnosing and analyzing PARAFAC or PCA models built in using <code>fitparafac</code> or <code>fitpca</code> function. This app provides multiple tabs to evaluate the performance, see validation status, and visualize different aspects of models.<br> Note: The app does not accept any output arguments!</p>
+<details>
+<summary>
+<b>Elements in case of PARAFAC model</b>
+</summary>
+<details open>
+<summary>
+<b>Overview</b>
+</summary>
 <p>This tab provides a summary of the PARAFAC models including:</p>
-
 <ul>
 <li>Number of components</li>
 <li>Model status</li>
@@ -417,152 +403,114 @@ Note: The app does not accept any output arguments!</p>
 <li>Constraints</li>
 <li>Toolbox used</li>
 </ul>
-
 <p>The bottom section of this tab includes:</p>
-
 <ul>
 <li>A plot for Core Consistency vs. Number of components</li>
 <li>A plot for Explained Variance vs. Number of components</li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Scores &amp; loadings</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Scores &amp; loadings</b>
+</summary>
 <p>This tab provides scores and loadings visualizations for each model:</p>
-
 <ul>
 <li>Scores plots for each model</li>
 <li>Loadings plots for each model (Emission and Excitation spectra)</li>
 </ul>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Spectral loadings</b></summary></p>
-
-<p>This tab provides spectral loadings plots for each component in each model separately:
-Note: each row of plots correspond to one model.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Loadings &amp; leverages</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Spectral loadings</b>
+</summary>
+<p>This tab provides spectral loadings plots for each component in each model separately: Note: each row of plots correspond to one model.</p>
+</details>
+<details open>
+<summary>
+<b>Loadings &amp; leverages</b>
+</summary>
 <p>This tab provides plots of scores for samples, excitation and emission loadings for each wavelength and leverages in each mode (samples, excitation, emission) to visualize the influence of each data point on the model. You can go through different models by using the drop-down menu button on top of the plots.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Errors &amp; leverages</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Errors &amp; leverages</b>
+</summary>
 <p>To visualize the sum of squared error against leverages in each mode (samples, excitation, emission). You can go through different models by using the drop-down menu button on top of the plots.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Fingerprint plots</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>Fingerprint plots</b>
+</summary>
 <p>Use this tab to plot Excitation Emission Matrix (EEM) of each component in each model. Go through different models by using the drop-down menu button on top of the plots.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>SSE</b></summary></p>
-
-<p>To visualize the sum of squared error for each mode (samples, excitation, emission). This can be helpful to identify which samples or wavelength impose the biggest errors on the model.
-You can go through different models by using the drop-down menu button on top of the plots.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b>Score correlation</b></summary></p>
-
-<p>This tab plots a heatmap of correlations between different components in each model. This provides insights into the relationships between different components.
-Left-clicking on the <code>view correlations vs. metadata</code> button opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information in metadata columns.</p>
-
-<p></details></p>
-
-<p></details></p>
-
-<p><details>
-    <summary><b>Elements in case of PCA model</b></summary></p>
-
+</details>
+<details open>
+<summary>
+<b>SSE</b>
+</summary>
+<p>To visualize the sum of squared error for each mode (samples, excitation, emission). This can be helpful to identify which samples or wavelength impose the biggest errors on the model. You can go through different models by using the drop-down menu button on top of the plots.</p>
+</details>
+<details open>
+<summary>
+<b>Score correlation</b>
+</summary>
+<p>This tab plots a heatmap of correlations between different components in each model. This provides insights into the relationships between different components. Left-clicking on the <code>view correlations vs. metadata</code> button opens a new app, in which score correlation plots are generated as scatter plots and datapoints are color-labeled based on the information in metadata columns.</p>
+</details>
+</details>
+<details>
+<summary>
+<b>Elements in case of PCA model</b>
+</summary>
 <p>The app visualizing PCA models consists mainly of three tabs:</p>
-
-<ol>
+<ol type="1">
 <li>Scores</li>
 <li>Loadings</li>
 <li>Score-Score plots</li>
 </ol>
-
-<p>The score tab shows the scores for every PC across the dataset in a seperate plot
-The Loadings tab show the re-folded loadings of every PC in the EEM projection.
-The Score-Score tab allows users to plot scores of PC&#39;s against one another and color the scatter markers by metadata. When a scatter marker is clicked on, the EEM will be shown on the right.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset containing PARAFAC models</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>The score tab shows the scores for every PC across the dataset in a seperate plot The Loadings tab show the re-folded loadings of every PC in the EEM projection. The Score-Score tab allows users to plot scores of PC's against one another and color the scatter markers by metadata. When a scatter marker is clicked on, the EEM will be shown on the right.</p>
+</details>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset containing PARAFAC models</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save the graphical user interface </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the current GUI.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewmodels</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewmodels.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewmodels.jpg&quot;.</p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save the graphical user interface </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the current GUI.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewmodels</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewmodels.png". Likewise, providing "projectX.jpg" will result in "projectX-viewmodels.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>startTab</code>- specify opening tab (only PARAFAC). </b></summary>
-    <i>character</i></p>
-
-<p>If desired, the default &quot;Overview&quot; can be replaced by one of the following:</p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving.</p>
+</details>
+<details open>
+<summary>
+<b><code>startTab</code>- specify opening tab (only PARAFAC). </b>
+</summary>
+<p><i>character</i></p>
+<p>If desired, the default "Overview" can be replaced by one of the following:</p>
 <ul>
-<li>&quot;Scores &amp; loadings&quot;</li>
-<li>&quot;Spectral loadings&quot;</li>
-<li>&quot;Loadings &amp; leverages&quot;</li>
-<li>&quot;Errors &amp; leverages&quot;</li>
-<li>&quot;Fingerprint plots&quot;</li>
-<li>&quot;SSE&quot;</li>
-<li>&quot;Score correlation&quot;</li>
+<li>"Scores &amp; loadings"</li>
+<li>"Spectral loadings"</li>
+<li>"Loadings &amp; leverages"</li>
+<li>"Errors &amp; leverages"</li>
+<li>"Fingerprint plots"</li>
+<li>"SSE"</li>
+<li>"Score correlation"</li>
 </ul>
-
 <p>This results in a switch of tab focus after the GUI starts up. Can be particularly useful in conjunction with saving figure outputs automatically.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>f</code>- which model to show at startup (only PARAFAC) </b></summary>
-    <i>numeric</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>f</code>- which model to show at startup (only PARAFAC) </b>
+</summary>
+<p><i>numeric</i></p>
 <p>To start showing a particular model with f-components, the option can be supplied. Can be particularly useful in conjunction with saving figure outputs automatically.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

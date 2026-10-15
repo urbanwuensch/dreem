@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>drEEMdataset</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,40 +370,27 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">The drEEMdataset object</h1>
-
-<p>Processing of multidimensional data can be a mess. Decisions on how to organize the data need to be made, variable names set, and conventions made. Often, functions don&#39;t work as intended because the input they were provided with isn&#39;t formatted as expected.</p>
-
-<p>Another problem arises when considering the need for tracability. When loading a dataset, it&#39;s not clear what it&#39;s status is. Have blanks been subtracted? Who performed the spectral correction (was it even done?)? What about inner-filter effects?</p>
-
+<h1 id="the-dreemdataset-object">The drEEMdataset object</h1>
+<p>Processing of multidimensional data can be a mess. Decisions on how to organize the data need to be made, variable names set, and conventions made. Often, functions don't work as intended because the input they were provided with isn't formatted as expected.</p>
+<p>Another problem arises when considering the need for tracability. When loading a dataset, it's not clear what it's status is. Have blanks been subtracted? Who performed the spectral correction (was it even done?)? What about inner-filter effects?</p>
 <p>Meet the <code>drEEMdataset object</code>!</p>
-
-<p>Starting in drEEM 2, we made the decision to define what&#39;s known as a <code>class</code> in Matlab notation. We call this the <code>drEEMdataset</code>. It has a defined number of properties (i.e. variables). Nothing else is allowed to be added. And anytime a function is called, the dataset get&#39;s validated to avoid errors.</p>
-
+<p>Starting in drEEM 2, we made the decision to define what's known as a <code>class</code> in Matlab notation. We call this the <code>drEEMdataset</code>. It has a defined number of properties (i.e. variables). Nothing else is allowed to be added. And anytime a function is called, the dataset get's validated to avoid errors.</p>
 <p>You can still manually modify the data of course if you wish to do so! But when you intend to work with drEEM, you must work with datasets of the custom <code>drEEMdataset</code> class.</p>
-
 <p>This page aims to show the properties, highlight some ways to work with it, and demonstrate its advantages.</p>
-
-<p>First, let&#39;s look at all the properties of the <code>drEEMdataset</code>. You can see these by simply calling the class. This results in an empty dataset being created.</p>
-
+<p>First, let's look at all the properties of the <code>drEEMdataset</code>. You can see these by simply calling the class. This results in an empty dataset being created.</p>
 <blockquote>
-<p><strong>Note</strong>: <code>drEEMdataset</code> is a unified container that can hold absorbance data, fluorescence data, or both. When importing absorbance-only files, the container will contain absorbance (<code>abs</code>) data while the fluorescence field (<code>X</code>) remains empty; importing fluorescence-only files yields the opposite. After import, seperate containers get &quot;syncronized with <code>alignsamples</code> via the <code>filelist</code> so that the absorbance and fluorescence containers contain the same samples in the same order. You should then merge absorbance data into the fluorescence container. The separate absorbance container can then be cleared. When using the toolbox for blank subtraction, blank spectra from the separate container are copied into the sample container and stored in the <code>XBlank</code> field.</p>
+<p><strong>Note</strong>: <code>drEEMdataset</code> is a unified container that can hold absorbance data, fluorescence data, or both. When importing absorbance-only files, the container will contain absorbance (<code>abs</code>) data while the fluorescence field (<code>X</code>) remains empty; importing fluorescence-only files yields the opposite. After import, seperate containers get "syncronized with <code>alignsamples</code> via the <code>filelist</code> so that the absorbance and fluorescence containers contain the same samples in the same order. You should then merge absorbance data into the fluorescence container. The separate absorbance container can then be cleared. When using the toolbox for blank subtraction, blank spectra from the separate container are copied into the sample container and stored in the <code>XBlank</code> field.</p>
 </blockquote>
-
-<div><pre><code class="language-none">&gt;&gt; drEEMdataset
+<pre><code>&gt;&gt; drEEMdataset
 
 ans = 
 
-drEEMdataset with properties:
+  drEEMdataset with properties:
 
         history: [0×1 drEEMhistory]
               X: []
@@ -430,34 +413,31 @@ opticalMetadata: [0×0 table]
        userdata: []
  instrumentInfo: [0×0 struct]
 measurementInfo: [0×0 struct]
-    toolboxdata: [] </code></pre></div>
-
-<h2 id="toc_1">Properties</h2>
-
+    toolboxdata: []    </code></pre>
+<h2 id="properties">Properties</h2>
 <p>You can see above that there are tons of properties (i.e. variables) in the object. Many of these could be familiar from previous use of drEEM or DOMFluor, but many are also new. We will run through them.</p>
-
 <ul>
-<li><strong>history</strong>: This is an object of it&#39;s own class (sorry to be complicated here). But you don&#39;t really need to know much about other than it keeps a memory about the history of the dataset. Every time you call a drEEM function, it creates an entry, saves it&#39;s options there, perhaps makes a function message, and stores backups in a few cases. This object gets exported along with the dataset to let everybody know what happened to the dataset. This is also the place where your own comments get stored.</li>
-<li><strong>X</strong>: The fluorescence dataset (samples x emission x excitation).</li>
-<li><strong>abs</strong>: The absorbance dataset (samples x absorbance)</li>
-<li><strong>suppSpectra</strong>: Mostly a placeholder (&quot;supplemental spectra&quot;). You could store other kinds of spectra in here to do some cool stuff like data fusion. For example, mass spectra could go here!</li>
-<li><strong>filelist</strong>: This is a cell array of characters. The toolbox uses this variable to know what to call your samples. I.e. file names, sample names, sample IDs (whatever you&#39;d call it)</li>
-<li><strong>i</strong>: The sample identifier. This starts out as a simple vector with as many numbers as you have samples. But when you delete samples, i=2 might disappear from the list. Don&#39;t work with indexes, work with .i to avoid ambiguity in your programming. <code>data.i==2</code> will always work as intented, <code>data.X(2,:,:)</code> will refer to different samples if you change stuff!</li>
-<li><strong>Ex</strong>: The excitation wavelengths, stored as a column vector. Always stored as increasing numbers.</li>
-<li><strong>Em</strong>: The emission wavelengths, stored as a column vector. Always stored as increasing numbers.</li>
-<li><strong>nEx</strong>: The number of excitation wavelengths, stored as an integer. </li>
-<li><strong>nEm</strong>: The number of emission wavelengths, stored as an integer. </li>
-<li><strong>absWave</strong>: The absorbance wavelengths, stored as a column vector. Always stored as increasing numbers.</li>
-<li><strong>suppSpectraAxis</strong>: The axis information for the variable <code>suppSpectra</code>, stored as a column vector. Not actively used by the drEEM toolbox as of version 2.0.0</li>
-<li><strong>nSample</strong>: The number of samples. Equal to <code>size(X,1)</code> and <code>size(abs,1)</code>.</li>
-<li><strong>models</strong>: Yet another class of it&#39;s own. This is where potential PARAFAC models get stored. All of the model&#39;s properties are stored in here. No need to know much about it, because you&#39;ll access the object with e.g. <a href="viewmodels.html">viewmodels</a></li>
-<li><strong>metadata</strong>: A table containing relevant metadata. Could be anything, temperature, salinity, location, lat/lon, analysis date, sampling date, person handling the samples, replicate #. You name it. The toolbox knows about this table and will offer the data in functions where it&#39;s relevant.</li>
-<li><strong>opticalMetadata</strong>: A table dedicated to Cople peaks (<a href="pickpeaks.html">pickpeaks</a>) and CDOM absorbance slopes (<a href="fitslopes">fitslopes</a>). If you want to analyze them, just extract this table from the dataset.</li>
-<li><strong>split</strong>: Here&#39;s where the split datasets will reside when you create them. They are each their own drEEMdataset objects and work in the same way as the parent dataset.</li>
-<li><p><strong>status</strong>. This is a read-only variable. It stores the information about the status of the dataset:
-    &gt;&gt; drEEMstatus</p>
+<li><p><strong>history</strong>: This is an object of it's own class (sorry to be complicated here). But you don't really need to know much about other than it keeps a memory about the history of the dataset. Every time you call a drEEM function, it creates an entry, saves it's options there, perhaps makes a function message, and stores backups in a few cases. This object gets exported along with the dataset to let everybody know what happened to the dataset. This is also the place where your own comments get stored.</p></li>
+<li><p><strong>X</strong>: The fluorescence dataset (samples x emission x excitation).</p></li>
+<li><p><strong>abs</strong>: The absorbance dataset (samples x absorbance)</p></li>
+<li><p><strong>suppSpectra</strong>: Mostly a placeholder ("supplemental spectra"). You could store other kinds of spectra in here to do some cool stuff like data fusion. For example, mass spectra could go here!</p></li>
+<li><p><strong>filelist</strong>: This is a cell array of characters. The toolbox uses this variable to know what to call your samples. I.e. file names, sample names, sample IDs (whatever you'd call it)</p></li>
+<li><p><strong>i</strong>: The sample identifier. This starts out as a simple vector with as many numbers as you have samples. But when you delete samples, i=2 might disappear from the list. Don't work with indexes, work with .i to avoid ambiguity in your programming. <code>data.i==2</code> will always work as intented, <code>data.X(2,:,:)</code> will refer to different samples if you change stuff!</p></li>
+<li><p><strong>Ex</strong>: The excitation wavelengths, stored as a column vector. Always stored as increasing numbers.</p></li>
+<li><p><strong>Em</strong>: The emission wavelengths, stored as a column vector. Always stored as increasing numbers.</p></li>
+<li><p><strong>nEx</strong>: The number of excitation wavelengths, stored as an integer.</p></li>
+<li><p><strong>nEm</strong>: The number of emission wavelengths, stored as an integer.</p></li>
+<li><p><strong>absWave</strong>: The absorbance wavelengths, stored as a column vector. Always stored as increasing numbers.</p></li>
+<li><p><strong>suppSpectraAxis</strong>: The axis information for the variable <code>suppSpectra</code>, stored as a column vector. Not actively used by the drEEM toolbox as of version 2.0.0</p></li>
+<li><p><strong>nSample</strong>: The number of samples. Equal to <code>size(X,1)</code> and <code>size(abs,1)</code>.</p></li>
+<li><p><strong>models</strong>: Yet another class of it's own. This is where potential PARAFAC models get stored. All of the model's properties are stored in here. No need to know much about it, because you'll access the object with e.g. <a href="viewmodels.html">viewmodels</a></p></li>
+<li><p><strong>metadata</strong>: A table containing relevant metadata. Could be anything, temperature, salinity, location, lat/lon, analysis date, sampling date, person handling the samples, replicate #. You name it. The toolbox knows about this table and will offer the data in functions where it's relevant.</p></li>
+<li><p><strong>opticalMetadata</strong>: A table dedicated to Cople peaks (<a href="pickpeaks.html">pickpeaks</a>) and CDOM absorbance slopes (<a href="fitslopes">fitslopes</a>). If you want to analyze them, just extract this table from the dataset.</p></li>
+<li><p><strong>split</strong>: Here's where the split datasets will reside when you create them. They are each their own drEEMdataset objects and work in the same way as the parent dataset.</p></li>
+<li><p><strong>status</strong>. This is a read-only variable. It stores the information about the status of the dataset:</p>
+<pre><code>&gt;&gt; drEEMstatus
 
-<div><pre><code class="language-none">ans = 
+ans = 
 
   drEEMstatus with properties:
 
@@ -467,18 +447,11 @@ measurementInfo: [0×0 struct]
      signalCalibration: &quot;unknown&quot;
       scatterTreatment: &quot;unknown&quot;
          signalScaling: &quot;unknown&quot;
-        absorbanceUnit: &quot;unknown&quot;</code></pre></div>
-
-<p>As you could guess from the names, each of these entries informs the toolbox about the dataset&#39;s status in regard to certain aspects. The functions will actually check and stop you from performing something if it makes no sense. The only way to change the status is through calling <code>drEEMtoolbox.changestatus()</code>. The GUI will give you valid options and you will have to chose what&#39;s appropriate. Any drEEM function that changes the status of the dataset will also change the status object!
-This information will be exported along with the data or PARAFAC results.</p></li>
-<li><p><strong>userdata</strong>. Not maintained by the toolbox and simply a placeholder. You could use this variable as a container for any data you&#39;d want to imagine. It&#39;s there for you. If we didn&#39;t provide it but you&#39;d want to make it yourself, Matlab would throw an error. Better have it and not need it...</p></li>
+        absorbanceUnit: &quot;unknown&quot;</code></pre>
+<p>As you could guess from the names, each of these entries informs the toolbox about the dataset's status in regard to certain aspects. The functions will actually check and stop you from performing something if it makes no sense. The only way to change the status is through calling <code>drEEMtoolbox.changestatus()</code>. The GUI will give you valid options and you will have to chose what's appropriate. Any drEEM function that changes the status of the dataset will also change the status object! This information will be exported along with the data or PARAFAC results.</p></li>
+<li><p><strong>userdata</strong>. Not maintained by the toolbox and simply a placeholder. You could use this variable as a container for any data you'd want to imagine. It's there for you. If we didn't provide it but you'd want to make it yourself, Matlab would throw an error. Better have it and not need it...</p></li>
 <li><p><strong>instrumentInfo</strong>: An unused placeholder. Room for future developments!</p></li>
 <li><p><strong>toolboxdata</strong>: An unused placeholder. Room for future developments!</p></li>
 </ul>
-
-
-
-
 </body>
-
 </html>

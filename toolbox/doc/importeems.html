@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>importeems</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,65 +370,42 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">importeems</h1>
-
+<h1 id="importeems">importeems</h1>
 <p>Import measurement files and create drEEMdataset object</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = importeems(filePattern)</code></a></p>
-
 <p><a href="#syntax3"><code>dataout = importeems(filePattern,status)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = importeems( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>This function scans the current working directory (<code>pwd</code>) for files using a given filename pattern, reads each file, and returns a <code>drEEMdataset</code> containing the fluorescence data.</p>
-
 <p>The function does two passes of imports. The first is used to read the dimensions of each file and to subsequently check that all data contains the same wavelength information.</p>
-
 <blockquote>
 <p><strong><em>All files must have the same dimensions. If this is not the case, the function will attempt to resolve the issue but most likely return an error!</em></strong></p>
 </blockquote>
-
-<p><details open>
-<summary><b>
-<code>dataout = importeems(filePattern)</code> - standard options (fits e.g. HYJ Export for AquaLog data)</b>
+<details open>
+<summary>
+<b> <code>dataout = importeems(filePattern)</code> - standard options (fits e.g. HYJ Export for AquaLog data)</b>
 </summary>
-<a name="syntax1"></a><br>
-returns a drEEMdataset class object that contains fluorescence EEMs and their associated information.</p>
-
+<p><a name="syntax1"></a><br> returns a drEEMdataset class object that contains fluorescence EEMs and their associated information.</p>
 <p>Upon successful import, the <code>changestatus</code> GUI will appear on screen and pause the execution until the user has acknowledged the status of the dataset. You are asked to specify to what level the dataset has been processed. Since the drEEMdataset can contain fluorescence and / or absorbance, the GUI will ask about absorbance properties. Please ignore the absorbance-focused properties, they convey no meaning for a fluorescence-only dataset.</p>
-
 <p><img src="newfldata.png" width="auto" height="auto" align="center"/></p>
-
 <blockquote>
 <p><strong><em>It is important to specify the correct properties at this moment. If you are unsure as to what has been done already, please reach out to the instrument manufacturer, collaborator, laboratory manager or similar to ensure that the right information is supplied here.</em></strong></p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
-<summary><b>
-<code>dataout = importeems(filePattern,status)</code> - explicitly supply processing status</b>
+</details>
+<details open>
+<summary>
+<b> <code>dataout = importeems(filePattern,status)</code> - explicitly supply processing status</b>
 </summary>
-<a name="syntax3"></a></p>
-
-<p>For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to &quot;unknown&quot;, the GUI will still ask for clarification.</p>
-
-<p>Example: </p>
-
-<div><pre><code class="language-none">blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
+<p><a name="syntax3"></a></p>
+<p>For large projects with many imports and automated processing, it is much easier to prevent a GUI from popping up during import. This synax gives you the option to supply the correct drEEMstatus to the function. If any of the properties are set to "unknown", the GUI will still ask for clarification.</p>
+<p>Example:</p>
+<pre><code>blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
     &quot;IFEcorrection&quot;,&quot;not applied&quot;,...
     &quot;signalCalibration&quot;,&quot;not applied&quot;,...
     &quot;scatterTreatment&quot;,&quot;not applied&quot;,...
@@ -440,121 +413,87 @@ returns a drEEMdataset class object that contains fluorescence EEMs and their as
     &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
     absorbanceUnit=&#39;absorbance per cm&#39;);
 
-blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;,blanks_status);</code></pre></div>
-
-<p></details></p>
-
-<p><details open>
-<summary><b>
-<code>dataout = importeems([ ___ ], Name,Value)</code> - custom options</b>
+blanks=tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;,blanks_status);</code></pre>
+</details>
+<details open>
+<summary>
+<b> <code>dataout = importeems([ ___ ], Name,Value)</code> - custom options</b>
 </summary>
-<a name="syntax2"></a></p>
-
+<p><a name="syntax2"></a></p>
 <p>Custom options are specified with optional pairs of arguments using one or more name-value arguments. For example, you can specify the orientation of the EEM, or the wavelength vector if it is not given in each file.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<p><strong>Horiba AquaLog:</strong>
-<code>blanks = tbx.importeems(&quot;* - Waterfall Plot Blank.dat&quot;);</code></p>
-
-<p><strong>Horiba FluoroMax:</strong>     <code>blanks=tbx.importeems(&#39;*.dat&#39;,&#39;columnIsExcitation&#39;,true,&#39;columnWave&#39;,240:10:450);</code></p>
-
-<p><strong>Cary Eclipse</strong>  <code>samples=tbx.importeems(&quot;*.csv&quot;,&quot;columnIsExcitation&quot;,true);</code></p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details open>
-    <summary><b><code>filePattern</code> Text pattern to identify files for import</b></summary>
-    <i>char | string</i></p>
-
+</details>
+<h2 id="examples">Examples</h2>
+<p><strong>Horiba AquaLog:</strong> <code>blanks = tbx.importeems("* - Waterfall Plot Blank.dat");</code></p>
+<p><strong>Horiba FluoroMax:</strong> <code>blanks=tbx.importeems('*.dat','columnIsExcitation',true,'columnWave',240:10:450);</code></p>
+<p><strong>Cary Eclipse</strong> <code>samples=tbx.importeems("*.csv","columnIsExcitation",true);</code></p>
+<h2 id="input-arguments">Input arguments</h2>
+<details open>
+<summary>
+<b><code>filePattern</code> Text pattern to identify files for import</b>
+</summary>
+<p><i>char | string</i></p>
 <p>A text specifying the pattern of the files to be imported. This can include wildcard characters (*) to match multiple files. The pattern will be completely removed from the sample name after import to leave only the non-repeating filename information. For example <code>S001PEM.dat</code> will be known as <code>S001</code> in the produced dataset.</p>
-
-<p>Example: <code>&#39;*.csv&#39;</code></p>
-
-<p>Example: <code>&#39;* - Waterfall Plot Samples.dat&#39;</code></p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>status</code> drEEMstatus object with correct parameters preset</b></summary>
-    <i>drEEMstatus</i></p>
-
+<p>Example: <code>'*.csv'</code></p>
+<p>Example: <code>'* - Waterfall Plot Samples.dat'</code></p>
+</details>
+<details open>
+<summary>
+<b><code>status</code> drEEMstatus object with correct parameters preset</b>
+</summary>
+<p><i>drEEMstatus</i></p>
 <p>Provide an already customized drEEMstatus object to prevent the GUI from appearing at the end of an import.</p>
-
-<div><pre><code class="language-none">blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
+<pre><code>blanks_status=drEEMstatus(&quot;blankSubtraction&quot;,&quot;not applied&quot;,...
         &quot;IFEcorrection&quot;,&quot;not applied&quot;,...
         &quot;signalCalibration&quot;,&quot;not applied&quot;,...
         &quot;scatterTreatment&quot;,&quot;not applied&quot;,...
         &quot;signalScaling&quot;,&#39;original scale&#39;,...
         &#39;spectralCorrection&#39;,&#39;applied by instrument software&#39;,...
-        absorbanceUnit=&#39;absorbance per cm&#39;);</code></pre></div>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filePattern</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>columnWave</code>- specify if first column contains wavelength data (or specify them)</b></summary>
-    <i>numeric | logical</i></p>
-
+        absorbanceUnit=&#39;absorbance per cm&#39;);</code></pre>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filePattern</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>columnWave</code>- specify if first column contains wavelength data (or specify them)</b>
+</summary>
+<p><i>numeric | logical</i></p>
 <p>If <code>true</code>, the data in the measurement files are expected to have wavelength information in columns. Default is <code>true</code>.</p>
-
-<p>If numeric, the function assumes that you provide the wavelength vector to associate it with the data. In this case, the length of the vector must be equal to the number of columns in each file. </p>
-
-<p><em>Take care that the vector is supplied in the same orientation as the data was recorded (increasing vs. decreasing wavelength).</em>
-</details></p>
-
-<p><details open>
-    <summary><b><code>rowWave</code>- specify if first row contains wavelength data (or specify them)</b></summary>
-    <i>numeric | logical</i></p>
-
+<p>If numeric, the function assumes that you provide the wavelength vector to associate it with the data. In this case, the length of the vector must be equal to the number of columns in each file.</p>
+<em>Take care that the vector is supplied in the same orientation as the data was recorded (increasing vs. decreasing wavelength).</em>
+</details>
+<details open>
+<summary>
+<b><code>rowWave</code>- specify if first row contains wavelength data (or specify them)</b>
+</summary>
+<p><i>numeric | logical</i></p>
 <p>If <code>true</code>, the data in the measurement files are expected to have wavelength information in rows. Default is <code>true</code>.</p>
-
-<p>If numeric, the function assumes that you provide the wavelength vector to associate it with the data. In this case, the length of the vector must be equal to the number of rows in each file. </p>
-
-<p><em>Take care that the vector is supplied in the same orientation as the data was recorded (increasing vs. decreasing wavelength).</em>
-</details></p>
-
-<p><details open>
-    <summary><b><code>columnIsExcitation</code>- specify the orientation of the EEM</b></summary>
-    <i>numeric | logical</i></p>
-
+<p>If numeric, the function assumes that you provide the wavelength vector to associate it with the data. In this case, the length of the vector must be equal to the number of rows in each file.</p>
+<em>Take care that the vector is supplied in the same orientation as the data was recorded (increasing vs. decreasing wavelength).</em>
+</details>
+<details open>
+<summary>
+<b><code>columnIsExcitation</code>- specify the orientation of the EEM</b>
+</summary>
+<p><i>numeric | logical</i></p>
 <p>If <code>true</code>, the columns represent excitation wavelengths. If <code>false</code>, the data matrix will be rotated so that it matches the standard settings in the toolbox. Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>NumHeaderLines</code>- number of header lines to ignore</b></summary>
-    <i>numeric</i></p>
-
-<p>Specify the number of  lines (rows) to skip from the top in each file. Default is <code>0</code>.<br></p>
-
-<p>Example: <code>&#39;NumHeaderLines&#39;, 2</code> to remove the first 2 rows of each file<br></p>
-
+</details>
+<details open>
+<summary>
+<b><code>NumHeaderLines</code>- number of header lines to ignore</b>
+</summary>
+<p><i>numeric</i></p>
+<p>Specify the number of lines (rows) to skip from the top in each file. Default is <code>0</code>.<br></p>
+<p>Example: <code>'NumHeaderLines', 2</code> to remove the first 2 rows of each file<br></p>
 <p>Default is <code>0</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details open>
-    <summary><b><code>dataout</code> - contains EEMs </b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. </p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details open>
+<summary>
+<b><code>dataout</code> - contains EEMs </b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
 <p>The fluorescence data is stored using the properties <code>.X</code>, <code>.Ex</code>, <code>.Em</code>, <code>.nEx</code>, <code>.nEm</code>, and sample names are stored in <code>.filelist</code>. Read the documentation on the <code>drEEMdataset</code> for more information.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>scalesamples</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,161 +370,104 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">scalesamples</h1>
-
+<h1 id="scalesamples">scalesamples</h1>
 <p>Scale fluorescence signals to focus on qualitative difference and (potentially) lessen autocorrelation.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = scalesamples(data, option)</code></a></p>
-
-<p><a href="#syntax4"><code>dataout = scalesamples(data, &#39;max&#39;)</code></a></p>
-
-<p><a href="#syntax3"><code>dataout = scalesamples(data, &#39;reverse&#39;)</code></a></p>
-
-<p><a href="#syntax2"><code>scalesamples(data, &#39;help&#39;)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<p><a href="#syntax4"><code>dataout = scalesamples(data, 'max')</code></a></p>
+<p><a href="#syntax3"><code>dataout = scalesamples(data, 'reverse')</code></a></p>
+<p><a href="#syntax2"><code>scalesamples(data, 'help')</code></a></p>
+<h2 id="description">Description</h2>
 <p>In many datasets, the differences between fluorescence signals are not qualitative but quantitative. Since highly correlated signals can violate the variability assumption behind PARAFAC, a method to scale the signals is needed to remove quantitative differences between samples and instead focus on qualitative differences.</p>
-
 <p>In previous versions of the drEEM toolbox, the function to accomplish this was <code>normeem</code>. This function scaled each EEM by division with its standard deviation. However, in datasets with steep gradients, this can lead to a situation where smooth EEMs with good signals receive the same weighting as very noisy samples that might even appear highly similar to a blank. The PARAFAC algorithm is then forced to give the same weight to noise as it gives to smooth, well measured signals.</p>
-
 <p><code>scalesamples</code> provides more flexibility to perform scaling. It does so by scaling with the nth root of the standard deviation. The user specifies which nth root should be used. The lowest number (1) equals the scaling of the predecessor <code>normeem</code>. The higher the number, the less severe the scaling. In testing, values between 1.2 and 2 have proven useful.</p>
-
-<p>Alternatively, a normalization by the maximum intensity is also possible. </p>
-
-<p><details open>
+<p>Alternatively, a normalization by the maximum intensity is also possible.</p>
+<details open>
 <summary>
 <b><code>dataout = scalesamples(data, option)</code> - apply scaling</b>
 </summary>
- <a name="syntax1"></a></p>
-
+<p><a name="syntax1"></a></p>
 <p>This syntax is used to apply the scaling. The number provided in <code>option</code> represents the <code>n</code> of the <code>nth root</code> of the standard deviation. n is limited to be between 1 (most severe scaling) and 50 (least severe scaling). If 1, all samples essentially have the same numeric weight, whereas differences between signal magnitutes are maintained at higher numbers (though lessened).</p>
-
-<p>The function adds an entry to the dataset&#39;s history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.</p>
-
+<p>The function adds an entry to the dataset's history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.</p>
 <blockquote>
 <p><strong><em>Any calls to <code>subdataset</code> or <code>zapnoise</code> will search for the unscaled, original data and make sure that changes are reflected in the original dataset. The toolbox does so automatically, no need to keep track.</em></strong></p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
-<b><code>dataout = scalesamples(data, &#39;max&#39;)</code> - apply max-normalization</b>
+<b><code>dataout = scalesamples(data, 'max')</code> - apply max-normalization</b>
 </summary>
- <a name="syntax4"></a></p>
-
+<p><a name="syntax4"></a></p>
 <p>This syntax is used to apply the max-normalization. Each EEM is divided by the maximum intensity observed in the sample.</p>
-
-<p>The function adds an entry to the dataset&#39;s history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.</p>
-
+<p>The function adds an entry to the dataset's history where the unscaled data is stored. The status of the dataset is changed to inform the user that the data has been scaled. When the function is called again, the original data will be restored to avoid repeated scaling.</p>
 <blockquote>
 <p><strong><em>Any calls to <code>subdataset</code> or <code>zapnoise</code> will search for the unscaled, original data and make sure that changes are reflected in the original dataset. The toolbox does so automatically, no need to keep track.</em></strong></p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
-<b><code>scalesamples(data, &#39;help&#39;)</code> - decision support</b>
+<b><code>scalesamples(data, 'help')</code> - decision support</b>
 </summary>
- <a name="syntax2"></a></p>
-
+<p><a name="syntax2"></a></p>
 <p>In this syntax, the function provides decision support. Peaks C, D, M, and T are extracted for scaled versions of the dataset with <code>n</code> between 1 and 5 (n in the nth root).</p>
-
 <blockquote>
 <p><strong><em>No output argument is produced with this syntax. If one is provided, an error will occur.</em></strong></p>
 </blockquote>
-
 <p><img src="scalesamplesdiag.png" width="auto" height="auto" align="justified"/></p>
-
-<p><strong>The first row</strong> shows the median distance of each peak from the maximum peak intensity in the dataset. Numbers generally increase with increasing <code>n</code>, but not always monotonically.  </p>
-
+<p><strong>The first row</strong> shows the median distance of each peak from the maximum peak intensity in the dataset. Numbers generally increase with increasing <code>n</code>, but not always monotonically.</p>
 <p><strong>The second row</strong> shows the median distance between peak pairs M and T, C and M, C and D, and T and D.</p>
-
 <p><strong>The last row</strong> shows correlations between the intensities of peak pairs M vs. T, C vs. M, C vs. D and T vs. D. Here, less autocorrelation is generally desirable but trends differ between peak pairs. Autocorrelations tend to be higher at higher nth roots and hit a minimum at lower numbers.</p>
-
-<p></details></p>
-
-<p><details open>
+</details>
+<details open>
 <summary>
-<b><code>dataout = scalesamples(data, &#39;reverse&#39;)</code> - reverse the scaling operation</b>
+<b><code>dataout = scalesamples(data, 'reverse')</code> - reverse the scaling operation</b>
 </summary>
- <a name="syntax3"></a></p>
-
+<p><a name="syntax3"></a></p>
 <p>This syntax reverses the scaling operation and restores the original fluorescence EEMs.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li><p>normeem equivalent (unit variance scaling)
-<code>samples = tbx.scalesamples(samples,1);</code></p></li>
-<li><p>gentle scaling  (Pareto scaling, sqrt of std)
-<code>samples = tbx.scalesamples(samples);</code></p></li>
-<li><p>very gentle scaling  (5th root of std)
-<code>samples = tbx.scalesamples(samples,5);</code></p></li>
-<li><p>reverse scaling after it had been applied
-<code>samples = tbx.scalesamples(samples,&#39;reverse&#39;);</code></p></li>
-<li><p>Don&#39;t know what to do? Get decision help
-<code>samples = tbx.scalesamples(samples,&#39;help&#39;);</code></p></li>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li><p>normeem equivalent (unit variance scaling) <code>samples = tbx.scalesamples(samples,1);</code></p></li>
+<li><p>gentle scaling (Pareto scaling, sqrt of std) <code>samples = tbx.scalesamples(samples);</code></p></li>
+<li><p>very gentle scaling (5th root of std) <code>samples = tbx.scalesamples(samples,5);</code></p></li>
+<li><p>reverse scaling after it had been applied <code>samples = tbx.scalesamples(samples,'reverse');</code></p></li>
+<li><p>Don't know what to do? Get decision help <code>samples = tbx.scalesamples(samples,'help');</code></p></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset containing EEMs to be scaled.</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset containing EEMs to be scaled.</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
 <blockquote>
-<p>If the status property <code>data.status.signalScaling</code> is not <code>&quot;original scale&quot;</code>, the function automatically searches the original dataset and does not repeat scaling on scaled EEMs.</p>
+<p>If the status property <code>data.status.signalScaling</code> is not <code>"original scale"</code>, the function automatically searches the original dataset and does not repeat scaling on scaled EEMs.</p>
 </blockquote>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>option</code> - specify function operation.</b></summary>
-    <i>numeric | character</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>option</code> - specify function operation.</b>
+</summary>
+<p><i>numeric | character</i></p>
 <p>If a numeric value, it must be a positive number less than or equal to <code>50</code>, indicating the scaling intensity. The function scales the data based on the standard deviation of the samples, using the <code>option</code> as the root value.</p>
-
-<p>If a character vector, it must be either <code>&#39;reverse&#39;</code> to reverse the scaling process and obtain the unscaled data or <code>&#39;help&#39;</code> to provide help information. <code>help</code> will show a diagnosis plot that depicts the peak distributions (for Peaks C, D, M, and T) for different normalization parameters.</p>
-
+<p>If a character vector, it must be either <code>'reverse'</code> to reverse the scaling process and obtain the unscaled data or <code>'help'</code> to provide help information. <code>help</code> will show a diagnosis plot that depicts the peak distributions (for Peaks C, D, M, and T) for different normalization parameters.</p>
 <p>Default is <code>2</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Output arguments (optional)</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset containing scaled or original (restored) EEMs.</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. </p>
-
+</details>
+<h2 id="output-arguments-optional">Output arguments (optional)</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset containing scaled or original (restored) EEMs.</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
 <blockquote>
-<p>Once the status property <code>data.status.signalScaling</code> is set by the function, modifications made using functions such as <code>subdataset</code> will be mirrored on the original X stored as backup in the drEEMhistory belonging to the <code>scalesamples</code> entry. </p>
+<p>Once the status property <code>data.status.signalScaling</code> is set by the function, modifications made using functions such as <code>subdataset</code> will be mirrored on the original X stored as backup in the drEEMhistory belonging to the <code>scalesamples</code> entry.</p>
 </blockquote>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

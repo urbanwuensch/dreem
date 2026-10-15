@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewsplitvalidation</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,84 +370,53 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewsplitvalidation</h1>
-
+<h1 id="viewsplitvalidation">viewsplitvalidation</h1>
 <p>Visualize a split validation on a specific model present in data.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">viewsplitvalidation(data, fac,Name,Value)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>viewsplitvalidation(data, fac,Name,Value)</code></pre>
+<h2 id="description">Description</h2>
 <p>The <code>viewsplitvalidation</code> function visualizes the split validation on a provided dataset by checking the similarities of excitation and emission spectral loading between different subsets. Two spectra are sufficiently similar if the Tucker congruence coefficient is greater than <code>0.95</code>.</p>
-
 <blockquote>
-<p><strong><em>The actual split validation is already performed after a call to <code>fitparafac</code> with the option <code>mode=&#39;fitsplits&#39;</code>. There, the results are shown as console output but no plots are shown. Use this function to find out how well the validation worked or where it did not succeed.</em></strong></p>
+<p><strong><em>The actual split validation is already performed after a call to <code>fitparafac</code> with the option <code>mode='fitsplits'</code>. There, the results are shown as console output but no plots are shown. Use this function to find out how well the validation worked or where it did not succeed.</em></strong></p>
 </blockquote>
-
-<p>The function checks if the model specified by the number of components <code>fac</code> is validated across different splits and the model obtained from all of the data, <code>&quot;overall&quot;</code> (see <code>fitparafac</code> function for options <code>&quot;fitoverall&quot;</code> and <code>&quot;fitsplit&quot;</code>).</p>
-
-<p>If validation check is passes, the function plots the validated models, displaying their loadings and contours, and provides diagnostic plots if validation fails. </p>
-
+<p>The function checks if the model specified by the number of components <code>fac</code> is validated across different splits and the model obtained from all of the data, <code>"overall"</code> (see <code>fitparafac</code> function for options <code>"fitoverall"</code> and <code>"fitsplit"</code>).</p>
+<p>If validation check is passes, the function plots the validated models, displaying their loadings and contours, and provides diagnostic plots if validation fails.</p>
 <p>The function includes detailed error messages to help diagnose why a validation might have failed.</p>
-
-<p><code>viewsplitvalidation</code> checks for the presence of desired model in the overall and all split datasets during the input parsing. If a model is not found in all cases, an error will be shown. </p>
-
+<p><code>viewsplitvalidation</code> checks for the presence of desired model in the overall and all split datasets during the input parsing. If a model is not found in all cases, an error will be shown.</p>
 <blockquote>
 <p><strong><em>Note:</em></strong> A splitvalidation with the function is only possible if the overall model can be compared with models in all splits.</p>
 </blockquote>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset with PARAFAC models</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset with PARAFAC models</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
 <p>PARAFAC models should be present in the overall dataset and all splits for full functionality.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>fac</code> - number of PARAFAC components in the validated model</b></summary>
-    <i>numeric</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>fac</code> - number of PARAFAC components in the validated model</b>
+</summary>
+<p><i>numeric</i></p>
 <p>Specifies the number of components in the model you wish to validate.</p>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical function output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the graphical output produced by the function.
-A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewsplitvalidation</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewsplitvalidation.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewsplitvalidation.jpg&quot;.</p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save grapical function output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the graphical output produced by the function. A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewsplitvalidation</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewsplitvalidation.png". Likewise, providing "projectX.jpg" will result in "projectX-viewsplitvalidation.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
-
-<p></details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving.</p>
+</details>
 </body>
-
 </html>

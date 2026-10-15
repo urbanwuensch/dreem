@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>export2zip</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,29 +370,18 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">export2zip</h1>
-
+<h1 id="export2zip">export2zip</h1>
 <p>Export absorbance and fluorescence data in current form, along with its processing status (&amp; history), scatter treatment settings, absorbance slopes (if applicable) and FDOM peaks &amp; indices.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">export2zip(data,filename)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>export2zip(data,filename)</code></pre>
+<h2 id="description">Description</h2>
 <p>The function exports a dataset in its entirety in accordance to FAIR principles to a compressed archive that is ready to be uploaded to data repositories without modification.</p>
-
 <p>The export includes:</p>
-
 <ul>
 <li>Sample fluorescence EEMs</li>
 <li>Blank fluorescence EEMs (if <code>subtractblanks</code> was used)</li>
@@ -406,30 +391,21 @@ details:open > summary {
 <li>The dataset status entries</li>
 <li>A detailed README.txt to explain the contents of the archive</li>
 </ul>
-
 <p>The dataset is exported in interoperable csv files, but a .mat file is added for convenience of Matlab users. Note that, while a drEEMdataset can only be used while the drEEM toolbox is installed (i.e. the class definition is known), the exported .mat file is converted to a conventional structure and can thus be read independent of the Matlab configuration.</p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to export</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<p><details open>
-    <summary><b><code>filename</code> - name of compressed archive</b></summary>
-    <i>char | string</i></p>
-
-<p>The name of the output file. It should be a text and will be saved with a <code>.zip</code> extension.
-Note: Any extension at the end of the <code>filename</code> will be changed to <code>.zip</code>. If none is provided, it will be added.</p>
-
-<p></details></p>
-
-
-
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to export</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<details open>
+<summary>
+<b><code>filename</code> - name of compressed archive</b>
+</summary>
+<p><i>char | string</i></p>
+<p>The name of the output file. It should be a text and will be saved with a <code>.zip</code> extension. Note: Any extension at the end of the <code>filename</code> will be changed to <code>.zip</code>. If none is provided, it will be added.</p>
+</details>
 </body>
-
 </html>

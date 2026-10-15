@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>rmspikes</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,187 +370,132 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">rmspikes</h1>
-
+<h1 id="rmspikes">rmspikes</h1>
 <p>Removes spikes from fluorescence excitation-emission matrix (EEM) data by identifying and interpolating over noisy data points.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = rmspikes(data)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = rmspikes( data , Name,Value)</code></a></p>
-
 <p><a href="#syntax3"><code>rmspikes( data , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>In large datasets, the quality inspection of every EEM can take a long time. <code>rmspikes</code> offers an automated method to delete signal spikes from fluorescence EEMs. It is designed to take out very bad cases of signals that stick out from otherwise smooth EEMs.</p>
-
 <blockquote>
-<p><strong><em>The function only works reliably with EEMs that don&#39;t contain Rayleigh or Raman Scatter! If scatter is present, the default threshold factor is most likely unusable.</em></strong></p>
+<p><strong><em>The function only works reliably with EEMs that don't contain Rayleigh or Raman Scatter! If scatter is present, the default threshold factor is most likely unusable.</em></strong></p>
 </blockquote>
-
 <p><code>rmspikes</code> performs an analysis that estimates the baseline noise level across the dataset. The analysis sequence is as follows:</p>
-
 <ul>
-<li>The dataset is replicated four times. In each copy, every 2nd excitation or emission scan is NaN&#39;ed. Once starting at the first, then at the second scan.</li>
+<li>The dataset is replicated four times. In each copy, every 2nd excitation or emission scan is NaN'ed. Once starting at the first, then at the second scan.</li>
 <li>The missing data in each copy is replaced with a 2D-inpainting algorithm (<a href="https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans"><code>inpaint_nans</code></a>).</li>
 <li>The difference between the original and interpolated EEMs is calculated for each copy. The differences are accumulated in one 3D array.</li>
 <li>A threshold matrix is calculated based on the median difference between observed and interpolated. Since data tends to get noisier toward the UV in the excitation direction, the noise floor estimate is transformed into a vector along the excitation direction (noise along the emission is thus assumed to not change with wavelength). The vector is transformed by multiplication with the square root to make the method more sensitive in the UV. The vector is then transformed back into a matrix with <code>repmat</code>. <code>thresholdFactor</code> is multiplied onto this matrix to safeguard against excessive flagging.</li>
-<li>For points in the EEM where the difference between interpolated and observed data exceeds the threshold matrix, the data is NaN&#39;ed</li>
+<li>For points in the EEM where the difference between interpolated and observed data exceeds the threshold matrix, the data is NaN'ed</li>
 <li>If interpolation is enabled, the removed data is finally replaced with a 2D interpolation guess.</li>
 </ul>
-
 <blockquote>
 <p>The function works best for wide peaks in the visible range. In testing, the function has shown to have a tendency toward removing parts of narrow peak data in the UV if highly dynamic peaks are present. If this is observed, raise the <code>thresholdFactor</code> option or consider refraining from using the function.</p>
 </blockquote>
-
 <p>Another warning:</p>
-
 <blockquote>
 <p>If the dataset contains EEM parts that contain only missing data or zeros, the estimation of the noise floor will fail and the function will return an error. Please use subdataset to trim your dataset to a sensible spectral range in this case!</p>
 </blockquote>
-
 <p>The function provides warnings if a significant portion of the data is identified as noisy.</p>
-
 <p>Copyright notice:</p>
-
 <blockquote>
-<p><strong>&#39;inpaint&#39;</strong> John D&#39;Errico (2025). <code>inpaint_nans</code> (https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans), MATLAB Central File Exchange. Retrieved March 5, 2025. </p>
+<p><strong>'inpaint'</strong> John D'Errico (2025). <code>inpaint_nans</code> (https://www.mathworks.com/matlabcentral/fileexchange/4551-inpaint_nans), MATLAB Central File Exchange. Retrieved March 5, 2025.</p>
 </blockquote>
-
-<p><details open>
-    <summary><b><code>dataout = rmspikes(data)</code> - default options</b></summary>
-<a name="syntax1"></a></p>
-
+<details open>
+<summary>
+<b><code>dataout = rmspikes(data)</code> - default options</b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>Applies the default settings with a threshold factor of 10 and disabled interpolation.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>dataout = rmspikes( ___ , Name,Value)</code> - custom options</b></summary>
-<a name="syntax2"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>dataout = rmspikes( ___ , Name,Value)</code> - custom options</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p>specifies additional options using one or more <a href="#NameValue">name-value</a> pair arguments. For example, you can specify if <code>interpolation</code> should be performed or adjust the <code>thresholdFactor</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>rmspikes(data,Name,Value)</code> - diagnostics mode</b></summary>
-<a name="syntax3"></a></p>
-
+</details>
+<details open>
+<summary>
+<b><code>rmspikes(data,Name,Value)</code> - diagnostics mode</b>
+</summary>
+<p><a name="syntax3"></a></p>
 <p>When no output argument is supplied, the function automatically switches to diagnostics mode. This automatically sets <code>plot=true</code> and <code>details=true</code> and facilitates finetuning of <code>thresholdFactor</code>.</p>
-
 <p><img src="rmspikes_diagnostics.png" width="auto" height="auto" align="center"/></p>
-
 <p>This example figures show the diagnostic plot (<code>details=true</code>) that can help to decide on the most appropriate <code>thresholdFactor</code></p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li><p>Delete signals 10x above the noise floor and don&#39;t interpolate
-<code>samples = tbx.rmspikes(samples);</code></p></li>
-<li><p>Finetune thresholdFactor through visual inspection
-<code>tbx.rmspikes(samples,thresholdFactor=15);</code></p></li>
-<li><p>Delete signals 20x above the noise floor and interpolate over deletions
-<code>samples = tbx.rmspikes(samples,thresholdFactor=20,interpolate=true);</code></p></li>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li><p>Delete signals 10x above the noise floor and don't interpolate <code>samples = tbx.rmspikes(samples);</code></p></li>
+<li><p>Finetune thresholdFactor through visual inspection <code>tbx.rmspikes(samples,thresholdFactor=15);</code></p></li>
+<li><p>Delete signals 20x above the noise floor and interpolate over deletions <code>samples = tbx.rmspikes(samples,thresholdFactor=20,interpolate=true);</code></p></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset with fluorescence data.</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>thresholdFactor</code>- sensitivity to excessive noise (sample by sample)</b></summary>
-    <i>numeric</i></p>
-
-<p>Adjust the sensitivity of the spike detection. A lower value results in more sensitivity. </p>
-
-<p>Default is <code>10</code>. </p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>interpolate</code>- switch to enable interpolation</b></summary>
-    <i>logical</i></p>
-
-<p>Logical or numeric value to specify if interpolation over removed data points should be performed. </p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset with fluorescence data.</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>thresholdFactor</code>- sensitivity to excessive noise (sample by sample)</b>
+</summary>
+<p><i>numeric</i></p>
+<p>Adjust the sensitivity of the spike detection. A lower value results in more sensitivity.</p>
+<p>Default is <code>10</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>interpolate</code>- switch to enable interpolation</b>
+</summary>
+<p><i>logical</i></p>
+<p>Logical or numeric value to specify if interpolation over removed data points should be performed.</p>
 <p>Default is <code>false</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if a plot showing the results should be generated. The plot shows noise threshold profile along excitation mode and the percentage removal of data in excitation and emission modes.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>details</code>- switch to enable diagnostics plots (sample by sample)</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>details</code>- switch to enable diagnostics plots (sample by sample)</b>
+</summary>
+<p><i>logical</i></p>
 <p>detailed diagnostic plots each sample. This plot depicts original and final EEMs, original EEM with marked removal points and, finally, the difference between original data and smoothed data.</p>
-
 <p>Use this option to finetune <code>thresholdFactor</code></p>
-
 <p>Default is <code>false</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>rmspikes</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-rmspikes.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-rmspikes.jpg&quot;.</p>
-
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save graphical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>rmspikes</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-rmspikes.png". Likewise, providing "projectX.jpg" will result in "projectX-rmspikes.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - despiked fluorescence data</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - despiked fluorescence data</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

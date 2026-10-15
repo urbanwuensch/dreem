@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewhistory</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,66 +370,39 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewhistory</h1>
-
+<h1 id="viewhistory">viewhistory</h1>
 <p>View and export a summary of the functions carried out on data and their details.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">viewhistory(data,Name,Value)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>viewhistory(data,Name,Value)</code></pre>
+<h2 id="description">Description</h2>
 <p>The function <code>viewhistory</code> opens up the drEEM viewhistory app that contains a summary of the drEEM functions that have been run on the data, along with their details and the comments added by the user during the process.</p>
-
 <p>Functions that appear more than once are color-coded for easier navigation through the list.</p>
-
-<p>Hovering over any cell will show the detailed content of the cell if their length exceeds the cell&#39;s space.</p>
-
+<p>Hovering over any cell will show the detailed content of the cell if their length exceeds the cell's space.</p>
 <p>Use the <code>Save list as spreadsheet</code> button to export the history in <code>.ods</code> (OpenDocument Spreadsheet) file format. The exported spreadsheet will contain all the history fields, timestamps, function names, user comments, and function messages.</p>
-
 <p>By clicking on any of the functions (in drEEM function column) that accept some options as input, the two <code>View selected options</code> and <code>Transfer options to workspace</code> buttons will be enabled. Use the former to see the options associated with the selected function in a new window, and the latter to export the options to the workspace in a variable called <code>restoredOptions</code>.</p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code></b></summary>
-    <i>drEEMdataset</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code></b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save the grapical user interface  </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the current GUI.
-A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewhistory</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewhistory.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewhistory.jpg&quot;.</p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save the grapical user interface </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the current GUI. A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewhistory</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewhistory.png". Likewise, providing "projectX.jpg" will result in "projectX-viewhistory.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
-
-<p></details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving.</p>
+</details>
 </body>
-
 </html>

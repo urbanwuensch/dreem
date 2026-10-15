@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewspectralvariance</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,61 +370,37 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewspectralvariance</h1>
-
+<h1 id="viewspectralvariance">viewspectralvariance</h1>
 <p>Visualize and analyze the spectral variability in fluorescence and absorbance data.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">viewspectralvariance(data,Name,Value)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>viewspectralvariance(data,Name,Value)</code></pre>
+<h2 id="description">Description</h2>
 <p>The <code>viewspectralvariance</code> function plots the spectral variability of absorbance and fluorescence data. The function scales all data to unit variance in the sample mode, giving each sample equal weighting.</p>
-
 <p>The function identifies samples with very low signals and will generate a warning regarding the impact of those samples.</p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset with fluorescence and absorbance data.</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. </p>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical function output</b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced by the function</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewspectralvariance</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewspectralvariance.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewspectralvariance.jpg&quot;.</p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset with fluorescence and absorbance data.</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.</p>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save grapical function output</b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced by the function</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewspectralvariance</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewspectralvariance.png". Likewise, providing "projectX.jpg" will result in "projectX-viewspectralvariance.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-
-
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
 </body>
-
 </html>

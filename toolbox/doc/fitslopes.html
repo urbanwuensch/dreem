@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>fitslopes</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,160 +370,112 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">fitslopes</h1>
-
+<h1 id="fitslopes">fitslopes</h1>
 <p>Fit slopes to the CDOM absorbance data in a drEEMdataset object.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = fitslopes( data , Name,Value)</code></a></p>
-
 <p><a href="#syntax2"><code>fitslopes( ___ )</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p>The function <code>fitslopes</code> fits slopes to the CDOM absorbance data in <code>data</code>. The function returns the processed <code>data</code> with CDOM slopes stored in the table <code>data.opticalMetadata</code>. </p>
-
+<h2 id="description">Description</h2>
+<p>The function <code>fitslopes</code> fits slopes to the CDOM absorbance data in <code>data</code>. The function returns the processed <code>data</code> with CDOM slopes stored in the table <code>data.opticalMetadata</code>.</p>
 <blockquote>
 <p><strong><em>Results are reported in the unit per µm and expressed as positive values (though CDOM absorbance is decreasing with increasing wavelength)</em></strong></p>
 </blockquote>
-
-<p>When reporting slopes in publications, please refer to the original studies that presented the methodology (see &quot;Fitting methods&quot;)</p>
-
+<p>When reporting slopes in publications, please refer to the original studies that presented the methodology (see "Fitting methods")</p>
 <blockquote>
 <p><strong><em><code>fitslopes</code> is automatically called in <code>viewabsorbance</code>, <code>export2zip</code>, and <code>exportresults</code> to present CDOM slopes for further analysis.</em></strong></p>
 </blockquote>
-
-<p><details open>
-<summary><b><i>Fitting methods</b></i>
-</summary></p>
-
+<details open>
+<summary>
+<b><i>Fitting methods</b></i>
+</summary>
 <p>The function fits slopes to the data using three ranges:</p>
-
 <ul>
 <li><p>Long range exponential slope fitting (specified by <code>options.LongRange</code>) according to <a href="https://doi.org/10.1006/ecss.2000.0645">Stedmon et al. (2000)</a></p></li>
 <li><p>Linear slope fitting of log-transformed data in the wavelength range <code>275</code>-<code>295</code> nm according to <a href="https://doi.org/10.4319/lo.2008.53.3.0955">Helms et al. (2008)</a></p></li>
-<li><p>Linear slope fitting of log-transformed data in the wavelength range <code>350</code>-<code>400</code> nm according to <a href="https://doi.org/10.4319/lo.2008.53.3.0955">Helms et al. (2008)</a>
-</details></p></li>
+<li><p>Linear slope fitting of log-transformed data in the wavelength range <code>350</code>-<code>400</code> nm according to <a href="https://doi.org/10.4319/lo.2008.53.3.0955">Helms et al. (2008)</a></p></li>
 </ul>
-
+</details>
 <p>The function uses default values of input arguments (see Input arguments section) when options are not specified.</p>
-
-<p>An entry will be added to the <code>history</code> field of the <code>dataout</code>, detailing the  options used for <code>fitslopes</code>. </p>
-
-<p><details open>
-<summary><b><code>dataout = fitslopes(data,Name,Value)</code></b>
+<p>An entry will be added to the <code>history</code> field of the <code>dataout</code>, detailing the options used for <code>fitslopes</code>.</p>
+<details open>
+<summary>
+<b><code>dataout = fitslopes(data,Name,Value)</code></b>
 </summary>
-<a name="syntax1"></a></p>
-
-<p>Specifies additional options using one or more name-value pair arguments. For example, you can specify the Wavelength range for long-range exponential slope fitting using <code>LongRange</code> or turn plotting options on or off. <br>
-Example: </p>
-
-<p></details></p>
-
-<p><details>
-<summary><b><code>fitslopes( ___ )</code>- Diagnostic mode</b>
+<p><a name="syntax1"></a></p>
+<p>Specifies additional options using one or more name-value pair arguments. For example, you can specify the Wavelength range for long-range exponential slope fitting using <code>LongRange</code> or turn plotting options on or off. <br> Example:</p>
+</details>
+<details>
+<summary>
+<b><code>fitslopes( ___ )</code>- Diagnostic mode</b>
 </summary>
- <a name="syntax2"></a></p>
-
+<p><a name="syntax2"></a></p>
 <p>Runs the function in diagnostic mode. In this mode, options are automatically set to <code>details=true</code> and <code>plot=true</code> to inspect fits and adjust the default value of <code>rsq</code> or the wavelength range for the exponential slope before obtaining the slopes.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<p><code>data = fitslopes(data,  &#39;plot&#39;,false, LongRange=[300 700], rsq=0.9)</code> 
-Fit slopes using a custom wavelength range for the exponential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - contains CDOM spectra to fit slopes to</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. If no absorbance is present, the function will return an error.
-</details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>LongRange</code>- Range of the exponential slope</b></summary>
-    <i>numeric [1x2]</i></p>
-
+</details>
+<h2 id="examples">Examples</h2>
+<p><code>data = fitslopes(data,  'plot',false, LongRange=[300 700], rsq=0.9)</code> Fit slopes using a custom wavelength range for the exponential slope and use an R2 threshold of 0.9 to omit bad fits while also not producing any final plot.</p>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - contains CDOM spectra to fit slopes to</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. If no absorbance is present, the function will return an error.
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>LongRange</code>- Range of the exponential slope</b>
+</summary>
+<p><i>numeric [1x2]</i></p>
 <p>Numeric array specifying Wavelength range for long-range exponential slope fitting. Default is <code>[300 600]</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>rsq</code>- R-squared threshold for fits</b></summary>
-    <i>numeric</i></p>
-
-<p>A scalar numeric specifying R-squared threshold for linear fits. <code>rsq</code> must be numeric and less than or equal to <code>1</code>.
-Default is <code>0.95</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>rsq</code>- R-squared threshold for fits</b>
+</summary>
+<p><i>numeric</i></p>
+<p>A scalar numeric specifying R-squared threshold for linear fits. <code>rsq</code> must be numeric and less than or equal to <code>1</code>. Default is <code>0.95</code>.</p>
+</details>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if a plot showing the results should be generated. The plot shows an overview of slopes for all sample in <code>data</code>. If no output argument is supplied, plotting is enabled automatically.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>details</code>- switch to plot diagnostics</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>details</code>- switch to plot diagnostics</b>
+</summary>
+<p><i>logical</i></p>
 <p>Logical or numeric value to specify if detailed diagnostic plots should be shown for each sample. Each plot will show the raw, modeled, and residual data if a fit was possible.If no output argument is supplied, the option is enabled automatically.</p>
-
 <p>Default is <code>false</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>fitslopes</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-fitslopes.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-fitslopes.jpg&quot;.</p>
-
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save graphical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>fitslopes</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-fitslopes.png". Likewise, providing "projectX.jpg" will result in "projectX-fitslopes.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving).</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with slope data in .opticalMetadata</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving).</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with slope data in .opticalMetadata</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
 <p>All calculated slopes are saved in a table inside the dataset called <code>opticalMetadata</code>. The table can be extracted to the workspace, e.g. slopes=dataout.opticalMetadata.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

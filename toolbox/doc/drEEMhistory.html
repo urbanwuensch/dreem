@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>drEEMhistory</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,63 +370,39 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">The dataset history</h1>
-
+<h1 id="the-dataset-history">The dataset history</h1>
 <p>Since version 2.0.0, drEEM keeps a detailed record of operations it performs on a dataset. All major operations involved in the processing are fully implemented in methods no matter how simple they theoretically are (e.g. blank subtraction). How does it keep this record?</p>
-
 <p><strong><em>With the <code>drEEMhistory</code> property!</em></strong></p>
-
-<p>It is one one of the properties (i.e. a field in a Matlab structure) of the <a href="dreemdataset.html"><code>drEEMdataset</code></a> object, so you&#39;ll find a history in each dataset you&#39;ll work with.</p>
-
-<p>The history will give you basic information on a dataset even if it has been years since you&#39;ve worked on it. For example, when <em>did</em> you last work on it? What <em>has</em> actually already been done on it?</p>
-
-<p>Though very helpful in itself, the history gets even more useful in conjunction with the dataset status (<a href="drEEMstatus.html"><code>drEEMstatus</code></a> object). And the best thing is that you can add information to the history yourself with the <a href="addcomment.html"><code>addcomment</code> </a> method! </p>
-
+<p>It is one one of the properties (i.e. a field in a Matlab structure) of the <a href="dreemdataset.html"><code>drEEMdataset</code></a> object, so you'll find a history in each dataset you'll work with.</p>
+<p>The history will give you basic information on a dataset even if it has been years since you've worked on it. For example, when <em>did</em> you last work on it? What <em>has</em> actually already been done on it?</p>
+<p>Though very helpful in itself, the history gets even more useful in conjunction with the dataset status (<a href="drEEMstatus.html"><code>drEEMstatus</code></a> object). And the best thing is that you can add information to the history yourself with the <a href="addcomment.html"><code>addcomment</code></a> method!</p>
 <blockquote>
 <p><strong><em>Remember</em></strong>: The more information you add to the history when running an analysis, the more reprodicible your workflow will be. For everybody else, but also for yourself when you return to an old dataset.</p>
 </blockquote>
-
 <p>The idea behind the history is that you need not much know about it; the history is takes care of itself and gets exported with <a href="export2zip.hmtl"><code>export2zip</code></a> or <a href="exportresults.html"><code>exportresults</code></a>. So it always stays with the dataset, even after an export.</p>
-
 <blockquote>
 <p><strong>Note</strong>: The history is also how the toolbox knows about signal scaling or scatter treatment. Certain methods search the history and use the information stored in it.</p>
 </blockquote>
-
-<p>The history has a (hidden) property called <code>details</code>. Here, the optional input arguments to any function are stored. In this way, you&#39;ll always know excactly how the function was applied. Though hidden, <a href="viewhistory.html"><code>viewhistory</code></a> can restore the details to the workspace and you could apply the same options to another dataset with a tiny bit of work on your end.</p>
-
-<p>The history has a (hidden) property <code>previous</code>. Though strickly limited to keep file sizes reasonable, the toolbox uses this functionality when e.g. scaling signals: The unscaled EEMs are kept in as the previous version of the dataset. Any call to <a href="subdataset.html"><code>subdataset</code></a> or <a href="zapnoise.html"><code>zapnoise</code></a> will search the <code>previous</code> dataset and apply the operation to the unscaled dataset kept in the history. This version of the dataset is then used to reverse the scaling when <code>scalesamples(data,&#39;reverse&#39;)</code> would be called.</p>
-
-<h2 id="toc_1">Properties</h2>
-
+<p>The history has a (hidden) property called <code>details</code>. Here, the optional input arguments to any function are stored. In this way, you'll always know excactly how the function was applied. Though hidden, <a href="viewhistory.html"><code>viewhistory</code></a> can restore the details to the workspace and you could apply the same options to another dataset with a tiny bit of work on your end.</p>
+<p>The history has a (hidden) property <code>previous</code>. Though strickly limited to keep file sizes reasonable, the toolbox uses this functionality when e.g. scaling signals: The unscaled EEMs are kept in as the previous version of the dataset. Any call to <a href="subdataset.html"><code>subdataset</code></a> or <a href="zapnoise.html"><code>zapnoise</code></a> will search the <code>previous</code> dataset and apply the operation to the unscaled dataset kept in the history. This version of the dataset is then used to reverse the scaling when <code>scalesamples(data,'reverse')</code> would be called.</p>
+<h2 id="properties">Properties</h2>
 <p>You can see above that there are tons of properties (i.e. variables) in the object. Many of these could be familiar from previous use of drEEM or DOMFluor, but many are also new. We will run through them.</p>
-
 <ul>
 <li><strong>timestamp</strong>: A date/time stamp marking the time when the function completed its modification on the dataset.</li>
 <li><strong>fname</strong>: The name of the drEEM function that was modifying the dataset.</li>
 <li><strong>fmessage</strong>: A short message with basic information about what was done.</li>
-<li><strong>usercomment</strong>: If you use <code>addcomment</code>, this is where your message will be stored. It will be associated with the last function by default since comments often refer to something that the last function was doing (or failed to do). Use <code>addcomment(data,&#39;___&#39;,&#39;newline&#39;)</code> to make a separate observation that stands alone by itself and is not associated with another function.</li>
+<li><strong>usercomment</strong>: If you use <code>addcomment</code>, this is where your message will be stored. It will be associated with the last function by default since comments often refer to something that the last function was doing (or failed to do). Use <code>addcomment(data,'___','newline')</code> to make a separate observation that stands alone by itself and is not associated with another function.</li>
 </ul>
-
-<h1 id="toc_2">Hidden properties</h1>
-
+<h1 id="hidden-properties">Hidden properties</h1>
 <ul>
 <li><strong>details</strong>: If a function uses name-value pair input arguments or option structures, all of that will be put in here.</li>
 <li><strong>backup</strong>: Unused. Disabled to reduce dataset size, but theoretically could store backups.</li>
 <li><strong>previous</strong>: In certain cases (e.g. <a href="scalesamples.html"><code>scalesamples</code></a>) an unmodified version of the dataset will be stored here. This property is used to then later undo this operation.</li>
 </ul>
-
-
-
-
 </body>
-
 </html>

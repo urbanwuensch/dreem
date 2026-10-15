@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>ramancalibration</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,181 +370,125 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">ramancalibration</h1>
-
+<h1 id="ramancalibration">ramancalibration</h1>
 <p>Calibrate fluorescence signal by the division of Raman scatter peak area.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>dataout = ramancalibration(samples, blanks)</code></a></p>
-
 <p><a href="#syntax2"><code>dataout = ramancalibration( ___ , Name,Value)</code></a></p>
-
 <p><a href="#syntax3"><code>ramancalibration( ___ , Name,Value)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The <code>ramancalibration</code> function calibrates the fluorescence signal in <code>samples</code> by the division of Raman scatter peak area at excitation=<code>ExWave</code> obtained from the dataset <code>blanks</code>. The area will be calculated after a baseline subtraction to take scatter or baseline noise into account.</p>
-
 <p>An entry will be added to the <code>history</code> field of the <code>data</code>, detailing the processing options used, including the excitation wavelength, integration range, Raman area, and baseline area. If no output argument is specified, the function will overwrite the original <code>data</code> in the workspace.</p>
-
 <blockquote>
 <p><strong><em>Depending on the measurement settings, the blank dataset might not contain a Raman scan of sufficient quality. It is your responsibility to verify that the Raman calibration worked well. The function produces a figure that should be inspected for every dataset.</em></strong></p>
 </blockquote>
-
-<p>The function validates the input datasets to ensure that the calibration is only carried out if it is appropriate: </p>
-
+<p>The function validates the input datasets to ensure that the calibration is only carried out if it is appropriate:</p>
 <blockquote>
-<p><strong><em>The status-property &quot;signalCalibration&quot; must be &quot;not applied&quot;. Otherwise, the function returns a validation error.</em></strong></p>
+<p><strong><em>The status-property "signalCalibration" must be "not applied". Otherwise, the function returns a validation error.</em></strong></p>
 </blockquote>
-
-<p><details open>
+<details open>
 <summary>
 <b><code>dataout = ramancalibration(samples, blanks)</code> default options</b>
 </summary>
- <a name="syntax1"></a></p>
-
-<p>Run the function with the default options. This will pick the emission scan at excitation 350nm and integrate from 378 to 424nm. The baseline between start and end of the Raman peak will be subtracted.
- <a name="syntax1"></a>
-</details></p>
-
-<p><details open>
+<p><a name="syntax1"></a></p>
+Run the function with the default options. This will pick the emission scan at excitation 350nm and integrate from 378 to 424nm. The baseline between start and end of the Raman peak will be subtracted. <a name="syntax1"></a>
+</details>
+<details open>
 <summary>
 <b><code>dataout = ramancalibration( ___ , Name,Value)</code> custom options</b>
 </summary>
- <a name="syntax2"></a>
- specifies additional options using one or more name-value pair arguments. For example, you can specify the excitation wavelength for extracting Raman scan using <code>ExWave</code> or specify the emission range for the integration of the area under the peak using <code>iStart</code>, <code>iEnd</code>. <br></p>
-
-<p></details></p>
-
-<p><details open>
+<p><a name="syntax2"></a> specifies additional options using one or more name-value pair arguments. For example, you can specify the excitation wavelength for extracting Raman scan using <code>ExWave</code> or specify the emission range for the integration of the area under the peak using <code>iStart</code>, <code>iEnd</code>. <br></p>
+</details>
+<details open>
 <summary>
 <b><code>dataout = ramancalibration( ___ , Name,Value)</code> diagnostic mode</b>
 </summary>
- <a name="syntax3"></a></p>
-
+<p><a name="syntax3"></a></p>
 <p>If no output arguments are assigned, you are left with diagnostic plots to see how the function would modify your data if it would assign output arguments. Use to verify options before running the function with effect.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<ol>
-<li>Trust us, but verify(!)
-<code>samples = tbx.ramancalibration(samples,blanks);</code></li>
-<li>Trust us, and fly blind (only recommended if you have verified defaults!)
-<code>samples = tbx.ramancalibration(samples,blanks,plot=false);</code></li>
-<li>Longer integration times, wider peak
-<code>samples = tbx.ramancalibration(samples,blanks,iStart=375,iEnd=430);</code></li>
-<li>Different Raman peak (you need to decide start and end wavelength of peaks visually)
-<code>samples = tbx.ramancalibration(samples,blanks,ExWave=275,iStart=...,iEnd=...);</code></li>
+</details>
+<h2 id="examples">Examples</h2>
+<ol type="1">
+<li>Trust us, but verify(!) <code>samples = tbx.ramancalibration(samples,blanks);</code></li>
+<li>Trust us, and fly blind (only recommended if you have verified defaults!) <code>samples = tbx.ramancalibration(samples,blanks,plot=false);</code></li>
+<li>Longer integration times, wider peak <code>samples = tbx.ramancalibration(samples,blanks,iStart=375,iEnd=430);</code></li>
+<li>Different Raman peak (you need to decide start and end wavelength of peaks visually) <code>samples = tbx.ramancalibration(samples,blanks,ExWave=275,iStart=...,iEnd=...);</code></li>
 </ol>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>samples</code> - contains EEMs of samples</b></summary>
-    <i>drEEMdataset</i></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>samples</code> - contains EEMs of samples</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(samples)</code>.</p>
-
 <blockquote>
-<p>The property <code>samples.status.signalCalibration</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
+<p>The property <code>samples.status.signalCalibration</code> must be <code>"not applied"</code>. Otherwise, the function returns a validation error.</p>
 </blockquote>
-
-<p></details></p>
-
-<p><details>
-    <summary><b><code>blanks</code> - contains EEMs of blanks</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>. </p>
-
+</details>
+<details>
+<summary>
+<b><code>blanks</code> - contains EEMs of blanks</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(blanks)</code>.</p>
 <blockquote>
-<p>The property <code>blanks.status.signalCalibration</code> must be <code>&quot;not applied&quot;</code>. Otherwise, the function returns a validation error.</p>
+<p>The property <code>blanks.status.signalCalibration</code> must be <code>"not applied"</code>. Otherwise, the function returns a validation error.</p>
 </blockquote>
-
-<p></details></p>
-
-<h2 id="toc_5">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>ExWave</code>- excitation wavelength for extracting Raman scan</b></summary>
-    <i>numeric </i></p>
-
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>data</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>ExWave</code>- excitation wavelength for extracting Raman scan</b>
+</summary>
+<p><i>numeric </i></p>
 <p>Indicates the excitation wavelength that the function uses to extract Raman scans. The function checks if the specified <code>ExWave</code> is present in the <code>blanks</code>. If present, the function extracts the corresponding scans directly. Otherwise, it interpolates the data in <code>blanks</code> to approximate the scans at the specified excitation wavelength.</p>
-
 <p>Default excitation wavelength is <code>350</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>iStart</code>- emission wavelength to start Raman peak area integration</b></summary>
-    <i>numeric </i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>iStart</code>- emission wavelength to start Raman peak area integration</b>
+</summary>
+<p><i>numeric </i></p>
 <p>The function calculates the Raman area and baseline area over the specified integration range starting from <code>iStart</code>. Default starting wavelength is <code>378</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>iEnd</code>- emission wavelength to end Raman peak area integration</b></summary>
-    <i>numeric </i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>iEnd</code>- emission wavelength to end Raman peak area integration</b>
+</summary>
+<p><i>numeric </i></p>
 <p>The function calculates the Raman area and baseline area over the specified integration range ending at <code>iEnd</code>. Default ending wavelength is <code>424</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>plot</code>- switch to plot the results</b></summary>
-    <i>logical</i></p>
-
+</details>
+<details open>
+<summary>
+<b><code>plot</code>- switch to plot the results</b>
+</summary>
+<p><i>logical</i></p>
 <p>If <code>true</code>, the function generates various plots to visualize the Raman emission scans, Raman area, baseline area relative to Raman area, and <code>SNB</code> (signal to background) across the dataset. For SNB, the signal is the maximum intensity of the Raman scan, and the background is the median fluorescence from the end of the peak +50nm.</p>
-
 <p>Default is <code>true</code>.</p>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save graphical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>ramancalibration</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-ramancalibration.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-ramancalibration.jpg&quot;.</p>
-
+</details>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save graphical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>ramancalibration</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-ramancalibration.png". Likewise, providing "projectX.jpg" will result in "projectX-ramancalibration.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving)</p>
-
-<p></details></p>
-
-<h2 id="toc_6">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - contains EEMs of samples with intensities in Raman Units</b></summary>
-    <i>drEEMdataset</i></p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving)</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - contains EEMs of samples with intensities in Raman Units</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
 <p>The status of the dataset is changed to reflect the fact that a Raman calibration has been applied by the drEEM toolbox</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

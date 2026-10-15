@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>viewopenfluormatches</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,87 +370,56 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">viewopenfluormatches</h1>
-
+<h1 id="viewopenfluormatches">viewopenfluormatches</h1>
 <p>Plot match results from OpenFluor.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
-<div><pre><code class="language-none">[summary,M]=viewopenfluormatches(filename,Name,Value)</code></pre></div>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="syntax">Syntax</h2>
+<pre><code>[summary,M]=viewopenfluormatches(filename,Name,Value)</code></pre>
+<h2 id="description">Description</h2>
 <p>This function lets the user plot OpenFluor database matching results in MATLAB for further inspection, export of graphical output and more.</p>
-
 <p>After importing a model for visual comparison with the entries in OpenFluor (<a href="https://openfluor.lablicate.com/">https://openfluor.lablicate.com/</a>), the user can choose to export the Matching results:</p>
-
 <p><img src="openfluor_matching.png" width="auto" height="auto" /></p>
-
-<p>When calling the downloaded file (&quot;OpenFluorSearch<em>ModelName</em>YYYYMMDD.csv&quot;) with <a href="viewopenfluormatches.html">viewopenfluormatches</a>, the results will be replotted in MATLAB. Note that the datacursor is active and hovering over the loadings plots will reveal additional information about the model that the selected component belongs to:</p>
-
+<p>When calling the downloaded file ("OpenFluorSearch_ModelName_YYYYMMDD.csv") with <a href="viewopenfluormatches.html">viewopenfluormatches</a>, the results will be replotted in MATLAB. Note that the datacursor is active and hovering over the loadings plots will reveal additional information about the model that the selected component belongs to:</p>
 <p><img src="openfluor_match_plotting.png" width="auto" height="auto" /></p>
-
-<p><strong>Note</strong>: When hovering over any of the components, the datacursor will display additional information &amp; the respective model&#39;s DOI is automatically copied to the clipboard. Simply paste into a browser (Windows: <code>Ctrl+v</code> and you will arrive at the landing page for most of the models in the database).</p>
-
-<h2 id="toc_3">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>filename</code> - filename of the OpenFluor results</b></summary>
-    <i>text</i></p>
-
-<p>Input must point at a file, e.g. <code>&#39;OpenFluorSearch_ModelName_YYYMMDD.csv&#39;</code></p>
-
-<p></details></p>
-
-<h2 id="toc_4">Name-Value arguments</h2>
-
-<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>&quot;Name&quot;,Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filename</code> in this case, but the order of the pairs does not matter. 
-<a name="NameValue"></a></p>
-
-<p><details open>
-    <summary><b><code>figurefile</code>- option to save grapical <code>plot</code> output </b></summary>
-    <i>character</i></p>
-
-<p>If a character vector is supplied (e.g. &quot;output.png&quot;), the function will save the output produced when plot is set to &quot;true&quot;. If plot=false, no output will be saved even if a character vector is supplied.</p>
-
-<p>A file extension can be supplied if desired (any extension supported by MATLAB&#39;s <code>exportgraphics</code> is fine). Note however that the function will insert a &quot;-&quot; followed by the calling function&#39;s name (<code>viewopenfluormatches</code>) before the extension to facilitate file organization. I.e. providing &quot;projectX&quot; as input will result in a file called &quot;projectX-viewopenfluormatches.png&quot;. Likewise, providing &quot;projectX.jpg&quot; will result in &quot;projectX-viewopenfluormatches.jpg&quot;.</p>
-
+<p><strong>Note</strong>: When hovering over any of the components, the datacursor will display additional information &amp; the respective model's DOI is automatically copied to the clipboard. Simply paste into a browser (Windows: <code>Ctrl+v</code> and you will arrive at the landing page for most of the models in the database).</p>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>filename</code> - filename of the OpenFluor results</b>
+</summary>
+<p><i>text</i></p>
+<p>Input must point at a file, e.g. <code>'OpenFluorSearch_ModelName_YYYMMDD.csv'</code></p>
+</details>
+<h2 id="name-value-arguments">Name-Value arguments</h2>
+<p>Specify pairs of arguments as <code>Name1=Value1,...,NameN=ValueN</code>, where <code>Name</code> is the argument name and <code>Value</code> is the corresponding value. The notation <code>"Name",Value</code> is also supported. Name-value arguments must appear after other arguments, <code>filename</code> in this case, but the order of the pairs does not matter. <a name="NameValue"></a></p>
+<details open>
+<summary>
+<b><code>figurefile</code>- option to save grapical <code>plot</code> output </b>
+</summary>
+<p><i>character</i></p>
+<p>If a character vector is supplied (e.g. "output.png"), the function will save the output produced when plot is set to "true". If plot=false, no output will be saved even if a character vector is supplied.</p>
+<p>A file extension can be supplied if desired (any extension supported by MATLAB's <code>exportgraphics</code> is fine). Note however that the function will insert a "-" followed by the calling function's name (<code>viewopenfluormatches</code>) before the extension to facilitate file organization. I.e. providing "projectX" as input will result in a file called "projectX-viewopenfluormatches.png". Likewise, providing "projectX.jpg" will result in "projectX-viewopenfluormatches.jpg".</p>
 <p>A pause of 3 seconds is implemented to allow graphical rendering to finish before saving a figure.</p>
-
-<p>Default: <code>&quot;&quot;</code> (i.e. an empty string disabling the figure saving.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>summary</code> - overview table</b></summary>
-    <i>table</i></p>
-
+<p>Default: <code>""</code> (i.e. an empty string disabling the figure saving.</p>
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>summary</code> - overview table</b>
+</summary>
+<p><i>table</i></p>
 <p>A table containing a list of all match statistics. Model database name and ID, component number, and TCC statistics.</p>
-
-<p></details></p>
-
-<p><details>
-    <summary><b><code>M</code> - results as structure</b></summary>
-    <i>struct</i></p>
-
+</details>
+<details>
+<summary>
+<b><code>M</code> - results as structure</b>
+</summary>
+<p><i>struct</i></p>
 <p>A dataset structure containing all loadings of the matched models that were plotted.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

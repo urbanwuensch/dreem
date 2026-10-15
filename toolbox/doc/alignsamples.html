@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>alignsamples</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,109 +370,74 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">alignsamples</h1>
-
+<h1 id="alignsamples">alignsamples</h1>
 <p>Compare sample names between datasets and remove the unmatched samples.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#syntax1"><code>[dsout1, __, dsoutN] = alignsamples(dsin1, __, dsinN)</code></a></p>
-
 <p><a href="#syntax2"><code>alignsamples(dsin1, __, dsinN)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>For the correction of inner-filter effects, blank subtractions, and Raman signal calibrations, the involved datasets <strong><em><em>must</em></em></strong> be aligned such that each contains the same number of samples of the same sample identity in the same sequence. <code>alignsamples</code> ensures this is the case.</p>
-
-<p><code>alignsamples</code> works with the <code>drEEMdataset</code> property <code>filelist</code> for the comparisons. It is strongly recommended to use the same sample names for different spectroscopic measurements and use filename tags to distinguish between the measurement types, e.g. &quot;sample 01 - sample eem.csv&quot;, &quot;sample 01 - blank eem.csv&quot;, &quot;sample 01 - absorbance.csv&quot;. This might require you to manually copy the same blank to pair it with each sample. The tags would be used by the toolbox to identify the measurement type and will automatically be removed upon import. <code>alignsamples</code> can then be called directly and without issues.</p>
-
-<p>If the names between samples, blanks, and absorbance files differs prior to import, make sure to use a metadata table and import it to replace the diverging filenames  with the matching ones. Take a look at the <a href="import_tutorial_02.html">complex data import tutorial</a> to learn how this can be done.</p>
-
+<p><code>alignsamples</code> works with the <code>drEEMdataset</code> property <code>filelist</code> for the comparisons. It is strongly recommended to use the same sample names for different spectroscopic measurements and use filename tags to distinguish between the measurement types, e.g. "sample 01 - sample eem.csv", "sample 01 - blank eem.csv", "sample 01 - absorbance.csv". This might require you to manually copy the same blank to pair it with each sample. The tags would be used by the toolbox to identify the measurement type and will automatically be removed upon import. <code>alignsamples</code> can then be called directly and without issues.</p>
+<p>If the names between samples, blanks, and absorbance files differs prior to import, make sure to use a metadata table and import it to replace the diverging filenames with the matching ones. Take a look at the <a href="import_tutorial_02.html">complex data import tutorial</a> to learn how this can be done.</p>
 <blockquote>
 <p><strong><em>Note:</em></strong> If no common sample names between the datasets are found, the function will always return an error prior to assigning an output.</p>
 </blockquote>
-
-<p><details open>
-    <summary><b><code>[dsout1, __, dsoutN] = alignsamples(dsin1, __, dsinN)</code></b>
-    </summary>
- <a name="syntax1"></a></p>
-
+<details open>
+<summary>
+<b><code>[dsout1, __, dsoutN] = alignsamples(dsin1, __, dsinN)</code></b>
+</summary>
+<p><a name="syntax1"></a></p>
 <p>Match sample names across multiple datasets (<code>N≥2</code>) and remove the unmatched samples to ensure that the output datasets contain only the same samples in the same sequence. Number and order of the output should match the input. Console output will be provided as summary, for example:</p>
-
-<div><pre><code class="language-none">samples: removed 1 samples with the previous .i: 10
+<pre><code>samples: removed 1 samples with the previous .i: 10
 blanks: removed 1 samples with the previous .i: 10
-absorbance: No action necessary. All files between supplied datasets had same names.</code></pre></div>
-
-<p></details></p>
-
-<p><details open>
-    <summary><b><code>alignsamples(dsin1, __, dsinN)</code> - diagnostic mode</b>
-    </summary>
- <a name="syntax2"></a></p>
-
+absorbance: No action necessary. All files between supplied datasets had same names.</code></pre>
+</details>
+<details open>
+<summary>
+<b><code>alignsamples(dsin1, __, dsinN)</code> - diagnostic mode</b>
+</summary>
+<p><a name="syntax2"></a></p>
 <p>Runs the function in diagnostic mode. Without output arguments, the function will run as always, but no output arguments are assigned. Use this notation for testing. This gives the chance to fix issues with filenames. First, console output will be provided, followed by a table with more information to take action:</p>
-
-<div><pre><code class="language-none">samples: removed 1 samples with the previous .i: 10
+<pre><code>samples: removed 1 samples with the previous .i: 10
 blanks: removed 1 samples with the previous .i: 10
-absorbance: No action necessary. All files between supplied datasets had same names.</code></pre></div>
-
-<p>The uifigure table shows exactly where sample names matched and didn&#39;t match and in which dataset. For example:
-<img src="alignsamples_diagnostic.png" width="auto" height="auto" align="justify"/></p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
+absorbance: No action necessary. All files between supplied datasets had same names.</code></pre>
+<p>The uifigure table shows exactly where sample names matched and didn't match and in which dataset. For example: <img src="alignsamples_diagnostic.png" width="auto" height="auto" align="justify"/></p>
+</details>
+<h2 id="examples">Examples</h2>
 <p><code>alignsamples(samples,blanks,absorbance)</code></p>
-
 <p>Diagnose how many sample names match between the datasets. Can be run before the next example to troubleshoot issues.</p>
-
 <p><code>[samples,blanks,absorbance] = alignsamples(samples,blanks,absorbance)</code></p>
-
 <p>Perform the comparisons of sample names and delete the non-ubiquitous samples in each of the datasets.</p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>dsin1, __, dsinN</code>- datasets for comparisons</b></summary>
-    <i>drEEMdataset class</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>dsin1, __, dsinN</code>- datasets for comparisons</b>
+</summary>
+<p><i>drEEMdataset class</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
 </details>
 <!---
 <details>
-    <summary><b>`comment - descriptive text`</b></summary>
-    <i>text of the class string or char</i>
-     -->   </p>
-
-<p></details></p>
-
+<summary><b>`comment - descriptive text`</b></summary>
+<i>text of the class string or char</i>
+     -->
+</details>
 <!---
+
 ## Name-Value arguments
 -->
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dsout1, __, dsoutN</code> - datasets with same sample sequence</b></summary>
-    <i>drEEMdataset</i></p>
-
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dsout1, __, dsoutN</code> - datasets with same sample sequence</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dsout1)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>

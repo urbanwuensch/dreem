@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>changestatus</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,27 +370,17 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">changestatus</h1>
-
+<h1 id="changestatus">changestatus</h1>
 <p>Manually change the status of a <code>drEEMdataset</code> to reflect its current state</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><code>data=changestatus(data)</code></p>
-
-<h2 id="toc_2">Description</h2>
-
+<h2 id="description">Description</h2>
 <p>The <code>changestatus</code> function opens up a user interface that allows to change the status of the data in one or more of the available fields. The fields describe:</p>
-
 <ul>
 <li>spectral correction</li>
 <li>inner filter effect correction</li>
@@ -404,48 +390,34 @@ details:open > summary {
 <li>signal scaling</li>
 <li>absorbance unit</li>
 </ul>
-
 <blockquote>
 <p>The property <code>status</code> of <code>drEEMdataset</code> is a read-only property that can only be changed by methods of the toolbox. This includes <code>changestatus</code>, but also all other processing functions, such as <code>subtractblanks</code>.</p>
 </blockquote>
-
-<p>The function offers guidance on each aspect of the status. This can be accessed by pressing the &quot;?&quot; button next to the name of the status in the interface.</p>
-
-<h2 id="toc_3">Examples</h2>
-
+<p>The function offers guidance on each aspect of the status. This can be accessed by pressing the "?" button next to the name of the status in the interface.</p>
+<h2 id="examples">Examples</h2>
 <p><code>data=changestatus(data)</code></p>
-
-<p><code>changestatus</code> is a GUI tool. Calling the function will result in a uifigure and Matlab waits for the GUI to close. This is done by hitting the button &quot;save &amp; exit&quot;.</p>
-
-<p>The function offers guidance on each aspect of the status. This can be accessed by pressing the &quot;?&quot; button next to the name of the status in the interface.</p>
-
+<p><code>changestatus</code> is a GUI tool. Calling the function will result in a uifigure and Matlab waits for the GUI to close. This is done by hitting the button "save &amp; exit".</p>
+<p>The function offers guidance on each aspect of the status. This can be accessed by pressing the "?" button next to the name of the status in the interface.</p>
 <p><img src="changestatus_example.png" width="auto" height="auto" align="justify"/></p>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset in need of status update</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset in need of status update</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
 <!---
+
 ## Name-Value arguments
 -->
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with new status</b></summary>
-    <i>drEEMdataset</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>. 
-</details></p>
-
-
-
-
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with new status</b>
+</summary>
+<p><i>drEEMdataset</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.
+</details>
 </body>
-
 </html>

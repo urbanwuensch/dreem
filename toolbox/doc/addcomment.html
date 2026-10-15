@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>addcomment</title>
-
-
 <style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
@@ -374,89 +370,59 @@ details:open > summary {
   border-left-style: none;
 }
 
+
 </style>
-
-
 </head>
-
 <body>
-
 <p><img src="top right corner logo.png" width="100" height="auto" align="right"/></p>
-
-<h1 id="toc_0">addcomment</h1>
-
+<h1 id="addcomment">addcomment</h1>
 <p>Document an analysis process through comments.</p>
-
-<h2 id="toc_1">Syntax</h2>
-
+<h2 id="syntax">Syntax</h2>
 <p><a href="#s1"><code>dataout = addcomment(data,comment)</code></a></p>
-
-<p><a href="#s2"><code>dataout = addcomment(data,comment,&#39;newline&#39;)</code></a></p>
-
-<h2 id="toc_2">Description</h2>
-
-<p><details open>
-<summary><b>
-<code>dataout = addcomment(data,&#39;new comment here&#39;)</code> - add user comment to previous function call</b>
+<p><a href="#s2"><code>dataout = addcomment(data,comment,'newline')</code></a></p>
+<h2 id="description">Description</h2>
+<details open>
+<summary>
+<b> <code>dataout = addcomment(data,'new comment here')</code> - add user comment to previous function call</b>
 </summary>
-<a name="s1"></a> adds a comment to a drEEMdataset that describes an observation, justifies a decision, or documents any other kind of process. The comment field will be stored in the document&#39;s history and can be retrieved with <a href="viewhistory.html"><code>viewhistory</code></a> and <code>displayhistory</code> and will be exported with <a href="exportresults.html"><code>exportresults</code></a> and <a href="export2zip.html"><code>export2zip</code></a>. </p>
-
-<p>By default, the function assumes that a comment is being made on a previous operation, such as noise removal, a PARAFAC fit, or similar. The comment will thus be added to the most recent history entry (no new &quot;line&quot; will be added. This will look as follows:</p>
-
+<p><a name="s1"></a> adds a comment to a drEEMdataset that describes an observation, justifies a decision, or documents any other kind of process. The comment field will be stored in the document's history and can be retrieved with <a href="viewhistory.html"><code>viewhistory</code></a> and <code>displayhistory</code> and will be exported with <a href="exportresults.html"><code>exportresults</code></a> and <a href="export2zip.html"><code>export2zip</code></a>.</p>
+<p>By default, the function assumes that a comment is being made on a previous operation, such as noise removal, a PARAFAC fit, or similar. The comment will thus be added to the most recent history entry (no new "line" will be added. This will look as follows:</p>
 <p><img src="addcomment_inline.png" width="auto" height="auto" align="right"/></p>
-
-<p>As you can see above, the comment is added as a &quot;Comments by user&quot; in history entry number 2, i.e. it &quot;belongs&quot; to that function.</p>
-
-<p></details></p>
-
-<p><details open>
-<summary><b>
-<code>dataout = addcomment(data,&#39;new comment here&#39;,&#39;newline&#39;)</code> - add user comment as independent entry</b>
+<p>As you can see above, the comment is added as a "Comments by user" in history entry number 2, i.e. it "belongs" to that function.</p>
+</details>
+<details open>
+<summary>
+<b> <code>dataout = addcomment(data,'new comment here','newline')</code> - add user comment as independent entry</b>
 </summary>
- <a name="s2"></a> </p>
-
-<p>If you wish to make a comment independent of the last function call, use the <code>newline</code> attribute. </p>
-
+<p><a name="s2"></a></p>
+<p>If you wish to make a comment independent of the last function call, use the <code>newline</code> attribute.</p>
 <p><img src="addcomment_newline.png" width="auto" height="auto" align="right"/></p>
-
-<p>This will result in the comment being its own, independent entry in the dataset history. Above your comment shows up as an entry in &quot;details&quot;, not under comments by user.</p>
-
-<p></details></p>
-
-<h2 id="toc_3">Examples</h2>
-
-<div><pre><code class="language-none">samples=tbx.addcomment(samples,&#39;Smart thing to say here.&#39;)</code></pre></div>
-
-<h2 id="toc_4">Input arguments</h2>
-
-<p><details>
-    <summary><b><code>data</code> - dataset to add comment to</b></summary>
-    <i>drEEMdataset class</i></p>
-
-<p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>. 
-</details></p>
-
-<p><details open>
-    <summary><b><code>comment</code> - descriptive text</b></summary>
-    <i>text of the class string or char</i></p>
-
+<p>This will result in the comment being its own, independent entry in the dataset history. Above your comment shows up as an entry in "details", not under comments by user.</p>
+</details>
+<h2 id="examples">Examples</h2>
+<pre><code>samples=tbx.addcomment(samples,&#39;Smart thing to say here.&#39;)</code></pre>
+<h2 id="input-arguments">Input arguments</h2>
+<details>
+<summary>
+<b><code>data</code> - dataset to add comment to</b>
+</summary>
+<p><i>drEEMdataset class</i></p>
+A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(data)</code>.
+</details>
+<details open>
+<summary>
+<b><code>comment</code> - descriptive text</b>
+</summary>
+<p><i>text of the class string or char</i></p>
 <p>A text that describes some observation, a concern, a result, a course of action or anything else worthy of documenting.</p>
-
-<p></details></p>
-
-<h2 id="toc_5">Output arguments</h2>
-
-<p><details>
-    <summary><b><code>dataout</code> - dataset with new comment</b></summary>
-    <i>drEEMdataset</i></p>
-
+</details>
+<h2 id="output-arguments">Output arguments</h2>
+<details>
+<summary>
+<b><code>dataout</code> - dataset with new comment</b>
+</summary>
+<p><i>drEEMdataset</i></p>
 <p>A dataset of the class <code>drEEMdataset</code> that passes the validation function <code>tbx.validatedataset(dataout)</code>.</p>
-
-<p></details></p>
-
-
-
-
+</details>
 </body>
-
 </html>
