@@ -37,17 +37,14 @@ end
 
 % Run optionValidator again to return the result opmode
 opmode=optionValidator(option);
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    if matches(opmode,{'apply','reverse'})
-        nargoutchk(1,1)
-    else
-        if nargout>0
-            error('If you supply "help" as second input, no output should be assigned since the function runs in Diagnostics mode.')
-        end
+if matches(opmode,{'apply','reverse'})
+    nargoutchk(1,1)
+else
+    if nargout>0
+        error('If you supply "help" as second input, no output should be assigned since the function runs in Diagnostics mode.')
     end
-
 end
+
 %% Define some functions and stuff.
 tens2mat=@(x,sz1,sz2,sz3) reshape(x,sz1,sz2*sz3);
 
@@ -176,13 +173,6 @@ switch opmode
         error('Input to ''intensity'' (second input) not understood.')
 end
 
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',inputname(1), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-end
 
 end
 

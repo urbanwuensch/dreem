@@ -37,10 +37,7 @@ arguments
 end
 
 
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    nargoutchk(1,1)
-end
+nargoutchk(1,1)
 
 % This bit is doing the splitting
 switch splitType
@@ -92,13 +89,6 @@ idx=height(dataout.history)+1;
 dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename,['dataset split with split-type: "',char(splitType),'"'],options,dataout);
 
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',inputname(1), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-end
 
 
 end

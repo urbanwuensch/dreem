@@ -29,15 +29,12 @@ arguments
     options.quiet {mustBeNumericOrLogical} = false
     options.figurefile (1,:) {mustBeText} = "";
 end
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    if nargout>0
-        nargoutchk(1,3)
-    else
-        disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
-        options.plot=true;
-        options.details=true;
-    end
+if nargout>0
+    nargoutchk(1,3)
+else
+    disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
+    options.plot=true;
+    options.details=true;
 end
 Xname = 'X';
 if options.quiet
@@ -463,16 +460,8 @@ dataout.history(idx,1)=...
 dataout.validate(dataout);
 
 
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',char(inputname(1)), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-else
-    if nargout==0
-        clearvars dataout picklist
-    end
+if nargout==0
+    clearvars dataout picklist
 end
 
 end

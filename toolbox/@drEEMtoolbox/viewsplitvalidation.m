@@ -256,13 +256,6 @@ else
     error('Validation outcome scenario unaccounted for. This should not happen (contact developers)')
 end
 
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',char(inputname(1)), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-end
 
 end
 

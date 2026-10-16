@@ -68,10 +68,7 @@ options.constraints=char(options.constraints);
 options.initialization=char(options.initialization);
 options.toolbox=char(options.toolbox);
 
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    nargoutchk(1,1)
-end
+nargoutchk(1,1)
 
 if matches(options.toolbox,'parafac3w')
     if not(matches(options.constraints,'nonnegativity'))||not(matches(options.initialization,'random'))
@@ -308,13 +305,6 @@ if matches(mode,"fitsplits")
 end
 
 
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',inputname(1), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-end
 
 end
 

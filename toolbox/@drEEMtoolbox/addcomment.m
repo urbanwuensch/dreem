@@ -24,10 +24,7 @@ arguments
     newopt (1,:) {mustBeText,mustBeMember(newopt,["","newline"])} = string.empty
 end
 
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    nargoutchk(1,1)
-end
+nargoutchk(1,1)
 
 idx=height(data.history);
 dataout=data;
@@ -44,11 +41,6 @@ if isempty(newopt)
         dataout.history(idx).usercomment=string(comment);
     end
 
-    if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-        assignin("base",inputname(1),dataout);
-        disp(['<strong> "',inputname(1), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-        return
-    end
 
 else
     % new drEEMhistory entry

@@ -56,16 +56,14 @@ else
 end
 
 % Diagnostic mode feature
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    if nargout>0
-        nargoutchk(1,1)
-        diagnostic=false;
-    else
-        if not(silent)
-            disp('<strong>Diagnostic mode</strong> to test whether options work as intended.')
-        end
-        diagnostic=true;
+if nargout>0
+    nargoutchk(1,1)
+    diagnostic=false;
+else
+    if not(silent)
+        disp('<strong>Diagnostic mode</strong> to test whether options work as intended.')
     end
+    diagnostic=true;
 end
 
 % Find files & throw error when none are found

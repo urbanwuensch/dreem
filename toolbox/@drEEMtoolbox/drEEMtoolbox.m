@@ -177,35 +177,6 @@ classdef drEEMtoolbox < handle
 
     end
 
-    % These are toolbox internal, would just be confusing if visible
-    methods (Static = true, Hidden = true)
-        function methodEnd(dataout,name)
-            if drEEMtoolbox.OvrWrteUnless
-                assignin("base",dataout,name)
-            end
-        end
-
-        function scenario=outputscenario(n_in)
-
-            if n_in ~= 0 && not(drEEMtoolbox.options.OvrWrteUnless)
-                % User wants explicit assignments & toolbox agrees
-                scenario=categorical({'explicitOut'});
-            end
-            if drEEMtoolbox.options.OvrWrteUnless && n_in==0
-                % User wants workspace variable to be overwritten  & toolbox agrees
-                scenario=categorical({'implicitOut'});
-            end
-            if drEEMtoolbox.options.OvrWrteUnless && n_in~=0
-                % User wants explicit assignments but toolbox disagrees
-                scenario=categorical({'explicitOut'});
-            end
-            if not(drEEMtoolbox.options.OvrWrteUnless) && n_in==0
-                % Toolbox is set to make explicit assignments, but user didn't give output args
-                scenario=categorical({'explicitOut'});
-            end
-        end
-    end
-
     methods (Static = true , Access = public)
 
         %doc function
@@ -296,7 +267,6 @@ classdef drEEMtoolbox < handle
     methods (Hidden = true,Static = true)
         function out=defaultOptions
             out.plotByDefault = true;
-            out.OvrWrteUnless = false;
             out.uifig = true;
         end
         function versionRequires(debugging)

@@ -55,13 +55,10 @@ if not(isfield(data,datakey))
     end
 end
 
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    if nargout>0
-        nargoutchk(1,1)
-    else
-        disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
-    end
+if nargout>0
+    nargoutchk(1,1)
+else
+    disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
 end
 
 
@@ -236,14 +233,8 @@ dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename,"Metadata associated (look at data.metadata)",[],dataout);
 dataout.validate(dataout);
 
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',char(inputname(1)), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-else
-    if nargout==0
-        clearvars dataout
-    end
+if nargout==0
+    clearvars dataout
 end
 
 

@@ -40,10 +40,7 @@ catch ME
     error(['outSample: ',ME.message])
 end
 
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    nargoutchk(1,1)
-end
+nargoutchk(1,1)
 
 
 % Anonymous function, finds the clostest match to the provided wavelengths
@@ -102,13 +99,6 @@ idx=height(dataout.history)+1;
 dataout.history(idx,1)=...
     drEEMhistory.addEntry(mfilename,message,[],dataout);
 
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',inputname(1), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
-end
 
 f=drEEMdataset.modelsWithContent(dataout);
 if not(isempty(f))

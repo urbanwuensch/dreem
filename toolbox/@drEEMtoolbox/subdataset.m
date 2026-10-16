@@ -39,10 +39,7 @@ arguments
     options.outEm (1,:) {mustBeA(options.outEm,'logical'),outEmVal(data,options.outEm)} = false
     options.outEx (1,:) {mustBeA(options.outEx,'logical'),outExVal(data,options.outEx)} = false
 end
-% Experimental feature; overwrite workspace variable, needs no outputarg check
-if drEEMtoolbox.outputscenario(nargout)=="explicitOut"
-    nargoutchk(1,1)
-end
+nargoutchk(1,1)
 outSample=options.outSample;
 outEm=options.outEm;
 outEx=options.outEx;
@@ -101,13 +98,6 @@ end
 dataout.validate(dataout);
 if splitChange
     % disp('subdataset operation was also applied to split datasets!')
-end
-% Will only run if toolbox is set to overwrite workspace variable and user
-% didn't provide an output argument
-if drEEMtoolbox.outputscenario(nargout)=="implicitOut"
-    assignin("base",inputname(1),dataout);
-    disp(['<strong> "',inputname(1), '" processed. </strong> Since no output argument was provided, the workspace variable was overwritten.'])
-    return
 end
 
 end
