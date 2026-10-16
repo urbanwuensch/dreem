@@ -110,8 +110,12 @@ for j=1:numel(varargin)
         end
     end
     
-    if not(isempty(deleted))
+    % Models and splits refer to the old sample order: reset them if samples
+    % were removed or reordered
+    reordered = ~isequal(idx(:), (1:varargin{j}.nSample)');
+    if not(isempty(deleted)) || reordered
         varargout{j}.models=drEEMmodel;
+        varargout{j}.split=drEEMdataset.empty;
     end
 
     varargout{j}.nSample=varargout{j}.nSample-numel(deleted);

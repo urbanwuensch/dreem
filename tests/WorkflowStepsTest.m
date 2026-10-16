@@ -42,6 +42,24 @@ classdef WorkflowStepsTest < DreemTestCase
             tc.verifyError(@() alignBoth(a,b), ?MException)
         end
 
+        function alignResetsModelsWhenOrderChanges(tc)
+            d = named(["S03","S01","S02"]);           % not in alphabetical order
+            d = drEEMtoolbox.fitparafac(d,"fitoverall",f=1,starts=1, ...
+                parallelization=false,consoleoutput="none");
+            tc.assumeNotEmpty(drEEMdataset.modelsWithContent(d), "no model to reset")
+            [d2,~] = drEEMtoolbox.alignsamples(d,d);
+            tc.verifyEqual(d2.filelist, {'S01';'S02';'S03'})
+            tc.verifyEmpty(drEEMdataset.modelsWithContent(d2), "scores no longer match the reordered samples")
+        end
+
+        function alignKeepsModelsWhenNothingChanges(tc)
+            d = named(["S01","S02","S03"]);           % already in order
+            d = drEEMtoolbox.fitparafac(d,"fitoverall",f=1,starts=1, ...
+                parallelization=false,consoleoutput="none");
+            [d2,~] = drEEMtoolbox.alignsamples(d,d);
+            tc.verifyEqual(drEEMdataset.modelsWithContent(d2), drEEMdataset.modelsWithContent(d))
+        end
+
         %% associatemetadata
         function metadataMatchesByNameIgnoringCase(tc)
             d = drEEMtoolbox.associatemetadata(named(["S01","S02","S03"]), metaTable(), "sampleId");
