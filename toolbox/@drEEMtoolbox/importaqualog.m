@@ -48,8 +48,13 @@ if options.toolreset
     elseif isunix&&not(ismac)
         toolname='aqualog2nc-linux-x64';
     end
-    toolpath = char(fullfile(userpath,toolname));
-
+    % userpath can be empty (some Linux installs, userpath('clear')); fall back to prefdir
+    base = userpath;
+    if isempty(base) || ~isfolder(base)
+        base = prefdir;
+    end
+    toolpath = char(fullfile(base,toolname));
+    
     if exist(toolpath,"file")
         delete(toolpath)
         disp([toolname,' successfully deleted. This should trigger a re-download shortly'])

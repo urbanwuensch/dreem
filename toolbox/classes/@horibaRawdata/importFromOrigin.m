@@ -12,6 +12,11 @@ folder=char(folder);
 
 if ismac&&isunix
     platform='mac';
+    if ismac && ~strcmp(computer('arch'),'maca64')
+        error('drEEM:unsupportedPlatform', ['aqualog2nc is only available for Apple silicon Macs. ' ...
+            'Export your data from Origin as text files and use importeems/importabsorbance instead.'])
+    end
+
 elseif ispc
     platform='windows';
 elseif isunix&&not(ismac)
@@ -27,23 +32,38 @@ switch platform
         toolname='aqualog2nc-linux-x64';
 end
 
-toolpath = char(fullfile(userpath,toolname));
-ncfile=char(fullfile(folder,'NetCDF_rawdata.nc'));
+base = userpath;
+if isempty(base) || ~isfolder(base)
+    base = prefdir;
+end
+toolpath = char(fullfile(base,toolname));
 
+ncfile=char(fullfile(folder,'NetCDF_rawdata.nc'));
 if isfile(ncfile)
     delete(ncfile)
 end
 
 if not(isfile(toolpath))
     disp('Downloading OS-specific version of aqualog2nc...')
+    try
     zenodo=webread('https://zenodo.org/api/records/21928517/versions/latest',ContentType='json');
     for j=1:numel(zenodo.files)
         assetname{j}=zenodo.files(j).links.self; %#ok<AGROW>
     end
-    toolindex=contains(assetname,toolname);
-    url=zenodo.files(toolindex).links.self;
 
-    websave(toolpath,url);
+    files = zenodo.files;
+    if iscell(files), files = [files{:}]; end
+    hit = files(strcmp(string({files.key}), toolname));
+    assert(isscalar(hit), 'file %s not found in the aqualog2nc record', toolname)
+    websave(toolpath, hit.links.self);
+
+    catch ME
+        if isfile(toolpath), delete(toolpath), end   % no half-downloaded binary
+        error('drEEM:aqualog2ncDownload', ['Could not download aqualog2nc (%s).\n' ...
+            'Check the internet connection, or download "%s" from ' ...
+            'https://doi.org/10.5281/zenodo.21928517 and save it as\n  %s'], ...
+            ME.message, toolname, toolpath)
+    end
     disp('Success')
 else
     disp('Found aqualog2nc in your drEEM toolbox. Continuing...')
