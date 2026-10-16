@@ -6,6 +6,9 @@ function dataout = mergemeasurements(a,b,measurement,mode)
 % Samples are matched by name (.filelist). Samples in "b" without a match
 % in "a" are ignored, but all samples in "a" have to be matched to "b".
 % The axis information (e.g. .absWave) and the related status entries are copied from "b".
+% Transferring fluorescence deletes existing models and splits in "a" and takes the
+% blanks (.XBlank) from "b". Transferring absorbance is refused if the toolbox has
+% already corrected inner-filter effects in "a" (merge before ifecorrection).
 %
 % <strong>Note:</strong> The history of "b" is NOT transferred. Only the merge itself is
 % recorded in the history of "a". Any processing applied to "b" beforehand (e.g.

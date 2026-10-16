@@ -24,6 +24,10 @@ Samples are matched by their names (`.filelist`), not by their position in the d
 
 Together with the measurement, the function copies its axis information (e.g. `.absWave`) and the related entries of the dataset status (e.g. `absorbanceUnit`) from `b` to `a`.
 
+> ***Transferring `"fluorescence"` deletes existing PARAFAC/PCA models and splits in `a`, because they no longer match the new EEMs. Blank EEMs (`.XBlank`) are taken from `b`, or removed from `a` if `b` has none.***
+
+> ***Transferring `"absorbance"` stops with an error if the toolbox has already corrected inner-filter effects in `a` (`ifecorrection`). The corrected EEMs would no longer match the new absorbance. Merge absorbance before `ifecorrection`.***
+
 > ***Use `alignsamples` before merging. It reports and removes samples that are not present in all datasets***.
 
 > ***The history of `b` is not transferred. Only the merge itself is recorded in the history of `a`. Any processing applied to `b` beforehand (e.g. `processabsorbance`) will not appear in the history of the merged dataset. To keep a complete record, merge first and process afterwards, or document the processing of `b` with `addcomment` or `export2zip` before merging.***
