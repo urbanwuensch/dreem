@@ -46,16 +46,13 @@ end
 if not(isfile(toolpath))
     disp('Downloading OS-specific version of aqualog2nc...')
     try
-    zenodo=webread('https://zenodo.org/api/records/21928517/versions/latest',ContentType='json');
-    for j=1:numel(zenodo.files)
-        assetname{j}=zenodo.files(j).links.self; %#ok<AGROW>
-    end
+        zenodo=webread('https://zenodo.org/api/records/21928517/versions/latest',ContentType='json');
 
-    files = zenodo.files;
-    if iscell(files), files = [files{:}]; end
-    hit = files(strcmp(string({files.key}), toolname));
-    assert(isscalar(hit), 'file %s not found in the aqualog2nc record', toolname)
-    websave(toolpath, hit.links.self);
+        files = zenodo.files;
+        if iscell(files), files = [files{:}]; end
+        hit = files(strcmp(string({files.key}), toolname));
+        assert(isscalar(hit), 'file %s not found in the aqualog2nc record', toolname)
+        websave(toolpath, hit.links.self);
 
     catch ME
         if isfile(toolpath), delete(toolpath), end   % no half-downloaded binary
@@ -66,7 +63,7 @@ if not(isfile(toolpath))
     end
     disp('Success')
 else
-    disp('Found aqualog2nc in your drEEM toolbox. Continuing...')
+    disp('Found aqualog2nc on your path. Continuing...')
 end
 
 

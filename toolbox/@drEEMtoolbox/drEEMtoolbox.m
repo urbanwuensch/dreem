@@ -303,8 +303,9 @@ classdef drEEMtoolbox < handle
             arguments
                 debugging (1,:) {mustBeA(debugging,'logical')} = false
             end
-            lastcheck=getenv('drEEM ML version check');
-            if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
+            lastcheck=getpref('drEEM','MATLABversion',NaT);
+            check = isnat(lastcheck) || lastcheck < datetime('today');
+            if check
                 if isMATLABReleaseOlderThan(drEEMtoolbox.requiredVersion)
                     error(['You need Matlab ',drEEMtoolbox.requiredVersion,' or newer to use this version of drEEM.'])
                 end
@@ -319,7 +320,7 @@ classdef drEEMtoolbox < handle
                 else
                     warning(['Missing toolbox(es):',tbs{~isthere},'. Some toolbox functionality will use a fallback, but everything will work.'])
                 end
-                setenv('drEEM ML version check',char(datetime("today"))),if debugging,disp('setenv executed (ML version check + addon tbxs)'),end
+                setpref('drEEM','MATLABversion',datetime('today')),if debugging,disp('setpref executed (ML version check + addon tbxs)'),end
             else
                 % All good, nothing to do.
             end
@@ -348,22 +349,35 @@ classdef drEEMtoolbox < handle
                 throwAsCaller(MException("drEEM:versionConflict",message))
             end
         end
+        
+        function updatedreem
+            url=drEEMtoolbox.updatecheck;
+            drEEMtoolbox.interactiveupdate(url);
 
-        function updatedreem(directory,debugging,existingversion,onlineversion)
-            arguments
+        end
+
+        function url=updatecheck(directory,debugging,existingversion,onlineversion)
+            arguments (Input)
                 directory (1,:) {mustBeText} = 'https://zenodo.org/api/records/17182160/versions/latest';
                 debugging (1,:) {mustBeA(debugging,'logical')} = false
                 existingversion (1,:) {mustBeNumeric} = [];
                 onlineversion (1,:) {mustBeNumeric} = [];
             end
 
-            % Has check already been done today? Trying to minimize delays
-            lastcheck=getenv('drEEM update checked');
-            if datetime(lastcheck)<datetime('today')||isempty(lastcheck)
-                check=true;
+            arguments (Output)
+                url (1,:) {mustBeText}
+            end
+
+            url='';
+
+            % Has check already been done today? (stored across sessions)
+            lastcheck = getpref('drEEM','lastUpdateCheck',NaT);
+            check = isnat(lastcheck) || lastcheck < datetime('today');
+            if debugging, disp(['check = ',char(string(check))]), end
+
+            if check
                 if debugging,disp('check = true'),end
             else
-                check=false;
                 if debugging,disp('check = false'),end
             end
 
@@ -378,7 +392,7 @@ classdef drEEMtoolbox < handle
                 vhist=webread(directory,options);
 
             online=table;
-            online.Version=char(vhist.metadata.version);
+            online.Version=regexprep(char(vhist.metadata.version),'^[vV]','');
 
             files = vhist.files;
             if iscell(files)
@@ -399,13 +413,13 @@ classdef drEEMtoolbox < handle
             assert(~any(isnan([online.Parts existing.Parts])),'drEEM:update', ...
                 'version numbers not understood: online "%s", installed "%s"',online.Version,existing.Version)
             catch ME
-                setenv('drEEM update checked',char(datetime("today")))
+                setpref('drEEM','lastUpdateCheck',datetime('today'))
                 if debugging,disp(['update check skipped: ',ME.message]),end
                 return
             end
             if debugging
-                existing.Parts=existingversion;
-                online.Parts=onlineversion;
+                if ~isempty(existingversion), existing.Parts=existingversion; end
+                if ~isempty(onlineversion),   online.Parts=onlineversion;     end
             end
 
             % What is the max number of version parts?
@@ -438,6 +452,7 @@ classdef drEEMtoolbox < handle
                         disp(['online:   ',num2str(online.Parts)]),disp(['existing: ',num2str(existing.Parts)])
                         disp('<strong>Online version out of date?</strong> Either you are a developer, or something is wrong. Returning...')
                     end
+                    setpref('drEEM','lastUpdateCheck',datetime('today'))
                     return
                 elseif online.Parts(j) == existing.Parts(j)
                     update = false;
@@ -449,37 +464,41 @@ classdef drEEMtoolbox < handle
                 url=online.url;
             else
                 url='';
+                setpref('drEEM','lastUpdateCheck',datetime('today'))
+                disp('<strong>Using the latest version of the drEEM toolbox.</strong>')
+            end            
+        end
+
+
+        function interactiveupdate(url,debugging)
+            arguments (Input)
+                url (1,:) {mustBeText}
+                debugging (1,:) {mustBeA(debugging,'logical')} = false
             end
-
-            clearvars -except url directory debugging
-
             if not(isempty(url))
                 if debugging,disp('update execution'),end
                 answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
                     ,'Update Notice','Update now','Open File exchange','No','Update now');
             else
-                setenv('drEEM update checked',char(datetime("today")))
-                disp('<strong>Using the latest version of the drEEM toolbox.</strong>')
                 return
             end
 
             switch answer
                 case 'Open File exchange'
                     web("https://mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
-                    setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                 case 'Update now'
-                    % Dissect the URL and take the last bit (the file)
-
                     if contains(url,'.mltbx')
                         if debugging,disp('attempt install'),end
-                        disp('<strong>Downloading...</strong> (approx 100MB, might take a while)')
+                        disp('<strong>Downloading...</strong> (approx 50MB, might take a minute)')
                         try
-                            installfile=tempname;
+                            installfile=[tempname,'.mltbx'];
                             websave(installfile, url);
                             disp('<strong>Installing...</strong>')
-                            matlab.addons.toolbox.installToolbox(tempname);
+                            matlab.addons.toolbox.installToolbox(installfile);
                             delete(installfile)
+                            disp('<strong>drEEM updated.</strong> Please restart MATLAB to use the new version.')
                         catch
+                            if isfile(installfile), delete(installfile), end
                             warning('Install failed, redirecting to File Exchange instead')
                             pause(2)
                             web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
@@ -490,12 +509,12 @@ classdef drEEMtoolbox < handle
                         web("https://se.mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                     end
                 case 'No'
-                    setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                     disp('<strong>Update skipped</strong>. Will check again tomorrow...')
                 otherwise
-                    setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                     disp('<strong>Update skipped</strong>. Will check again tomorrow...')
             end
+            setpref('drEEM','lastUpdateCheck',datetime('today')),if debugging,disp('setpref executed (update check)'),end
+
 
         end
 
