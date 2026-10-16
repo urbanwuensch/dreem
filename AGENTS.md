@@ -25,6 +25,7 @@ data, centred on PARAFAC. Maintainer: Urban Wünsch (urban.wunsch@chalmers.se).
 | `apps_mlapp/` | App Designer sources (`.mlapp`) for the GUIs in `+dreemgui` |
 | `tests/` | `matlab.unittest` test suite (see Testing) |
 | `tests/reference/` | Stored fingerprints for the processing regression tests |
+| `tests/testdata/` | Real instrument files for import tests (Aqualog text export, Origin projects) |
 | `buildfile.m` | Build plan: `check`, `test`, `docs`, `tutorials`, `package` |
 | `buildUtilities/doc_template.html` | pandoc page template for the `docs` task |
 | `matlab.toml` | MATLAB project + packaging config (version, folders, output file name) |
@@ -64,6 +65,11 @@ code change usually means the change affects results further down the processing
 | `ExportTest` | `exportresults`, `export2zip`, `export2openfluor`: files complete, exported values equal the dataset |
 | `TutorialDataTest` | shipped tutorial `.mat` files validate; the processing chain reproduces `tutorial_01_processed.mat` |
 | `UpdateCheckTest` | `updatecheck` never errors (offline, invalid record, unexpected response), decides correctly for newer/same/older versions, and the published Zenodo version has a `.mltbx` and a plain version number |
+| `DiagnosticPlotTest` | diagnostic mode and `plot=true` of the processing methods run and open figures (smoke test) |
+| `WorkflowStepsTest` | `alignsamples`, `associatemetadata`, `addcomment` |
+| `ViewerTest` | all `view*` apps open and save their figure under the requested name |
+| `RealDataImportTest` | real instrument files in `tests/testdata`: Aqualog text export (dataset 2) through the tutorial chain incl. PARAFAC; Origin project via `importaqualog` (dataset 1) |
+| `OriginVsTextImportTest` | the same measurements as `.opj` and as Aqualog text export give identical EEMs, blanks and absorbance (dataset 3) |
 
 Writing tests:
 - Inherit from `tests/DreemTestCase.m`. It checks that `drEEMtoolbox` resolves to this
