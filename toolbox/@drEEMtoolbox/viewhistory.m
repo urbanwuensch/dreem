@@ -31,7 +31,7 @@ if not(isempty(figurefile))
     pause(3)
     try
         fig=dreemgui.extractUIfigure(app);
-        dreemgui.saveAfterFunctionCall(fig,'test.png')
+        dreemgui.saveAfterFunctionCall(fig,figurefile)
     catch ME
         throwAsCaller(ME)
     end
