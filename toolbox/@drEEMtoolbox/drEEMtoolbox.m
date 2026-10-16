@@ -376,12 +376,6 @@ classdef drEEMtoolbox < handle
                 options.Timeout=5;
                 options.ContentType="json";
                 vhist=webread(directory,options);
-            catch
-                setenv('drEEM update checked',char(datetime("today")))
-                if debugging,disp('version document download failed.'),end
-                if debugging,disp('setenv=true'),end
-                return
-            end
 
             online=table;
             online.Version=char(vhist.metadata.version);
@@ -402,7 +396,13 @@ classdef drEEMtoolbox < handle
             % digest version numbers into parts
             online.Parts=cellfun(@(x) str2double(x),strsplit(online.Version,'.'));
             existing.Parts=cellfun(@(x) str2double(x),strsplit(existing.Version,'.'));
-
+            assert(~any(isnan([online.Parts existing.Parts])),'drEEM:update', ...
+                'version numbers not understood: online "%s", installed "%s"',online.Version,existing.Version)
+            catch ME
+                setenv('drEEM update checked',char(datetime("today")))
+                if debugging,disp(['update check skipped: ',ME.message]),end
+                return
+            end
             if debugging
                 existing.Parts=existingversion;
                 online.Parts=onlineversion;
@@ -468,18 +468,17 @@ classdef drEEMtoolbox < handle
                     web("https://mathworks.com/matlabcentral/fileexchange/162526-dreem-toolbox/")
                     setenv('drEEM update checked',char(datetime("today"))),if debugging,disp('setenv executed (update check)'),end
                 case 'Update now'
-                    % Kick off the ? parts of the URL
-                    digested=strsplit(url,'?');
-                    % Disect the URL and take the last bit (the file)
-                    digested=strsplit(digested{1},'/');
-                    if contains(digested{end},'.mltbx')
+                    % Dissect the URL and take the last bit (the file)
+
+                    if contains(url,'.mltbx')
                         if debugging,disp('attempt install'),end
                         disp('<strong>Downloading...</strong> (approx 100MB, might take a while)')
                         try
-                            websave(digested{end}, url);
+                            installfile=tempname;
+                            websave(installfile, url);
                             disp('<strong>Installing...</strong>')
-                            matlab.addons.toolbox.installToolbox(digested{end});
-                            delete(digested{end})
+                            matlab.addons.toolbox.installToolbox(tempname);
+                            delete(installfile)
                         catch
                             warning('Install failed, redirecting to File Exchange instead')
                             pause(2)
