@@ -231,7 +231,7 @@ writetable(scoretable,filename,"FileType","spreadsheet",...
 
 if matches(data.models(f).modelName,'PARAFAC')
     load=table;
-    load.sample=data.Ex;
+    load.Excitation=data.Ex;
     for j=1:size(FMax,2)
         load.(['C',num2str(j)])=loads{3}(:,j);
     end
@@ -239,7 +239,7 @@ if matches(data.models(f).modelName,'PARAFAC')
         "WriteMode","overwritesheet","Sheet",[num2str(f),'C ex loadings'])
     
     load=table;
-    load.sample=data.Em;
+    load.Emission=data.Em;
     for j=1:size(FMax,2)
         load.(['C',num2str(j)])=loads{2}(:,j);
     end
