@@ -530,13 +530,21 @@ classdef drEEMtoolbox < handle
                 action (1,1) string {mustBeMember(action,["show","install"])} = "show"
             end
             f = fullfile(drEEMtoolbox.rootfolder,"AGENTS.md");
+            f = fullfile(drEEMtoolbox.rootfolder,"AGENTS.md");
             if action == "install"
-                copyfile(f, fullfile(pwd,"AGENTS.md"));
-                fprintf('Copied the drEEM agent guide to %s\n', fullfile(pwd,"AGENTS.md"));
+                targets = fullfile(pwd,["AGENTS.md","CLAUDE.md"]);
+                existing = targets(isfile(targets));
+                if ~isempty(existing)
+                    error('drEEM:agentguideExists', ['%s already exists and was not changed.\n' ...
+                        'Add a line pointing to the drEEM guide to your own file instead:\n' ...
+                        '  Before using the drEEM toolbox, read %s'], strjoin(existing,", "), f)
+                end
+                copyfile(f, targets(1));
+                writelines("@AGENTS.md", targets(2));
+                fprintf('Copied the drEEM agent guide to %s (and a CLAUDE.md pointing to it)\n', pwd);
             else
                 type(f)
             end
-        end
     end
 
 end
