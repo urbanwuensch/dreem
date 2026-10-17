@@ -61,7 +61,6 @@ display-name = "drEEM toolbox"
 summary = "Processing and analysis of ultraviolet-visible absorbance and fluorescence spectra."
 package-root = "toolbox"
 version = "2.26.10"
-getting-started-file = "toolbox/doc/GettingStarted.mlx"
 id = "8d87ad7f-ac6a-4500-af57-5e1bc1739a2b"
 lastAccessed = "1791292611155"
 
