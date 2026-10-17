@@ -34,12 +34,16 @@ if nargout>0
 else
     disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
     options.plot=true;
-    options.details=true;
+    options.details=drEEMtoolbox.isinteractive; % stepping through samples needs a person
 end
 Xname = 'X';
 if options.quiet
     options.plot = false;
     options.details = false;
+end
+if options.details
+    drEEMtoolbox.requireinteractive("pickpeaks with details=true", ...
+        "keep details=false and use plot=true, figurefile=""peaks.png"".")
 end
 
 plt = options.plot;

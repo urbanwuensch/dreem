@@ -78,6 +78,30 @@ classdef drEEMtoolbox < handle
 
         end
 
+        function tf = isinteractive(force)
+            % true if a person can answer dialogs and close windows. In "matlab -batch"
+            % (scripts run by agents, CI) uiwait/waitfor would wait forever.
+            % isinteractive(false) simulates batch mode (tests), isinteractive([]) resets.
+            persistent forced
+            if nargin
+                forced = force;
+            end
+            if isempty(forced)
+                tf = ~batchStartupOptionUsed;
+            else
+                tf = forced;
+            end
+        end
+
+        function requireinteractive(what,alternative)
+            % Error (instead of hanging) if a method is about to wait for a person
+            if ~drEEMtoolbox.isinteractive
+                throwAsCaller(MException("drEEM:needsInteractiveSession", ...
+                    "%s waits for a person to close a window, which never happens in " + ...
+                    "batch mode (matlab -batch). Instead: %s", what, alternative))
+            end
+        end
+
         function openWritableDoc(relPath)
             arguments
                 relPath (1,:) char = 'doc/GettingStarted.m'
@@ -460,6 +484,10 @@ classdef drEEMtoolbox < handle
             end
             if not(isempty(url))
                 if debugging,disp('update execution'),end
+                if ~drEEMtoolbox.isinteractive
+                    disp('<strong>A newer version of the drEEM toolbox is available:</strong> run tbx = drEEMtoolbox in an interactive MATLAB session to update.')
+                    return
+                end
                 answer = questdlg('Your version of the drEEM toolbox is outdated. Would you like to update?' ...
                     ,'Update Notice','Update now','Open File exchange','No','Update now');
             else

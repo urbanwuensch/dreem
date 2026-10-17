@@ -47,6 +47,8 @@ end
 
 % Scenario: User wants GUI for decision support
 if isa(data,"drEEMdataset")&&not(isa(option,"handlescatterOptions"))
+    drEEMtoolbox.requireinteractive("handlescatter without options (GUI)", ...
+        "pass a handlescatterOptions object with plot=false, e.g. opt = handlescatterOptions; opt.plot = false; samples = tbx.handlescatter(samples,opt);")
     % Start app with names
     handle=dreemgui.viewscatter_gui(data);
     uialert(handle.UIFigure, ...
@@ -74,6 +76,10 @@ if nargout>0
 else
     disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
     options.plot=true;
+end
+if options.plot
+    drEEMtoolbox.requireinteractive("handlescatter with plot=true (and diagnostic mode)", ...
+        "assign the output with opt.plot = false and inspect the result with tbx.viewscatter(samples,figurefile=""scatter.png"").")
 end
 %% Check user input
 if ischar(options.samples)||isstring(options.samples)

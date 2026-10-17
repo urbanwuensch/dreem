@@ -40,8 +40,12 @@ if nargout>0
 else
     disp('<strong>Diagnostic mode</strong>, no output will be assigned (no variable was specified).')
     diagnosticMode=true;
-    options.details=true;
+    options.details=drEEMtoolbox.isinteractive; % stepping through samples needs a person
     options.plot=true;
+end
+if options.details
+    drEEMtoolbox.requireinteractive("rmspikes with details=true", ...
+        "keep details=false and use plot=true, figurefile=""spikes.png"".")
 end
 %% Input parsing
 Xname = 'X';

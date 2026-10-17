@@ -168,6 +168,8 @@ dataout.validate(dataout);
 %%%%% IMPLEMENT SPLITS!!!!
 % User needs to tell the toolbox what the status of the dataset is.
 if nargin<3
+    drEEMtoolbox.requireinteractive("upgradedataset without a status (opens the status dialog)", ...
+        "pass the status as third argument: tbx.upgradedataset(old,{},drEEMstatus(...)).")
     handle=dreemgui.setstatus_dreem(dataout,'data');
     waitfor(handle,"finishedHere",true);
     try

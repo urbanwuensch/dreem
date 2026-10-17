@@ -19,6 +19,8 @@ function dataout = changestatus(data)
 arguments
     data (1,1)  {mustBeA(data,"drEEMdataset"),drEEMdataset.validate(data)}
 end
+    drEEMtoolbox.requireinteractive("changestatus (opens the status dialog)", ...
+        "declare the status at import with drEEMstatus(...), or ask the user to run changestatus.")
     % Get input name
     x_name = inputname(1);
     

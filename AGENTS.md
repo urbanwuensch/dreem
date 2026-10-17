@@ -76,6 +76,7 @@ code change usually means the change affects results further down the processing
 | `TutorialDataTest` | shipped tutorial `.mat` files validate; the processing chain reproduces `tutorial_01_processed.mat` |
 | `UpdateCheckTest` | `updatecheck` never errors (offline, invalid record, unexpected response), decides correctly for newer/same/older versions, and the published Zenodo version has a `.mltbx` and a plain version number |
 | `DiagnosticPlotTest` | diagnostic mode and `plot=true` of the processing methods run and open figures (smoke test) |
+| `BatchModeTest` | with batch mode simulated (`drEEMtoolbox.isinteractive(false)`), calls that wait for a person raise `drEEM:needsInteractiveSession` and diagnostic modes return. New `uiwait`/`waitfor`/dialog calls need a `drEEMtoolbox.requireinteractive` guard and a test here |
 | `WorkflowStepsTest` | `alignsamples`, `associatemetadata`, `addcomment` |
 | `ViewerTest` | all `view*` apps open and save their figure under the requested name |
 | `RealDataImportTest` | real instrument files in `tests/testdata`: Aqualog text export (dataset 2) through the tutorial chain incl. PARAFAC; Origin project via `importaqualog` (dataset 1) |

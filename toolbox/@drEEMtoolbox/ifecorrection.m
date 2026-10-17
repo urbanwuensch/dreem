@@ -45,7 +45,7 @@ exout=logical(double(dataout.Ex<AbsRange(1))+ double(dataout.Ex>AbsRange(2)));
 % Make sure that the right information is given to the user
 message='Abs-based IFE correction applied. ';
 if any(emout)||any(exout)
-    message=[message,'CDOM and FDOM coverage different (subdataset applied). '];
+    message=[message,'CDOM and FDOM coverage different (subdataset applied). You may want to use processabsorbance with the extrapolate=true option to avoid this, particularly if max(.absWave) < max(.Em)'];
 end
 % Remove wavelengths not covered by absorbance from DS
 dataout=drEEMtoolbox.subdataset(dataout,outEm=emout,outEx=exout);

@@ -224,6 +224,8 @@ if not(diagnostic)
     call_gui=any(contains(statusentries,"unknown"));
 
     if call_gui
+        drEEMtoolbox.requireinteractive("the status dialog of importeems (status contains unknown entries)", ...
+            "pass a complete drEEMstatus at import, e.g. st = drEEMstatus('spectralCorrection','applied by instrument software',...); see help drEEMstatus.")
         handle=dreemgui.setstatus_dreem(data,'data',options.changeStatusMessage);
         options=rmfield(options,'changeStatusMessage');
         waitfor(handle,"finishedHere",true);
