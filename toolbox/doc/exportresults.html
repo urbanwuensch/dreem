@@ -380,10 +380,64 @@ details:open > summary {
 <h2 id="syntax">Syntax</h2>
 <p><code>exportresults(data, f, filename)</code></p>
 <h2 id="description">Description</h2>
-<p>The <code>exportresults</code> function takes a drEEMdataset object, <code>data</code>, a <code>filename</code>, and a PARAFAC model index, <code>f</code>, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indices, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the <code>data</code> and organizes the data into several sheets within the spreadsheet.</p>
+<p>The <code>exportresults</code> function takes a drEEMdataset object <code>data</code>, a model index <code>f</code> and a <code>filename</code>, and exports relevant data and results, including history, status, scatter treatment, Coble peaks and indices, chosen parafac model overview, fluorescence maxima of samples, and excitation and emission loadings, to an Excel file. The function ensures the specified PARAFAC / PCA model exists within the <code>data</code> and organizes the data into several sheets within the spreadsheet.</p>
 <blockquote>
 <p><strong><em>Note:</em></strong> The function deletes any existing file with the same name before writing the new data.</p>
 </blockquote>
+<blockquote>
+<p><strong><em>Note:</em></strong> If the dataset was scaled with <code>scalesamples</code>, the scaling is reversed before export, so all exported intensities and Fmax values are in the original units.</p>
+</blockquote>
+<p>The spreadsheet contains these sheets:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Sheet</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataset history</code></td>
+<td>all processing steps</td>
+</tr>
+<tr>
+<td><code>dataset status</code></td>
+<td>processing status</td>
+</tr>
+<tr>
+<td><code>scatter treatment</code></td>
+<td>scatter removal settings</td>
+</tr>
+<tr>
+<td><code>Peaks &amp; indicies</code></td>
+<td>fluorescence peaks, indices and CDOM slopes (<code>.opticalMetadata</code>)</td>
+</tr>
+<tr>
+<td><code>PARAFAC model overview</code> / <code>PCA model overview</code></td>
+<td>fit statistics of the models</td>
+</tr>
+<tr>
+<td><code>Split-validation approach</code></td>
+<td>how the splits were made (only if splits exist)</td>
+</tr>
+<tr>
+<td><code>&lt;f&gt;C Fl. max.</code></td>
+<td>sample names and Fmax of each component</td>
+</tr>
+<tr>
+<td><code>&lt;f&gt;C ex loadings</code>, <code>&lt;f&gt;C em loadings</code></td>
+<td>PARAFAC: <code>Excitation</code> / <code>Emission</code> wavelengths, then one column per component</td>
+</tr>
+<tr>
+<td><code>PC&lt;n&gt; re-folded loadings</code></td>
+<td>PCA: loadings of component n as an excitation-emission matrix</td>
+</tr>
+</tbody>
+</table>
 <h2 id="examples">Examples</h2>
 <p><code>exportresults(data, 5, 'mymodel.xlsx')</code></p>
 <p>Export the 5-component model from <code>data</code> to Excel spreadsheet <code>mymodel.xlsx</code>.</p>
@@ -407,7 +461,10 @@ A dataset of the class <code>drEEMdataset</code> that passes the validation func
 <b><code>filename</code> - name of export spreadsheet</b>
 </summary>
 <p><i>char | string</i></p>
-<p>The name of the output file. It should be a text and will be saved with a <code>.xlsx</code> extension. Note: Any extension at the end of the <code>filename</code> will be changed to <code>.xlsx</code>. If none is provided, it will be added.</p>
+<p>The name of the output file. It will be saved with a <code>.xlsx</code> extension. Note: Any extension at the end of the <code>filename</code> will be changed to <code>.xlsx</code>. If none is provided, it will be added.</p>
+<blockquote>
+<p><strong><em>Note:</em></strong> Provide a file name only, not a path. The file is always written to the current folder (<code>pwd</code>); change to the target folder with <code>cd</code> before exporting. The name ends at the first dot: <code>'model.v2'</code> is saved as <code>model.xlsx</code>, and a full path such as <code>'C:\results\model.xlsx'</code> does not work.</p>
+</blockquote>
 </details>
 <!---
 

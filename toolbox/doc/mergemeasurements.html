@@ -389,6 +389,12 @@ details:open > summary {
 </ul>
 <p>Together with the measurement, the function copies its axis information (e.g. <code>.absWave</code>) and the related entries of the dataset status (e.g. <code>absorbanceUnit</code>) from <code>b</code> to <code>a</code>.</p>
 <blockquote>
+<p><strong><em>Transferring <code>"fluorescence"</code> deletes existing PARAFAC/PCA models and splits in <code>a</code>, because they no longer match the new EEMs. Blank EEMs (<code>.XBlank</code>) are taken from <code>b</code>, or removed from <code>a</code> if <code>b</code> has none.</em></strong></p>
+</blockquote>
+<blockquote>
+<p><strong><em>Transferring <code>"absorbance"</code> stops with an error if the toolbox has already corrected inner-filter effects in <code>a</code> (<code>ifecorrection</code>). The corrected EEMs would no longer match the new absorbance. Merge absorbance before <code>ifecorrection</code>.</em></strong></p>
+</blockquote>
+<blockquote>
 <p><strong><em>Use <code>alignsamples</code> before merging. It reports and removes samples that are not present in all datasets</em></strong>.</p>
 </blockquote>
 <blockquote>
