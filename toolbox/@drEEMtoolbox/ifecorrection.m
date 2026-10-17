@@ -53,7 +53,7 @@ dataout=drEEMtoolbox.subdataset(dataout,outEm=emout,outEx=exout);
 % Calculate the IFE correction factors based on ABA
 IFCmat=ABAife(dataout.Ex,dataout.Em,[rcvec(dataout.absWave,'row');dataout.abs]);  %or use Abs.Aug here
 IFCmat=real(IFCmat);
-if any(isnan(IFCmat(:)))&&any(data.abs(:)>2)
+if any(isnan(IFCmat(:)))&&any(dataout.abs(:)>2)
     nanNote="Some samples had very high absorbance (>2). These EEM areas were NaN'ed.";
 elseif any(isnan(IFCmat(:)))
     nanNote="Some of the IFC matrix contained NaNs. This results in NaNs in the fluorescence EEMs.";
