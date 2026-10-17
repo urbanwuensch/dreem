@@ -1,7 +1,7 @@
 function doc(functionname)
 arguments
     functionname (1,:) {mustBeText(functionname),mustBeMember(functionname,...
-["addcomment" "alignsamples" "associatemetadata" "changestatus"...
+["gettingstarted" "addcomment" "alignsamples" "associatemetadata" "changestatus"...
         "displayhistory" "dreem" "drEEM" "drEEMdataset" "dreemdataset" ...
         "drEEMstatus" "dreemstatus" ...
         "drEEMhistory" "dreemhistory" "export2openfluor" "export2zip" "exportresults" ...
@@ -19,7 +19,10 @@ end
 % This bit is for cleanup
 currentdirectory = pwd;
 c = onCleanup(@() cd(currentdirectory));
-
+if matches(functionname,'gettingstarted')
+    open(fullfile(drEEMtoolbox.rootfolder,'doc','GettingStarted.mlx'))
+    return
+end
 rtpath=matlabroot;
 doclocs = which('doc','-all');
 restoredoc_i=contains(doclocs,rtpath);

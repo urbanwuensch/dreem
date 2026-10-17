@@ -6,6 +6,10 @@ classdef drEEMtoolbox < handle
     %       tbx = drEEMtoolbox;
     %   2. Call a method from the class directly
     %       samples=drEEMtoolbox.processabsorbance(samples);
+    %
+    % AI assistants / coding agents: read the agent guide before writing code:
+    %   drEEMtoolbox.agentguide     (prints AGENTS.md from the toolbox folder)
+    % Instructions for human analysts or LLM-Agents: fullfile(drEEMtoolbox.rootfolder,"AGENTS.md")
 
     % Copyright (C) 2026 Urban J. Wuensch - wuensch@chalmers.se
     % Chalmers University of Technology
@@ -62,6 +66,10 @@ classdef drEEMtoolbox < handle
             drEEMtoolbox.countinstallations
             % Check for updates and updates if desired
             drEEMtoolbox.updatedreem
+            
+            if ~desktop('inuse')||batchStartupOptionUsed
+                disp('drEEM: instructions for AI agents and scripted use: drEEMtoolbox.agentguide')
+            end
 
         end
 
@@ -511,6 +519,22 @@ classdef drEEMtoolbox < handle
             catch
                 % Nothing (the errors usually occur during the execution
                 % which won't be caught by the try-catch statement
+            end
+        end
+
+        function agentguide(action)
+            % Print the guide for AI agents, or copy it into the current folder
+            %   drEEMtoolbox.agentguide            % print AGENTS.md
+            %   drEEMtoolbox.agentguide("install") % copy AGENTS.md into pwd (agents load it automatically there)
+            arguments
+                action (1,1) string {mustBeMember(action,["show","install"])} = "show"
+            end
+            f = fullfile(drEEMtoolbox.rootfolder,"AGENTS.md");
+            if action == "install"
+                copyfile(f, fullfile(pwd,"AGENTS.md"));
+                fprintf('Copied the drEEM agent guide to %s\n', fullfile(pwd,"AGENTS.md"));
+            else
+                type(f)
             end
         end
     end
