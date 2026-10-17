@@ -67,7 +67,12 @@ classdef drEEMtoolbox < handle
             % Check for updates and updates if desired
             drEEMtoolbox.updatedreem
             
-            if ~desktop('inuse')||batchStartupOptionUsed
+            if isMATLABReleaseOlderThan("R2026b")
+                interactive = usejava('desktop');     % desktop("inuse") exists only from R2026b
+            else
+                interactive = desktop("inuse");
+            end
+            if ~interactive || batchStartupOptionUsed
                 disp('drEEM: instructions for AI agents and scripted use: drEEMtoolbox.agentguide')
             end
 
