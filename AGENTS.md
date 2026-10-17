@@ -26,8 +26,10 @@ data, centred on PARAFAC. Maintainer: Urban Wünsch (urban.wunsch@chalmers.se).
 | `tests/` | `matlab.unittest` test suite (see Testing) |
 | `tests/reference/` | Stored fingerprints for the processing regression tests |
 | `tests/testdata/` | Real instrument files for import tests (Aqualog text export, Origin projects) |
-| `buildfile.m` | Build plan: `check`, `test`, `docs`, `tutorials`, `package` |
+| `buildfile.m` | Build plan: `check`, `test`, `docs`, `tutorials`, `pdf`, `package` |
 | `buildUtilities/doc_template.html` | pandoc page template for the `docs` task |
+| `buildUtilities/build_doc_pdf.py` | Builds the documentation PDF for the `pdf` task |
+| `documentation/drEEM_toolbox_documentation.pdf` | All help pages and tutorials as one PDF (**generated** by `buildtool pdf`) |
 | `matlab.toml` | MATLAB project + packaging config (version, folders, output file name) |
 
 ## Building
@@ -39,11 +41,19 @@ buildtool check      % static code analysis (CodeIssuesTask), no errors allowed
 buildtool test       % test suite in tests/
 buildtool docs       % Markdown -> toolbox/doc/*.html (needs pandoc)
 buildtool tutorials  % tutorial .mlx -> toolbox/doc/*.html
+buildtool pdf        % all help pages -> documentation/drEEM_toolbox_documentation.pdf
 buildtool            % default: package, after check, test, docs and tutorials
 ```
 
-`docs` and `tutorials` declare inputs and outputs, so `buildtool` skips them when
+`docs`, `tutorials` and `pdf` declare inputs and outputs, so `buildtool` skips them when
 nothing has changed. The package is written to `release/dreem.mltbx`.
+
+`pdf` (needs Google Chrome and Python 3 with `pypdf`, ~2 min) runs `docs` and `tutorials`
+first, then renders every page in `toolbox/doc` and merges them with a table of contents
+and bookmarks: Overview and Tutorials in the order of `toolbox/doc/helptoc.xml`, then all
+function pages from `documentation/functions/`. A new tutorial page must be added to the
+lists in `build_doc_pdf.py`; new function pages are included automatically. The PDF is not
+part of the package; don't edit it, rebuild it.
 
 Agents usually can't drive MATLAB GUIs. When verifying, call methods with `plot=false`
 and avoid anything that opens a blocking window (see `toolbox/AGENTS.md`).

@@ -15,6 +15,12 @@ plan("docs").Outputs = fullfile("toolbox","doc",erase(string({md.name}),".md") +
 plan("tutorials").Inputs  = fullfile("toolbox","examples",tutorialNames() + ".mlx");
 plan("tutorials").Outputs = fullfile("toolbox","doc",tutorialNames() + ".html");
 
+% All help pages -> one PDF with table of contents and bookmarks (not part of the package)
+html = dir("toolbox/doc/*.html");
+plan("pdf").Inputs  = [string(fullfile({html.folder},{html.name})), "buildUtilities/build_doc_pdf.py"];
+plan("pdf").Outputs = "documentation/drEEM_toolbox_documentation.pdf";
+plan("pdf").Dependencies = ["docs" "tutorials"];
+
 plan("package") = PackageTask(Dependencies=["check" "test" "docs" "tutorials"]);
 plan.DefaultTasks = "package";
 end
@@ -54,6 +60,31 @@ for name = tutorialNames()
     export(in, out);
 end
 fprintf("Exported %d tutorials.\n", numel(tutorialNames()))
+end
+
+function pdfTask(~)
+% Combine all help pages into one PDF (requires Google Chrome and the Python package pypdf)
+cmd = sprintf('"%s" "%s" "%s" "%s"', findPython(), ...
+    fullfile(pwd,"buildUtilities","build_doc_pdf.py"), pwd, ...
+    fullfile(pwd,"documentation","drEEM_toolbox_documentation.pdf"));
+status = system(cmd);   % output (one line per page) goes straight to the command window
+if status ~= 0
+    error("drEEM:pdfFailed","Building the documentation PDF failed (see messages above).")
+end
+end
+
+function exe = findPython()
+% MATLAB started from the Dock does not see the shell PATH, so check the usual places too
+candidates = ["/Library/Frameworks/Python.framework/Versions/Current/bin/python3", ...
+    "/opt/homebrew/bin/python3","/usr/local/bin/python3"];
+exe = candidates(find(isfile(candidates),1));
+if isempty(exe)
+    [status,where] = system("which python3");
+    if status ~= 0
+        error("drEEM:noPython","python3 not found. Install Python 3 and the package pypdf.")
+    end
+    exe = strtrim(string(where));
+end
 end
 
 function names = tutorialNames()
