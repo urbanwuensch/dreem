@@ -12,7 +12,7 @@ plan("docs").Inputs  = [string(fullfile({md.folder},{md.name})), ...
 plan("docs").Outputs = fullfile("toolbox","doc",erase(string({md.name}),".md") + ".html");
 
 % Tutorial live scripts (toolbox/examples) -> toolbox/doc
-plan("tutorials").Inputs  = fullfile("toolbox","examples",tutorialNames() + ".mlx");
+plan("tutorials").Inputs  = fullfile("toolbox","examples",tutorialNames() + ".m");
 plan("tutorials").Outputs = fullfile("toolbox","doc",tutorialNames() + ".html");
 
 % All help pages -> one PDF with table of contents and bookmarks (not part of the package)
