@@ -35,7 +35,7 @@ startup-folder = "toolbox"
     "images/dreem-2.png",
 ]
 "Getting Started Guide" = [
-    "toolbox/doc/GettingStarted.mlx",
+    "toolbox/doc/GettingStarted.m",
 ]
 "App Gallery File" = [
 ]
