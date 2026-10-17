@@ -530,7 +530,6 @@ classdef drEEMtoolbox < handle
                 action (1,1) string {mustBeMember(action,["show","install"])} = "show"
             end
             f = fullfile(drEEMtoolbox.rootfolder,"AGENTS.md");
-            f = fullfile(drEEMtoolbox.rootfolder,"AGENTS.md");
             if action == "install"
                 targets = fullfile(pwd,["AGENTS.md","CLAUDE.md"]);
                 existing = targets(isfile(targets));
@@ -547,4 +546,5 @@ classdef drEEMtoolbox < handle
             end
     end
 
+    end
 end
