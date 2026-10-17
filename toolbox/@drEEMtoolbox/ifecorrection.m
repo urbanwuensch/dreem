@@ -43,9 +43,9 @@ emout=logical(double(dataout.Em<AbsRange(1))+ double(dataout.Em>AbsRange(2)));
 exout=logical(double(dataout.Ex<AbsRange(1))+ double(dataout.Ex>AbsRange(2)));
 
 % Make sure that the right information is given to the user
-message='Abs-based IFE correction applied. ';
+notes=strings(0);
 if any(emout)||any(exout)
-    message=[message,'CDOM and FDOM coverage different (subdataset applied). You may want to use processabsorbance with the extrapolate=true option to avoid this, particularly if max(.absWave) < max(.Em)'];
+    notes(end+1)="CDOM and FDOM coverage different (subdataset applied). You may want to use processabsorbance with the extrapolate=true option to avoid this, particularly if max(.absWave) < max(.Em).";
 end
 % Remove wavelengths not covered by absorbance from DS
 dataout=drEEMtoolbox.subdataset(dataout,outEm=emout,outEx=exout);
@@ -54,9 +54,11 @@ dataout=drEEMtoolbox.subdataset(dataout,outEm=emout,outEx=exout);
 IFCmat=ABAife(dataout.Ex,dataout.Em,[rcvec(dataout.absWave,'row');dataout.abs]);  %or use Abs.Aug here
 IFCmat=real(IFCmat);
 if any(isnan(IFCmat(:)))&&any(data.abs(:)>2)
-    message=[message,'Some samples had very high absorbance (>2). These EEM areas were NaN''ed.'];
+    nanNote="Some samples had very high absorbance (>2). These EEM areas were NaN'ed.";
 elseif any(isnan(IFCmat(:)))
-    message=[message,'Some of the IFC matrix contained NaNs. This results in NaNs in the fluorescence EEMs.'];
+    nanNote="Some of the IFC matrix contained NaNs. This results in NaNs in the fluorescence EEMs.";
+else
+    nanNote="";
 end
 % Perform the correction
 dataout.X=dataout.X.*IFCmat;
@@ -64,12 +66,19 @@ dataout.status=...
     drEEMstatus.change(dataout.status,"IFEcorrection","applied by toolbox");
 
 % drEEMhistory entry
+message=strjoin(["Abs-based IFE correction applied.",notes,nanNote]," ");
 idx=height(dataout.history)+1;
 dataout.history(idx,1)=...
-    drEEMhistory.addEntry(mfilename,message,[],dataout);
+    drEEMhistory.addEntry(mfilename,char(strtrim(message)),[],dataout);
 dataout.validate(dataout);
-
-disp(message)
+% Final messages
+disp('Abs-based IFE correction applied.')
+if ~isempty(notes)
+    warning("drEEM:ifeTrimmed","%s",notes)
+end
+if nanNote~=""
+    warning("drEEM:ifeNaN","%s",nanNote)
+end
 
 
 if options.plot
