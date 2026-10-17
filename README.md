@@ -16,6 +16,7 @@ Each method ends in displaying a guide to get started with more information.
 - Access the toolbox methods by calling e.g. `tbx.importeems(...)`
 - To see which methods are available, type `tbx.` followed by hitting the TAB key to get a list of method suggestions.
 - For orientation, method names generally refer to an action and an object, e.g. `importeems`, `fitparafac`, `subtractblanks`, `splitdataset`, etc.
+- Using an AI/LLM assistant? Point it to toolbox/AGENTS.md or run drEEMtoolbox.agentguide("install") in your analysis folder
 
 ## Additional toolboxes contained within
 drEEM ships with several functions provided by external sources:
