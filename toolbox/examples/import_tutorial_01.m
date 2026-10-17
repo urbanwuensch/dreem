@@ -1,11 +1,11 @@
 %[text] %[text:anchor:T_72f6] # Simple data import
 %[text] To open this page as a Matlab live script, run the command
 %[text] ```matlabCodeExample
-%[text] open(which("import_tutorial_01.mlx"))
+%[text] open(which("import_tutorial_01.m"))
 %[text] ```
 %[text] If you would like to use this page to build your own m-file , get started by running this command
 %[text] ```matlabCodeExample
-%[text] matlab.internal.liveeditor.openAndConvert('import_tutorial_01.mlx', 'import_example.m');
+%[text] matlab.internal.liveeditor.openAndConvert('import_tutorial_01.m', 'import_example.m');
 %[text] ```
 %[text] 
 %[text] This tutorial shows how to import fluorescence and absorbance data with file triplets (sample EEM, blank EEM, absorbance spectrum). The particular dataset imported here was measured on an Horiba AquaLog.

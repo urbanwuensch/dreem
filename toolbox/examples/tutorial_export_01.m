@@ -1,11 +1,11 @@
 %[text] %[text:anchor:H_65cd] # Data export
 %[text] To open this page as a Matlab live script, run the command
 %[text] ```matlabCodeExample
-%[text] open(which("tutorial_export_01.mlx"))
+%[text] open(which("tutorial_export_01.m"))
 %[text] ```
 %[text] If you would like to use this page to build your own m-file , get started by running this command
 %[text] ```matlabCodeExample
-%[text] matlab.internal.liveeditor.openAndConvert('tutorial_export_01.mlx', 'export_example.m');
+%[text] matlab.internal.liveeditor.openAndConvert('tutorial_export_01.m', 'export_example.m');
 %[text] ```
 %[text] 
 %[text] At one point or another, you will want to get your data out of the Matlab environment. drEEM supports exporting of:
@@ -16,7 +16,7 @@
 %[text] ```matlabCodeExample
 %[text] drEEMtoolbox.exp (then hit the ⇥ key)
 %[text] ```
-%[text:tableOfContents]{"heading":"**Table of Contents**"}
+%[text:tableOfContents]{"heading":"Table of Contents"}
 %[text] %[text:anchor:H_5d06] ## Toolbox setup and data loading
 clearvars
 close all force

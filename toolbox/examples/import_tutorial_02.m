@@ -3,7 +3,7 @@
 %[text] 
 %[text] If you would like to open this tutorial as a Matlab Live script, run the following code in the command line:
 %[text] ```matlabCodeExample
-%[text] open(which('import_tutorial_02.mlx'))
+%[text] open(which('import_tutorial_02.m'))
 %[text] ```
 %[text] ## Toolobox setup
 %[text] First, we initiate this session by clearing all variables, closing all figures, and assigning an object to the toolbox class so we can access it. Then we change to the directory

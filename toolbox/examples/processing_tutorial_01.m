@@ -1,13 +1,13 @@
 %[text] %[text:anchor:T_8631] # Data processing tutorial
 %[text] To open this page as a Matlab live script, run the command
 %[text] ```matlabCodeExample
-%[text] open(which("processing_tutorial_01.mlx"))
+%[text] open(which("processing_tutorial_01.m"))
 %[text] ```
 %[text] If you would like to use this page to build your own m-file , get started by running this command
 %[text] ```matlabCodeExample
-%[text] matlab.internal.liveeditor.openAndConvert('processing_tutorial_01.mlx', 'processing_example.m');
+%[text] matlab.internal.liveeditor.openAndConvert('processing_tutorial_01.m', 'processing_example.m');
 %[text] ```
-%[text:tableOfContents]{"heading":"**Table of Contents**"}
+%[text:tableOfContents]{"heading":"Table of Contents"}
 %[text] This tutorial will walk you though the sequence of steps required to process data before getting to the stage where you want to carry out machine learning.
 %[text] Why? Without processing, the data will most certainly not behave according to the [Beer-Lambert law](https://en.wikipedia.org/wiki/Beer%E2%80%93Lambert_law) in it's entirety.
 %[text] First, we need to initialize this instance and load the dataset we already imported in one of the other tutorials ([simple import tutorial](file:./import_tutorial_01.html)).

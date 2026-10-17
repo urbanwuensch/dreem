@@ -1,9 +1,9 @@
 %[text] # Data quality inspection & handling of issues
 %[text] To open this page as a Matlab live script, run the command
 %[text] ```matlabCodeExample
-%[text] open(which("prepare4Parafac_tutorial.mlx"))
+%[text] open(which("prepare4Parafac_tutorial.m"))
 %[text] ```
-%[text:tableOfContents]{"heading":"**Table of Contents**"}
+%[text:tableOfContents]{"heading":"Table of Contents"}
 %[text] 
 %[text] The purpose of this tutorial is to demonstrate some tools that can take care of quality issues that might affect your PARAFAC results.
 %[text] First, let's load a dataset. The imported and processed dataset from other tutorials will do fine for this tutorial.

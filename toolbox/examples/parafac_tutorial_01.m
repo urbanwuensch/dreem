@@ -1,14 +1,14 @@
 %[text] %[text:anchor:T_6071] # PARAFAC tutorial
 %[text] To open this page as a Matlab live script, run the command
 %[text] ```matlabCodeExample
-%[text] open(which("parafac_tutorial_01.mlx"))
+%[text] open(which("parafac_tutorial_01.m"))
 %[text] ```
 %[text] If you would like to use this page to build your own m-file , get started by running this command
 %[text] ```matlabCodeExample
-%[text] matlab.internal.liveeditor.openAndConvert('parafac_tutorial_01.mlx', 'parafac_example.m');
+%[text] matlab.internal.liveeditor.openAndConvert('parafac_tutorial_01.m', 'parafac_example.m');
 %[text] ```
 %[text] **Notice:** The purpose of this tutorial is to demostrate the use of drEEM for PARAFAC. Here, we use a dataset cosisting of several pure compounds in arteficial seawater that are degraded in a chemostat experiment ([Sjösted et al. 2022](https://doi.org/10.3354/ame01986)). The dataset originally consisted of more than 300 samples, but we have trimmed it down to save time here. For an in-depth discussion on valid models on DOM samples from (more) *natural* environments, please refer to [Murphy et al. (2013)](https://pubs.rsc.org/en/content/articlehtml/2013/ay/c3ay41160e). 
-%[text:tableOfContents]{"heading":"**Table of Contents**"}
+%[text:tableOfContents]{"heading":"Table of Contents"}
 %[text] %[text:anchor:H_66c5] ## Toolbox setup and initiation
 clearvars
 close all force
@@ -106,7 +106,7 @@ demo=tbx.splitdataset(samples,"byMetadata","metadataColumn",'type');
 disp(['Number of samples in the metadata splits: ',num2str([demo.split(:).nSample])]) %[output:78523680]
 clearvars demo % Let's keep the workspace tidy
 %[text] Just keep in mind that the [`splitdataset`](file:splitdataset.html) function can help you reorganize your datasets by metadata and is not just there as a tool to make 2 random splits for splitvalidation.
-%[text] ***The validation is*** <u>___your___</u> ***safety check and you should perform it in a way that critically inspects your analysis. Have a look at the*** [***documentation***](file:splitdataset.html) ***here.***
+%[text] ***The validation is*** <u>***your***</u> ***safety check and you should perform it in a way that critically inspects your analysis. Have a look at the*** [documentation](file:splitdataset.html) ***here.***
 %[text] Next, we use the same function from before, but by specifiying `mode='split'`. This way, the function looks only at the split datasets, not the overall, original dataset. Though those models are still saved in the dataset as well.
 samples=tbx.fitparafac(samples,"fitsplits", ... %[output:group:60a88bb4] %[output:704f150d]
     f=5:6,convergence=1e-8, ... %[output:704f150d]

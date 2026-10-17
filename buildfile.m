@@ -55,7 +55,7 @@ end
 function tutorialsTask(~)
 % Export the tutorial live scripts, with the outputs saved in them, to toolbox/doc
 for name = tutorialNames()
-    in  = fullfile(pwd,"toolbox","examples",name + ".mlx");
+    in  = fullfile(pwd,"toolbox","examples",name + ".m");
     out = fullfile(pwd,"toolbox","doc",name + ".html");
     export(in, out);
 end

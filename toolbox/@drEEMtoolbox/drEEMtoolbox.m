@@ -75,7 +75,7 @@ classdef drEEMtoolbox < handle
 
         function openWritableDoc(relPath)
             arguments
-                relPath (1,:) char = 'doc/GettingStarted.mlx'
+                relPath (1,:) char = 'doc/GettingStarted.m'
             end
 
             src = fullfile(drEEMtoolbox.rootfolder, relPath);

@@ -20,7 +20,7 @@ end
 currentdirectory = pwd;
 c = onCleanup(@() cd(currentdirectory));
 if matches(functionname,'gettingstarted')
-    open(fullfile(drEEMtoolbox.rootfolder,'doc','GettingStarted.mlx'))
+    open(fullfile(drEEMtoolbox.rootfolder,'doc','GettingStarted.m'))
     return
 end
 rtpath=matlabroot;
